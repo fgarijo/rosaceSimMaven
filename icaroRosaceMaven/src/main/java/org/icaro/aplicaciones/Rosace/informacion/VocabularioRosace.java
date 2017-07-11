@@ -101,8 +101,10 @@ public class VocabularioRosace extends NombresPredefinidos{
     static public  final String identRutaFicheroEscenarioSimulacion  = "rutaFicheroEscenarioSimulacion";
     static public  final String rutaFicheroRobotsTest    = "rutaFicheroRobotsTest";
     static public  final String identDirectorioPersistenciaEscenarios  = "PersistenciaEscenariosSimulacion" ;
-    static public  final String rutaPersistenciaEscenarios    = "src/PersistenciaEscenariosSimulacion";
+//    static public  final String rutaPersistenciaEscenarios    = "src/PersistenciaEscenariosSimulacion";
+    static public  final String rutaPersistenciaEscenarios    = "src/main/resources/persistenciaEscenariosSimulacion";
     static public  final String rutaIconosEscenario = "\\src\\utilsDiseniaEscenariosRosace\\";
+    public static final String RUTA_ICONOS_ESCENARIOS = "src/main/resources/iconosEscenarios/";
     static public  final String intervaloMilisegundosEnvioCCMensajes = "intervaloMilisegundosEnvioMensajesDesdeCC"; 
     static public  final String timeTimeoutPorDefecto = "timeTimeoutPorDefecto";     
     static public  final String timeTimeoutMilisegundosRecibirEvaluaciones = "timeTimeoutMilisegundosRecibirEvaluaciones";     
@@ -117,8 +119,8 @@ public class VocabularioRosace extends NombresPredefinidos{
     static public  final String IdentRecursoCreacionEntornosSimulacion = "RecursoCreacionEntornosSimulacion1";
     static public  final String IdentRecursoVisualizadorEntornosSimulacion = "RecursoVisualizadorEntornosSimulacion1";
     static public  final String IdentPersistenciaEntornosSimulacion = "RecursoPersistenciaEntornosSimulacion1";
-    static public  final String NombreDirectorioPersistenciaResSimulacion = "PersistenciaResultadosSimulacion";
-    static public  final String NombreDirectorioPersistenciaEscenarios = "PersistenciaEscenariosSimulacion";
+    static public  final String NombreDirectorioPersistenciaResSimulacion = "src/main/resources/persistenciaResultadosSimulacion";
+    static public  final String NombreDirectorioPersistenciaEscenarios = "src/main/resources/persistenciaEscenariosSimulacion";
     // Valores de los inputs del agente controlador. Son necesarios para que el visualizador envie notificaciones y para definir
     // el automata
     static public  final String peticionSimulacionVictima = "peticionSimulacionVictima";

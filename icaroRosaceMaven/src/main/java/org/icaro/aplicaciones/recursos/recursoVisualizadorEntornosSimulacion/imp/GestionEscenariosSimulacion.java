@@ -75,6 +75,7 @@ public class GestionEscenariosSimulacion {
     }
 
     boolean hayEscenariosCreados() {
-     return ! identsEscenarios.isEmpty();
+        if (identsEscenarios!=null)return ! identsEscenarios.isEmpty();
+        return false;
     }
 }

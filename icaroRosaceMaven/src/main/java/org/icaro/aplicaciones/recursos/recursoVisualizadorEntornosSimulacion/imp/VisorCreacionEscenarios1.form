@@ -307,7 +307,7 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jSeparator7" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="538" max="32767" attributes="0"/>
+              <EmptySpace pref="544" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -321,7 +321,7 @@
     <Component class="javax.swing.JLabel" name="robotIcon">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/utilsDiseniaEscenariosRosace/Robot.png"/>
+          <Image iconType="3" name="/iconosEscenarios/Robot.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Robots"/>
         <Property name="iconTextGap" type="int" value="2"/>
@@ -339,7 +339,7 @@
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/utilsDiseniaEscenariosRosace/Mujer.png"/>
+          <Image iconType="3" name="/iconosEscenarios/Mujer.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Victimas"/>
         <Property name="verticalAlignment" type="int" value="3"/>

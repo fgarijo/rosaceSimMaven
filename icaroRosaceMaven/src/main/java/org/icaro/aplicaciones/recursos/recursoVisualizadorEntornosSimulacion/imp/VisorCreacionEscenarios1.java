@@ -18,6 +18,7 @@ import java.awt.Image;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
@@ -53,12 +54,11 @@ public class VisorCreacionEscenarios1 extends javax.swing.JFrame {
     private String directorioTrabajo;
      private String tituloVentanaVisor = "ROSACE Scenario Visor";
     private String rutassrc = "src/";   //poner "src/main/java" si el proyecto de icaro se monta en un proyecto maven
-    private String rutapaqueteConstructorEscenariosROSACE = "utilsDiseniaEscenariosRosace/";
+//    private String rutaIconosEscenarios = "src/main/resources/iconosEscenarios/";
     private static  Image IMAGErobot,IMAGEmujer,IMAGEmujerRes ;
-    private String rutaIconos = "\\src\\utilsDiseniaEscenariosRosace\\";
 //    private String rutaPersistenciaEscenario = "\\src\\persistenciaEscenarios\\";
     private String directorioPersistencia = VocabularioRosace.NombreDirectorioPersistenciaEscenarios+File.separator;
-     private String imageniconoHombre = "Hombre.png";
+    private String imageniconoHombre = "Hombre.png";
     private String imageniconoMujer = "Mujer.png";
     private String imageniconoMujerRescatada = "MujerRescatada.png";
     private String imageniconoHombreRescatado = "HombreRescatado.png";
@@ -89,15 +89,9 @@ public class VisorCreacionEscenarios1 extends javax.swing.JFrame {
      public  VisorCreacionEscenarios1(ControladorGestionEscenariosRosace controlador) throws Exception {
 //        super("visor Escenario ");
         initComponents();
-        initEscenario();
         moverComp =new ComponentMover();
         moverComp.addMenuAcciones(jPopupMenuAcionEntidad);
         controladorSim = controlador;
-        
-        
-//        identEquipoActual = escenarioActualComp.getIdentEscenario();
-//        actualizarInfoEquipoEnEscenario();
-//        leerInfoEscenario();
         directorioTrabajo = System.getProperty("user.dir");
         numeroRobots=0;  mumeroVictimas=0;
 //        tablaEntidadesEnEscenario = new HashMap<String, JLabel>();
@@ -105,46 +99,10 @@ public class VisorCreacionEscenarios1 extends javax.swing.JFrame {
 
     }
    
-    private void initEscenario(){
-        String rutaIconoRobot =   rutapaqueteConstructorEscenariosROSACE + imageniconoRobot;
-        IMAGErobot = Utilities.loadImage (rutaIconoRobot);
-        IMAGEmujerRes = Utilities.loadImage ( rutapaqueteConstructorEscenariosROSACE +imageniconoMujerRescatada); 
-        IMAGEmujer = Utilities.loadImage ( rutapaqueteConstructorEscenariosROSACE +imageniconoMujer);
-//        JLabel label = new javax.swing.JLabel("RobotPrueba");
-//            String rutaIconoRobot = directorioTrabajo + "/" + rutassrc + rutapaqueteConstructorEscenariosROSACE + imageniconoRobot;
-
-//       label.setIcon(new javax.swing.ImageIcon(rutaIconoRobot));     //System.out.println("Ruta->" + rutaIconoRobot);
-//       label.createImage(10,10);
-//            this.getRootPane().add(label);
-//            this.repaint();
-    }
 
         public synchronized void cambiarIconoVictimaARescatada(String valor_idVictima) {
         System.out.println("se cambia el icono de la victima a rescatada: "+valor_idVictima );
-//        ((IconNodeWidget)scene.findWidget(valor_idVictima)).setImage(IMAGEmujerRes);
- 
-//        int numeroIdVictima = Integer.parseInt(numeroVictima);
-//
-//        JLabel jlabelVictima = new JLabel();
-//
-//        jlabelVictima = victimaslabel.get(numeroVictima);
-//
-//        if (jlabelVictima != null) {
-//
-//            //String rutaAbsolutaIconoVictima = jlabelVictima.getIcon().toString();			
-//            //System.out.println("victima " + numeroVictima + "  , " + jlabelVictima.getIcon().toString());
-//
-//            if (numeroIdVictima % 2 == 0) {
-//                jlabelVictima.setIcon(new javax.swing.ImageIcon(directorioTrabajo + "/" + rutassrc + rutapaqueteConstructorEscenariosROSACE + "HombreRescatado.png"));
-//                //System.out.println("Es un hombre");
-//            } else {
-//                jlabelVictima.setIcon(new javax.swing.ImageIcon(directorioTrabajo + "/" + rutassrc + rutapaqueteConstructorEscenariosROSACE + "MujerRescatada.png"));
-//                //System.out.println("Es una mujer");
-//            }
-//
-//        } else {
-//            System.out.println("jlabelVictima nulo");
-//        }
+
     System.out.println("se cambia el icono de la victima a rescatada");
     }
 
@@ -240,12 +198,12 @@ public class VisorCreacionEscenarios1 extends javax.swing.JFrame {
             }
         });
         jPopupMenuAcionEntidad.addMenuKeyListener(new javax.swing.event.MenuKeyListener() {
-            public void menuKeyTyped(javax.swing.event.MenuKeyEvent evt) {
-            }
             public void menuKeyPressed(javax.swing.event.MenuKeyEvent evt) {
                 jPopupMenuAcionEntidadMenuKeyPressed(evt);
             }
             public void menuKeyReleased(javax.swing.event.MenuKeyEvent evt) {
+            }
+            public void menuKeyTyped(javax.swing.event.MenuKeyEvent evt) {
             }
         });
 
@@ -304,7 +262,7 @@ public class VisorCreacionEscenarios1 extends javax.swing.JFrame {
 
         jTextFieldModeloOrganizacion.setName("Modelo Organizacion"); // NOI18N
 
-        robotIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/utilsDiseniaEscenariosRosace/Robot.png"))); // NOI18N
+        robotIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconosEscenarios/Robot.png"))); // NOI18N
         robotIcon.setText("Robots");
         robotIcon.setIconTextGap(2);
 
@@ -316,7 +274,7 @@ public class VisorCreacionEscenarios1 extends javax.swing.JFrame {
         });
 
         victimaIcon1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        victimaIcon1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/utilsDiseniaEscenariosRosace/Mujer.png"))); // NOI18N
+        victimaIcon1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconosEscenarios/Mujer.png"))); // NOI18N
         victimaIcon1.setText("Victimas");
         victimaIcon1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         victimaIcon1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -485,7 +443,7 @@ public class VisorCreacionEscenarios1 extends javax.swing.JFrame {
                     .addComponent(jLabelIdentEquipo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(538, Short.MAX_VALUE))
+                .addContainerGap(544, Short.MAX_VALUE))
         );
 
         pack();
@@ -509,21 +467,6 @@ public class VisorCreacionEscenarios1 extends javax.swing.JFrame {
         System.out.println("Ha pulsado el botón Guardar escenario");
         actualizarCoordenadasEntidades();
         controladorSim.peticionGuardarEscenario(escenarioActualComp);
-//        String valor ;
-//        setLocationRelativeTo(this);
-//        escenarioActualComp.setIdentEscenario(jTextFieldIdentEquipo.getText());
-//        persistencia.guardarInfoEscenarioSimulacion(directorioPersistencia, escenarioActualComp);
-//
-//        //         String smsg = "Puede cambiar el valor en milisegundos en que deben enviarse las coordenadas";
-//
-//        String smsg = "Se va a guardar el escenario: " +jTextFieldIdentEquipo.getText() ;
-//        JOptionPane.showConfirmDialog(rootPane, smsg,"Confirmar GuardarEscenario",JOptionPane.OK_CANCEL_OPTION );
-        //         jOptionPaneAvisoError.setToolTipText(smsg);
-        //         jOptionPaneAvisoError.setLocation(20,20);
-        //         jOptionPaneAvisoError.setVisible(true);
-        //         this.add(jOptionPaneAvisoError);
-        //         this.validate();
-
     }//GEN-LAST:event_jButtonGuardarEscenarioActionPerformed
 
     private void intervalNumRobotsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_intervalNumRobotsActionPerformed
@@ -600,17 +543,6 @@ public class VisorCreacionEscenarios1 extends javax.swing.JFrame {
          System.out.println("Ha pulsado el botón Guardar Escenario");
          actualizarCoordenadasEntidades();
          controladorSim.peticionGuardarEscenario(escenarioActualComp);
-//        String valor ;
-//        setLocationRelativeTo(this);
-////        escenarioActualComp.setIdentEscenario(jTextFieldIdentEquipo.getText());
-//        escenarioActualComp.setIdentificadorNormalizado();
-//        persistencia.guardarInfoEscenarioSimulacion(directorioPersistencia, escenarioActualComp);
-//
-//        //         String smsg = "Puede cambiar el valor en milisegundos en que deben enviarse las coordenadas";
-//        jTextFieldIdentEquipo.setText(escenarioActualComp.getIdentEscenario());
-//        String smsg = "Se va a guardar el escenario: " + escenarioActualComp.getIdentEscenario();
-//        JOptionPane.showConfirmDialog(rootPane, smsg,"Confirmar GuardarEscenario",JOptionPane.OK_CANCEL_OPTION );
-        //         jOptionPaneAvisoError.setToolTipText(smsg);
     }//GEN-LAST:event_jMenuItemGuardarActionPerformed
 
     private void jPopupMenuAcionEntidadPopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jPopupMenuAcionEntidadPopupMenuWillBecomeVisible
@@ -725,20 +657,17 @@ public class VisorCreacionEscenarios1 extends javax.swing.JFrame {
         String rutaImagen;
         String identEntidad;
        if ( tipoEntidad.startsWith("Robot")){
-           rutaImagen=directorioTrabajo+rutaIconos+imageniconoRobot;
+//           rutaImagen=directorioTrabajo+rutaIconos+imageniconoRobot;
+            rutaImagen=VocabularioRosace.RUTA_ICONOS_ESCENARIOS+imageniconoRobot;
            numeroRobots= escenarioActualComp.getNumRobots();
-           
-         
-//           intervalNumRobots.setText(""+numeroRobots);
              numeroRobots++;
              identEntidad=tipoEntidad+numeroRobots;
            escenarioActualComp.addRoboLoc(identEntidad, new Point(coordX,coordY));
-           intervalNumRobots.setText(""+numeroRobots);
-//           label.setText(tipoEntidad+numeroRobots);
-           
+           intervalNumRobots.setText(""+numeroRobots);    
        }
        else{
-        rutaImagen=directorioTrabajo+rutaIconos+imageniconoMujer;
+//        rutaImagen=directorioTrabajo+rutaIconos+imageniconoMujer;
+        rutaImagen=VocabularioRosace.RUTA_ICONOS_ESCENARIOS+imageniconoMujer;
         mumeroVictimas= escenarioActualComp.getNumVictimas();
         mumeroVictimas++;
 //         intervalNumVictimas.setText(""+mumeroVictimas);
@@ -748,24 +677,14 @@ public class VisorCreacionEscenarios1 extends javax.swing.JFrame {
          intervalNumVictimas.setText(""+mumeroVictimas);
 //         identEntidad=tipoEntidad+mumeroVictimas;
 //         label.setText(tipoEntidad+mumeroVictimas);
-       }
-        
+       }      
         label.setText(identEntidad);
         label.setBounds(10, 10, 100, 100);
-//        label.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-//            @Override
-//            public void mouseDragged(java.awt.event.MouseEvent evt) {
-//                jLabelMouseDragged(evt);
-//            }
-//            public void mouseReleased(java.awt.event.MouseEvent evt) {
-//                jLabelMouseReleased(evt);
-//            }
-//        });
-        
         this.add(label);
         label.setVisible(true);
         
 //        label.setIcon(new ImageIcon("E:\\FicheroRed\\Github\\rosaceSIM\\src\\utilsDiseniaEscenariosRosace\\Robot.png"));
+//    rutaImagen= "src/main/resources/iconosEscenarios/Robot.png";
         label.setIcon(new ImageIcon(rutaImagen));
         label.setLocation(coordX, coordY);
         this.listaEntidadesEnEscenario.add(label);
@@ -778,14 +697,6 @@ public class VisorCreacionEscenarios1 extends javax.swing.JFrame {
     }
     public void addEntidadEnEscenario (String rutaIcono, String idEntidad, Point puntoLoc){
          JLabel label = new JLabel();
-       
-//          String rutaImagen=directorioTrabajo+rutaIconos+imageniconoMujer;
-//           numeroRobots= escenrioSimComp.getNumRobots();
-//           numeroRobots++;
-//           intervalNumRobots.setText(""+numeroRobots);
-//           identEntidad=tipoEntidad+numeroRobots;
-//           escenrioSimComp.addRoboLoc(identEntidad, new Point(coordX,coordY));
-//           intervalNumRobots.setText(""+numeroRobots);
            label.setText(idEntidad);
         label.setBounds(10, 10, 100, 100);
         this.add(label);
@@ -815,17 +726,6 @@ public class VisorCreacionEscenarios1 extends javax.swing.JFrame {
         intervalNumVictimas.setText(""+escenarioActualComp.getNumVictimas());
 //        intervalNumVictimas.setVisible(true);
     }
-//    public void actualizarCoordenadasEntidades(){
-//        System.out.println( "Se actualizan las coordenadas. Numero de entidades : "+listaEntidadesEnEscenario.size());
-//        for (int i=0; i<listaEntidadesEnEscenario.size();){
-//            JLabel entidadLabel = listaEntidadesEnEscenario.get(i);
-//            String identEntidad = entidadLabel.getText();
-//            if (identEntidad.contains("Robot"))
-//                                        escenarioActualComp.addRoboLoc(identEntidad, entidadLabel.getLocation());
-//            else escenarioActualComp.addVictimLoc(identEntidad, entidadLabel.getLocation());
-//            System.out.println( "Se actualiza la entidad : "+identEntidad+ " Coordenadas : X =" + entidadLabel.getX() +" , Y = " +entidadLabel.getY() );
-//        }
-//    }
     public void actualizarCoordenadasEntidades(){
         System.out.println( "Se actualizan las coordenadas. Numero de entidades : "+listaEntidadesEnEscenario.size());
         int numRobots= 0; int numVictims= 0;
@@ -862,12 +762,11 @@ public class VisorCreacionEscenarios1 extends javax.swing.JFrame {
          jTextFieldModeloOrganizacion.setText(""+infoEscenario.getmodeloOrganizativo());
          intervalNumRobots.setText(""+numRobots);
          intervalNumVictimas.setText(""+numVictims);
-         
          String rutaImagen;
          Set entidades;
          Iterator entries;
          if (numRobots>0) {
-         rutaImagen=directorioTrabajo+rutaIconos+imageniconoRobot;
+         rutaImagen=VocabularioRosace.RUTA_ICONOS_ESCENARIOS+imageniconoRobot;
           entidades = infoEscenario.getRobots();
 //          entidades.remove("robotInit");
           entries = entidades.iterator();
@@ -883,7 +782,7 @@ public class VisorCreacionEscenarios1 extends javax.swing.JFrame {
         }
          }
          if (numVictims>0) {
-            rutaImagen=directorioTrabajo+rutaIconos+imageniconoMujer;
+            rutaImagen=VocabularioRosace.RUTA_ICONOS_ESCENARIOS+imageniconoMujer;
             entidades = infoEscenario.getSetVictims();
 //            entidades.remove("victimInit");
             entries = entidades.iterator();
@@ -903,8 +802,7 @@ public class VisorCreacionEscenarios1 extends javax.swing.JFrame {
      private void peticionGuardarEscenario (){
          setLocationRelativeTo(this);
 //        escenarioActualComp.setIdentEscenario(jTextFieldIdentEquipo.getText());
-        escenarioActualComp.setIdentificadorNormalizado();
-      
+        escenarioActualComp.setIdentificadorNormalizado(); 
         jTextFieldIdentEquipo.setText(escenarioActualComp.getIdentEscenario());
         String smsg = "Se va a guardar el escenario: " + escenarioActualComp.getIdentEscenario();
        int respuesta= JOptionPane.showConfirmDialog(rootPane, smsg,"Confirmar GuardarEscenario",JOptionPane.OK_CANCEL_OPTION );
@@ -928,17 +826,6 @@ public class VisorCreacionEscenarios1 extends javax.swing.JFrame {
 //       }
      }
      private void eliminarEntidadesEscenario(){
-//         Set entidades;
-//         Iterator entries;
-//         if (infoEscenario.getNumRobots()>0) {
-//         rutaImagen=directorioTrabajo+rutaIconos+imageniconoRobot;
-//          entidades = infoEscenario.getRobots();
-//          entries = entidades.iterator();
-//            while (entries.hasNext()) {
-//                Entry thisEntry = (Entry) entries.next();
-//                Point punto =(Point)thisEntry.getValue();
-//            addEntidadEnEscenario(rutaImagen,(String)thisEntry.getKey(),(Point)thisEntry.getValue());
-//             ((JLabel) this.findComponentAt((Point)thisEntry.getValue())).setVisible(false);
          JLabel labelActual;             
          for( Component comp : this.getContentPane().getComponents() ){
                  if (comp instanceof JLabel){
@@ -996,15 +883,7 @@ public class VisorCreacionEscenarios1 extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(VisorCreacionEscenarios1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
+       
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
 
