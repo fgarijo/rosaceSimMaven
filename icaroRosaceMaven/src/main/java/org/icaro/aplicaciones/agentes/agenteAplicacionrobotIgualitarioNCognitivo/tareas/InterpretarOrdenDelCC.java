@@ -24,9 +24,8 @@ public class InterpretarOrdenDelCC extends TareaSincrona{
 	   try {
       //       trazas = NombresPredefinidos.RECURSO_TRAZAS_OBJ;
              MisObjetivos misObjs = (MisObjetivos) params[0];
-             Objetivo objetivoEjecutantedeTarea = (Objetivo)params[1];
-             OrdenCentroControl ccOrdenAyudarVictima = (OrdenCentroControl)params[2];
-             VictimsToRescue victims2R = (VictimsToRescue)params[3];
+             OrdenCentroControl ccOrdenAyudarVictima = (OrdenCentroControl)params[1];
+             VictimsToRescue victims2R = (VictimsToRescue)params[2];
              Victim victim = (Victim)ccOrdenAyudarVictima.getJustificacion();
             // String identTarea = this.getIdentTarea();
              String nombreAgenteEmisor = this.getIdentAgente();

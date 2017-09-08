@@ -43,13 +43,15 @@ public class VisorMovimientoEscenario extends javax.swing.JFrame {
      private String tituloVentanaVisor = "ROSACE Scenario Visor";
     private String rutassrc = "src/";   //poner "src/main/java" si el proyecto de icaro se monta en un proyecto maven
     private String rutapaqueteConstructorEscenariosROSACE = "utilsDiseniaEscenariosRosace/";
-    public static  Image IMAGErobot,IMAGEmujer,IMAGEmujerRes ,IMAGEmujerAsignada,IMAGEmujerReAsignada;
+    public static  ImageIcon IMAGErobot,IMAGEmujer,IMAGEmujerRes ,IMAGEmujerAsignada,IMAGEmujerReasignada;
     private String rutaIconos = "\\src\\utilsDiseniaEscenariosRosace\\";
 //    private String rutaPersistenciaEscenario = "\\src\\persistenciaEscenarios\\";
     private String directorioPersistencia = VocabularioRosace.NombreDirectorioPersistenciaEscenarios+File.separator;
     private String imageniconoHombre = "Hombre.png";
     private String imageniconoMujer = "Mujer.png";
     private String imageniconoMujerRescatada = "MujerRescatada.png";
+    private String imageniconoMujerReasignada = "MujerMujerReasignada.png";
+    private String imageniconoMujerAsignada= "MujerAsignada.png";
     private String imageniconoHombreRescatado = "HombreRescatado.png";
     private String imageniconoRobot = "Robot.png";
     private String modeloOrganizativoInicial = "Igualitario";
@@ -68,19 +70,20 @@ public class VisorMovimientoEscenario extends javax.swing.JFrame {
         initComponents();
         initEscenario();
         escenarioActual = infoEscenario;
-        directorioTrabajo = System.getProperty("user.dir");
+//        directorioTrabajo = System.getProperty("user.dir");
         numeroRobots=0;  mumeroVictimas=0;
 //        tablaEntidadesEnEscenario = new HashMap<String, JLabel>();
         listaEntidadesEnEscenario = new ArrayList < JLabel>();
     }
    
     private void initEscenario(){
-        String rutaIconoRobot =   rutapaqueteConstructorEscenariosROSACE + imageniconoRobot;
-        IMAGErobot = Utilities.loadImage (rutaIconoRobot);
-        IMAGEmujerRes = Utilities.loadImage ( rutapaqueteConstructorEscenariosROSACE +imageniconoMujerRescatada); 
-        IMAGEmujer = Utilities.loadImage ( rutapaqueteConstructorEscenariosROSACE +imageniconoMujer);
-        IMAGEmujerAsignada= Utilities.loadImage ("utilsDiseniaEscenariosRosace/MujerAsignada.png");
-        IMAGEmujerReAsignada= Utilities.loadImage ("utilsDiseniaEscenariosRosace/MujerReasignada.png");
+//        String rutaIconoRobot =   rutapaqueteConstructorEscenariosROSACE + imageniconoRobot;
+        IMAGErobot =new ImageIcon(VocabularioRosace.RUTA_ICONOS_ESCENARIOS+imageniconoRobot);
+        IMAGEmujerRes = new ImageIcon(VocabularioRosace.RUTA_ICONOS_ESCENARIOS+imageniconoMujerRescatada);
+        IMAGEmujer = new ImageIcon(VocabularioRosace.RUTA_ICONOS_ESCENARIOS+imageniconoMujer);
+        IMAGEmujerReasignada= new ImageIcon(VocabularioRosace.RUTA_ICONOS_ESCENARIOS+imageniconoMujerReasignada);
+        IMAGEmujerAsignada= new ImageIcon(VocabularioRosace.RUTA_ICONOS_ESCENARIOS+imageniconoMujerAsignada);
+//        IMAGEmujerReAsignada= Utilities.loadImage ("utilsDiseniaEscenariosRosace/MujerReasignada.png");
         
         tablaEntidadesEnEscenario= new HashMap<String, JLabel>();
     }
@@ -150,7 +153,7 @@ public class VisorMovimientoEscenario extends javax.swing.JFrame {
 
         jTextFieldModeloOrganizacion.setName("Modelo Organizacion"); // NOI18N
 
-        robotIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/utilsDiseniaEscenariosRosace/Robot.png"))); // NOI18N
+        robotIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconosEscenarios/Robot.png"))); // NOI18N
         robotIcon.setText("Robots");
         robotIcon.setIconTextGap(2);
 
@@ -162,7 +165,7 @@ public class VisorMovimientoEscenario extends javax.swing.JFrame {
         });
 
         victimaIcon1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        victimaIcon1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/utilsDiseniaEscenariosRosace/Mujer.png"))); // NOI18N
+        victimaIcon1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconosEscenarios/Mujer.png"))); // NOI18N
         victimaIcon1.setText("Victimas");
         victimaIcon1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         victimaIcon1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -209,7 +212,7 @@ public class VisorMovimientoEscenario extends javax.swing.JFrame {
                         .addComponent(victimaIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(intervalNumVictimas, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 475, Short.MAX_VALUE))
+                        .addGap(0, 433, Short.MAX_VALUE))
                     .addComponent(jSeparator7, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
@@ -233,7 +236,7 @@ public class VisorMovimientoEscenario extends javax.swing.JFrame {
                             .addComponent(jLabelIdentEquipo))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(560, Short.MAX_VALUE))
+                .addContainerGap(564, Short.MAX_VALUE))
         );
 
         pack();
@@ -339,7 +342,7 @@ public class VisorMovimientoEscenario extends javax.swing.JFrame {
          Set entidades;
          Iterator entries;
          if (numRobots>0) {
-         rutaImagen=directorioTrabajo+rutaIconos+imageniconoRobot;
+          rutaImagen=VocabularioRosace.RUTA_ICONOS_ESCENARIOS+imageniconoRobot;
           entidades = escenarioActual.getRobots();
 //          entidades.remove("robotInit");
           entries = entidades.iterator();
@@ -355,7 +358,7 @@ public class VisorMovimientoEscenario extends javax.swing.JFrame {
         }
          }
          if (numVictims>0) {
-            rutaImagen=directorioTrabajo+rutaIconos+imageniconoMujer;
+             rutaImagen=VocabularioRosace.RUTA_ICONOS_ESCENARIOS+imageniconoMujer;
             entidades = escenarioActual.getSetVictims();
 //            entidades.remove("victimInit");
             entries = entidades.iterator();
@@ -451,12 +454,12 @@ public class VisorMovimientoEscenario extends javax.swing.JFrame {
 //        System.out.println("Localizacion del robot " + jlabelRobot.getText() + "-> " + jlabelRobot.getLocationOnScreen());
     }
 
-    public void cambiarIconoEntidad(String idEntidad, Image imagenIcono) {
+    public void cambiarIconoEntidad(String idEntidad, ImageIcon imagenIcono) {
 
        JLabel jlabelEntidad = tablaEntidadesEnEscenario.get(idEntidad);
         if (jlabelEntidad != null) {
-            ImageIcon icono = new ImageIcon (imagenIcono);
-            jlabelEntidad.setIcon(icono);
+//            ImageIcon icono = new ImageIcon (imagenIcono);
+            jlabelEntidad.setIcon(imagenIcono);
         } else {
             System.out.println("jlabelEntidad nulo");
         }

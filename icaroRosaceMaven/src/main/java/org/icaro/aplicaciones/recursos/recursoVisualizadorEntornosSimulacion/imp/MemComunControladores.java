@@ -24,6 +24,13 @@ public class MemComunControladores {
     private int numRobotsdefsEnOrganizacion;
     private String modorganizDefinidoEnOrg;
     private boolean escenarioEdicionAbierto;
+    private boolean casoSimulacionPreparado;
+    private boolean casoSimulacionIniciado;
+    private boolean casoSimulacionFinalizado;
+    private boolean paramSimulacionVisualizados;
+    private boolean robtsVisualizados;
+    private boolean victimsVisualizados;
+    private boolean intervaloSecVisualizado;
     public MemComunControladores(){
         
     }
@@ -34,11 +41,41 @@ public class MemComunControladores {
     public synchronized boolean getescenarioSimulacionAbierto(){
         return escenarioSimulacionAbierto;
     }
-     public synchronized void setsimulacionEnCurso(boolean estado){
-         simulacionEnCurso=estado ;
+    public synchronized void setcasoSimulacionPreparado(boolean estado){
+         casoSimulacionPreparado=estado ;
     }
-    public synchronized boolean getsimulacionEnCurso(){
-        return simulacionEnCurso;
+    public synchronized boolean getcasoSimulacionPreparado(){
+        return casoSimulacionPreparado= escenarioSimulacion!=null&&paramSimulacionVisualizados;
+    }
+    public synchronized void setcasoSimulacionIniciado(boolean estado){
+         casoSimulacionIniciado=estado ;
+         if(casoSimulacionFinalizado)casoSimulacionFinalizado=false;
+    }
+    public synchronized boolean getcasoSimulacionIniciado(){
+        return casoSimulacionIniciado;
+    }
+    public synchronized void setcasoSimulacionFinalizado(boolean estado){
+         casoSimulacionFinalizado=estado ;
+         if(casoSimulacionFinalizado){casoSimulacionPreparado=true;
+                    casoSimulacionIniciado=false;
+         }
+    }
+    public synchronized boolean getcasoSimulacionFinalizado(){
+        return casoSimulacionFinalizado;
+    }
+     public synchronized void setrobtsVisualizados(boolean estado){
+         robtsVisualizados=estado ;
+    }
+     public synchronized void setvictimsVisualizados(boolean estado){
+         victimsVisualizados=estado ;
+         
+    }
+     public synchronized void setintervaloSecVisualizado(boolean estado){
+         intervaloSecVisualizado=estado ;
+         if(intervaloSecVisualizado)paramSimulacionVisualizados=intervaloSecVisualizado&&victimsVisualizados&&robtsVisualizados;
+    }
+    public synchronized boolean getparamSimulacionVisualizados(){
+        return intervaloSecVisualizado&&victimsVisualizados&&robtsVisualizados;
     }
     public synchronized void setescenarioMovimiento(EscenarioSimulacionRobtsVictms escenarioMov){
         escenarioMovimiento = escenarioMov;
@@ -54,6 +91,7 @@ public class MemComunControladores {
     }
     public synchronized void setescenarioSimulacion(EscenarioSimulacionRobtsVictms escenarioSim){
         escenarioSimulacion = escenarioSim;
+       
     }
     public synchronized EscenarioSimulacionRobtsVictms getescenarioSimulacion(){
         return escenarioSimulacion ;
@@ -92,4 +130,12 @@ public class MemComunControladores {
   public  boolean getescenarioEdicionAbierto() {
        return escenarioEdicionAbierto;
     }
+  public  boolean reqComenzarSimulacion() {
+       return escenarioSimulacionAbierto&&casoSimulacionPreparado;
+    }
+  public boolean reqEscnrioEnEdicionParaSimular(){
+    return  escenarioEdicionAbierto&&
+              escenarioEdicion.getNumRobots()==numRobotsdefsEnOrganizacion&&
+              escenarioEdicion.getmodeloOrganizativo().equalsIgnoreCase(modorganizDefinidoEnOrg);
+  }
 }

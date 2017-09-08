@@ -147,6 +147,7 @@ public class AccionesSemanticasAgenteAplicacionAgteControladorSimuladorRosace ex
         } catch (Exception ex) {
             Exceptions.printStackTrace(ex);
         }
+        trazas.trazar(this.nombreAgente, " Ejecuto a ccion : validarPeticionSimulacion", NivelTraza.debug);
    }
    
    public void  ValidarEscenarioRecibido (EscenarioSimulacionRobtsVictms escenario){

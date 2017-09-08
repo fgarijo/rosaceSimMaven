@@ -380,7 +380,7 @@ public class ClaseGeneradoraRecursoVisualizadorEntornosSimulacion extends ImplRe
     public void setItfUsoPersistenciaSimulador(ItfUsoRecursoPersistenciaEntornosSimulacion itfUsopersistencia) throws Exception {
         this.controladorGestEscenarios.setIftRecPersistencia(itfUsopersistencia);
         this.controladorIUSimulador.setIftRecPersistencia(itfUsopersistencia);
-        this.controladorGestEscenarios.initModelosYvistas();
+        this.controladorGestEscenarios.initVisualizadores();
         this.controladorIUSimulador.initModelosYvistas();
     }
 

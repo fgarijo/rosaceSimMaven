@@ -12,8 +12,9 @@
             <icaro:propiedad atributo="identificadorEquipo" valor = "rescate1" />
             <icaro:propiedad atributo="nombreJefeEquipo" valor = "rescate1RobotAsignador" />   
             <icaro:propiedad atributo="organizacion" valor = "Igualitario" />
-    <!--        <icaro:propiedad atributo="rutaFicheroVictimasTest" valor = "src/utils/Esc_6Victimas_0IP_001.xml" />  -->
-            <icaro:propiedad atributo="identFicheroEscenarioSimulacion" valor = "modeloOrg_IgualitarioNumRobts_2NumVicts_2_0.xml" />            
+    <!--        <icaro:propiedad atributo="rutaFicheroVictimasTest" valor = "src/utils/Esc_6Victimas_0IP_001.xml" />  -
+            <icaro:propiedad atributo="identFicheroEscenarioSimulacion" valor = "modeloOrg_IgualitarioNumRobts_2NumVicts_2_0.xml" />  --> 
+            <icaro:propiedad atributo="identFicheroEscenarioSimulacion" valor ="Org_IgualitarioRobts_2Victs_3_0.xml" />
             <icaro:propiedad atributo="rutaFicheroRobotsTest" valor = "src/utils/Esc_Jerarquico_4Robots_001.xml" />
             <icaro:propiedad atributo="timeMsTarea:TimeOutContactarMiembrosEquipo" valor = "3000" />
             <icaro:propiedad atributo="intervaloMilisegundosEnvioMensajesDesdeCC" valor = "10000" />   <!-- valor expresado en milisegundos -->  

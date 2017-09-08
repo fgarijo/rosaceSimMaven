@@ -47,7 +47,7 @@ import java.util.ArrayList;
                   agentesEquipo =infoDecision.getAgentesEquipo();
               trazas.aceptaNuevaTrazaEjecReglas(nombreAgenteEmisor, "Se Ejecuta la Tarea :"+ identTarea +"\n");
               if(agentesEquipo.size()>0){
-              trazas.aceptaNuevaTraza(new InfoTraza(nombreAgenteEmisor, "Enviamos la evaluacion " + infoDecision.getMi_eval(), InfoTraza.NivelTraza.info));            
+              trazas.aceptaNuevaTrazaEjecReglas(nombreAgenteEmisor, "Enviamos la evaluacion " + infoDecision.getMi_eval()+"\n");            
              this.getComunicator().informaraGrupoAgentes(miEvaluacion, agentesEquipo);
          //   this.getComunicator().informarConMomentoCreacionaGrupoAgentes(miEvaluacion, agentesEquipo);
               infoDecision.setRespuestasEsperadas(agentesEquipo.size());
@@ -55,7 +55,7 @@ import java.util.ArrayList;
              
               this.getEnvioHechos().actualizarHechoWithoutFireRules(infoDecision);
        //       this.generarInformeOK(identTarea, objetivoEjecutantedeTarea, nombreAgenteEmisor, VocabularioRosace.ResEjTaskMiEvalucionEnviadaAlEquipo);
-              trazas.aceptaNuevaTraza(new InfoTraza(nombreAgenteEmisor, "Numero de agentes de los que espero respuesta:" + agentesEquipo.size(), InfoTraza.NivelTraza.info));
+              trazas.aceptaNuevaTrazaEjecReglas(nombreAgenteEmisor, "Numero de agentes de los que espero respuesta:" + agentesEquipo.size()+"\n");
               this.generarInformeTemporizadoFromConfigProperty(VocabularioRosace.IdentTareaTimeOutRecibirEvaluaciones1,  objetivoEjecutantedeTarea, 
                       nombreAgenteEmisor,  idVictima);
               }else{ // El robot es el unico disponible por ello considera que el objetivo esta conseguido
@@ -69,7 +69,7 @@ import java.util.ArrayList;
                           " relativo a la victima : "+ objetivoEjecutantedeTarea.getobjectReferenceId()+" \n");
               }
                this.getEnvioHechos().eliminarHecho(miEvaluacion);
-             } // en le caso de que ya la haya enviado la evaluacion no hago nada
+             } // en el caso de que ya la haya enviado la evaluacion no hago nada
 		} catch (Exception e) {
 			e.printStackTrace();
         }

@@ -23,7 +23,7 @@ public class InfoParaDecidirQuienVa implements Serializable{
 //      private InfoEquipo miEquipo ;
       private ArrayList<String>  agentesEquipo,agentesEmpatados,respuestasAgentes;
       private  int mi_eval_nueva,respuestasEsperadas,confirmacionesEsperadas ;
-      private int numeroEvaluacionesRecibidas, valorMejorEvalucionRecibida,indiceAgenteConMejorEvaluacion;
+      private int numeroEvaluacionesRecibidas, valorMinimoCosteRecibido,indiceAgenteConMejorEvaluacion;
       public int numeroRespuestasConfirmacionParaIrYo = 0 ;
       public int mi_eval = 0;
       public int respuestasRecibidas = 0;
@@ -58,7 +58,7 @@ public class InfoParaDecidirQuienVa implements Serializable{
             agentesEmpatados = new ArrayList();
             evaluacionesRecibidas = new ArrayList();
             numeroEvaluacionesRecibidas = 0;
-            valorMejorEvalucionRecibida = 0;
+            valorMinimoCosteRecibido = Integer.MAX_VALUE;
             indiceAgenteConMejorEvaluacion = 0;
             respuestasRecibidas = 0;
             numeroRespuestasConfirmacionParaIrYo = 0;
@@ -86,7 +86,7 @@ public class InfoParaDecidirQuienVa implements Serializable{
          }
          idElementoDecision = idInfoDecision;
          numeroEvaluacionesRecibidas = 0;
-         valorMejorEvalucionRecibida = 0;
+         valorMinimoCosteRecibido = Integer.MAX_VALUE;
          indiceAgenteConMejorEvaluacion = 0;
          numeroRespuestasConfirmacionParaIrYo = 0;
          tengoLaMejorEvaluacion = false;
@@ -190,7 +190,7 @@ public class InfoParaDecidirQuienVa implements Serializable{
          //empezamos en el uno porque lo hemos inicializado en el cero
          for(int i = 1; i< evaluacionesRecibidas.size();i++){
              evaluacion_local = (Integer)evaluacionesRecibidas.get(i);
-             if(mejor_eval<evaluacion_local){
+             if(evaluacion_local<mejor_eval){
                  mejorAgente = (String)agentesEquipo.get(i);
                  mejor_eval = evaluacion_local;
              }
@@ -291,9 +291,9 @@ public class InfoParaDecidirQuienVa implements Serializable{
           Integer indiceAgente = agentesEquipo.indexOf ( evaluacion.getIdentAgente());
           // Si el agente no pertenece al equipo ignoro la evalucion que puede ser la mia
           if (indiceAgente != -1 ) {
-              if (eval > valorMejorEvalucionRecibida   ){
-                    // Si la evaluacion recibida es mayor que la mejor evaluacion actualizo el valor de la mejor evaluacion
-                    valorMejorEvalucionRecibida = eval;
+              if (eval < valorMinimoCosteRecibido   ){
+                    // Si la evaluacion recibida es menor que la mejor evaluacion actualizo el valor de la mejor evaluacion
+                    valorMinimoCosteRecibido = eval;
                     indiceAgenteConMejorEvaluacion = indiceAgente;
               }
 
@@ -307,16 +307,16 @@ public class InfoParaDecidirQuienVa implements Serializable{
               if (numeroEvaluacionesRecibidas == agentesEquipo.size()){
                     hanLlegadoTodasLasEvaluaciones = true;
                     // Caluculo si tengo la mejor evaluacio o si hay empate con otros
-                    if (mi_eval < valorMejorEvalucionRecibida ){
+                    if (mi_eval > valorMinimoCosteRecibido ){
                         noSoyElMejor=true; 
                         hayEmpates = false;
                         tengoLaMejorEvaluacion = false;
                     }else
-                        if (mi_eval == valorMejorEvalucionRecibida ){
+                        if (mi_eval == valorMinimoCosteRecibido ){
                              tengoLaMejorEvaluacion = false;
                              hayEmpates = true;
                              noSoyElMejor=false;
-                        }else {// mi evaluacion es mayor
+                        }else {// mi evaluacion es menor
                              tengoLaMejorEvaluacion = true;
                              hayEmpates = false;
                              noSoyElMejor=false;

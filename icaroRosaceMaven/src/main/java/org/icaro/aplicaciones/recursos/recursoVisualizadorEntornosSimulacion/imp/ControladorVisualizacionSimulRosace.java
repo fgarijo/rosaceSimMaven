@@ -93,6 +93,7 @@ public class ControladorVisualizacionSimulRosace {
     public static final int FICHERO_VALIDO = 3;
 //    private boolean simulando;
 //    private boolean editando;
+    private String sepLinea= System.getProperty("line.separator");
     private javax.swing.JFileChooser jFileChooser1;
     private int maxIntentosPeticionSeleccionEscenario = 2;
     private int resultadoObtencionFicheroSimulacion;
@@ -122,6 +123,22 @@ public class ControladorVisualizacionSimulRosace {
               visorControlSim.setVisible(true);               
     }
   public synchronized void peticionComenzarSimulacion(String identEscenarioActual, int intervaloSecuencia) {
+      if(memComunControladores.reqComenzarSimulacion()){
+          this.comenzarSimulacion( intervaloSecuencia);
+      }else // intentar que los requisitos se cumplan
+          if (memComunControladores.getcasoSimulacionIniciado()){} // se ignora la peticion
+          else if (!memComunControladores.getcasoSimulacionPreparado()){//escenarioSimulacion!=null&&paramSimulacionVisualizados
+              if(escenarioSimulComp==null){} // intentar abrir un escenario con el ident
+              else if (!memComunControladores.getparamSimulacionVisualizados()){
+                      this.actualizarEscenarioEnVisorControlSim();
+                      }
+              if (!memComunControladores.getescenarioSimulacionAbierto())this.peticionMostrarEscenarioSimulacion();
+              // volvemos a verificar los requisitos
+              if(memComunControladores.reqComenzarSimulacion()){
+                this.comenzarSimulacion( intervaloSecuencia);
+          }
+          }else //     
+          
       if ( this.memComunControladores.getescenarioSimulacionAbierto()){
           if(memComunControladores.getcambioEnEscenarioSimulacion()){
               escenarioSimulComp=memComunControladores.getescenarioMovimiento();
@@ -155,11 +172,11 @@ public class ControladorVisualizacionSimulRosace {
 //                memComunControladores.getmodorganizDefinidoEnOrg(),memComunControladores.getnumRobotsdefsEnOrganizacion() );  
         }
       }
-  
-  public  void peticionPararRobot(String identRobotSeleccionado) {
-        
-    }
-
+private void comenzarSimulacion( int intervaloSecuencia){
+     notifEvts.sendPeticionSimulacionSecuenciaVictimasToRobotTeam(escenarioSimulComp,intervaloSecuencia);
+          memComunControladores.setcasoSimulacionIniciado(true);
+          simulacionEnCurso= true;
+}
 
  private void consejoUsuario(String mensajeConsejo, String recomendacion) {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -233,6 +250,9 @@ public  void peticionMostrarEscenarioMovimiento(EscenarioSimulacionRobtsVictms e
 //                    visorMovimientoEscen.actualizarEscenario(escenarioSimulComp);
                     visorMovimientoEscen.setVisible(false);
                     visorMovimientoEscen= new VisorMovimientoEscenario(escenarioComp);
+                   
+                    
+                    
                        }
                   
             }else // abrir un visor con el escenario
@@ -251,6 +271,7 @@ public  void peticionMostrarEscenarioMovimiento(EscenarioSimulacionRobtsVictms e
           this.memComunControladores.setescenarioSimulacion(escenarioSimulComp);
           this.memComunControladores.setevisorMovimiento(visorMovimientoEscen);
           this.actualizarEscenarioEnVisorControlSim();
+          this.memComunControladores.setcasoSimulacionPreparado(true);
         } catch (Exception ex) {
             Exceptions.printStackTrace(ex);
         }
@@ -261,27 +282,38 @@ private void actualizarEscenarioEnVisorControlSim(){
     visorControlSim.setIdentEscenarioActual(escenarioSimulComp.getIdentEscenario());
     visorControlSim.visualizarIdentsEquipoRobot(escenarioSimulComp.getListIdentsRobots());
     visorControlSim.visualizarIdentsVictimas(escenarioSimulComp.getListIdentsVictims());
-    
+    memComunControladores.setrobtsVisualizados(true);
+    memComunControladores.setvictimsVisualizados(true);
     
     
 }
-public  void peticionMostrarEscenarioActual() {
+public  void peticionMostrarEscenarioSimulacion() {
  boolean escenarioSimulacionDefinido= escenarioSimulComp != null;
  boolean escenarioEdicionAbierto = memComunControladores.getescenarioEdicionAbierto();
  boolean escenarioSimulacionAbierto = memComunControladores.getescenarioSimulacionAbierto();
-    if (escenarioSimulComp != null)visorMovimientoEscen.setVisible(true);
-    else if(escenarioEdicionAbierto){
-//            visorEditorEscen.setVisible(true);
+    if (escenarioSimulacionAbierto)visorMovimientoEscen.setVisible(true);
+    else if (escenarioSimulacionDefinido){
+        visorMovimientoEscen.setVisible(true);
+        memComunControladores.setescenarioSimulacionAbierto(true);
+    }
+    else if(memComunControladores.reqEscnrioEnEdicionParaSimular()){
             if (  visorControlSim.solicitarConfirmacion("Tiene un escenario abierto quiere utilizarlo como escenario de simulacion ??")){
               // enviar el fichero al controlador para que valide el numero de robots
                 this.notifEvts.sendInfoEscenarioSeleccionado(memComunControladores.getescenarioEdicion());
+//            memComunControladores.setescenarioSimulacion(memComunControladores.getescenarioEdicion());
+    
             }// No quiere usar el escenario de edicion como escenario de simulacion
            // Decir al usuario que no tiene un escenario definido
            // Para iniciar simulacion necesita definir un escenario con xx robots
+            else visorControlSim.visualizarConsejo(" Escenario En edicion"," El escenario en edicion no reune los requisitos  para ser"
+                    + "utilizado como escenario de simulacion" , 
+                    "  El numero de robots debe ser de : " +memComunControladores.getnumRobotsdefsEnOrganizacion() +
+                    " El modelo roganizativo deber ser : " +memComunControladores.getmodorganizDefinidoEnOrg());
+        
          }
-    else{
+    else{// no tiene escenario edicion abierto
        
-        visorControlSim.visualizarRecomenSeleccionFicheroSimulacion(tituloAvisoEscenarioNoDefinido,
+        visorControlSim.visualizarRecomenSeleccionFicheroSimulacion("Escenario de Simulacion Indefinido",
                 memComunControladores.getmodorganizDefinidoEnOrg(),memComunControladores.getnumRobotsdefsEnOrganizacion() );
     }
          
@@ -335,6 +367,10 @@ public boolean abrirVisorControlSimConEscenario(EscenarioSimulacionRobtsVictms e
             }
             visorMovimientoEscen = new VisorMovimientoEscenario(escenarioEdicionComp);
             visorMovimientoEscen.visualizarEscenario();
+            memComunControladores.setescenarioSimulacion(escenarioSimulComp);
+            memComunControladores.setevisorMovimiento(visorMovimientoEscen);
+            memComunControladores.setescenarioSimulacionAbierto(true);
+            memComunControladores.setcasoSimulacionPreparado(true);
 //            visorControlSim.visualizarIdentsEquipoRobot(escenarioActualComp.getListIdentsRobots());
             visorControlSimuladorIniciado=true;
             visorMovientoIniciado = true;
@@ -391,7 +427,7 @@ public  void peticionSalvarVictima() {
 //            visorEditorEscen.setVisible(true);
             if (  visorControlSim.solicitarConfirmacion("Tiene un escenario abierto quiere utilizarlo como escenario de simulacion ??")){
               // enviar el fichero al controlador para que valide el numero de robots
-                this.notifEvts.sendInfoEscenarioSeleccionadoValido(memComunControladores.getescenarioEdicion());
+                this.notifEvts.sendInfoEscenarioObtenidodoValido(memComunControladores.getescenarioEdicion());
             }// No quiere usar el escenario de edicion como escenario de simulacion
            // Decir al usuario que no tiene un escenario definido
            // Para iniciar simulacion necesita definir un escenario con xx robots
@@ -548,7 +584,7 @@ public  void peticionMostrarVictima(String identVictima,String estadoVictima)thr
                 this.visorMovimientoEscen.cambiarIconoEntidad(identVictima,VisorMovimientoEscenario.IMAGEmujerAsignada);
                 break;
             case "reAsignada":
-                this.visorMovimientoEscen.cambiarIconoEntidad(identVictima,VisorMovimientoEscenario.IMAGEmujerReAsignada);
+                this.visorMovimientoEscen.cambiarIconoEntidad(identVictima,VisorMovimientoEscenario.IMAGEmujerReasignada);
                 break;
             case "rescatada":
                 this.visorMovimientoEscen.cambiarIconoEntidad(identVictima,VisorMovimientoEscenario.IMAGEmujerRes);
@@ -577,7 +613,7 @@ public  void peticionMostrarVictima(String identVictima,String estadoVictima)thr
    {
 //     Ya tiene un escenario de simulacion valido, pero los robots no estan actualizados
        // cerrar el escenario de simulacion que tenga abierto y poner en primer plano
-       notifEvts.sendInfoEscenarioSeleccionadoValido(escenarioSimulComp);
+       notifEvts.sendInfoEscenarioObtenidodoValido(escenarioSimulComp);
    }else{// No ha seleccionado ningun fichero 
        visorMovimientoEscen.setVisible(false);
        visorControlSim.inicializarInfoEscenarioSimul();

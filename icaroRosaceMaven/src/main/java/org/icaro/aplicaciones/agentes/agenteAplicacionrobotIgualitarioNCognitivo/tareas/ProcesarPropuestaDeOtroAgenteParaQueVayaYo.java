@@ -37,10 +37,12 @@ public class ProcesarPropuestaDeOtroAgenteParaQueVayaYo extends TareaSincrona {
                         this.generarInformeConCausaTerminacion(this.identTarea, objetivoEjecutantedeTarea, identAgente, VocabularioRosace.MsgContenidoPropuestaNoValida, CausaTerminacionTarea.ERROR);
                         trazas.aceptaNuevaTraza(new InfoTraza(identAgente, "El mensaje de la propuesta Recibida No es valido :  "+ propuestaRecibida  , InfoTraza.NivelTraza.error));
                   }
-                  else { //De acuerdo a la regla citada al principio, la ejecucion entraría por aqui
+                  else { //De acuerdo a la regla citada al principio, la ejecucion entraria por aqui
                          if (!infoDecision.hanLlegadoTodasLasEvaluaciones){// Si no tengo todas las evaluaciones es que hay otros que las han recibido y proponen que vaya yo
                                                              infoDecision.tengoLaMejorEvaluacion = true; // cro lo que me dicen 
                                                              infoDecision.hanLlegadoTodasLasEvaluaciones = true; // no espero mas evaluaciones
+                            trazas.aceptaNuevaTrazaEjecReglas(identAgente, " Se ejecuta la Tarea : "+ identTarea + " Se procesa la propuesta del agente : "
+                                                               + propuestaRecibida.getIdentAgente()+ " cuando no tengo todas las evaluaciones " +"\n");
                          }
                          if (infoDecision.tengoLaMejorEvaluacion){
 //                             infoDecision.addConfirmacionAcuerdoParaIr(propuestaRecibida.getIdentAgente(), mensajePropuesta);
@@ -48,8 +50,10 @@ public class ProcesarPropuestaDeOtroAgenteParaQueVayaYo extends TareaSincrona {
                              infoDecision.addConfirmacionAcuerdoParaIr(propuestaRecibida.getIdentAgente(), propuestaRecibida.getMensajePropuesta());
                              this.getEnvioHechos().eliminarHechoWithoutFireRules(propuestaRecibida);
                              this.getEnvioHechos().actualizarHechoWithoutFireRules(infoDecision);
+                             trazas.aceptaNuevaTrazaEjecReglas(identAgente, " Se ejecuta la Tarea : "+ identTarea + " Se procesa la propuesta del agente : "
+                                                               + propuestaRecibida.getIdentAgente()+ " cuando tengo la mejor evaluacion " +"\n");
                             }
-                         //no tengo la mejor evaluación
+                         //no tengo la mejor evaluacion
                          else{// Si no tengo todas las evaluaciones es que hay otros que las han recibido y proponen que vaya yo
                              
                              this.generarInformeConCausaTerminacion(identTarea, objetivoEjecutantedeTarea, identAgente, "LaPropuestaNoEsValidaNoTengoLaMejorEvaluacion", CausaTerminacionTarea.OTRO);

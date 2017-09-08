@@ -21,6 +21,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -140,14 +141,13 @@ public class RecursoPersistenciaEntornosSimulacionImp1 extends ImplRecursoSimple
         }    
      }
      
-     public EscenarioSimulacionRobtsVictms obtenerInfoEscenarioSimulacion(String identFicheroInfoPersistencia){
+     public EscenarioSimulacionRobtsVictms obtenerInfoEscenarioSimulacion(String identFichero){
          try {
-              File ficheroEscenario = this.obtenerFicheroEscenario(identFicheroInfoPersistencia);
-             
+              File ficheroEscenario = this.obtenerFicheroEscenario(identFichero);            
                 if(ficheroEscenario== null){
 //                    dirFicherosPersistencia.mkdir();
 //                    rutaFicheroInfoPersistencia= dirFicherosPersistencia.getAbsolutePath()+"\\";
-                System.out.println("El fichero   : "+ identFicheroInfoPersistencia+ " No existe " );
+                System.out.println("El fichero   : "+ identFichero+ " No existe " );
              
                 }else {
                    Serializer serializer = new Persister();
@@ -161,6 +161,21 @@ public class RecursoPersistenciaEntornosSimulacionImp1 extends ImplRecursoSimple
         }
          return null;
      }
+     public boolean existEscenarioSimulacion(String modOrg, int numRobots){
+         
+         if ( identsEscenarioSimulacion.isEmpty())return false;
+         Iterator<String> iter = identsEscenarioSimulacion.iterator();
+         String identFichero;
+         EscenarioSimulacionRobtsVictms escenarioSimul;
+         while ( iter.hasNext()){
+             identFichero= iter.next();
+             escenarioSimul=obtenerInfoEscenarioSimulacion(identFichero);
+             if( escenarioSimul.getmodeloOrganizativo().equals(modOrg)&& escenarioSimul.getNumRobots()==numRobots) return true;  
+         }
+         return false;
+     }
+     
+   
  public   InfoCasoSimulacion obtenerInfoCasoSimulacion(String identFicheroCaso) {
        try {
               File ficheroEscenario = this.obtenerFicheroCasoSimulacion(identFicheroCaso);

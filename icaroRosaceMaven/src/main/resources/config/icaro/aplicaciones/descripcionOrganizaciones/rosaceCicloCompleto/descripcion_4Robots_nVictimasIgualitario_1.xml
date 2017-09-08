@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <icaro:DescOrganizacion xmlns:icaro="urn:icaro:aplicaciones:descripcionOrganizaciones"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="urn:icaro:aplicaciones:descripcionOrganizaciones ../../../../schemas/DescripcionOrganizacionSchema.xsd ">
+   xsi:schemaLocation="urn:icaro:aplicaciones:descripcionOrganizaciones ../../../../src/schemas/DescripcionOrganizacionSchema.xsd ">
 <!--******************************************************************************************************
 ******************     Propiedades globales de la organizacion             	            ******************
 ********************************************************************************************************-->
@@ -13,7 +13,7 @@
             <icaro:propiedad atributo="nombreJefeEquipo" valor = "rescate1RobotAsignador" />   
             <icaro:propiedad atributo="organizacion" valor = "Igualitario" />
     <!--        <icaro:propiedad atributo="rutaFicheroVictimasTest" valor = "src/utils/Esc_6Victimas_0IP_001.xml" />  -->
-            <icaro:propiedad atributo="identFicheroEscenarioSimulacion" valor = "modeloOrg_IgualitarioNumRobts_4NumVicts_5_0.xml" />            
+            <icaro:propiedad atributo="identFicheroEscenarioSimulacion" valor = "Org_IgualitarioRobts_4Victs_4_0.xml" />            
             <icaro:propiedad atributo="rutaFicheroRobotsTest" valor = "src/utils/Esc_Jerarquico_4Robots_001.xml" />
             <icaro:propiedad atributo="timeMsTarea:TimeOutContactarMiembrosEquipo" valor = "3000" />
             <icaro:propiedad atributo="intervaloMilisegundosEnvioMensajesDesdeCC" valor = "10000" />   <!-- valor expresado en milisegundos -->  
@@ -48,23 +48,23 @@
 	********************************************************************************************************-->
 <icaro:DescComportamientoAgentesAplicacion>
     <icaro:DescComportamientoAgente
-       nombreComportamiento="AgenteAplicacionAgteControladorSimuladorRosace" rol="AgenteAplicacion" localizacionComportamiento="icaro.aplicaciones.agentes.agenteAplicacionAgteControladorSimuladorRosaceReactivo.comportamiento"
+       nombreComportamiento="AgenteAplicacionAgteControladorSimuladorRosace" rol="AgenteAplicacion" localizacionComportamiento="org.icaro.aplicaciones.agentes.agenteAplicacionAgteControladorSimuladorRosaceReactivo.comportamiento"
                             tipo="Reactivo" />
     <icaro:DescComportamientoAgente
-       nombreComportamiento="AgenteAplicacionAsignadorTareas" rol="AgenteAplicacion" localizacionComportamiento="icaro.aplicaciones.agentes.agenteAplicacionAsignadorTareasCognitivo" tipo="Cognitivo" 
-       localizacionFicheroReglas="icaro.aplicaciones.agentes.agenteAplicacionAsignadorTareasCognitivo.procesoResolucionObjetivos.reglasjearqJefeCambioRol.drl"/>
+       nombreComportamiento="AgenteAplicacionAsignadorTareas" rol="AgenteAplicacion" localizacionComportamiento="org.icaro.aplicaciones.agentes.agenteAplicacionAsignadorTareasCognitivo" tipo="Cognitivo" 
+       localizacionFicheroReglas="org.icaro.aplicaciones.agentes.agenteAplicacionAsignadorTareasCognitivo.procesoResolucionObjetivos.reglasjearqJefeCambioRol.drl"/>
      <icaro:DescComportamientoAgente  
-       nombreComportamiento="AgenteAplicacionIgualitario" rol="AgenteAplicacion" localizacionComportamiento="icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo" tipo="Cognitivo"
-       localizacionFicheroReglas="icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.procesoResolucionObjetivos.reglasIgualitarioNC2.drl"/>
+       nombreComportamiento="AgenteAplicacionIgualitario" rol="AgenteAplicacion" localizacionComportamiento="org.icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo" tipo="Cognitivo"
+       localizacionFicheroReglas="org.icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.procesoResolucionObjetivos.reglasIgualitarioNC3.drl"/>
 </icaro:DescComportamientoAgentesAplicacion>
 </icaro:DescComportamientoAgentes>
 	<!--******************************************************************************************************
 	******************   Descripcion de los recursos de aplicacion                          ******************
 	********************************************************************************************************-->
 <icaro:DescRecursosAplicacion>
-        <icaro:DescRecursoAplicacion nombre="RecursoVisualizadorEntornosSimulacion" localizacionClaseGeneradora="icaro.aplicaciones.recursos.recursoVisualizadorEntornosSimulacion.imp.ClaseGeneradoraRecursoVisualizadorEntornosSimulacion"/>			            		
-	<icaro:DescRecursoAplicacion nombre="RecursoPersistenciaEntornosSimulacion" localizacionClaseGeneradora="icaro.aplicaciones.recursos.recursoPersistenciaEntornosSimulacion.imp.ClaseGeneradoraRecursoPersistenciaEntornosSimulacion"/>			            		
-	<icaro:DescRecursoAplicacion nombre="RecursoCreacionEntornosSimulacion" localizacionClaseGeneradora="icaro.aplicaciones.recursos.recursoCreacionEntornosSimulacion.imp.ClaseGeneradoraRecursoCreacionEntornosSimulacion"/>		
+        <icaro:DescRecursoAplicacion nombre="RecursoVisualizadorEntornosSimulacion" localizacionClaseGeneradora="org.icaro.aplicaciones.recursos.recursoVisualizadorEntornosSimulacion.imp.ClaseGeneradoraRecursoVisualizadorEntornosSimulacion"/>			            		
+	<icaro:DescRecursoAplicacion nombre="RecursoPersistenciaEntornosSimulacion" localizacionClaseGeneradora="org.icaro.aplicaciones.recursos.recursoPersistenciaEntornosSimulacion.imp.ClaseGeneradoraRecursoPersistenciaEntornosSimulacion"/>			            		
+	<icaro:DescRecursoAplicacion nombre="RecursoCreacionEntornosSimulacion" localizacionClaseGeneradora="org.icaro.aplicaciones.recursos.recursoCreacionEntornosSimulacion.imp.ClaseGeneradoraRecursoCreacionEntornosSimulacion"/>		
 </icaro:DescRecursosAplicacion>
 
 </icaro:DescripcionComponentes>

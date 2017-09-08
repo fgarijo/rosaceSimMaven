@@ -70,7 +70,7 @@ public class VisorControlSimuladorRosace extends javax.swing.JFrame {
         jtextTextFieldIntervaloEnvioMensajes = new javax.swing.JTextField();
         jButtonTerminarSimulacion = new javax.swing.JButton();
         jPararRobotEnvioMensajes = new javax.swing.JButton();
-        jButtonMostrarEscenarioActual = new javax.swing.JButton();
+        jButtonMostrarEscenarioSimulacion = new javax.swing.JButton();
         jScrollPanelistaIdentsVictimas = new javax.swing.JScrollPane();
         jListIdentsVictims = new javax.swing.JList();
         jScrollPaneIdentsRobots = new javax.swing.JScrollPane();
@@ -160,10 +160,10 @@ public class VisorControlSimuladorRosace extends javax.swing.JFrame {
             }
         });
 
-        jButtonMostrarEscenarioActual.setText("Mostrar Escenario actual");
-        jButtonMostrarEscenarioActual.addActionListener(new java.awt.event.ActionListener() {
+        jButtonMostrarEscenarioSimulacion.setText("Mostrar Escenario Simulación");
+        jButtonMostrarEscenarioSimulacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonMostrarEscenarioActualActionPerformed(evt);
+                jButtonMostrarEscenarioSimulacionActionPerformed(evt);
             }
         });
 
@@ -294,7 +294,7 @@ public class VisorControlSimuladorRosace extends javax.swing.JFrame {
                             .addComponent(jPararRobotEnvioMensajes)
                             .addComponent(jtextTextFieldIntervaloEnvioMensajes, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButtonMostrarEscenarioActual)
+                        .addComponent(jButtonMostrarEscenarioSimulacion)
                         .addGap(45, 45, 45)
                         .addComponent(jLabel4))
                     .addComponent(jButtonSendVictim)
@@ -302,7 +302,7 @@ public class VisorControlSimuladorRosace extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 12, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jScrollPaneIdentsRobots, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jTextFieldIdentEscenarioActual))
                 .addGap(58, 58, 58))
@@ -328,7 +328,7 @@ public class VisorControlSimuladorRosace extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jTextFieldIdentEscenarioActual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonMostrarEscenarioActual))
+                    .addComponent(jButtonMostrarEscenarioSimulacion))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -394,10 +394,10 @@ public class VisorControlSimuladorRosace extends javax.swing.JFrame {
         controladorEscSim.peticionPararRobot();
     }//GEN-LAST:event_jPararRobotEnvioMensajesActionPerformed
 
-    private void jButtonMostrarEscenarioActualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMostrarEscenarioActualActionPerformed
+    private void jButtonMostrarEscenarioSimulacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMostrarEscenarioSimulacionActionPerformed
         // TODO add your handling code here:
-        controladorEscSim.peticionMostrarEscenarioActual();
-    }//GEN-LAST:event_jButtonMostrarEscenarioActualActionPerformed
+        controladorEscSim.peticionMostrarEscenarioSimulacion();
+    }//GEN-LAST:event_jButtonMostrarEscenarioSimulacionActionPerformed
 
     private void jlistIdentsRobotsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlistIdentsRobotsMouseClicked
     if (evt.getClickCount() == 2) {
@@ -429,12 +429,13 @@ public class VisorControlSimuladorRosace extends javax.swing.JFrame {
 
     private void jMenuItemEliminarEscenarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEliminarEscenarioActionPerformed
         // TODO add your handling code here:
-        controladorGestionEscenarios.peticionEliminarEscenario();
+        
+        controladorGestionEscenarios.peticionEliminarEscenarioSimulActual();
     }//GEN-LAST:event_jMenuItemEliminarEscenarioActionPerformed
 
     private void jMenuItemPararActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPararActionPerformed
         // TODO add your handling code here:
-        controladorEscSim.peticionPararRobot(identRobotSeleccionado);
+//        controladorEscSim.peticionPararRobot(identRobotSeleccionado);
     }//GEN-LAST:event_jMenuItemPararActionPerformed
 
     private void jPopupMenuAcionesRobotsPopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jPopupMenuAcionesRobotsPopupMenuWillBecomeVisible
@@ -639,7 +640,7 @@ public class VisorControlSimuladorRosace extends javax.swing.JFrame {
     private javax.swing.JMenuItem DesactivarTrazas;
     private javax.swing.JMenu Simulador;
     private javax.swing.JMenu Trazas;
-    private javax.swing.JButton jButtonMostrarEscenarioActual;
+    private javax.swing.JButton jButtonMostrarEscenarioSimulacion;
     private javax.swing.JButton jButtonSendVictim;
     private javax.swing.JButton jButtonSendVictimsSequence;
     private javax.swing.JButton jButtonTerminarSimulacion;

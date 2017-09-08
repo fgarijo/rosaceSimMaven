@@ -14,7 +14,7 @@ import java.util.concurrent.PriorityBlockingQueue;
 public class Coste {
     private Coordinate robotLocation; //Localizacion del robot
     private double funcionEvaluacion; //Variable para almacenar el resultado de calcular la funcion de evaluacion utilizada
-    private Integer cotaMaxima = 10000;
+    private Integer cotaMaxima ;
     // Argumentos para calcular el coste 
     private double distanciaPosRobotVictima;
     private int tiempoAtencionVictimas; // para tener en cuenta  el  numero de victimas asignadas
@@ -36,6 +36,7 @@ public class Coste {
 	//Constructor
 	public void Coste(){
 		trazaCalculoCoste="";
+                cotaMaxima= Integer.MAX_VALUE;
 	}
     //Funcion de evaluacion que solo considera distancia entre la nueva victima y la posicion del robot. NO SE CONSIDERA LA ENERGIA NI LAS VICTIMAS QUE TIENE ASIGNADAS PREVIAMENTE.
 	//En este caso, el tercer parametro, robot, solo se utiliza para la depuracion. No interviene en el calculo de la funcion de evaluacion de este metodo
@@ -54,7 +55,7 @@ public class Coste {
 //	       trazas.aceptaNuevaTraza(new InfoTraza("Evaluacion", "Coste: FuncionEvaluacion2 sobre Victima(" + nuevaVictima.getName() + ")"  +
 //		          ": robot " + robot.getIdRobot() + "-> -1.0"	    		   
 //	    		   , InfoTraza.NivelTraza.info));       		        		                                                           		        		          		           			
-		   return -1.0 ;
+		   return cotaMaxima ;
 		}
 		else{
 //		   trazas.aceptaNuevaTraza(new InfoTraza("Evaluacion", "Coste: FuncionEvaluacion2 sobre Victima(" + nuevaVictima.getName() + ")"  +
@@ -74,7 +75,7 @@ public class Coste {
 		double resultado;
 		//Si no tiene energia devuelve un -1 para indicar que no tiene recursos para ir
 		if (par1DistanciaCamino > robot.getAvailableEnergy()){   		        		                                                           		        		          		           			
-			   resultado= -1.0 ;
+			   resultado= cotaMaxima ;
 			}
 			else{
 				resultado = (par1DistanciaCamino * pesoPar1) + (par2TiempoTotalAtencionVictimas*pesoPar2);								
@@ -184,17 +185,17 @@ public class Coste {
                 this.addTraza("Victima Destino : ", victima.getName()+ " Coordenadas Victima : "+victima.getCoordinateVictim().toString() );
             
             }   
-           int mi_eval = (int)funcionEvaluacion;   //convierto de double a int porque la implementacion inicial de Paco usaba int                                  
-            
-            if (mi_eval>=0){            
-//              int  mi_eval_nueva = Integer.MAX_VALUE; 
-            int  mi_eval_nueva = cotaMaxima; 
-                //como va el que menor rango tiene, lo inicializamos a la peor                        
-            	//Para que gane el que mayor valor tiene de evaluacion le resto el valor de la distancia obtenida al valor maximo de Integer
-            	//El que este mas cercano hara decrecer menos ese valor y por tanto es el MEJOR
-            	mi_eval = mi_eval_nueva - mi_eval;
-            }
-            return mi_eval;
+//           int mi_eval = (int)funcionEvaluacion;   //convierto de double a int porque la implementacion inicial de Paco usaba int                                  
+//            
+//            if (mi_eval>=0){            
+////              int  mi_eval_nueva = Integer.MAX_VALUE; 
+//            int  mi_eval_nueva = cotaMaxima; 
+//                //como va el que menor rango tiene, lo inicializamos a la peor                        
+//            	//Para que gane el que mayor valor tiene de evaluacion le resto el valor de la distancia obtenida al valor maximo de Integer
+//            	//El que este mas cercano hara decrecer menos ese valor y por tanto es el MEJOR
+//            	mi_eval = mi_eval_nueva - mi_eval;
+//            }
+            return (int)funcionEvaluacion;
         }
 
 	//Calcula el tiempo que tardara en atender todas las victimas que tiene asignadas actualmente, mas el tiempo que tardara en atender a la nueva victima

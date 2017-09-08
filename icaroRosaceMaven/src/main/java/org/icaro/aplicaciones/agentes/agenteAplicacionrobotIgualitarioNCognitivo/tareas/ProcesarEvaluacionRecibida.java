@@ -26,11 +26,10 @@ public class ProcesarEvaluacionRecibida extends TareaSincrona{
              Objetivo objetivoEjecutantedeTarea = (Objetivo)params[0];
              InfoParaDecidirQuienVa infoDecisionAgente = (InfoParaDecidirQuienVa) params[1];
              EvaluacionAgente evaluacionRecibida = (EvaluacionAgente) params[2];
-             trazas.aceptaNuevaTraza(new InfoTraza(this.identAgente, "Se Ejecuta la Tarea :"+ this.identTarea , InfoTraza.NivelTraza.info));
-             trazas.aceptaNuevaTraza(new InfoTraza(this.identAgente, "Se Procesa la Evaluacion  enviada por el agente :"+ evaluacionRecibida.identAgente +" Cuyo Valor es:"+evaluacionRecibida.valorEvaluacion  , InfoTraza.NivelTraza.debug));
+             trazas.aceptaNuevaTrazaEjecReglas(identAgente,"Se ejecuta la tarea : " + identTarea + "  Se Procesa la Evaluacion  enviada por el agente :"+ evaluacionRecibida.identAgente +" Cuyo Valor es:"+evaluacionRecibida.valorEvaluacion +"\n");
              //Cuanto tengo todas las evaluaciones el metodo addNuevaEvaluacion actualiza las variables noSoyElMejor, hayEmpates, 
              //tengoLaMejorEvaluacion de InfoParaDecidirQuienVa  
-              this.getEnvioHechos().eliminarHechoWithoutFireRules(evaluacionRecibida);
+//              this.getEnvioHechos().eliminarHechoWithoutFireRules(evaluacionRecibida);
              infoDecisionAgente.addNuevaEvaluacion(evaluacionRecibida);
              
              if (infoDecisionAgente.tengoTodasLasEvaluaciones()){
@@ -50,7 +49,7 @@ public class ProcesarEvaluacionRecibida extends TareaSincrona{
            // Todavia no tengo todas las respuestas
 //                 this.generarInformeOK(identDeEstaTarea, objetivoEjecutantedeTarea, nombreAgenteEmisor, VocabularioRosace.ResEjTaskProcesadoEvaluaciones_MefaltanEvaluaciones);
              }
-             
+              this.getEnvioHechos().eliminarHecho(evaluacionRecibida);
             
              // lo metemos directamente al motor el infoDecisionAgente  
         //      this.getEnvioHechos().actualizarHechoWithoutFireRules(infoDecisionAgente);

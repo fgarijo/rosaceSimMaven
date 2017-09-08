@@ -55,7 +55,7 @@
        localizacionFicheroReglas="icaro.aplicaciones.agentes.agenteAplicacionAsignadorTareasCognitivo.procesoResolucionObjetivos.reglasjearqJefeCambioRol.drl"/>
      <icaro:DescComportamientoAgente  
        nombreComportamiento="AgenteAplicacionIgualitario" rol="AgenteAplicacion" localizacionComportamiento="icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo" tipo="Cognitivo"
-       localizacionFicheroReglas="icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.procesoResolucionObjetivos.reglasIgualitarioNC2.drl"/>
+       localizacionFicheroReglas="icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.procesoResolucionObjetivos.reglasIgualitarioNC3.drl"/>
 </icaro:DescComportamientoAgentesAplicacion>
 </icaro:DescComportamientoAgentes>
 	<!--******************************************************************************************************

@@ -70,7 +70,7 @@ public class ObtenerEvaluacionRealizarObjetivo extends TareaSincrona {
 //            funcionEvaluacion = coste.FuncionEvaluacion3(distanciaCamino, 5.0, tiempoAtencionVictimas, 9.0, robot, victim);
 	     funcionEvaluacion= coste.CalculoCosteAyudarVictima(identAgente, robotLocation, robot, victim, victims2R, misObjs, "FuncionEvaluacion3");
             if(trazarCalculoCoste) {
-                this.trazas.aceptaNuevaTrazaEjecReglas(identAgente, coste.getTrazaCalculoCoste());
+                this.trazas.aceptaNuevaTrazaEjecReglas(identAgente," Se ejecuta la tarea :" + identTarea + coste.getTrazaCalculoCoste()+"\n");
             }         
             mi_eval = (int)funcionEvaluacion;   //convierto de double a int porque la implementacion inicial de Paco usaba int                                  
             EvaluacionAgente eval = new  EvaluacionAgente (identAgente, mi_eval);

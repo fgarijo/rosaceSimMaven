@@ -55,6 +55,7 @@ import java.util.HashSet;
     public ArrayList<Victim> getVictimasArescatar ()throws Exception;
     public void guardarInfoCasoSimulacion (InfoCasoSimulacion infoCaso)throws Exception;
     public InfoCasoSimulacion obtenerInfoCasoSimulacion (String idCaso)throws Exception;
+    public boolean existEscenarioSimulacion(String modOrg, int numRobots)throws Exception;
     public void guardarInfoAsignacionVictima (InfoAgteAsignacionVictima infoAsignVictima)throws Exception;
     public ArrayList<InfoAgteAsignacionVictima> obtenerInfoAsignacionVictimas ()throws Exception;
     public boolean guardarSerieResultadosSimulacion(InfoSerieResultadosSimulacion infoSerieResultados)throws Exception;

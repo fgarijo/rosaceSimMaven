@@ -171,7 +171,7 @@
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jButtonMostrarEscenarioActual" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButtonMostrarEscenarioSimulacion" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -181,7 +181,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace min="0" pref="12" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       <Component id="jScrollPaneIdentsRobots" min="-2" pref="250" max="-2" attributes="1"/>
                   </Group>
                   <Component id="jTextFieldIdentEscenarioActual" max="32767" attributes="0"/>
@@ -216,7 +216,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jTextFieldIdentEscenarioActual" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButtonMostrarEscenarioActual" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButtonMostrarEscenarioSimulacion" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
@@ -302,12 +302,12 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jPararRobotEnvioMensajesActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButtonMostrarEscenarioActual">
+    <Component class="javax.swing.JButton" name="jButtonMostrarEscenarioSimulacion">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Mostrar Escenario actual"/>
+        <Property name="text" type="java.lang.String" value="Mostrar Escenario Simulaci&#xf3;n"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonMostrarEscenarioActualActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonMostrarEscenarioSimulacionActionPerformed"/>
       </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPanelistaIdentsVictimas">

@@ -92,7 +92,7 @@ public class VisorCreacionEscenarios1 extends javax.swing.JFrame {
         moverComp =new ComponentMover();
         moverComp.addMenuAcciones(jPopupMenuAcionEntidad);
         controladorSim = controlador;
-        directorioTrabajo = System.getProperty("user.dir");
+//        directorioTrabajo = System.getProperty("user.dir");
         numeroRobots=0;  mumeroVictimas=0;
 //        tablaEntidadesEnEscenario = new HashMap<String, JLabel>();
         listaEntidadesEnEscenario = new ArrayList < JLabel>();

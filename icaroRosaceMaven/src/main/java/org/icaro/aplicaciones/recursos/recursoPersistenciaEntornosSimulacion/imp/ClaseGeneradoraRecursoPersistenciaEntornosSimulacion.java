@@ -135,7 +135,12 @@ public  class ClaseGeneradoraRecursoPersistenciaEntornosSimulacion extends ImplR
     @Override
     public HashSet obtenerIdentsEscenarioSimulacion() throws Exception {
         
-       return impRecPersistenciaXML.obtenerIdentsEscenarioSimulacion(VocabularioRosace.identDirectorioPersistenciaEscenarios);
+       return impRecPersistenciaXML.obtenerIdentsEscenarioSimulacion(VocabularioRosace.NombreDirectorioPersistenciaEscenarios);
+    }
+    @Override
+    public boolean existEscenarioSimulacion(String modOrg, int numRobots)throws Exception{
+        
+       return impRecPersistenciaXML.existEscenarioSimulacion( modOrg,  numRobots);
     }
 }
             
