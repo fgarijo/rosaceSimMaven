@@ -50,7 +50,7 @@ public class VisorMovimientoEscenario extends javax.swing.JFrame {
     private String imageniconoHombre = "Hombre.png";
     private String imageniconoMujer = "Mujer.png";
     private String imageniconoMujerRescatada = "MujerRescatada.png";
-    private String imageniconoMujerReasignada = "MujerMujerReasignada.png";
+    private String imageniconoMujerReasignada = "MujerReasignada.png";
     private String imageniconoMujerAsignada= "MujerAsignada.png";
     private String imageniconoHombreRescatado = "HombreRescatado.png";
     private String imageniconoRobot = "Robot.png";

@@ -171,11 +171,12 @@ public class ControladorGestionEscenariosRosace {
                 visorControlSim.setIdentEscenarioActual(identEquipoActual);
                 visorControlSim.setIntervaloEnvioMensajesDesdeCC(intervaloSecuencia);
                 identsRobotsEquipo = escenarioEdicionComp.getListIdentsRobots();
-                if (escenarioEdicionAbierto) {
-                    this.visorControlSim.visualizarConsejo("Escenario Edicion Abierto", "Solo se permite editar un escenario", "Guardamos el escenario abierto");
-                    visorEditorEscen.setVisible(false);
+                this.memComunControladores.setescenarioSimulacion(escenarioEdicionComp);
+//                if (escenarioEdicionAbierto) {
+//                    this.visorControlSim.visualizarConsejo("Escenario Edicion Abierto", "Solo se permite editar un escenario", "Guardamos el escenario abierto");
+//                    visorEditorEscen.setVisible(false);
 //            escenarioActualAbierto=false; Sin Terminar !!!!!!!!!!!!!!
-                }
+//                }
                 if (identsRobotsEquipo != null) {
                     visorControlSim.visualizarIdentsEquipoRobot(identsRobotsEquipo);
                 }

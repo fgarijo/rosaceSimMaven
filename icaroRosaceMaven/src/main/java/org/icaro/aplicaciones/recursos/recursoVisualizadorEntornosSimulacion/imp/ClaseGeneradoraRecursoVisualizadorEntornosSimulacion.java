@@ -102,7 +102,7 @@ public class ClaseGeneradoraRecursoVisualizadorEntornosSimulacion extends ImplRe
     }
     @Override
     public void obtenerEscenarioSimulacion (String modOrganizativo, int numRobots )throws Exception {
-        this.controladorGestEscenarios.peticionObtenerEscenarioSimulacion( modOrganizativo,  numRobots);
+        this.controladorIUSimulador.obtenerEscenarioSimulacion( modOrganizativo,  numRobots);
 //       EscenarioSimulacionRobtsVictms escenarioActual= null;
 //       int numerointentos = 0;int maxIntentos = 2;
 //       while ( numerointentos<maxIntentos && escenarioActual==null ){
@@ -243,7 +243,7 @@ public class ClaseGeneradoraRecursoVisualizadorEntornosSimulacion extends ImplRe
     public void mostrarEscenarioMovimiento(EscenarioSimulacionRobtsVictms infoEscenario) {
         //   throw new UnsupportedOperationException("Not supported yet.");
         // verificar que el agente a reportar esta definido , si no lo esta los eventos no se envian a nadie
-        controladorIUSimulador.peticionMostrarEscenarioMovimiento(infoEscenario);
+        controladorIUSimulador.mostrarEscenarioMovimiento(infoEscenario);
     }
     public void mostrarEscenarioMovimiento(String rutaEscenario) {
         //   throw new UnsupportedOperationException("Not supported yet.");

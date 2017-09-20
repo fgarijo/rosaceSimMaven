@@ -36,8 +36,8 @@ public class MandarEvaluacionAQuienLaPide  extends TareaSincrona {
     private String identObjEvaluacion;
     private String nombreAgenteQuePideLaEvaluacion ;
     private Integer miEvalDeRespuesta;
-    private Integer valorDisuasorioParaElquePideAcepteQueSoyYoElResponsable = 5000000;
-    private  Integer valorParaExcluirmeDelObjetivo = -5000 ;
+    private Integer valorDisuasorioParaElquePideAcepteQueSoyYoElResponsable = Integer.MAX_VALUE;
+//    private  Integer valorParaExcluirmeDelObjetivo = -5000 ;
     private VictimsToRescue victimasRecibidas ;
     private Victim victimEnPeticion ;
     private RobotStatus1 robot;

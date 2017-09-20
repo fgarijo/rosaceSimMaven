@@ -378,7 +378,7 @@ public class VisorControlSimuladorRosace extends javax.swing.JFrame {
         // de vuelta al controlador . En definitiva hay que desdoblar esto
          System.out.println("Ha pulsado el boton send victims");
          this.solicitarDefinicionItervaloSecuencia();
-         controladorEscSim.peticionComenzarSimulacion(identEscenarioActual, intervaloSecuencia);
+         controladorEscSim.peticionComenzarSimulacionSecVictims(identEscenarioActual, intervaloSecuencia);
 
     }//GEN-LAST:event_jButtonSendVictimsSequenceActionPerformed
 
@@ -423,7 +423,7 @@ public class VisorControlSimuladorRosace extends javax.swing.JFrame {
 
     private void jMenuItemAbrirEscenarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAbrirEscenarioActionPerformed
         // TODO add your handling code here:
-        controladorGestionEscenarios.peticionAbrirEscenarioEdicion();
+        controladorEscSim.peticionAbrirEscenarioSimulacion();
 
     }//GEN-LAST:event_jMenuItemAbrirEscenarioActionPerformed
 

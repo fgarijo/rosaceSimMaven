@@ -206,7 +206,7 @@ when
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());      
 end
 rule "OrdCC3 :Proceso una orden de fin de caso simulacion enviada por el CC  "
-salience 10
+salience 15
 when   
  //  miEquipo: InfoEquipo(idTeam:teamId,inicioContactoConEquipo== true)
     miEquipo: InfoEquipo()
@@ -387,7 +387,7 @@ when
     victims2R:VictimsToRescue(victims2Rescue!=null)
     obj1 :AyudarVictima(state == Objetivo.PENDING, victimId == idVict)   
     obj2: DecidirQuienVa (state == Objetivo.SOLVED,objectDecisionId == idVict )
-    infoDecision: InfoParaDecidirQuienVa(idElementoDecision == idVict,tengoLaMejorEvaluacion == true, tengoAcuerdoDeTodos == true)
+    infoDecision: InfoParaDecidirQuienVa(idElementoDecision == idVict,tengoLaMejorEvaluacion == true, miDecisionParaAsumirElObjetivoEnviadaAtodos == true)
     focoActual:Focus()
  then
     TareaSincrona tarea = gestorTareas.crearTareaSincrona(EncolarObjetivoActualizarFocoIGN1.class); 
@@ -422,10 +422,11 @@ rule " Pet1: Si me piden mi evaluacion de una victima y el objetivo no esta foca
 when
     victims2R:VictimsToRescue(victims2Rescue!=null)
     victimaCC:Victim(idVict:name)
-    obj:DecidirQuienVa(objectDecisionId == idVict)
+    obj :DecidirQuienVa(state == Objetivo.SOLVING, objectReferenceId == idVict)
      peticionAgte: PeticionAgente( mensajePeticion == VocabularioRosace.MsgPeticionEnvioEvaluaciones,justificacion==victimaCC ) 
     focoActual: Focus(foco != obj) 
     then
+    retract(peticionAgte);
    modify ( focoActual ){
         setFoco(obj)
         };
@@ -1015,7 +1016,7 @@ end
 //    Consecucion  del objetivo ConfirmacionParaIrYo (se pone a SOLVED)
 // ----------------------------------------------------------------------
 
-rule "Objetivo ConfirmacionParaIrYo Resuelto tras eviar mi decision"
+rule "Objetivo ConfirmacionParaIrYo Resuelto tras enviar mi decision"
    when
       victimaCC:Victim(idVict:name)   
       obj:ConfirmacionParaIrYo(objectConfirmationId==idVict,state == Objetivo.SOLVING)
