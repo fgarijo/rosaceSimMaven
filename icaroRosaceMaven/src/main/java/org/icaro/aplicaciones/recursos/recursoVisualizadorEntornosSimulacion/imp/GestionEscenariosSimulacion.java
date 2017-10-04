@@ -23,6 +23,7 @@ public class GestionEscenariosSimulacion {
     private String numVictims = "Victs_";
     private String orgModelo = "Org_";
     private String  orgModeloInicial = "SinDefinir";
+    private String tipoFichero=".xml";
 
      public GestionEscenariosSimulacion (){
         tablaEscenariosDefinidos = new HashMap();      
@@ -39,13 +40,14 @@ public class GestionEscenariosSimulacion {
 //           }
 //}
      public synchronized String getIdentEscenario (String orgTipo,int numRobts, int numVictm){
-         String identEscenario = orgModelo+orgTipo+numRobots+numRobts+numVictims+numVictm+"_0";
-//         if (identsEscenarios.isEmpty())return identEscenario+"_0";
-//         int indiceEscenarioRepetido = 0;      
-//         while (getIdentsEscenariosSimulacion ( ).contains(identEscenario)){
-//             indiceEscenarioRepetido ++;
-//             identEscenario =identEscenario+"_"+indiceEscenarioRepetido;
-//         }
+         String identEscenarioBase = orgModelo+orgTipo+numRobots+numRobts+numVictims+numVictm;
+         int indiceEscenarioRepetido = 0;
+         String identEscenario=identEscenarioBase+"_"+indiceEscenarioRepetido;
+         if (identsEscenarios.isEmpty())return identEscenario;       
+         while (identsEscenarios.contains(identEscenario+tipoFichero)){
+             indiceEscenarioRepetido ++;
+             identEscenario =identEscenarioBase+"_"+indiceEscenarioRepetido;
+         }
          return identEscenario;
      }
      public void  setIdentsEscenariosSimulacion ( HashSet setIdentsEscenarios){

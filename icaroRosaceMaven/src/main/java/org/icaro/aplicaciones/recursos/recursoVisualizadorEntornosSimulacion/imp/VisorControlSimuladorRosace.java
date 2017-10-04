@@ -65,6 +65,7 @@ public class VisorControlSimuladorRosace extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         jMenuItemVerEstado = new javax.swing.JMenuItem();
         jFileChooser1 = new javax.swing.JFileChooser();
+        jLabel1 = new javax.swing.JLabel();
         jButtonSendVictim = new javax.swing.JButton();
         jButtonSendVictimsSequence = new javax.swing.JButton();
         jtextTextFieldIntervaloEnvioMensajes = new javax.swing.JTextField();
@@ -82,18 +83,18 @@ public class VisorControlSimuladorRosace extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jMenuBarEditorEsc = new javax.swing.JMenuBar();
+        Simulador = new javax.swing.JMenu();
+        jMenuItemAbrirEscenarioParaSimular = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItemSalirSimulador = new javax.swing.JMenuItem();
         jMenuEditarEscenario = new javax.swing.JMenu();
         jMenuItemAbrirEscenario = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
         jMenuItemCrearEscenario = new javax.swing.JMenuItem();
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
-        jMenuItemEliminarEscenario = new javax.swing.JMenuItem();
-        jSeparator8 = new javax.swing.JPopupMenu.Separator();
-        jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenuItemSalir = new javax.swing.JMenuItem();
-        Simulador = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        jSeparator8 = new javax.swing.JPopupMenu.Separator();
         Trazas = new javax.swing.JMenu();
         ActivarTrazas = new javax.swing.JMenuItem();
         DesactivarTrazas = new javax.swing.JMenuItem();
@@ -127,6 +128,8 @@ public class VisorControlSimuladorRosace extends javax.swing.JFrame {
                 jFileChooser1ActionPerformed(evt);
             }
         });
+
+        jLabel1.setText("jLabel1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Centro de Control");
@@ -201,6 +204,37 @@ public class VisorControlSimuladorRosace extends javax.swing.JFrame {
 
         jLabel7.setText("Victimas");
 
+        Simulador.setText("Simulador");
+
+        jMenuItemAbrirEscenarioParaSimular.setText("Abrir Escenario para simular");
+        jMenuItemAbrirEscenarioParaSimular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemAbrirEscenarioParaSimularActionPerformed(evt);
+            }
+        });
+        Simulador.add(jMenuItemAbrirEscenarioParaSimular);
+
+        jMenuItem1.setText("Mostrar Resultados simulacion");
+        Simulador.add(jMenuItem1);
+
+        jMenuItem2.setText("Guardar resultados simulacion");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        Simulador.add(jMenuItem2);
+
+        jMenuItemSalirSimulador.setText("Salir del simulador");
+        jMenuItemSalirSimulador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemSalirSimuladorActionPerformed(evt);
+            }
+        });
+        Simulador.add(jMenuItemSalirSimulador);
+
+        jMenuBarEditorEsc.add(Simulador);
+
         jMenuEditarEscenario.setText("Editor Escenarios");
 
         jMenuItemAbrirEscenario.setText("Abrir Escenario");
@@ -221,16 +255,6 @@ public class VisorControlSimuladorRosace extends javax.swing.JFrame {
         jMenuEditarEscenario.add(jMenuItemCrearEscenario);
         jMenuEditarEscenario.add(jSeparator6);
 
-        jMenuItemEliminarEscenario.setText("Eliminar este Escenario");
-        jMenuItemEliminarEscenario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemEliminarEscenarioActionPerformed(evt);
-            }
-        });
-        jMenuEditarEscenario.add(jMenuItemEliminarEscenario);
-        jMenuEditarEscenario.add(jSeparator8);
-        jMenuEditarEscenario.add(jSeparator1);
-
         jMenuItemSalir.setText("Salir");
         jMenuItemSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -238,23 +262,9 @@ public class VisorControlSimuladorRosace extends javax.swing.JFrame {
             }
         });
         jMenuEditarEscenario.add(jMenuItemSalir);
+        jMenuEditarEscenario.add(jSeparator8);
 
         jMenuBarEditorEsc.add(jMenuEditarEscenario);
-
-        Simulador.setText("Simulador");
-
-        jMenuItem1.setText("Mostrar Resultados simulacion");
-        Simulador.add(jMenuItem1);
-
-        jMenuItem2.setText("Guardar resultados simulacion");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
-            }
-        });
-        Simulador.add(jMenuItem2);
-
-        jMenuBarEditorEsc.add(Simulador);
 
         Trazas.setText("Trazas");
 
@@ -423,15 +433,9 @@ public class VisorControlSimuladorRosace extends javax.swing.JFrame {
 
     private void jMenuItemAbrirEscenarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAbrirEscenarioActionPerformed
         // TODO add your handling code here:
-        controladorEscSim.peticionAbrirEscenarioSimulacion();
+       controladorGestionEscenarios.peticionAbrirEscenarioEdicion();
 
     }//GEN-LAST:event_jMenuItemAbrirEscenarioActionPerformed
-
-    private void jMenuItemEliminarEscenarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEliminarEscenarioActionPerformed
-        // TODO add your handling code here:
-        
-        controladorGestionEscenarios.peticionEliminarEscenarioSimulActual();
-    }//GEN-LAST:event_jMenuItemEliminarEscenarioActionPerformed
 
     private void jMenuItemPararActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPararActionPerformed
         // TODO add your handling code here:
@@ -482,6 +486,16 @@ public class VisorControlSimuladorRosace extends javax.swing.JFrame {
         // TODO add your handling code here:
          controladorEscSim.peticionActivarTrazas();
     }//GEN-LAST:event_ActivarTrazasActionPerformed
+
+    private void jMenuItemAbrirEscenarioParaSimularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAbrirEscenarioParaSimularActionPerformed
+        // TODO add your handling code here:
+        controladorEscSim.peticionAbrirEscenarioSimulacion();
+    }//GEN-LAST:event_jMenuItemAbrirEscenarioParaSimularActionPerformed
+
+    private void jMenuItemSalirSimuladorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSalirSimuladorActionPerformed
+        // TODO add your handling code here:
+        controladorEscSim.peticionSalirSimulador();
+    }//GEN-LAST:event_jMenuItemSalirSimuladorActionPerformed
     public void setIntervaloEnvioMensajesDesdeCC(int intervalo){
 		intervaloSecuencia = intervalo ;
                 jtextTextFieldIntervaloEnvioMensajes.setText(String.valueOf(intervalo));
@@ -645,6 +659,7 @@ public class VisorControlSimuladorRosace extends javax.swing.JFrame {
     private javax.swing.JButton jButtonSendVictimsSequence;
     private javax.swing.JButton jButtonTerminarSimulacion;
     private javax.swing.JFileChooser jFileChooser1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -656,16 +671,16 @@ public class VisorControlSimuladorRosace extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItemAbrirEscenario;
+    private javax.swing.JMenuItem jMenuItemAbrirEscenarioParaSimular;
     private javax.swing.JMenuItem jMenuItemCrearEscenario;
-    private javax.swing.JMenuItem jMenuItemEliminarEscenario;
     private javax.swing.JMenuItem jMenuItemParar;
     private javax.swing.JMenuItem jMenuItemSalir;
+    private javax.swing.JMenuItem jMenuItemSalirSimulador;
     private javax.swing.JMenuItem jMenuItemVerEstado;
     private javax.swing.JButton jPararRobotEnvioMensajes;
     private javax.swing.JPopupMenu jPopupMenuAcionesRobots;
     private javax.swing.JScrollPane jScrollPaneIdentsRobots;
     private javax.swing.JScrollPane jScrollPanelistaIdentsVictimas;
-    private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JPopupMenu.Separator jSeparator6;

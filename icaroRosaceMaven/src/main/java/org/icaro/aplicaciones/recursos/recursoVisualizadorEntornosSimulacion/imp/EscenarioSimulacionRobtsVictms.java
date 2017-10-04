@@ -140,7 +140,7 @@ public synchronized void addRoboInfo (String idRobot,RobotStatus1 infoRobot ){
     this.infoRobots.put(idRobot, infoRobot);
     numRobots++;
 }
-public void addRoboLoc (String idRobot,Point robotLoc ){
+public synchronized  void addRoboLoc (String idRobot,Point robotLoc ){
 
         if (ultimoRobotDefinido!=null &&ultimoRobotDefinido.getIdRobot().equals(idRobot))ultimoRobotDefinido.setLocPoint(robotLoc);
         else{
@@ -206,7 +206,7 @@ public void setIdentEscenario(String escenarioId) {
 }
     public synchronized String getIdentEscenario() {
 //        throw new UnsupportedOperationException("Not supported yet."); 
-    if (identEscenario==null&& migestor!=null)return migestor.getIdentEscenario(modeloOrganizativo, numRobots, numVictimas);
+    if ( migestor!=null)return migestor.getIdentEscenario(modeloOrganizativo, numRobots, numVictimas);
         return this.identEscenario;
     }
    public synchronized void  setIdentificadorNormalizado(){

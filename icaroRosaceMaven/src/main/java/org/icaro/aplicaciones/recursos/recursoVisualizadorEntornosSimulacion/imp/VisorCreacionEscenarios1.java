@@ -66,6 +66,8 @@ public class VisorCreacionEscenarios1 extends javax.swing.JFrame {
     private String modeloOrganizativoInicial = "Igualitario";
     private Map<String, JLabel> tablaEntidadesEnEscenario;
     private ArrayList <JLabel> listaEntidadesEnEscenario;
+    private volatile ArrayList <String> listaIdentsRobots;
+    private volatile ArrayList <String> listaIdentsVictimas;
     private JPanel panelVisor;
     private ObjectScene scene;
     private LayerWidget layer;
@@ -76,27 +78,37 @@ public class VisorCreacionEscenarios1 extends javax.swing.JFrame {
     private boolean intencionUsuarioCrearRobot;
     private boolean intencionUsuarioCrearVictima;
     private boolean entidadSeleccionadaParaMover;
-    private int numeroRobots, mumeroVictimas;
+    private int numeroRobots, numeroVictimas;
     private volatile GestionEscenariosSimulacion gestionEscComp;
     private volatile EscenarioSimulacionRobtsVictms escenarioActualComp;
     private ComponentMover moverComp;
-    private ControladorGestionEscenariosRosace controladorSim;
+    private ControladorGestionEscenariosRosace controladorGestionEsc;
     private volatile PersistenciaVisualizadorEscenarios persistencia;
     private String modeloOrganizativo;
     private String identEquipoActual;
     private File ultimoFicheroEscenarioSeleccionado;
+    private final int ENTIDAD_ROBOT=1;
+    private final int ENTIDAD_VICTIMA=2;
+    private final String ROBOT="Robot";
+    private final String VICTIMA="Victima";
+    private String numRobots = "Robts_";
+    private String numVictims = "Victs_";
+    private String orgModelo = "Org_";
+    private String  orgModeloInicial = "SinDefinir";
+    private String subIndiceEscRepetido = "_0";
 
      public  VisorCreacionEscenarios1(ControladorGestionEscenariosRosace controlador) throws Exception {
 //        super("visor Escenario ");
         initComponents();
         moverComp =new ComponentMover();
         moverComp.addMenuAcciones(jPopupMenuAcionEntidad);
-        controladorSim = controlador;
+        controladorGestionEsc = controlador;
 //        directorioTrabajo = System.getProperty("user.dir");
-        numeroRobots=0;  mumeroVictimas=0;
+        numeroRobots=0;  numeroVictimas=0;
 //        tablaEntidadesEnEscenario = new HashMap<String, JLabel>();
         listaEntidadesEnEscenario = new ArrayList < JLabel>();
-
+        listaIdentsRobots= new ArrayList < String>();
+        listaIdentsVictimas= new ArrayList < String>();
     }
    
 
@@ -258,6 +270,9 @@ public class VisorCreacionEscenarios1 extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);
             }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                formMouseReleased(evt);
+            }
         });
 
         jTextFieldModeloOrganizacion.setName("Modelo Organizacion"); // NOI18N
@@ -348,6 +363,11 @@ public class VisorCreacionEscenarios1 extends javax.swing.JFrame {
         jMenuEditarEscenario.add(jSeparator1);
 
         jMenuItemSalir.setText("Salir");
+        jMenuItemSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemSalirActionPerformed(evt);
+            }
+        });
         jMenuEditarEscenario.add(jMenuItemSalir);
 
         GestionEscenarios.add(jMenuEditarEscenario);
@@ -466,7 +486,7 @@ public class VisorCreacionEscenarios1 extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.out.println("Ha pulsado el botón Guardar escenario");
         actualizarCoordenadasEntidades();
-        controladorSim.peticionGuardarEscenario(escenarioActualComp);
+        controladorGestionEsc.peticionGuardarEscenario(escenarioActualComp);
     }//GEN-LAST:event_jButtonGuardarEscenarioActionPerformed
 
     private void intervalNumRobotsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_intervalNumRobotsActionPerformed
@@ -485,7 +505,7 @@ public class VisorCreacionEscenarios1 extends javax.swing.JFrame {
         // TODO add your handling code here:
          // TODO add your handling code here:
         actualizarCoordenadasEntidades();
-        controladorSim.peticionGuardarEscenario (escenarioActualComp);
+        controladorGestionEsc.peticionGuardarEscenario (escenarioActualComp);
 //         System.out.println("Ha pulsado el botón Aceptar valores Robots y victimas");
 //        String valor ;
 //        setLocationRelativeTo(this);
@@ -542,7 +562,7 @@ public class VisorCreacionEscenarios1 extends javax.swing.JFrame {
         // TODO add your handling code here:
          System.out.println("Ha pulsado el botón Guardar Escenario");
          actualizarCoordenadasEntidades();
-         controladorSim.peticionGuardarEscenario(escenarioActualComp);
+         controladorGestionEsc.peticionGuardarEscenario(escenarioActualComp);
     }//GEN-LAST:event_jMenuItemGuardarActionPerformed
 
     private void jPopupMenuAcionEntidadPopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jPopupMenuAcionEntidadPopupMenuWillBecomeVisible
@@ -560,6 +580,7 @@ public class VisorCreacionEscenarios1 extends javax.swing.JFrame {
         intencionUsuarioCrearRobot = true;
         intencionUsuarioCrearVictima = false;
         this.crearIconoRobVict("Robot",ultimoPuntoClic.x,ultimoPuntoClic.y );
+       
     }//GEN-LAST:event_jMenuItemAddRobotActionPerformed
 
     private void jMenuItemAddVictimaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAddVictimaActionPerformed
@@ -577,7 +598,7 @@ public class VisorCreacionEscenarios1 extends javax.swing.JFrame {
     private void jMenuItemAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAbrirActionPerformed
         // TODO add your handling code here:    
 //      peticionAbrirEscenario();
-        this.controladorSim.peticionAbrirEscenarioEdicion();
+        this.controladorGestionEsc.peticionAbrirEscenarioEdicion();
     }//GEN-LAST:event_jMenuItemAbrirActionPerformed
 
     private void jMenuItemNuevoEscenarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemNuevoEscenarioActionPerformed
@@ -586,7 +607,7 @@ public class VisorCreacionEscenarios1 extends javax.swing.JFrame {
         // lo que tiene
         if (escenarioActualComp.getNumRobots()> 0){
 //            peticionGuardarEscenario();
-            this.controladorSim.peticionGuardarEscenario(escenarioActualComp);
+            this.controladorGestionEsc.peticionGuardarEscenario(escenarioActualComp);
             // Se avisa de que el escenario actual se va a guardar antes de abrir el nuevo
 //            escenarioActualComp.setIdentEscenario(jTextFieldIdentEquipo.getText());
 //       
@@ -599,8 +620,9 @@ public class VisorCreacionEscenarios1 extends javax.swing.JFrame {
         }
         escenarioActualComp = gestionEscComp.crearEscenarioSimulacion();
 //        jTextFieldIdentEquipo.setText()
+         identEquipoActual= escenarioActualComp.getIdentEscenario();
         eliminarEntidadesEscenario();
-        jTextFieldIdentEquipo.setText(escenarioActualComp.getIdentEscenario());
+        jTextFieldIdentEquipo.setText(identEquipoActual);
         intervalNumRobots.setText(""+0);
         intervalNumVictimas.setText(""+0);
         
@@ -611,6 +633,7 @@ public class VisorCreacionEscenarios1 extends javax.swing.JFrame {
         modeloOrganizativo = "Jerarquico";
         jTextFieldModeloOrganizacion.setText(modeloOrganizativo);
         escenarioActualComp.setmodeloOrganizativo(modeloOrganizativo);
+        this.actualizarInfoEquipoEnEscenario();
     }//GEN-LAST:event_jMenuItemModeloJerarquicoActionPerformed
 
     private void jMenuItemModeloIgualitarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemModeloIgualitarioActionPerformed
@@ -618,12 +641,31 @@ public class VisorCreacionEscenarios1 extends javax.swing.JFrame {
          modeloOrganizativo = "Igualitario";
         jTextFieldModeloOrganizacion.setText(modeloOrganizativo);
         escenarioActualComp.setmodeloOrganizativo(modeloOrganizativo);
+        this.actualizarInfoEquipoEnEscenario();
     }//GEN-LAST:event_jMenuItemModeloIgualitarioActionPerformed
 
     private void jMenuItemEliminarEscenarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEliminarEscenarioActionPerformed
         // TODO add your handling code here:
         peticionEliminarEscenario();
     }//GEN-LAST:event_jMenuItemEliminarEscenarioActionPerformed
+
+    private void jMenuItemSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSalirActionPerformed
+        // TODO add your handling code here:
+        this.controladorGestionEsc.peticionSalirEditor();
+    }//GEN-LAST:event_jMenuItemSalirActionPerformed
+
+    private void formMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseReleased
+        // TODO add your handling code here:
+//         if (evt.getButton()==3){
+//            jPopupMenuAddEntidades.show(this,evt.getX(),evt.getY());
+//            ultimoPuntoClic = new Point(evt.getX(),evt.getY());
+//        }else {
+//        String tipoEntidad="Robot";
+//         if(intencionUsuarioCrearVictima)tipoEntidad="Victima";
+//         Point puntoCursor = MouseInfo.getPointerInfo().getLocation();
+//         this.crearIconoRobVict(tipoEntidad,puntoCursor.x,puntoCursor.y );
+//        }
+    }//GEN-LAST:event_formMouseReleased
     private void setIntervaloEnvioMensajesDesdeCC(int intervalo){
 		intervaloSecuencia = intervalo ;
 		int intervaloEnvioMensajesDesdeCC = 1000;
@@ -637,6 +679,9 @@ public class VisorCreacionEscenarios1 extends javax.swing.JFrame {
           evt.consume();
          
     }  
+     public int solicitarConfirmacion(String texto){
+        return( JOptionPane.showConfirmDialog(rootPane, texto));  
+     }
 
     public void visualizarIdentsEquipoRobot ( ArrayList<String> equipoIds){
 //        eqipoIds = eqipoIds.toArray();
@@ -655,26 +700,33 @@ public class VisorCreacionEscenarios1 extends javax.swing.JFrame {
         coordX=coordX+correccionX;
         coordY=coordY+correccionY;
         String rutaImagen;
-        String identEntidad;
+        String identEntidad="";
        if ( tipoEntidad.startsWith("Robot")){
 //           rutaImagen=directorioTrabajo+rutaIconos+imageniconoRobot;
             rutaImagen=VocabularioRosace.RUTA_ICONOS_ESCENARIOS+imageniconoRobot;
-           numeroRobots= escenarioActualComp.getNumRobots();
-             numeroRobots++;
-             identEntidad=tipoEntidad+numeroRobots;
+//           numeroRobots= escenarioActualComp.getNumRobots();
+//             numeroRobots++; 
+//             identEntidad=tipoEntidad+numeroRobots;
+//             if(listaIdentsRobots.contains(identEntidad))identEntidad=geIdentEntidad(ENTIDAD_ROBOT);
+//             else listaIdentsRobots.add(identEntidad);
+            identEntidad=geIdentEntidad(ENTIDAD_ROBOT);
            escenarioActualComp.addRoboLoc(identEntidad, new Point(coordX,coordY));
-           intervalNumRobots.setText(""+numeroRobots);    
+           numeroRobots++;
+                   intervalNumRobots.setText(""+numeroRobots);    
        }
        else{
 //        rutaImagen=directorioTrabajo+rutaIconos+imageniconoMujer;
         rutaImagen=VocabularioRosace.RUTA_ICONOS_ESCENARIOS+imageniconoMujer;
-        mumeroVictimas= escenarioActualComp.getNumVictimas();
-        mumeroVictimas++;
+//        mumeroVictimas= escenarioActualComp.getNumVictimas();
+//        numeroVictimas++;
 //         intervalNumVictimas.setText(""+mumeroVictimas);
-         identEntidad=tipoEntidad+mumeroVictimas;
+//         identEntidad=tipoEntidad+numeroVictimas;
+//         if(listaIdentsVictimas.contains(identEntidad))identEntidad=geIdentEntidad(ENTIDAD_VICTIMA);
+//             else listaIdentsVictimas.add(identEntidad);
+        identEntidad=geIdentEntidad(ENTIDAD_VICTIMA);
          escenarioActualComp.addVictimLoc(identEntidad, new Point(coordX,coordY));
-//         mumeroVictimas=escenrioSimComp.getNumVictimas();
-         intervalNumVictimas.setText(""+mumeroVictimas);
+         numeroVictimas++;
+         intervalNumVictimas.setText(""+numeroVictimas);
 //         identEntidad=tipoEntidad+mumeroVictimas;
 //         label.setText(tipoEntidad+mumeroVictimas);
        }      
@@ -682,18 +734,69 @@ public class VisorCreacionEscenarios1 extends javax.swing.JFrame {
         label.setBounds(10, 10, 100, 100);
         this.add(label);
         label.setVisible(true);
-        
-//        label.setIcon(new ImageIcon("E:\\FicheroRed\\Github\\rosaceSIM\\src\\utilsDiseniaEscenariosRosace\\Robot.png"));
-//    rutaImagen= "src/main/resources/iconosEscenarios/Robot.png";
         label.setIcon(new ImageIcon(rutaImagen));
         label.setLocation(coordX, coordY);
         this.listaEntidadesEnEscenario.add(label);
+        actualizarInfoEquipoEnEscenario ();
         System.out.println( "Se crea la entidad : "+label.getText()+ " Coordenadas : X =" + coordX +" , Y = " +coordY );
 //       tablaEntidadesEnEscenario.put(identEntidad, label);
 //       listaEntidadesEnEscenario.add(label);
         
        moverComp.registerComponent(label);
         return label;
+    }
+    private synchronized String geIdentEntidad(int tipoEntidad){
+        // si ya hay una entidad con ese el numero asignado se busca el entero minimo que no tiene asignada entidad
+        String etiqueta = "";
+//        ArrayList listaBusqueda=null;
+//        if(tipoEntidad==ENTIDAD_ROBOT){listaBusqueda=listaIdentsRobots;
+//        etiqueta=ROBOT;
+//        }
+//        else if(tipoEntidad==ENTIDAD_VICTIMA){
+//            listaBusqueda=listaIdentsVictimas;
+//            etiqueta=VICTIMA;
+//        }
+//        else return etiqueta;
+        int indiceHueco=0; boolean huecoEncontrado=false;
+//            indiceHueco = listaBusqueda.indexOf("");
+//                    if(indiceHueco<0)indiceHueco=listaBusqueda.size+1;
+//            while (indiceHueco< listaBusqueda.size()&&!huecoEncontrado){
+//                  if(listaBusqueda.get(i).equals(""))huecoEncontrado=true; 
+//                  else i++;
+//                }
+//            etiqueta=etiqueta+(i+1);        
+            if( tipoEntidad==ENTIDAD_ROBOT){
+                indiceHueco =listaIdentsRobots.indexOf("");
+                if(indiceHueco<0){
+                    int i=listaIdentsRobots.size()+1; etiqueta=ROBOT+i;
+                    while(listaIdentsRobots.contains(etiqueta)){
+                        i++;
+                        etiqueta=ROBOT+i;   
+                    }
+                    listaIdentsRobots.add(etiqueta);
+    System.out.println( "Se crea la etiqueta : " +etiqueta+ " En la posicion de la lista:  " + (i-1) +" ,El tamagno de la lista es : " +listaIdentsRobots.size() );
+                }
+                else{
+                    etiqueta=ROBOT+(indiceHueco+1); 
+                    listaIdentsRobots.set(indiceHueco, etiqueta);
+    System.out.println( "Se reutiliza la etiqueta : " +etiqueta+ " En la posicion de la lista:  " + indiceHueco +" ,El tamagno de la lista es : " +listaIdentsRobots.size() );
+                }
+            }else if( tipoEntidad==ENTIDAD_VICTIMA){
+                 indiceHueco =listaIdentsVictimas.indexOf("");
+                if(indiceHueco<0){
+                    int i=listaIdentsVictimas.size()+1; etiqueta=VICTIMA+i;
+                    while(listaIdentsVictimas.contains(etiqueta)){
+                        i++;
+                        etiqueta=VICTIMA+i;   
+                    }
+                     listaIdentsVictimas.add(etiqueta);
+                }
+                else{
+                    etiqueta=VICTIMA+(indiceHueco+1); 
+                    listaIdentsVictimas.set(indiceHueco, etiqueta);
+                }
+            }
+        return etiqueta;   
     }
     public void addEntidadEnEscenario (String rutaIcono, String idEntidad, Point puntoLoc){
          JLabel label = new JLabel();
@@ -712,20 +815,34 @@ public class VisorCreacionEscenarios1 extends javax.swing.JFrame {
      JLabel entidadAeliminar=   (JLabel) moverComp.getUltimoComponenteSeleccionado();
 //        escenrioSimComp.eliminarEntidad(((JLabel)moverComp.eliminarUltimoCompSeleccionado()).getName());
 //     moverComp.deregisterComponent(entidadAeliminar);
+int indiceEntidad =0;
      entidadAeliminar.setVisible(false);
-       escenarioActualComp.eliminarEntidad(entidadAeliminar.getText());
+     String identEntidad =entidadAeliminar.getText();
+     if (identEntidad.contains("Robot")||identEntidad.contains("robot")){
+                numeroRobots--;
+                 indiceEntidad =listaIdentsRobots.indexOf(identEntidad);
+                listaIdentsRobots.set(indiceEntidad,"");
+                intencionUsuarioCrearRobot=true;
+     }
+            else if (identEntidad.contains("Victim")){
+                numeroVictimas--;
+                 indiceEntidad =listaIdentsVictimas.indexOf(identEntidad);
+                listaIdentsVictimas.set(indiceEntidad,"");
+                intencionUsuarioCrearVictima=true;
+            }
+       escenarioActualComp.eliminarEntidad(identEntidad);
        listaEntidadesEnEscenario.remove(entidadAeliminar);
-        System.out.println( "Se elimina la entidad : "+entidadAeliminar.getText()+ " Coordenadas : X =" + entidadAeliminar.getX() +" , Y = " +entidadAeliminar.getY() );
+        System.out.println( "Se elimina la entidad : "+entidadAeliminar.getText()+ "Indice en tabla ident :"+ indiceEntidad + " Coordenadas : X =" + entidadAeliminar.getX() +" , Y = " +entidadAeliminar.getY() );
     actualizarInfoEquipoEnEscenario ();
     }
     public void actualizarInfoEquipoEnEscenario (){
-//        jTextFieldIdentEquipo= escenrioSimComp.get
-        jTextFieldModeloOrganizacion.setText(""+escenarioActualComp.getmodeloOrganizativo());
-        jTextFieldIdentEquipo.setText(""+escenarioActualComp.getIdentEscenario());
-        intervalNumRobots.setText(""+escenarioActualComp.getNumRobots());
-        intervalNumVictimas.setText(""+escenarioActualComp.getNumVictimas());
-//        intervalNumVictimas.setVisible(true);
+        jTextFieldModeloOrganizacion.setText(""+modeloOrganizativo);
+        intervalNumRobots.setText(""+numeroRobots);
+        intervalNumVictimas.setText(""+numeroVictimas);
+        identEquipoActual=orgModelo+modeloOrganizativo+numRobots+numeroRobots+numVictims+numeroVictimas+subIndiceEscRepetido;
+        jTextFieldIdentEquipo.setText(""+identEquipoActual);
     }
+   
     public void actualizarCoordenadasEntidades(){
         System.out.println( "Se actualizan las coordenadas. Numero de entidades : "+listaEntidadesEnEscenario.size());
         int numRobots= 0; int numVictims= 0;
