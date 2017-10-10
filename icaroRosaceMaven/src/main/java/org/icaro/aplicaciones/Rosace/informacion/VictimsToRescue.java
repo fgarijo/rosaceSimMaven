@@ -19,12 +19,12 @@ public class VictimsToRescue {
     private boolean hayVictimasArescatar;
 
 public VictimsToRescue(){
-       victims2Rescue = new HashMap <String, Victim>();
-       victimasNoAsignadas = new ArrayList<Victim>();
+       victims2Rescue = new HashMap <>();
+       victimasNoAsignadas = new ArrayList<>();
 } 
 public void inicializar(){
-    victims2Rescue = new HashMap <String, Victim>();
-    victimasNoAsignadas = new ArrayList<Victim>();
+    victims2Rescue = new HashMap <>();
+    victimasNoAsignadas = new ArrayList<>();
 }
 public synchronized void addVictimToRescue (Victim victim){
     String idVictim = victim.getName();

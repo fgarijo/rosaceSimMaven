@@ -75,7 +75,7 @@ public class ControladorVisualizacionSimulRosace {
     private volatile PersistenciaVisualizadorEscenarios persistenciaLocal;
     private String modeloOrganizativo;
     private String identEquipoActual;
-    private VisorCreacionEscenarios1 visorEditorEscen;
+    private VisorEditorEscenarios1 visorEditorEscen;
     private VisorMovimientoEscenario visorMovimientoEscen;
     private ItfUsoRecursoPersistenciaEntornosSimulacion itfPersistenciaSimul;
     private boolean visorControlSimuladorIniciado;
@@ -322,7 +322,7 @@ public class ControladorVisualizacionSimulRosace {
             visorMovimientoEscen.setVisible(true);
             memComunControladores.setescenarioSimulacionAbierto(true);
         } else if (memComunControladores.reqEscnrioEnEdicionParaSimular()) {
-            if (visorControlSim.solicitarConfirmacion("Tiene un escenario abierto quiere utilizarlo como escenario de simulacion ??")) {
+            if (visorControlSim.solicitarConfirmacion("Esta editando un escenario, quiere utilizarlo como escenario de simulacion ??")) {
                 // enviar el fichero al controlador para que valide el numero de robots
                 this.notifEvts.sendInfoEscenarioSeleccionado(memComunControladores.getescenarioEdicion());
 //            memComunControladores.setescenarioSimulacion(memComunControladores.getescenarioEdicion());
@@ -545,8 +545,8 @@ public class ControladorVisualizacionSimulRosace {
             } else if (resultadoSeleccion == this.FICHERO_SELECCIONADO) {
                 escenario = obtenerComputacionalDePersistencia(visorControlSim.getUltimoFicheroEscenarioSeleccionado());
                 if (escenario == null) {
-                    visorControlSim.visualizarConsejo("Fichero seleccionado Nulo ", "Se debe eleccionar un fichero con modelo organizativo : " + modOrganizativo
-                            + " y numero  = : " + numRobots, "Seleccione otro fichero o  cree uno nuevo ");
+                    visorControlSim.visualizarConsejo("Fichero seleccionado Nulo ", "Se debe eleccionar un fichero con modelo organizativo : " + this.modeloOrganizativo
+                            + " y numero  = : " + this.numeroRobots, "Seleccione otro fichero o  cree uno nuevo ");
                 } else if (escenario.getmodeloOrganizativo().equals(modOrganizativo)
                         && escenario.getNumRobots() == numRobots) {
                     nuevoIntentoDeObtencion = false;
@@ -618,7 +618,7 @@ public class ControladorVisualizacionSimulRosace {
     }
 
     private void setConsecuenciasNoSeleccionFicheroSimulacion() {
-        visorMovimientoEscen.setVisible(false);
+       if(visorMovimientoEscen!=null) visorMovimientoEscen.setVisible(false);
         visorControlSim.inicializarInfoEscenarioSimul();
         visorControlSim.setVisible(true);
         escenarioSimulComp = null;
@@ -675,15 +675,19 @@ public class ControladorVisualizacionSimulRosace {
 //            escenEdicionAptoParaSimular = this.verificarCaracteristicasEscenarioAbierto(escenarioEdicionComp.getmodeloOrganizativo(), escenarioEdicionComp.getNumRobots());
 //     if(escenarioSimulComp==null) memComunControladores.setescenarioSimulacion(escenarioEdicionComp);
 //        String identescenarioAntesDeLaPeticion;
+if(modeloOrganizativo==null)modeloOrganizativo= memComunControladores.getmodorganizDefinidoEnOrg();
+if(numeroRobots==0)numeroRobots=memComunControladores.getnumRobotsdefsEnOrganizacion();
         if (simulacionEnCurso) { // se abre un fichero para editarlo
             if (this.peticionConfirmacionInformacion("Tiene un caso de simulación en curso. Desea terminar la simulación actual y abrir un nuevo escenario de simulación ?")) {
                 this.peticionTerminarCasoSimulacion();
             }
 //                   this.visorEditorEscen.visualizarEscenario(escenarioEdicionComp);
-        } else // Se ha abierto un escenario que se puede editar pero se ha abierto para simular
+        } else 
         {
-//            if(escenarioSimulComp!=null) identescenarioAntesDeLaPeticion = escenarioSimulComp.getIdentEscenario();
-            if (this.obtenerEscenarioSimulacion(modeloOrganizativo, numeroRobots) == this.FICHERO_VALIDO) {
+            if(this.memComunControladores.reqEscnrioEnEdicionParaSimular())
+                if (this.peticionConfirmacionInformacion("Esta Editando un escenario. Quiere utilizarlo como escenario de simulacion ? "))
+                 this.notifEvts.sendInfoEscenarioSeleccionado(memComunControladores.getescenarioEdicion());
+                else if (this.obtenerEscenarioSimulacion(modeloOrganizativo, numeroRobots) == this.FICHERO_VALIDO) {
                 if (this.memComunControladores.getcambioEnEscenarioSimulacion()) {
                     this.notifEvts.sendInfoEscenarioObtenidodoValido(escenarioSimulComp);
                 }

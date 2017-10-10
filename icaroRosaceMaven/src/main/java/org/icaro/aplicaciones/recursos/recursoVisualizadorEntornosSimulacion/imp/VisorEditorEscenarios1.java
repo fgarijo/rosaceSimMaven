@@ -42,7 +42,7 @@ import org.openide.util.Utilities;
  *
  * @author FGarijo
  */
-public class VisorCreacionEscenarios1 extends javax.swing.JFrame {
+public class VisorEditorEscenarios1 extends javax.swing.JFrame {
 
     /** Creates new form ControlCenterGui2 */
     private NotificadorInfoUsuarioSimulador notifEvts;
@@ -97,7 +97,7 @@ public class VisorCreacionEscenarios1 extends javax.swing.JFrame {
     private String  orgModeloInicial = "SinDefinir";
     private String subIndiceEscRepetido = "_0";
 
-     public  VisorCreacionEscenarios1(ControladorGestionEscenariosRosace controlador) throws Exception {
+     public  VisorEditorEscenarios1(ControladorGestionEscenariosRosace controlador) throws Exception {
 //        super("visor Escenario ");
         initComponents();
         moverComp =new ComponentMover();
@@ -264,7 +264,7 @@ public class VisorCreacionEscenarios1 extends javax.swing.JFrame {
         });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Creación de Escenarios");
+        setTitle("Editor de Escenarios");
         setMinimumSize(new java.awt.Dimension(30, 30));
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -873,16 +873,19 @@ int indiceEntidad =0;
      public void visualizarEscenario(EscenarioSimulacionRobtsVictms infoEscenario ){
          eliminarEntidadesEscenario();
          escenarioActualComp= infoEscenario;
-         int numRobots = infoEscenario.getNumRobots();
-         int numVictims = infoEscenario.getNumVictimas();
+         listaIdentsRobots=infoEscenario.getListIdentsRobots();
+         listaIdentsVictimas=infoEscenario.getListIdentsVictims();
+         modeloOrganizativo=infoEscenario.getmodeloOrganizativo();
+         numeroRobots = infoEscenario.getNumRobots();
+         numeroVictimas = infoEscenario.getNumVictimas();
          jTextFieldIdentEquipo.setText(""+infoEscenario.getIdentEscenario());
-         jTextFieldModeloOrganizacion.setText(""+infoEscenario.getmodeloOrganizativo());
-         intervalNumRobots.setText(""+numRobots);
-         intervalNumVictimas.setText(""+numVictims);
+         jTextFieldModeloOrganizacion.setText(""+modeloOrganizativo);
+         intervalNumRobots.setText(""+numeroRobots);
+         intervalNumVictimas.setText(""+numeroVictimas);
          String rutaImagen;
          Set entidades;
          Iterator entries;
-         if (numRobots>0) {
+         if (numeroRobots>0) {
          rutaImagen=VocabularioRosace.RUTA_ICONOS_ESCENARIOS+imageniconoRobot;
           entidades = infoEscenario.getRobots();
 //          entidades.remove("robotInit");
@@ -898,7 +901,7 @@ int indiceEntidad =0;
 //         intervalNumVictimas.setText(""+escenrioSimComp.getNumVictimas());
         }
          }
-         if (numVictims>0) {
+         if (numeroVictimas>0) {
             rutaImagen=VocabularioRosace.RUTA_ICONOS_ESCENARIOS+imageniconoMujer;
             entidades = infoEscenario.getSetVictims();
 //            entidades.remove("victimInit");
@@ -992,13 +995,13 @@ int indiceEntidad =0;
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VisorCreacionEscenarios1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VisorEditorEscenarios1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VisorCreacionEscenarios1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VisorEditorEscenarios1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VisorCreacionEscenarios1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VisorEditorEscenarios1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VisorCreacionEscenarios1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VisorEditorEscenarios1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
        
         /* Create and display the form */
@@ -1007,7 +1010,7 @@ int indiceEntidad =0;
             @Override
             public void run() {
             String  directorioPersistencia = VocabularioRosace.NombreDirectorioPersistenciaEscenarios+File.separator;
-            VisorCreacionEscenarios1 visor;
+            VisorEditorEscenarios1 visor;
             PersistenciaVisualizadorEscenarios persistencia= new PersistenciaVisualizadorEscenarios();
             GestionEscenariosSimulacion gestionEscComp= new GestionEscenariosSimulacion();
             gestionEscComp.setIdentsEscenariosSimulacion(persistencia.obtenerIdentsEscenarioSimulacion(directorioPersistencia));

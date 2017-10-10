@@ -139,4 +139,6 @@ public class MemComunControladores {
               escenarioEdicion.getNumRobots()==numRobotsdefsEnOrganizacion&&
               escenarioEdicion.getmodeloOrganizativo().equalsIgnoreCase(modorganizDefinidoEnOrg);
   }
+
+   
 }

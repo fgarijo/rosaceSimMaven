@@ -74,7 +74,7 @@ public class ControladorGestionEscenariosRosace {
     private volatile PersistenciaVisualizadorEscenarios persistenciaLocal;
     private String modeloOrganizativo;
     private String identEquipoActual;
-    private VisorCreacionEscenarios1 visorEditorEscen;
+    private VisorEditorEscenarios1 visorEditorEscen;
     private VisorMovimientoEscenario visorMovimientoEscen;
     private ItfUsoRecursoPersistenciaEntornosSimulacion itfPersistenciaSimul;
     private boolean visorControlSimuladorIniciado;
@@ -126,7 +126,7 @@ public class ControladorGestionEscenariosRosace {
                                 gestionEscComp.setIdentsEscenariosSimulacion(identsEscenariosCreados);
                                 estadoCrtEsc.escenariosCreados=true;
             }
-            visorEditorEscen = new VisorCreacionEscenarios1(this);
+            visorEditorEscen = new VisorEditorEscenarios1(this);
             visorEditorEscen.setGestorEscenarionComp(gestionEscComp);
             visorEditorEscen.setDirectorioPersistencia(directorioPersistencia);
             visorControlSim.setDirectorioPersistencia(directorioPersistencia);
@@ -148,6 +148,7 @@ public class ControladorGestionEscenariosRosace {
             this.creandoEscenario = true;
             this.escenarioEdicionAbierto=true;
             this.memComunControladores.setescenarioEdicionAbierto(true);
+            this.memComunControladores.setescenarioEdicion(escenarioEdicionComp);
         }
     }
 
@@ -201,8 +202,9 @@ public class ControladorGestionEscenariosRosace {
             }
             numeroIntentos++;
         }
-        if (ficheroSeleccionadoValido) 
-            if(this.escenarioEdicionAbierto&&!escenarioEdicionComp.getIdentEscenario().equals(escenario.getIdentEscenario())){
+        if (ficheroSeleccionadoValido){
+            String identEscenarioSeleccionado = escenario.getIdentEscenario();
+            if(this.escenarioEdicionAbierto&&!escenarioEdicionComp.getIdentEscenario().equals(identEscenarioSeleccionado)){
             // Ya tiene abierto el escenario
             visorEditorEscen.setVisible(true);
             }else{
@@ -214,7 +216,8 @@ public class ControladorGestionEscenariosRosace {
             this.memComunControladores.setescenarioEdicionAbierto(true);
 //        this.memComunControladores.setcambioEnEscenarioSimulacion(true);
 //        this.memComunControladores.setescenarioSimulacionAbierto(true);  
-        } 
+        }
+        }
     }
 
     public void peticionObtenerEscenarioSimulacion(String modOrganizativo, int numRobots) {
@@ -589,6 +592,7 @@ public class ControladorGestionEscenariosRosace {
             this.peticionGuardarEscenario(escenarioSimulComp);
         else if(resultadoPeticion== JOptionPane.CANCEL_OPTION) return;
     }
+    this.memComunControladores.setescenarioEdicionAbierto(false);
     this.visorEditorEscen.dispose();
     }
     

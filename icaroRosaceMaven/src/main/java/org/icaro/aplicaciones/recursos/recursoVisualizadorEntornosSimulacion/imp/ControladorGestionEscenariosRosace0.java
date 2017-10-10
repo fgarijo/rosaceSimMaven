@@ -72,7 +72,7 @@ public class ControladorGestionEscenariosRosace0 {
     private volatile PersistenciaVisualizadorEscenarios persistenciaLocal;
     private String modeloOrganizativo;
     private String identEquipoActual;
-    private VisorCreacionEscenarios1 visorEditorEscen;
+    private VisorEditorEscenarios1 visorEditorEscen;
     private VisorMovimientoEscenario visorMovimientoEscen;
     private ItfUsoRecursoPersistenciaEntornosSimulacion itfPersistenciaSimul;
     private boolean visorControlSimuladorIniciado;

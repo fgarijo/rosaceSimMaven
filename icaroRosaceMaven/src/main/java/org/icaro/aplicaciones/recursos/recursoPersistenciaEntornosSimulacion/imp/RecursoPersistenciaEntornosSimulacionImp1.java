@@ -115,6 +115,7 @@ public class RecursoPersistenciaEntornosSimulacionImp1 extends ImplRecursoSimple
              if (identsEscenarioSimulacion.contains(identFichero)){// Se renombra el fichero agnadiendo 
                  identFichero = this.renombrarFichero(identFichero);
              }
+             identsEscenarioSimulacion.add(identFichero);
              identFichero = directorioFicherosPersistenciaEscenarios+File.separator+identFichero;
              File ficheroEscenario = new File (identFichero);
              serializer.write(escenario, ficheroEscenario);
@@ -271,6 +272,7 @@ public class RecursoPersistenciaEntornosSimulacionImp1 extends ImplRecursoSimple
      }
      private File obtenerFicheroEscenario (String identEscenario){
          Boolean encontrado = false ;
+         ficherosEscenarios = directorioFicherosPersistenciaEscenarios.listFiles();
          if(!identEscenario.endsWith(extFicheroXML))identEscenario=identEscenario+extFicheroXML;
          try {
               if(ficherosEscenarios == null) return null;
