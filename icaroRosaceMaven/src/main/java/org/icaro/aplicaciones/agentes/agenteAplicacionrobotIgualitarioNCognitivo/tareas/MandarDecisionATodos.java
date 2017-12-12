@@ -30,7 +30,7 @@ public class MandarDecisionATodos extends TareaSincrona {
                              decision.setJustificacion(infoDecision.getMi_eval());
                  trazas.aceptaNuevaTrazaEjecReglas(this.identAgente, "Enviamos la decision " + decision); 
                  trazas.aceptaNuevaTraza(new InfoTraza("OrdenAsignacion",
-                                                     "El robot " + this.identAgente + " se hace cargo de la victima " + identObjetoDecision,
+                                                     " El robot " + this.identAgente + " se hace cargo de la victima " + identObjetoDecision+"\n",
                                                      InfoTraza.NivelTraza.debug));
                  this.getComunicator().informaraGrupoAgentes(decision, infoDecision.getAgentesEquipo());
                  infoDecision.setMiDecisionParaAsumirElObjetivoEnviadaAtodos(Boolean.TRUE);

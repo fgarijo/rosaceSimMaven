@@ -1,16 +1,16 @@
 <escenarioSimulacion>
-   <identEscenario>Org_IgualitarioRobts_4Victs_4_0</identEscenario>
+   <identEscenario>Org_IgualitarioRobts_4Victs_10_0</identEscenario>
    <modeloOrganizativo>Igualitario</modeloOrganizativo>
    <numRobots>4</numRobots>
-   <numVictimas>4</numVictimas>
+   <numVictimas>10</numVictimas>
    <robots key="Robot1">
       <robotStatus1>
          <idRobot>Robot1</idRobot>
          <idRobotRol>indefinido</idRobotRol>
          <availableEnergy>100000</availableEnergy>
          <robotCoordinateActualP>
-            <x>74</x>
-            <y>44</y>
+            <x>147</x>
+            <y>65</y>
          </robotCoordinateActualP>
          <robotCapabilities class="java.util.ArrayList">
             <robotCapability nombre="radar">
@@ -25,8 +25,8 @@
          <idRobotRol>indefinido</idRobotRol>
          <availableEnergy>100000</availableEnergy>
          <robotCoordinateActualP>
-            <x>49</x>
-            <y>274</y>
+            <x>548</x>
+            <y>45</y>
          </robotCoordinateActualP>
          <robotCapabilities class="java.util.ArrayList">
             <robotCapability nombre="radar">
@@ -41,8 +41,8 @@
          <idRobotRol>indefinido</idRobotRol>
          <availableEnergy>100000</availableEnergy>
          <robotCoordinateActualP>
-            <x>30</x>
-            <y>473</y>
+            <x>262</x>
+            <y>410</y>
          </robotCoordinateActualP>
          <robotCapabilities class="java.util.ArrayList">
             <robotCapability nombre="radar">
@@ -57,8 +57,8 @@
          <idRobotRol>indefinido</idRobotRol>
          <availableEnergy>100000</availableEnergy>
          <robotCoordinateActualP>
-            <x>64</x>
-            <y>130</y>
+            <x>789</x>
+            <y>440</y>
          </robotCoordinateActualP>
          <robotCapabilities class="java.util.ArrayList">
             <robotCapability nombre="radar">
@@ -67,16 +67,104 @@
          </robotCapabilities>
       </robotStatus1>
    </robots>
+   <victimas key="Victima10">
+      <victim>
+         <name>Victima10</name>
+         <priority>100</priority>
+         <requiredCompetencies class="java.util.ArrayList">
+            <competency>25</competency>
+         </requiredCompetencies>
+         <victimCoordinateP>
+            <x>175</x>
+            <y>129</y>
+         </victimCoordinateP>
+      </victim>
+   </victimas>
+   <victimas key="Victima9">
+      <victim>
+         <name>Victima9</name>
+         <priority>100</priority>
+         <requiredCompetencies class="java.util.ArrayList">
+            <competency>25</competency>
+         </requiredCompetencies>
+         <victimCoordinateP>
+            <x>154</x>
+            <y>17</y>
+         </victimCoordinateP>
+      </victim>
+   </victimas>
+   <victimas key="Victima8">
+      <victim>
+         <name>Victima8</name>
+         <priority>100</priority>
+         <requiredCompetencies class="java.util.ArrayList">
+            <competency>25</competency>
+            <competency>25</competency>
+            <competency>25</competency>
+         </requiredCompetencies>
+         <victimCoordinateP>
+            <x>1017</x>
+            <y>240</y>
+         </victimCoordinateP>
+      </victim>
+   </victimas>
+   <victimas key="Victima7">
+      <victim>
+         <name>Victima7</name>
+         <priority>100</priority>
+         <requiredCompetencies class="java.util.ArrayList">
+            <competency>25</competency>
+            <competency>25</competency>
+            <competency>25</competency>
+         </requiredCompetencies>
+         <victimCoordinateP>
+            <x>569</x>
+            <y>225</y>
+         </victimCoordinateP>
+      </victim>
+   </victimas>
+   <victimas key="Victima6">
+      <victim>
+         <name>Victima6</name>
+         <priority>100</priority>
+         <requiredCompetencies class="java.util.ArrayList">
+            <competency>25</competency>
+            <competency>25</competency>
+            <competency>25</competency>
+         </requiredCompetencies>
+         <victimCoordinateP>
+            <x>828</x>
+            <y>90</y>
+         </victimCoordinateP>
+      </victim>
+   </victimas>
+   <victimas key="Victima5">
+      <victim>
+         <name>Victima5</name>
+         <priority>100</priority>
+         <requiredCompetencies class="java.util.ArrayList">
+            <competency>25</competency>
+            <competency>25</competency>
+            <competency>25</competency>
+         </requiredCompetencies>
+         <victimCoordinateP>
+            <x>330</x>
+            <y>231</y>
+         </victimCoordinateP>
+      </victim>
+   </victimas>
    <victimas key="Victima4">
       <victim>
          <name>Victima4</name>
          <priority>100</priority>
          <requiredCompetencies class="java.util.ArrayList">
             <competency>25</competency>
+            <competency>25</competency>
+            <competency>25</competency>
          </requiredCompetencies>
          <victimCoordinateP>
-            <x>511</x>
-            <y>213</y>
+            <x>816</x>
+            <y>228</y>
          </victimCoordinateP>
       </victim>
    </victimas>
@@ -86,10 +174,12 @@
          <priority>100</priority>
          <requiredCompetencies class="java.util.ArrayList">
             <competency>25</competency>
+            <competency>25</competency>
+            <competency>25</competency>
          </requiredCompetencies>
          <victimCoordinateP>
-            <x>499</x>
-            <y>476</y>
+            <x>504</x>
+            <y>445</y>
          </victimCoordinateP>
       </victim>
    </victimas>
@@ -99,10 +189,12 @@
          <priority>100</priority>
          <requiredCompetencies class="java.util.ArrayList">
             <competency>25</competency>
+            <competency>25</competency>
+            <competency>25</competency>
          </requiredCompetencies>
          <victimCoordinateP>
-            <x>736</x>
-            <y>349</y>
+            <x>459</x>
+            <y>125</y>
          </victimCoordinateP>
       </victim>
    </victimas>
@@ -112,10 +204,12 @@
          <priority>100</priority>
          <requiredCompetencies class="java.util.ArrayList">
             <competency>25</competency>
+            <competency>25</competency>
+            <competency>25</competency>
          </requiredCompetencies>
          <victimCoordinateP>
-            <x>528</x>
-            <y>35</y>
+            <x>30</x>
+            <y>154</y>
          </victimCoordinateP>
       </victim>
    </victimas>

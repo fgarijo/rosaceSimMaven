@@ -26,7 +26,7 @@ public class ConseguirObjetivoActualizarFoco extends TareaSincrona{
                     focoActual.setFocusToObjetivoMasPrioritario(misObjs);
                     this.getEnvioHechos().actualizarHecho(focoActual);
                 }
-              this.getEnvioHechos().actualizarHechoWithoutFireRules(misObjs);
+//              this.getEnvioHechos().actualizarHechoWithoutFireRules(misObjs);
                 this.getEnvioHechos().actualizarHecho(objetivoConseguido);
                 
              trazas.aceptaNuevaTrazaEjecReglas(this.identAgente, "Se ejecuta la tarea " + this.identTarea+

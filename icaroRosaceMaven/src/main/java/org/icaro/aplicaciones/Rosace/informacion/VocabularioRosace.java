@@ -23,6 +23,8 @@ public class VocabularioRosace extends NombresPredefinidos{
     public static final String IdentRolAgtesSubordinados= "robotSubordinado";
     public static final String IdentRolAgtesSubordinadosConCR= "robotSubordinadoConCR";
     public static final String IdentRolAgtesIgualitarios = "robotIgualitario";
+    public static final String NombreEstadoRobotBloqueado = "robotBloqueado";
+    public static final String NombreEstadoRobotParado = "robotParado";
     public static final String DescrExpectComunicacionConJefe="miComunicacionConJefe";
     public static final String MsgPropuesta_Oferta_Para_Ir= "SoyElMejorSituadoParaRealizarElObjetivo";
     public static final String MsgPropuesta_Decision_Ir = "YoVoy";
@@ -61,6 +63,7 @@ public class VocabularioRosace extends NombresPredefinidos{
     static public  final String MsgTimeoutComunicacionConJefe = "ExpiroTimeoutReaccionJefe";
     static public  final String MsgTimeoutPropuestaConEvalAJefe = "ExpiroTimeoutReaccionJefeAmiPropuesta";
     static public  final String MsgTimeoutGeneralEsperaInformacion = "ExpiroTimeoutEsperaInformacion";
+    static public  final String MsgTimeoutRecibirConfirmacionAsumirObjetivo = "ExpiroTimeoutAsumirObjetivo";
     static public  final String MsgPeticionTerminacionGestor ="peticionTerminacion";
     static public  final String MsgDecisionIrYoEnvidaTodos ="InformadoGrupo(YoVoy)";
     static public  final String MsgOrdenCCAyudarVictima ="AyudarVictima";
@@ -89,6 +92,10 @@ public class VocabularioRosace extends NombresPredefinidos{
     static public  final String IdentTareaTimeOutContactarMiembrosEquipo ="TimeOutContactarMiembrosEquipo";
     static public  final String IdentTareaTimeOutReaccionJefeAmsgeCC ="TimeOutReaccionJefeAmsgeCC";
     static public  final String IdentTareaTimeOutRespuestaJefe = "TimeOutRespuestaJefe";
+    static public  final String IdentCategoriaObjetivosDecision = "objetivosDecision";
+    static public  final String IdentCategoriaObjetivosAccion = "objetivosAccion";
+    static public  final String IdentVictimsArescatar = "victimsArescatar";
+    static public  final String IdentObjGlobalMiEquipo = "miEquipo";
     static public  final String PrefijoMsgTimeout = "Expiro timeout";
     static public  final String PrefijoPropiedadTareaTimeout ="timeMsTarea:";
     
@@ -142,6 +149,7 @@ public class VocabularioRosace extends NombresPredefinidos{
     static public  final String NombreFicheroSerieLlegadaYasignacion = "serieLlegadaYasignacionVictimas";
     static public  final String NombreFicheroSerieAsignacion = "serieAsignacionVictimas";
     static public  final String NombreFicheroEscenarioSimulacion = "identFicheroEscenarioSimulacion";
+    static public  final int TimeOutMiliSecConseguirObjetivo= 8000;
     static public  enum PeticionAgteControlSimul{TerminarSimulacion,mostrarEscenarioActualSimulado,pararRobot,sendSequenceOfSimulatedVictimsToRobotTeam,enviarIdentsEquipo};
     static public  enum EstadoMovimientoRobot {Indefinido,RobotParado, RobotEnMovimiento, RobotBloqueado, RobotBloqueadoPorObstaculo,RobotavanceImposible,enDestino, error};
     public static  enum EvalEnergiaRobot {sinEnergia,energiaSuficiente,EnergiaJusta, EnergiaInsuficiente };

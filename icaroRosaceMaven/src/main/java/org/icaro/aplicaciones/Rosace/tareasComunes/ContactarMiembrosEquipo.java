@@ -12,6 +12,8 @@ import org.icaro.infraestructura.entidadesBasicas.interfaces.InterfazUsoAgente;
 import org.icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaSincrona;
 import org.icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
 import java.util.ArrayList;
+import org.icaro.aplicaciones.Rosace.objetivosComunes.DefinirMiEquipo;
+import org.icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Focus;
 
 /**
  *
@@ -20,16 +22,14 @@ import java.util.ArrayList;
    public class ContactarMiembrosEquipo  extends TareaSincrona {
    private ArrayList <String> agentesEquipo;//resto de agentes que forman mi equipo                                
    private String nombreAgenteEmisor;
- 
-   
-
+   private long valorTemporizador = 5000;
    // private TimeOutRespuestas tiempoSinRecibirRespuesta;  //no usado
-
 	@Override
 	public void ejecutar(Object... params) {
 		try {     
               RobotStatus1 miStatus = (RobotStatus1)params[0];    
-             InfoEquipo equipoInfo = (InfoEquipo)params[1];  
+             InfoEquipo equipoInfo = (InfoEquipo)params[1]; 
+             Focus focoActual = (Focus)params[2];
               nombreAgenteEmisor = this.identAgente;
               agentesEquipo = equipoInfo.getTeamMemberIDs();
               trazas.aceptaNuevaTrazaEjecReglas(identAgente, "Se Ejecuta la Tarea : "+ identTarea + " Los agtes de mi equipo son : " + agentesEquipo );
@@ -39,10 +39,15 @@ import java.util.ArrayList;
               this.getComunicator().informaraGrupoAgentes(mirol, agentesEquipo);
               equipoInfo.setinicioContactoConEquipo();
               equipoInfo.setidentMiRolEnEsteEquipo(miStatus.getIdRobotRol());
-              this.getEnvioHechos().actualizarHechoWithoutFireRules(equipoInfo);
-              trazas.aceptaNuevaTraza(new InfoTraza(nombreAgenteEmisor, "Numero de agentes de los que espero respuesta:" + agentesEquipo.size(), InfoTraza.NivelTraza.info));     
+//              this.getEnvioHechos().actualizarHechoWithoutFireRules(equipoInfo);
+               DefinirMiEquipo definirMiequipoObj = new DefinirMiEquipo(VocabularioRosace.IdentMisionEquipo);
+               definirMiequipoObj.setSolving();
+               focoActual.setFoco(definirMiequipoObj);
+               this.getEnvioHechos().insertarHecho(definirMiequipoObj);
+               this.getEnvioHechos().actualizarHecho(focoActual);
+              trazas.aceptaNuevaTrazaEjecReglas(nombreAgenteEmisor, " Numero de agentes de los que espero respuesta: " + agentesEquipo.size() );     
               this.generarInformeTemporizadoFromConfigProperty(VocabularioRosace.IdentTareaTimeOutContactarMiembrosEquipo,null,nombreAgenteEmisor, null);
-              // en le caso de que ya la haya enviado la evaluacion no hago nada
+//                this.generarInformeTemporizado(valorTemporizador,this.identTarea,null,nombreAgenteEmisor, null);
 		} catch (Exception e) {
 			e.printStackTrace();
         }

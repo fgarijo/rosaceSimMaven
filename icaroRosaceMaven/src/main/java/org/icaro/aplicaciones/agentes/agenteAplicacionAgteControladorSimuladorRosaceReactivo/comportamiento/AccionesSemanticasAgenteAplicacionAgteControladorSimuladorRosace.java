@@ -362,6 +362,9 @@ private void inicializarInfoCasoSimulacion(){
 //            infoCasoSimul = new InfoCasoSimulacion(identCaso,escenarioActual.getIdentEscenario());
             infoCasoSimul.setInfoCasoSimulacion(identificadorEquipo,escenarioActual.getmodeloOrganizativo(),escenarioActual.getNumRobots(),escenarioActual.getNumVictimas());
             infoCasoSimul.setTiempoInicioEnvioPeticiones(tiempoInicialDeLaSimulacion);
+            trazas.aceptaNuevaTraza(new InfoTraza("OrdenAsignacion",
+                                               "\n"+ " Escenario : " +escenarioActual.getIdentEscenario()+ "\n", InfoTraza.NivelTraza.debug));
+            
 }
 public void victimaAsignadaARobot(InfoRescateVictima infoAsignacion) {
         try {

@@ -39,7 +39,7 @@ import java.util.ArrayList;
               Objetivo objetivoEjecutantedeTarea = (Objetivo) params[0];    
               infoDecision = (InfoParaDecidirQuienVa)params[1];
               EvaluacionAgente miEvaluacion = (EvaluacionAgente) params[2]; // redefino miEvaluacion 
-//              InfoEquipo miEquipo = (InfoEquipo) params[3]; 
+              InfoEquipo miEquipo = (InfoEquipo) params[3]; 
               nombreAgenteEmisor = this.getIdentAgente();
               idVictima = infoDecision.getidElementoDecision();
               if(!infoDecision.miEvaluacionEnviadaAtodos){

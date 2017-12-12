@@ -16,20 +16,27 @@ import java.io.Serializable;
 public class PeticionAsumirObjetivo extends PeticionAgente implements Serializable{
     private Objetivo objetivoTransferir;
     private Object infoComplementaria;
+    private boolean peticionAsumida;
    public PeticionAsumirObjetivo (String idAgteEmisor, Objetivo objtivoAtransferir, RobotStatus1 justificacion){
        super(idAgteEmisor);
        super.setMensajePeticion(VocabularioRosace.MsgePeticionAsumirObjetivo);
-       super.setJustificacion(justificacion);
+       super.setJustificacion(justificacion.clone());
        super.setidentObjectRefPeticion(objtivoAtransferir.getobjectReferenceId());
        objetivoTransferir = objtivoAtransferir;
    }
    public Objetivo getObjetivoTransferir(){
        return objetivoTransferir;
    }
-   public void setinfoComplementaria(Object complInfo){
+   public synchronized void setinfoComplementaria(Object complInfo){
        infoComplementaria=complInfo;
    }
-   public Object getinfoComplementaria(){
+   public synchronized Object getinfoComplementaria(){
        return infoComplementaria;
+   }
+   public void setpeticionAsumida(boolean status){
+       peticionAsumida=status;
+   }
+   public boolean getpeticionAsumida(){
+       return peticionAsumida;
    }
 }

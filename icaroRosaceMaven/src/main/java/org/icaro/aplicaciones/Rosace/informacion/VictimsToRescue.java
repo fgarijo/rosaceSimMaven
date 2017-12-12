@@ -47,6 +47,11 @@ public synchronized void addEstimatedCostVictim2Rescue(String victimId,Integer e
     if (victim!= null )victim.setEstimatedCost(estimatedCost);
     
    }
+public synchronized void addRobotResponsableVictim2Rescue(String victimId,String robotId ){
+    Victim victim = victims2Rescue.get(victimId);
+    if (victim!= null )victim.setrobotResponsableId(robotId);
+    
+   }
 
 public synchronized ArrayList<Victim> getVictimNoAsignadas(){
 	return victimasNoAsignadas;

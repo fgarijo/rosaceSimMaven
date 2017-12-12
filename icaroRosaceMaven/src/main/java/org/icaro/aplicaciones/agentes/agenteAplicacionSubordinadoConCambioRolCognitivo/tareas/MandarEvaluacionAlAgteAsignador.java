@@ -63,7 +63,7 @@ public class MandarEvaluacionAlAgteAsignador  extends TareaSincrona {
                      // Miro en la tabla de victimas si tengo la victima, 
                         victimEnPeticion = victimasRecibidas.getVictimToRescue(identObjEvaluacion);
                         if(victimEnPeticion != null){ // tengo la victima miro si tengo el valor estimado
-                            if (victimEnPeticion.isCostEstimated()) miEvalDeRespuesta = victimEnPeticion.getEstimatedCost();
+                            if (victimEnPeticion.getisCostEstimated()) miEvalDeRespuesta = victimEnPeticion.getEstimatedCost();
                             else{ // calculo el coste y lo guardo en la victima
                                miEvalDeRespuesta= calcularCosteEstimadoVictima();
                                victimEnPeticion.setEstimatedCost(miEvalDeRespuesta);

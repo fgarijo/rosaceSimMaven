@@ -268,10 +268,11 @@ public class Coste {
     	while (it.hasNext()){
     		  //Hay al menos un objetivo
     	    ob = it.next();
-            if ( ob.getState()!= Objetivo.SOLVED){
-    	      String referenciaIdObjetivo = ob.getobjectReferenceId();
+            String referenciaIdObjetivo = ob.getobjectReferenceId();
+            Victim victimaActualCola = victims2R.getVictimToRescue(referenciaIdObjetivo);  
+            if ( ob.getState()!= Objetivo.SOLVED ||victimaActualCola!=null){  	      
     	      //Obtener la victima de la cola
-                Victim victimaActualCola = victims2R.getVictimToRescue(referenciaIdObjetivo);    	          	      
+              System.out.println(" Objetivo : " + ob.getgoalId() + "  Calculo la prioridad de la victima ->"+referenciaIdObjetivo );              
                 int prioridadVictimaActualCola = victimaActualCola.getPriority();    	          	          	      
                 Coordinate coordinateVictimaActualCola = victimaActualCola.getCoordinateVictim();   	          	      
                 if (flag == false){

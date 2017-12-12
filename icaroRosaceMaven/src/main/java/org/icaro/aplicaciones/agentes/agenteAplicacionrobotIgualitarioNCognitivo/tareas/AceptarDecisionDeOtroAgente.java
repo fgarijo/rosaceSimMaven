@@ -33,6 +33,7 @@ public class AceptarDecisionDeOtroAgente extends TareaSincrona{
                 this.getEnvioHechos().actualizarHecho(focoActual);
             trazas.aceptaNuevaTrazaEjecReglas(identAgente, "Se ha ejecutado la tarea " + identTarea
                             + " Se ha tomado una decision para salvar a la victima :  " + decisionOtroAgente.getidentObjectRefDecision() + "\n"+
+                              " Agente a cargo de la tarea : " +  decisionOtroAgente.identAgente +    
                             "Objetivo conseguido :  " + decidirQuienVa + "El foco esta en el objetivo  :  " + focoActual+ "\n");
                             
             System.out.println("\n"+nombreAgenteEmisor +"Se ejecuta la tarea " + this.getIdentTarea()+ " Se actualiza el  objetivo:  "+ ayudarVictima+"\n\n" );

@@ -30,7 +30,7 @@ public class MoverseAsalvarVictima extends TareaSincrona {
     @Override
     public void ejecutar(Object... params) {
     
-            MisObjetivos misObjs = (MisObjetivos) params[0];
+            MisObjetivos misObjsAccion = (MisObjetivos) params[0];
             Focus focoActual = (Focus) params[1];
              victima = (Victim) params[2];
             InfoCompMovimiento infoComMov = (InfoCompMovimiento) params[3];
@@ -38,17 +38,17 @@ public class MoverseAsalvarVictima extends TareaSincrona {
             Objetivo objConseguido = focoActual.getFoco();
             if (objConseguido!= null){
                 objConseguido.setPriority(-1);
-                misObjs.cambiarPrioridad(objConseguido);
+                misObjsAccion.cambiarPrioridad(objConseguido);
             }
-            Objetivo nuevoObj = misObjs.getobjetivoMasPrioritario();
-            trazas.aceptaNuevaTrazaEjecReglas(identAgente, "Se ejecuta la tarea " + identTarea
+            Objetivo nuevoObj = misObjsAccion.getobjetivoMasPrioritario();
+            trazas.aceptaNuevaTrazaEjecReglas(identAgente, " Se ejecuta la tarea " + identTarea
                             + " Victima salvada  :  " + victima + 
-                            "Objetivo conseguido :  " + objConseguido + "Nuevo objetivo a conseguir  :  " + nuevoObj
-                            + " Los objetivos en la cola son  :  " + misObjs.getMisObjetivosPriorizados() + "\n");
+                            "Objetivo conseguido :  " + objConseguido + "Nuevo objetivo a conseguir  :  " + nuevoObj+ "\n"
+                            + " Los objetivos en la cola son  :  " + misObjsAccion.getMisObjetivosPriorizados() + "\n");
              log.debug("Se ejecuta la tarea " + identTarea
                             + " Victima salvada  :  " + victima + 
                             "Objetivo conseguido :  " + objConseguido + "Nuevo objetivo a conseguir  :  " + nuevoObj
-                            + " Los objetivos en la cola son  :  " + misObjs.getMisObjetivosPriorizados() + "\n"); 
+                            + " Los objetivos en la cola son  :  " + misObjsAccion.getMisObjetivosPriorizados() + "\n"); 
              Thread t = new Thread(){	
 				public void run(){
                                 itfcompMov.moverAdestino(victima.getName(), victima.getCoordinateVictim(), velocidadCruceroPordefecto); 
@@ -66,7 +66,7 @@ public class MoverseAsalvarVictima extends TareaSincrona {
                 victima = victimasArescatar.getVictimToRescue(nuevoObj.getobjectReferenceId());
                  itfcompMov = (ItfUsoMovimientoCtrl) infoComMov.getitfAccesoComponente();
 //                itfcompMov.moverAdestino(nuevoObj.getobjectReferenceId(), victima.getCoordinateVictim(), velocidadCruceroPordefecto); // se pondra la verlocidad por defecto 
-                t.run();
+                t.start();
                  infoComMov.setitfAccesoComponente(itfcompMov);
                     nuevoObj.setSolving();
 //                    focoActual.setFoco(nuevoObj);
@@ -77,24 +77,24 @@ public class MoverseAsalvarVictima extends TareaSincrona {
                     trazas.aceptaNuevaTrazaEjecReglas(identAgente, "Se ejecuta la tarea " + identTarea
                             + " Se inicia el movimiento  para salvar a la victima :  " + victima + "\n"+
                             "Objetivo conseguido :  " + objConseguido + "Nuevo objetivo a focalizar  :  " + nuevoObj
-                            + " Los objetivos en la cola son  :  " + misObjs.getMisObjetivosPriorizados() + "\n");
+                            + " Los objetivos en la cola son  :  " + misObjsAccion.getMisObjetivosPriorizados() + "\n");
                    log.debug("Se ejecuta la tarea " + identTarea
                             + " Se inicia el movimiento  para salvar a la victima :  " + victima + "\n"+
                             "Objetivo conseguido :  " + objConseguido + "Nuevo objetivo a focalizar  :  " + nuevoObj
-                            + " Los objetivos en la cola son  :  " + misObjs.getMisObjetivosPriorizados() + "\n"); 
+                            + " Los objetivos en la cola son  :  " + misObjsAccion.getMisObjetivosPriorizados() + "\n"); 
                 } // no hay objetivos para salvar victimas el foco se pone a null
             else{
                 
-                trazas.aceptaNuevaTrazaEjecReglas(identAgente, "Se ejecuta la tarea " + identTarea
+                trazas.aceptaNuevaTrazaEjecReglas(identAgente, "Se ejecuta la tarea " + identTarea+ "\n"
                             + " Nuevo objetivo a focalizar  :  " + nuevoObj + " Prioridad del objetivo : " + nuevoObj.getPriority()
-                            + " Sin orden de movimiento por no tener victimas en la cola."
-                            + " Los objetivos en la cola son  :  " + misObjs.getMisObjetivosPriorizados() + "\n");
+                            + " Sin orden de movimiento por no tener victimas en la cola."+ "\n"
+                            + " Los objetivos en la cola son  :  " + misObjsAccion.getMisObjetivosPriorizados() + "\n");
                  log.debug("\n" + identAgente + "Se ejecuta la tarea " + getIdentTarea() + " Sin orden de movimiento por no tener victimas en la cola."
                          + "  Foco null. Victima rescatada :  " + victima + "\n\n");
                  nuevoObj = null;
             }    
                 focoActual.setFoco(nuevoObj);
-                this.getEnvioHechos().actualizarHechoWithoutFireRules(misObjs);
+//                this.getEnvioHechos().actualizarHechoWithoutFireRules(misObjsAccion);
                 this.getEnvioHechos().actualizarHecho(focoActual);
         }
 }

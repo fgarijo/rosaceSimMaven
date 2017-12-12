@@ -40,7 +40,7 @@ public class ObtenerEvaluacionRealizarObjetivo extends TareaSincrona {
             InfoParaDecidirQuienVa infoDecision = (InfoParaDecidirQuienVa)params[2];
             RobotStatus1 robot = (RobotStatus1)params[3];                        
             VictimsToRescue victims2R =(VictimsToRescue)params[4];
-            MisObjetivos misObjs = (MisObjetivos)params[5];
+            MisObjetivos misObjsAccion = (MisObjetivos)params[5];
             trazarCalculoCoste=true;
             Coste coste = new Coste();
             coste.setTrazar(true);
@@ -63,19 +63,27 @@ public class ObtenerEvaluacionRealizarObjetivo extends TareaSincrona {
             System.out.println("para la victima ->"+victim.toString());
             System.out.println("victims2R->"+victims2R.getlastVictimToRescue().toString());
 //            System.out.println("misObjs->"+misObjs.getobjetivoMasPrioritario().toString());
-            if (misObjs.getobjetivoMasPrioritario()!=null)System.out.println("misObjs->"+misObjs.getobjetivoMasPrioritario().toString());
+            if (misObjsAccion.getobjetivoMasPrioritario()!=null)System.out.println("misObjs->"+misObjsAccion.getobjetivoMasPrioritario().toString());
 	        //Las sentencias siguientes permiten utilizar la funcion de evaluacion 3 que considera el recorrido que tendria que hacer y la engergia y el tiempo
 //            double distanciaCamino = coste.CalculaDistanciaCamino(this.identAgente, robotLocation, victim, victims2R, misObjs);
 //            double tiempoAtencionVictimas = coste.CalculaTiempoAtencion(3.0, victim, victims2R, misObjs);
 //            funcionEvaluacion = coste.FuncionEvaluacion3(distanciaCamino, 5.0, tiempoAtencionVictimas, 9.0, robot, victim);
-	     funcionEvaluacion= coste.CalculoCosteAyudarVictima(identAgente, robotLocation, robot, victim, victims2R, misObjs, "FuncionEvaluacion3");
+
+            if( robot.getBloqueado()){ // se envia una evaluacion maxima 
+                mi_eval= Integer.MAX_VALUE;
+            }else{
+                funcionEvaluacion= coste.CalculoCosteAyudarVictima(identAgente, robotLocation, robot, victim, victims2R, misObjsAccion, "FuncionEvaluacion3");
+             mi_eval = (int)funcionEvaluacion;   //convierto de double a int porque la implementacion inicial de Paco usaba int    
+            }
+	     
             if(trazarCalculoCoste) {
                 this.trazas.aceptaNuevaTrazaEjecReglas(identAgente," Se ejecuta la tarea :" + identTarea + coste.getTrazaCalculoCoste()+"\n");
             }         
-            mi_eval = (int)funcionEvaluacion;   //convierto de double a int porque la implementacion inicial de Paco usaba int                                  
+                                         
             EvaluacionAgente eval = new  EvaluacionAgente (identAgente, mi_eval);
             eval.setObjectEvaluationId(victim.getName());// Referenciamos la evaluacion con el ident de la victima
             infoDecision.setMi_eval(mi_eval);
+            victim.setEstimatedCost(mi_eval);
             infoDecision.setTengoMiEvaluacion(Boolean.TRUE);
             this.getEnvioHechos().insertarHechoWithoutFireRules(eval);
             this.getEnvioHechos().insertarHechoWithoutFireRules(robot);

@@ -19,6 +19,7 @@ import org.icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaSincr
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.PriorityBlockingQueue;
+import org.icaro.aplicaciones.Rosace.informacion.Victim;
 
 /**
  *
@@ -30,17 +31,17 @@ public class EnviarEquipoPeticionesAsumirMisObjetivos extends TareaSincrona{
    public void ejecutar(Object... params) {
 	   try {
              InfoEquipo miEquipo = (InfoEquipo)params[0];
-             MisObjetivos misObjs = (MisObjetivos)params[1];
+             MisObjetivos misObjsAccion = (MisObjetivos)params[1];
              RobotStatus1 miEstatus = (RobotStatus1) params[2];
              VictimsToRescue victimas = (VictimsToRescue)params[3];
              InfoTransimisionObjetivos infoTransmisionObjs;
 //             String idVictima=trsnsfObj.getobjectReferenceId();
              infoTransmisionObjs = new InfoTransimisionObjetivos(identAgente,miEquipo,miEstatus.getcausaCambioEstado());
              // Enviamos las propuestas a los miembros del equipo
-             Iterator<Objetivo>  iterObj = misObjs.getMisObjetivosPriorizados().iterator();
+             Iterator<Objetivo>  iterObj = misObjsAccion.getMisObjetivosPriorizados().iterator();
             ArrayList<String> idsAgtesMiequipo = miEquipo.getTeamMemberIDs();
             trazas.aceptaNuevaTrazaEjecReglas(identAgente, "  Se ejecuta la tarea : " + identTarea 
-                      + "///////////////////////////////////////////////////////////////////////////////// ///////////"+"\n"+
+                      + " Objetivos a transmitir : "+ misObjsAccion.getMisObjetivosPriorizados().toString() +"\n"+
                       "Agentes en mi equipo: " + idsAgtesMiequipo ); 
             while (iterObj.hasNext()){
   	  	  //Hay al menos un objetivo    		
@@ -48,8 +49,8 @@ public class EnviarEquipoPeticionesAsumirMisObjetivos extends TareaSincrona{
 //                if(obj.getgoalId().equals(idObjetivoAtrasmitir) ){
                 if( obj.getgoalId().equals("AyudarVictima")){
                 String obrefId = obj.getobjectReferenceId();
-                PeticionAsumirObjetivo petAsumirObj = new PeticionAsumirObjetivo(this.identAgente, obj, (RobotStatus1)miEstatus.clone());
-                petAsumirObj.setinfoComplementaria(victimas.getVictimToRescue(obrefId));
+                PeticionAsumirObjetivo petAsumirObj = new PeticionAsumirObjetivo(this.identAgente, obj, (RobotStatus1)miEstatus); 
+//                petAsumirObj.setinfoComplementaria((Victim)victimas.getVictimToRescue(obrefId).clone());
                 this.getComunicator().informaraGrupoAgentes(petAsumirObj, idsAgtesMiequipo);
                 infoTransmisionObjs.addInfoPropuestaEnviada(obrefId);
                 trazas.aceptaNuevaTrazaEjecReglas(identAgente, " Se envia una peticion al equipo para salvar a la victima : "+obrefId+ "Se aniade la victima a InfoTransimisionObjetivos . Contenido :  " + infoTransmisionObjs +"\n");

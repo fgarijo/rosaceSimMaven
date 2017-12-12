@@ -7,6 +7,7 @@ package org.icaro.aplicaciones.Rosace.tareasComunes;
 import org.icaro.aplicaciones.Rosace.informacion.InfoEquipo;
 import org.icaro.aplicaciones.Rosace.informacion.RobotStatus1;
 import org.icaro.aplicaciones.Rosace.informacion.VictimsToRescue;
+import org.icaro.aplicaciones.Rosace.informacion.VocabularioRosace;
 import org.icaro.aplicaciones.agentes.componentesInternos.movimientoCtrl.InfoCompMovimiento;
 import org.icaro.aplicaciones.agentes.componentesInternos.movimientoCtrl.ItfUsoMovimientoCtrl;
 import org.icaro.aplicaciones.agentes.componentesInternos.movimientoCtrl.imp.MaquinaEstadoMovimientoCtrl.EstadoMovimientoRobot;
@@ -14,13 +15,14 @@ import org.icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
 import org.icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Focus;
 import org.icaro.infraestructura.entidadesBasicas.procesadorCognitivo.MisObjetivos;
 import org.icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Tarea;
+import org.icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaSincrona;
 import org.icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
 
 /**
  *
  * @author Francisco J Garijo
  */
-public class InicializarInfoWorkMemCRN1 extends Tarea{
+public class InicializarInfoWorkMemCRN1 extends TareaSincrona{
             String miIdentAgte ;
             String identEquipo;
             int velocidadCruceroPorDefecto = 4; // metros por segundo
@@ -39,8 +41,19 @@ public class InicializarInfoWorkMemCRN1 extends Tarea{
              this.getItfConfigMotorDeReglas().setfactHandlesMonitoring_afterActivationFired_DEBUGGING(false);
              identEquipo = this.getItfUsoConfiguracion().getValorPropiedadGlobal(NombresPredefinidos.NOMBRE_PROPIEDAD_GLOBAL_IDENT_EQUIPO);
              this.getEnvioHechos().insertarHechoWithoutFireRules(new Focus());
-             this.getEnvioHechos().insertarHechoWithoutFireRules(new MisObjetivos());
-             this.getEnvioHechos().insertarHecho(new VictimsToRescue());
+             // Crear dos categorias de objetivos : decision y accion
+            
+             MisObjetivos objetivosDecision= new MisObjetivos();
+             objetivosDecision.setcategoria(VocabularioRosace.IdentCategoriaObjetivosDecision);
+              this.getItfMotorDeReglas().addGlobalVariable(VocabularioRosace.IdentCategoriaObjetivosDecision, objetivosDecision);
+             MisObjetivos objetivosAccion= new MisObjetivos();
+             objetivosAccion.setcategoria(VocabularioRosace.IdentCategoriaObjetivosAccion);
+             this.getItfMotorDeReglas().addGlobalVariable(VocabularioRosace.IdentCategoriaObjetivosAccion, objetivosAccion);
+//             this.getEnvioHechos().insertarHechoWithoutFireRules(objetivosDecision);
+//             this.getEnvioHechos().insertarHechoWithoutFireRules(objetivosAccion);
+//             this.getEnvioHechos().insertarHecho(new VictimsToRescue());
+                VictimsToRescue victimsArescatar = new VictimsToRescue();
+                this.getItfMotorDeReglas().addGlobalVariable(VocabularioRosace.IdentVictimsArescatar, victimsArescatar);
 //             RobotStatus miStatus = getRobotStatusInicial ( identRolAgte);        
                 if (  miStatus != null){
                     miStatus.setIdRobotRol(identRolAgte);
@@ -52,7 +65,8 @@ public class InicializarInfoWorkMemCRN1 extends Tarea{
                     InfoEquipo miEquipo = new InfoEquipo(miIdentAgte, identEquipo);
                     miEquipo.setTeamMemberStatus( miStatus); 
                     this.getEnvioHechos().insertarHecho(miStatus);
-                    this.getEnvioHechos().insertarHecho(miEquipo);
+//                    this.getEnvioHechos().insertarHecho(miEquipo);
+                    this.getItfMotorDeReglas().addGlobalVariable(VocabularioRosace.IdentObjGlobalMiEquipo, miEquipo);
                     this.trazas.aceptaNuevaTrazaEjecReglas(miIdentAgte, this.getIdentTarea()+ "  Actualizo mi estatus. Mi Rol en equipo :  " + miStatus.getIdRobotRol());
                     }
                    else this.trazas.trazar(miIdentAgte, "No se ha encontrado el fichero de inicializacion de Estatus", InfoTraza.NivelTraza.error);

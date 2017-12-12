@@ -36,7 +36,7 @@ public class MandarEvaluacionAQuienLaPide  extends TareaSincrona {
     private String identObjEvaluacion;
     private String nombreAgenteQuePideLaEvaluacion ;
     private Integer miEvalDeRespuesta;
-    private Integer valorDisuasorioParaElquePideAcepteQueSoyYoElResponsable = Integer.MAX_VALUE;
+    private Integer valorDisuasorioParaElquePideAcepteQueSoyYoElResponsable = Integer.MIN_VALUE;
 //    private  Integer valorParaExcluirmeDelObjetivo = -5000 ;
     private VictimsToRescue victimasRecibidas ;
     private Victim victimEnPeticion ;
@@ -64,14 +64,14 @@ public class MandarEvaluacionAQuienLaPide  extends TareaSincrona {
               trazas.aceptaNuevaTraza(new InfoTraza(nombreAgenteEmisor, "Se Ejecuta la Tarea :"+ identTarea , InfoTraza.NivelTraza.debug));
       // si el identificador esta entre mis objetivos es que esta resuelto , le mando un valor para que se desanime
      // en  otro caso puede ser que sea otro el que tenga el objetivo, en este caso él le mandará un valor grande
-     // si no tengo noticias del objetivo le mando un valor pequeno para que vaya él
+     // si no tengo noticias del objetivo le mando un valor pequeno para que vaya el
      // si coincide con el que estoy trabajando le mando el valor 
                if (identObjEvaluacion.equals(infoDecision.idElementoDecision)) miEvalDeRespuesta = infoDecision.getMi_eval();
                 else if( misObjtvs.existeObjetivoConEsteIdentRef(identObjEvaluacion))miEvalDeRespuesta = valorDisuasorioParaElquePideAcepteQueSoyYoElResponsable;
                       else { // Miro en la tabla de vicitimas si tengo la victima, 
                         victimEnPeticion = victimasRecibidas.getVictimToRescue(identObjEvaluacion);
                         if(victimEnPeticion != null){ // tengo la victima miro si tengo el valor estimado
-                            if (victimEnPeticion.isCostEstimated()) miEvalDeRespuesta = victimEnPeticion.getEstimatedCost();
+                            if (victimEnPeticion.getisCostEstimated()) miEvalDeRespuesta = victimEnPeticion.getEstimatedCost();
                             else{ // calculo el coste y lo guardo en la victima
                                miEvalDeRespuesta= calcularCosteEstimadoVictima();
                                victimEnPeticion.setEstimatedCost(miEvalDeRespuesta);
@@ -96,7 +96,7 @@ public class MandarEvaluacionAQuienLaPide  extends TareaSincrona {
               this.getEnvioHechos().eliminarHecho(peticionRecibida);
               EvaluacionAgente miEvaluacion = new EvaluacionAgente (nombreAgenteEmisor, miEvalDeRespuesta );
                                miEvaluacion.setObjectEvaluationId(identObjEvaluacion);
-              trazas.aceptaNuevaTraza(new InfoTraza(nombreAgenteEmisor, "Enviamos la evaluacion " + miEvaluacion, InfoTraza.NivelTraza.info));
+              trazas.aceptaNuevaTrazaEjecReglas(nombreAgenteEmisor, "Enviamos la evaluacion " + miEvaluacion + " de la victima : "+victimEnPeticion.getName() + " Al agente : " + nombreAgenteQuePideLaEvaluacion );
                               
               this.getComunicator().enviarInfoAotroAgente(miEvaluacion, nombreAgenteQuePideLaEvaluacion);
               this.generarInformeOK(identTarea, objetivoEjecutantedeTarea, nombreAgenteEmisor, VocabularioRosace.ResEjTaskMiEvaluacionEnviadaAlAgtesQLaPide+ nombreAgenteQuePideLaEvaluacion);

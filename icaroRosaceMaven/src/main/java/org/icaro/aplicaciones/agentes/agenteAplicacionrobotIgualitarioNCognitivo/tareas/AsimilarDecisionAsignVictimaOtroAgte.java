@@ -26,27 +26,25 @@ public class AsimilarDecisionAsignVictimaOtroAgte extends TareaSincrona{
     @Override
    public void ejecutar(Object... params) {
 	   try {
-//             MisObjetivos misObjs = (MisObjetivos) params[0];
-             Objetivo ayudarVictima = (Objetivo)params[0]; // el estado es pending
-             Objetivo decidirquienVa = (Objetivo)params[1];
-             InfoParaDecidirQuienVa infoDecision = (InfoParaDecidirQuienVa)params[2];
-             Focus focoActual = (Focus)params[3]; // el foco actual es decidir quien va 
-//                Objetivo objetivoMasPrioritario = misObjs.getobjetivoMasPrioritario();
-//                if (objetivoMasPrioritario != null)
-//                if(objetivoMasPrioritario.getState()== Objetivo.SOLVED){
-//                    objetivoMasPrioritario.setPriority(-1);
-//                    misObjs.addObjetivo(objetivoMasPrioritario);      
-//                }else if(objetivoMasPrioritario.getPriority()<0)objetivoMasPrioritario=null;
-////                ayudarVictima.setSolving();
-////                misObjs.addObjetivo(ayudarVictima);
-////                objetivoMasPrioritario = misObjs.getobjetivoMasPrioritario();
-             this.getEnvioHechos().eliminarHechoWithoutFireRules(decidirquienVa);
-                this.getEnvioHechos().eliminarHechoWithoutFireRules(ayudarVictima);
-                this.getEnvioHechos().eliminarHechoWithoutFireRules(infoDecision);
-//                focoActual.setFocusToObjetivoMasPrioritario(misObjs);
-                focoActual.setFoco(null);
+             MisObjetivos misObjsDecision = (MisObjetivos) params[0];
+             Objetivo ayudarVictima = (Objetivo)params[1]; // el estado es pending
+             Objetivo decidirquienVa = (Objetivo)params[2];
+             InfoParaDecidirQuienVa infoDecision = (InfoParaDecidirQuienVa)params[3];
+             Focus focoActual = (Focus)params[4]; // el foco actual es decidir quien va 
+             Victim victima = (Victim)params[5];
+             this.getEnvioHechos().eliminarHecho(decidirquienVa);
+                this.getEnvioHechos().eliminarHecho(ayudarVictima);
+                this.getEnvioHechos().eliminarHecho(infoDecision);
+                misObjsDecision.eliminarObjetivo(decidirquienVa);
+                decidirquienVa = misObjsDecision.getobjetivoMasPrioritario();
+                victima.setrobotResponsableId(infoDecision.dameIdentMejor());
+                 this.getEnvioHechos().actualizarHecho(victima);
+                if(decidirquienVa!=null)  this.getEnvioHechos().insertarHecho(decidirquienVa);
+//                this.getEnvioHechos().actualizarHechoWithoutFireRules(infoDecision);
+//                focoActual.setFocusToObjetivoMasPrioritario(misObjsDecision);
+                focoActual.setFoco(decidirquienVa);
                 this.getEnvioHechos().actualizarHecho(focoActual);
-            trazas.aceptaNuevaTrazaEjecReglas(this.identAgente, "Se ejecuta la tarea " + this.identTarea+
+            trazas.aceptaNuevaTrazaEjecReglas(this.identAgente, " Se ejecuta la tarea " + this.identTarea+"\n"+
                     "Foco anterior : "+focoActual.getFocoAnterior()+
                                     " Se actualiza el  foco a :  "+ focoActual +"\n" );
             System.out.println("\n"+this.identAgente +"Se ejecuta la tarea " + this.getIdentTarea()+ " Se actualiza el  objetivo:  "+ ayudarVictima+"\n\n" );

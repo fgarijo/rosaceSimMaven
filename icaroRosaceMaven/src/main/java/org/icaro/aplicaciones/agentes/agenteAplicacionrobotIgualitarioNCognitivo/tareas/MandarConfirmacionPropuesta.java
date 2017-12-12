@@ -14,6 +14,7 @@ import org.icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Objetivo;
 import org.icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaSincrona;
 import org.icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
 import java.util.ArrayList;
+import org.icaro.aplicaciones.Rosace.informacion.Victim;
 
 /**
  *
@@ -34,27 +35,24 @@ public class MandarConfirmacionPropuesta  extends TareaSincrona {
         
 	@Override
 	public void ejecutar(Object... params) {
-		
-//           trazas = NombresPredefinidos.RECURSO_TRAZAS_OBJ;
-           Objetivo objetivoEjecutantedeTarea = (Objetivo)params[0];
+           Victim victima = (Victim)params[0];
            PropuestaAgente propuestaRecibida = (PropuestaAgente)params[1];
            nombreAgenteEmisor = this.getAgente().getIdentAgente();
            identDeEstaTarea = this.getIdentTarea();
-
            try {
-                 trazas.aceptaNuevaTraza(new InfoTraza(nombreAgenteEmisor, "Se Ejecuta la Tarea :"+ identDeEstaTarea , InfoTraza.NivelTraza.debug));
+                 trazas.aceptaNuevaTrazaEjecReglas(nombreAgenteEmisor, " Se Ejecuta la Tarea :"+ identDeEstaTarea + " Victima implicada : " + victima.getName() );
 
                  nombreAgenteReceptor = propuestaRecibida.getIdentAgente();
-                 
+                 victima.setrobotResponsableId(nombreAgenteReceptor);
                  AceptacionPropuesta propuestaAceptada = new AceptacionPropuesta (nombreAgenteEmisor,VocabularioRosace.MsgAceptacionPropuesta,propuestaRecibida);
                  propuestaAceptada.setidentObjectRefAcetPropuesta(propuestaRecibida.getIdentObjectRefPropuesta());
-                 trazas.aceptaNuevaTraza(new InfoTraza(nombreAgenteEmisor, "Enviamos la confirmacion de la Propuesta: "+ propuestaRecibida + " Al agente " +nombreAgenteReceptor  , InfoTraza.NivelTraza.debug));
+                 trazas.aceptaNuevaTrazaEjecReglas(nombreAgenteEmisor," Se Ejecuta la Tarea :"+ identDeEstaTarea + " Enviamos la confirmacion de la Propuesta: "+ propuestaRecibida + " Al agente " +nombreAgenteReceptor );
                  this.getComunicator().enviarInfoAotroAgente(propuestaAceptada, nombreAgenteReceptor);
-       //          this.getComunicator().enviarInfoConMomentoCreacionAotroAgente(propuestaAceptada, nombreAgenteReceptor);
                  // Meto  la propuesta aceptada en el motor
                  this.getEnvioHechos().insertarHechoWithoutFireRules(propuestaAceptada);
+                 this.getEnvioHechos().insertarHecho(victima);
          //      this.getEnvioHechos().eliminarHechoWithoutFireRules(propuestaRecibida); // No hace falta porque al meterla en la confirmacion es como si se eliminara
-                 this.generarInformeOK(identDeEstaTarea, objetivoEjecutantedeTarea, nombreAgenteEmisor,"propuesta_Aceptada" );
+//                 this.generarInformeOK(identDeEstaTarea, objetivoEjecutantedeTarea, nombreAgenteEmisor,"propuesta_Aceptada" );
                          //         trazas.aceptaNuevaTraza(new InfoTraza(nombreAgenteEmisor, "Enviada Propuesta al agente " + agentesEquipo.size(), InfoTraza.NivelTraza.info));
                          //            tiempoSinRecibirRespuesta.start();
 

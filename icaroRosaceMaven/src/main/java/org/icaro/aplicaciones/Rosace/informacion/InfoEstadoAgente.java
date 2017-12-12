@@ -13,6 +13,7 @@ public class InfoEstadoAgente {
     private String identEstado;
     private String identAgte;
     private String refIteracion;
+    private boolean bloqueado;
     public InfoEstadoAgente (String agentId,String estadoId,String iteracionRef ){
         identAgte=agentId;
         identEstado=estadoId;
@@ -20,6 +21,7 @@ public class InfoEstadoAgente {
 }
     public void setidentEstado ( String estadoId){
         identEstado=estadoId;
+        if(estadoId.equalsIgnoreCase(VocabularioRosace.NombreEstadoRobotBloqueado))bloqueado=true;
     }
     public String getidentEstado ( ){
         return identEstado;
@@ -36,6 +38,23 @@ public class InfoEstadoAgente {
     }
     public void setrefIteracion(String iterId){
         refIteracion =iterId;
+    }
+    public boolean getBloqueado(){
+		return this.bloqueado;
+	}
+
+	public void setBloqueado(boolean b){
+		this.bloqueado = b;
+	}
+        @Override
+    public Object clone(){
+        Object obj=null;
+        try{
+            obj=super.clone();
+        }catch(CloneNotSupportedException ex){
+            System.out.println(" no se puede duplicar");
+        }
+        return obj;
     }
 }
     

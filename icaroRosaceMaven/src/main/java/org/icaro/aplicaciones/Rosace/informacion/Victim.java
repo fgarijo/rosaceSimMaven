@@ -25,6 +25,7 @@ public class Victim implements Serializable, Cloneable {
        private boolean isRescued = false;
        private boolean isCostEstimated = false;
        private Point victimCoordinateAnteriorP;
+       private String robotResponsableId;
    
        public Victim(){
            victimCoordinateAnteriorP = new Point(0,0);
@@ -37,7 +38,6 @@ public class Victim implements Serializable, Cloneable {
                 requiredCompetencies.add( 25);
        } 
 	
-       //In our first scenario (1 injured group, 1 new injured) this constructor was used.
        public Victim(Coordinate coorVictim){
     	   this.coordinateVictim = coorVictim;
        }
@@ -106,9 +106,19 @@ public class Victim implements Serializable, Cloneable {
 		   this.estimatedCost = costEstimated;
                    isCostEstimated = true;
 	   }
+            public synchronized String getrobotResponsableId(){
+		   return this.robotResponsableId;
+	   }
+
+   	   public synchronized void setrobotResponsableId(String robotId){
+		   this.robotResponsableId = robotId;
+	   }
    	   
-           public synchronized boolean isCostEstimated(){
+           public synchronized boolean getisCostEstimated(){
 		  return isCostEstimated ;
+	   }
+           public synchronized void setisCostEstimated(boolean valorBool){
+		   isCostEstimated = valorBool ;
 	   }
             public synchronized boolean getRescued(){
    		   return this.isRescued;

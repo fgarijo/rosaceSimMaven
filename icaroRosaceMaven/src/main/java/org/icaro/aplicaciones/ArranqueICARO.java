@@ -1,6 +1,6 @@
 package org.icaro.aplicaciones;
 
-import org.icaro.infraestructura.clasesGeneradorasOrganizacion.CreacionOrganizacion;
+import org.icaro.infraestructura.CreacionOrganizacion;
 
 public class ArranqueICARO {
 

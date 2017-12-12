@@ -39,7 +39,9 @@ public class ProcesarPropuestaDeOtroAgenteParaQueVayaYo extends TareaSincrona {
                   }
                   else { //De acuerdo a la regla citada al principio, la ejecucion entraria por aqui
                          if (!infoDecision.hanLlegadoTodasLasEvaluaciones){// Si no tengo todas las evaluaciones es que hay otros que las han recibido y proponen que vaya yo
-                                                             infoDecision.tengoLaMejorEvaluacion = true; // cro lo que me dicen 
+                                                             infoDecision.tengoLaMejorEvaluacion = true;
+                                                             infoDecision.noSoyElMejor=false;
+                                                             // cro lo que me dicen 
                                                              infoDecision.hanLlegadoTodasLasEvaluaciones = true; // no espero mas evaluaciones
                             trazas.aceptaNuevaTrazaEjecReglas(identAgente, " Se ejecuta la Tarea : "+ identTarea + " Se procesa la propuesta del agente : "
                                                                + propuestaRecibida.getIdentAgente()+ " cuando no tengo todas las evaluaciones " +"\n");
@@ -49,7 +51,7 @@ public class ProcesarPropuestaDeOtroAgenteParaQueVayaYo extends TareaSincrona {
 
                              infoDecision.addConfirmacionAcuerdoParaIr(propuestaRecibida.getIdentAgente(), propuestaRecibida.getMensajePropuesta());
                              this.getEnvioHechos().eliminarHechoWithoutFireRules(propuestaRecibida);
-                             this.getEnvioHechos().actualizarHechoWithoutFireRules(infoDecision);
+                             this.getEnvioHechos().actualizarHecho(infoDecision);
                              trazas.aceptaNuevaTrazaEjecReglas(identAgente, " Se ejecuta la Tarea : "+ identTarea + " Se procesa la propuesta del agente : "
                                                                + propuestaRecibida.getIdentAgente()+ " cuando tengo la mejor evaluacion " +"\n");
                             }

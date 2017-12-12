@@ -69,6 +69,7 @@ public class InfoEquipo {
      private void getIdentsAgentesEquipoFromConfig(String identEquipo){
             ArrayList agentesRegistrados = this.getIdentsAgentesAplicacionRegistrados();
             teamRobotIds = new ArrayList();
+            teamRobotIdsActivos=new ArrayList();
             String aux; Boolean encontrado = false; 
             int numberOfRegAgts =agentesRegistrados.size();
            // int j = 0;
@@ -76,7 +77,7 @@ public class InfoEquipo {
                 aux = (String) agentesRegistrados.get(i); 
                 //Excluimos el propio agente
                 if (aux.contains(identEquipo)& (!aux.contains(identAgentePropietario))) {       
-                    teamRobotIds.add(aux);         
+                    teamRobotIds.add(aux);
                 }            
             }
             this.numberOfTeamMembers =  teamRobotIds.size();    
@@ -113,16 +114,21 @@ public class InfoEquipo {
       public synchronized void addAgteAmiEquipo(String idAgte,String rolEnEquipoId){
           if (teamInfoAgentStatus.get(idAgte)== null){
               RobotStatus1 estatusAgte = new RobotStatus1();
-              estatusAgte.setIdRobotRol(rolEnEquipoId); 
+              estatusAgte.setIdRobotRol(rolEnEquipoId);
+              estatusAgte.setIdRobot(idAgte);
               // si no esta entre los que se han obtenido de la configuracion lo meto y si esta no se hace nada
-              if(!teamRobotIds.contains(idAgte)) teamRobotIds.add(idAgte);   
+              if(!teamRobotIds.contains(idAgte)){
+                  teamRobotIds.add(idAgte);      
+              }   
               teamInfoAgentStatus.put(idAgte, estatusAgte);
+//              teamRobotIdsActivos.add(idAgte);  
           }
       }
      public synchronized void eliminarIdentAgteDeMiEquipo(String idAgte){
          if (!(idAgte.equals(identAgentePropietario))&&(teamRobotIds.indexOf(idAgte)>0)){
 //             teamInfoAgentStatus.remove(idAgte);
              teamRobotIds.remove(teamRobotIds.indexOf(idAgte));
+//             teamRobotIdsActivos.remove(teamRobotIds.indexOf(idAgte));
          }
      }
      public synchronized ArrayList<String> getTeamMemberIDsWithThisRol(String rolId){
@@ -184,6 +190,18 @@ public class InfoEquipo {
      public synchronized void setTeamMemberStatus( RobotStatus1 robotSt){ 
          teamInfoAgentStatus.put(robotSt.getIdRobot(), robotSt);
      }
+     public synchronized void setEstadoTeamMember( InfoEstadoAgente robotEstado){
+         String idTeamMember = robotEstado.getidentAgte();
+         RobotStatus1 estatusRobot = teamInfoAgentStatus.get(idTeamMember);
+         estatusRobot.setestadoMovimiento(robotEstado.getidentEstado());
+         if(robotEstado.getBloqueado())estatusRobot.setBloqueado(true);
+         teamInfoAgentStatus.replace(robotEstado.getidentAgte(), estatusRobot);
+         
+     }
+      public synchronized String getEstadoTeamMember( String idRobot){ 
+         return teamInfoAgentStatus.get(idRobot).getestadoMovimiento();
+     }
+    
      public synchronized Boolean isRobotStatusDefined(String robtId){ 
         return  teamInfoAgentStatus.containsKey(robtId);
      }

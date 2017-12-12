@@ -43,7 +43,7 @@ public class VisorMovimientoEscenario extends javax.swing.JFrame {
      private String tituloVentanaVisor = "ROSACE Scenario Visor";
     private String rutassrc = "src/";   //poner "src/main/java" si el proyecto de icaro se monta en un proyecto maven
     private String rutapaqueteConstructorEscenariosROSACE = "utilsDiseniaEscenariosRosace/";
-    public static  ImageIcon IMAGErobot,IMAGEmujer,IMAGEmujerRes ,IMAGEmujerAsignada,IMAGEmujerReasignada;
+    public static  ImageIcon IMAGErobot,IMAGEmujer,IMAGEmujerRes ,IMAGEmujerAsignada,IMAGEmujerReasignada,IMAGErobotAveriado;
     private String rutaIconos = "\\src\\utilsDiseniaEscenariosRosace\\";
 //    private String rutaPersistenciaEscenario = "\\src\\persistenciaEscenarios\\";
     private String directorioPersistencia = VocabularioRosace.NombreDirectorioPersistenciaEscenarios+File.separator;
@@ -54,6 +54,7 @@ public class VisorMovimientoEscenario extends javax.swing.JFrame {
     private String imageniconoMujerAsignada= "MujerAsignada.png";
     private String imageniconoHombreRescatado = "HombreRescatado.png";
     private String imageniconoRobot = "Robot.png";
+    private String imageniconoRobotAveriado = "RobotAveriado.png";
     private String modeloOrganizativoInicial = "Igualitario";
     private Map<String, JLabel> tablaEntidadesEnEscenario;
     private ArrayList <JLabel> listaEntidadesEnEscenario;
@@ -79,6 +80,7 @@ public class VisorMovimientoEscenario extends javax.swing.JFrame {
     private void initEscenario(){
 //        String rutaIconoRobot =   rutapaqueteConstructorEscenariosROSACE + imageniconoRobot;
         IMAGErobot =new ImageIcon(VocabularioRosace.RUTA_ICONOS_ESCENARIOS+imageniconoRobot);
+        IMAGErobotAveriado =new ImageIcon(VocabularioRosace.RUTA_ICONOS_ESCENARIOS+imageniconoRobotAveriado);
         IMAGEmujerRes = new ImageIcon(VocabularioRosace.RUTA_ICONOS_ESCENARIOS+imageniconoMujerRescatada);
         IMAGEmujer = new ImageIcon(VocabularioRosace.RUTA_ICONOS_ESCENARIOS+imageniconoMujer);
         IMAGEmujerReasignada= new ImageIcon(VocabularioRosace.RUTA_ICONOS_ESCENARIOS+imageniconoMujerReasignada);
@@ -281,8 +283,6 @@ public class VisorMovimientoEscenario extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldIdentEquipoActionPerformed
     
-     
-
     public void visualizarIdentsEquipoRobot ( ArrayList<String> equipoIds){
 //        eqipoIds = eqipoIds.toArray();
         identsRobotsEquipo = equipoIds;
@@ -377,32 +377,7 @@ public class VisorMovimientoEscenario extends javax.swing.JFrame {
          escenarioActualAbierto = true;
         }
      }
-//     private void peticionGuardarEscenario (){
-//         setLocationRelativeTo(this);
-////        escenarioActualComp.setIdentEscenario(jTextFieldIdentEquipo.getText());
-//        escenarioActualComp.setIdentificadorNormalizado();
-//      
-//        jTextFieldIdentEquipo.setText(escenarioActualComp.getIdentEscenario());
-//        String smsg = "Se va a guardar el escenario: " + escenarioActualComp.getIdentEscenario();
-//       int respuesta= JOptionPane.showConfirmDialog(rootPane, smsg,"Confirmar GuardarEscenario",JOptionPane.OK_CANCEL_OPTION );
-//        //         jOptionPaneAvisoError.setToolTipText(smsg);
-//       if (respuesta==JOptionPane.OK_OPTION){
-//           gestionEscComp.addEscenario(escenarioActualComp);
-//             persistencia.guardarInfoEscenarioSimulacion(directorioPersistencia, escenarioActualComp);
-//       }
-//     }
-//     public int confirmarPeticionGuardarEscenario (String msgConfirmacion){
-//         escenarioActualComp.setIdentificadorNormalizado();
-//         jTextFieldIdentEquipo.setText(escenarioActualComp.getIdentEscenario());
-//        String smsg = msgConfirmacion + jTextFieldIdentEquipo.getText();
-////       int respuesta= JOptionPane.showConfirmDialog(rootPane, smsg,"Confirmar GuardarEscenario",JOptionPane.OK_CANCEL_OPTION );
-//        //         jOptionPaneAvisoError.setToolTipText(smsg);
-//       return JOptionPane.showConfirmDialog(rootPane, smsg,"Confirmar GuardarEscenario",JOptionPane.OK_CANCEL_OPTION );
-////       if (respuesta==JOptionPane.OK_OPTION){
-////           gestionEscComp.addEscenario(escenarioActualComp);
-////             persistencia.guardarInfoEscenarioSimulacion(directorioPersistencia, escenarioActualComp);
-////       }
-//     }
+
   public synchronized void cambiarPosicionRobot(String idRobot, int nueva_coordx, int nueva_coordy) {
 
 //        String numeroRobot = getNumeroRobot(idRobot);
@@ -416,33 +391,7 @@ public class VisorMovimientoEscenario extends javax.swing.JFrame {
 //            jlabelRobot.setBounds(jlabelRobot.getX()+10, jlabelRobot.getY()+10, jlabelRobot.getWidth(), jlabelRobot.getHeight());
 //            jlabelRobot.setBounds(nueva_coordx, nueva_coordy, jlabelRobot.getWidth(), jlabelRobot.getHeight());
             jlabelRobot.setLocation(nueva_coordx, nueva_coordy);
-//            this.notifyAll();
 
-            //Eliminar de la visualizacion
-//            jlabelRobot.setVisible(false);
-//            panelVisor.remove(jlabelRobot);
-            //Eliminar de la variable mapa que almacena identificadores y posiciones de los robots
-//            robotslabel.remove(numeroRobot);
-
-            //Crear una nueva label en la nueva posicion
-            //crear el label y posicionarlo en el JPanel
-//            JLabel label = new JLabel("");
-//            String rutaIconoRobot = directorioTrabajo + "/" + rutassrc + rutapaqueteConstructorEscenariosROSACE + imageniconoRobot;
-//
-//            label.setIcon(new javax.swing.ImageIcon(rutaIconoRobot));
-//
-//            label.setText(numeroRobot);
-//            label.setEnabled(true);
-//            label.setVisible(true);
-//
-//            Dimension size = label.getPreferredSize();
-//            label.setBounds(nueva_coordx, nueva_coordy, size.width, size.height);
-//
-//            panelVisor.add(label);
-//
-//            robotslabel.put(numeroRobot, label);   //Lo anoto en el Map: la clave es el numero del robot y contenido es el label creado
-
-//            System.out.println("NUEVA Localizacion del robot " + label.getText() + "-> (" + label.getLocation().x + "," + label.getLocation().y + ")");
         } else 
             System.out.println("jlabel nulo");
         }else {
@@ -464,37 +413,6 @@ public class VisorMovimientoEscenario extends javax.swing.JFrame {
             System.out.println("jlabelEntidad nulo");
         }
     }
-  
-    
-//     private void eliminarEntidadesEscenario(){
-////         Set entidades;
-////         Iterator entries;
-////         if (infoEscenario.getNumRobots()>0) {
-////         rutaImagen=directorioTrabajo+rutaIconos+imageniconoRobot;
-////          entidades = infoEscenario.getRobots();
-////          entries = entidades.iterator();
-////            while (entries.hasNext()) {
-////                Entry thisEntry = (Entry) entries.next();
-////                Point punto =(Point)thisEntry.getValue();
-////            addEntidadEnEscenario(rutaImagen,(String)thisEntry.getKey(),(Point)thisEntry.getValue());
-////             ((JLabel) this.findComponentAt((Point)thisEntry.getValue())).setVisible(false);
-//         JLabel labelActual;             
-//         for( Component comp : this.getContentPane().getComponents() ){
-//                 if (comp instanceof JLabel){
-//                      labelActual = (JLabel)comp;
-//                     if (!labelActual.equals(jLabelIdentEquipo)&&!labelActual.equals(jLabelOrganizacion)
-//                             &&!labelActual.equals(robotIcon)&&!labelActual.equals(victimaIcon1)){                    
-//                         comp.setVisible(false);
-//                         remove(comp);
-//                 System.out.println( "Se borra la entidad : "+ " Coordenadas :  =" + comp.getLocation() );         
-//                     }
-//                };
-//         }     
-//         intervalNumRobots.setText(""+infoEscenario.getNumRobots());
-//         intervalNumVictimas.setText(""+escenrioSimComp.getNumVictimas());
-//            }
-//        }
-//     }
     /**
      * @param args the command line arguments
      */
@@ -521,21 +439,7 @@ public class VisorMovimientoEscenario extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(VisorMovimientoEscenario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
+        
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -583,16 +487,10 @@ public class VisorMovimientoEscenario extends javax.swing.JFrame {
     private javax.swing.JLabel victimaIcon1;
     // End of variables declaration//GEN-END:variables
 
-//    private void setGestorEscenarionComp(GestionEscenariosSimulacion gestEscComp) {
-////        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//    this.gestionEscComp=gestEscComp;
-//    }
 
 public void visualizarConsejo (String titulo, String msgConsejo, String recomendacion){
          JOptionPane.showMessageDialog(rootPane,msgConsejo + "  "+ recomendacion, titulo,2);
      }
-
-
  public synchronized   void actualizarEscenario(EscenarioSimulacionRobtsVictms escenarioComp) {
         
             //Si el escenario a visulizar
@@ -633,11 +531,9 @@ public void visualizarConsejo (String titulo, String msgConsejo, String recomend
              entryRobot = (Entry) iteratorRobot.next();
              robotInfo = (RobotStatus1)entryRobot.getValue();
              locRobot = robotInfo.getLocPoint();
-//            addEntidadEnEscenario(rutaImagen,(String)thisEntry.getKey(),(Point)thisEntry.getValue());
+             cambiarIconoEntidad(robotInfo.getIdRobot(), IMAGErobot);
             this.cambiarPosicionRobot(robotInfo.getIdRobot(),locRobot.x, locRobot.y);
             this.setVisible(true);
-//         intervalNumRobots.setText(""+infoEscenario.getNumRobots());
-//         intervalNumVictimas.setText(""+escenrioSimComp.getNumVictimas());
         }
     }
 }

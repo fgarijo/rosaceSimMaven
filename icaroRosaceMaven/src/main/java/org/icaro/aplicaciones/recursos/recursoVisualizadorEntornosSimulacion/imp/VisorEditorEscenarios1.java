@@ -106,9 +106,9 @@ public class VisorEditorEscenarios1 extends javax.swing.JFrame {
 //        directorioTrabajo = System.getProperty("user.dir");
         numeroRobots=0;  numeroVictimas=0;
 //        tablaEntidadesEnEscenario = new HashMap<String, JLabel>();
-        listaEntidadesEnEscenario = new ArrayList < JLabel>();
-        listaIdentsRobots= new ArrayList < String>();
-        listaIdentsVictimas= new ArrayList < String>();
+        listaEntidadesEnEscenario = new ArrayList < >();
+        listaIdentsRobots= new ArrayList < >();
+        listaIdentsVictimas= new ArrayList < >();
     }
    
 
@@ -764,7 +764,9 @@ public class VisorEditorEscenarios1 extends javax.swing.JFrame {
 //                  if(listaBusqueda.get(i).equals(""))huecoEncontrado=true; 
 //                  else i++;
 //                }
-//            etiqueta=etiqueta+(i+1);        
+//            etiqueta=etiqueta+(i+1); 
+            if(listaIdentsRobots==null)listaIdentsRobots= new ArrayList < >();
+            if(listaIdentsVictimas==null)listaIdentsVictimas= new ArrayList < >();
             if( tipoEntidad==ENTIDAD_ROBOT){
                 indiceHueco =listaIdentsRobots.indexOf("");
                 if(indiceHueco<0){
