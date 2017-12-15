@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 package org.icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.tareas;
+import org.icaro.aplicaciones.Rosace.informacion.DecisionAgente;
 import org.icaro.aplicaciones.Rosace.informacion.Victim;
 import org.icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.informacion.InfoParaDecidirQuienVa;
 import org.icaro.aplicaciones.agentes.componentesInternos.movimientoCtrl.InfoCompMovimiento;
@@ -46,7 +47,8 @@ public class AsimilarDecisionAsignVictimaOtroAgte extends TareaSincrona{
                 this.getEnvioHechos().actualizarHecho(focoActual);
             trazas.aceptaNuevaTrazaEjecReglas(this.identAgente, " Se ejecuta la tarea " + this.identTarea+"\n"+
                     "Foco anterior : "+focoActual.getFocoAnterior()+
-                                    " Se actualiza el  foco a :  "+ focoActual +"\n" );
+                                    " Se actualiza el  foco a :  "+ focoActual+"\n"+
+                    " La victima : "+ victima.getName() + " Se la queda el robot : "+ victima.getrobotResponsableId());
             System.out.println("\n"+this.identAgente +"Se ejecuta la tarea " + this.getIdentTarea()+ " Se actualiza el  objetivo:  "+ ayudarVictima+"\n\n" );
                           
              

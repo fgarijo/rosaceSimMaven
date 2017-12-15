@@ -145,18 +145,20 @@
  
         </plugins>
     </build> 
+    
     <dependencies>
+        
         <dependency>
             <groupId>org.icaro</groupId>
-            <artifactId>icaroGestoresyInfrastr</artifactId>
+            <artifactId>icaroGestoresconInfrastr</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
-<!-- 
-        <dependency>
+ <!--
+     <dependency>
             <groupId>org.icaro</groupId>
-            <artifactId>infrastructura</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <artifactId>Infreaestructura00</artifactId>
+            <version>0.0.1</version>
             <type>jar</type>
         </dependency>
 -->
