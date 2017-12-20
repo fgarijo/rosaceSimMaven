@@ -193,9 +193,10 @@ public class InfoEquipo {
      public synchronized void setEstadoTeamMember( InfoEstadoAgente robotEstado){
          String idTeamMember = robotEstado.getidentAgte();
          RobotStatus1 estatusRobot = teamInfoAgentStatus.get(idTeamMember);
+         if(estatusRobot==null)estatusRobot= new RobotStatus1();
          estatusRobot.setestadoMovimiento(robotEstado.getidentEstado());
          if(robotEstado.getBloqueado())estatusRobot.setBloqueado(true);
-         teamInfoAgentStatus.replace(robotEstado.getidentAgte(), estatusRobot);
+         teamInfoAgentStatus.replace(idTeamMember, estatusRobot);
          
      }
       public synchronized String getEstadoTeamMember( String idRobot){ 

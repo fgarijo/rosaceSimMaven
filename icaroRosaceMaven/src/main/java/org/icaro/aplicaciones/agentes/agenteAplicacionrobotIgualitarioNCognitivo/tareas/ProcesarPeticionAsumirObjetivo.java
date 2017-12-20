@@ -65,8 +65,9 @@ public class ProcesarPeticionAsumirObjetivo extends TareaSincrona {
                  peticionRecibida.setpeticionAsumida(true);
                  this.getEnvioHechos().actualizarHecho(victimaImplicada);
                  this.getEnvioHechos().actualizarHecho(nuevoObjAyudarVictima);
+                 this.getEnvioHechos().actualizarHecho(newDecision);
 //                 this.getEnvioHechos().actualizarHecho(foco);
-                 this.getEnvioHechos().actualizarHecho(peticionRecibida);
+                
                  this.trazas.aceptaNuevaTrazaEjecReglas(this.getIdentAgente(), 
                         " Se ejecuta la tarea : " + this.getIdentTarea() + " Peticion recibida del robot :  " + identAgteEnviaPeticion +"\n"+
                         "  idVictima implicada : "+idvictima +" Estado del robot proponente bloqueado? : "+estatusRobot.getBloqueado()+"\n"+
@@ -75,10 +76,12 @@ public class ProcesarPeticionAsumirObjetivo extends TareaSincrona {
                                 "  Miembros en mi equipo : " + miEquipo.getIDsMiembrosActivos().toString()+ "\n"); 
                   }else
                      this.trazas.aceptaNuevaTrazaEjecReglas(this.getIdentAgente(), 
-                        "Se ejecuta la tarea : " + this.getIdentTarea() + " Preticion recibida del robot :  " + identAgteEnviaPeticion +"\n"+
+                        "Se ejecuta la tarea : " + this.getIdentTarea() + " Peticion recibida del robot :  " + identAgteEnviaPeticion +"\n"+
                         " la victima implicada es null. Estado del robot proponente bloqueado? : "+estatusRobot.getBloqueado()+
                                 "El foco esta en el objetivo : " + foco.getFoco()+ "\n" );  
-            
+                this.getEnvioHechos().eliminarHecho(peticionRecibida);
+                if(foco.getFoco()==null)foco.setFoco(misObjsDecision.getobjetivoMasPrioritario());
+                this.getEnvioHechos().actualizarHecho(foco);
                   
             }
             catch(Exception e) {

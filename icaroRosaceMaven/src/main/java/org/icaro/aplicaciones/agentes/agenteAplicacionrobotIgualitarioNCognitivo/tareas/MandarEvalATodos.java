@@ -43,15 +43,16 @@ import java.util.ArrayList;
               nombreAgenteEmisor = this.getIdentAgente();
               idVictima = infoDecision.getidElementoDecision();
               if(!infoDecision.miEvaluacionEnviadaAtodos){
-//              agentesEquipo = miEquipo.getIDsMiembrosActivos();
-                  agentesEquipo =infoDecision.getAgentesEquipo();
+              agentesEquipo = miEquipo.getIDsMiembrosActivos();
               trazas.aceptaNuevaTrazaEjecReglas(nombreAgenteEmisor, "Se Ejecuta la Tarea :"+ identTarea +"\n");
               if(agentesEquipo.size()>0){
-              trazas.aceptaNuevaTrazaEjecReglas(nombreAgenteEmisor, "Enviamos la evaluacion " + infoDecision.getMi_eval()+"\n");            
+              infoDecision.setAgentesEquipo(agentesEquipo);
+              trazas.aceptaNuevaTrazaEjecReglas(nombreAgenteEmisor, " Agentes en el equipo : " + agentesEquipo.toString() + " Enviamos la evaluacion " + infoDecision.getMi_eval()+"\n");            
              this.getComunicator().informaraGrupoAgentes(miEvaluacion, agentesEquipo);
          //   this.getComunicator().informarConMomentoCreacionaGrupoAgentes(miEvaluacion, agentesEquipo);
               infoDecision.setRespuestasEsperadas(agentesEquipo.size());
-              infoDecision.setMiEvaluacionEnviadaAtodos(Boolean.TRUE);
+              infoDecision.setMiEvaluacionEnviadaAtodos(true);
+              infoDecision.sethanLlegadoTodasLasEvaluaciones(false);
              
               this.getEnvioHechos().actualizarHechoWithoutFireRules(infoDecision);
        //       this.generarInformeOK(identTarea, objetivoEjecutantedeTarea, nombreAgenteEmisor, VocabularioRosace.ResEjTaskMiEvalucionEnviadaAlEquipo);
@@ -65,7 +66,7 @@ import java.util.ArrayList;
                 InfoContEvtMsgAgteReactivo msg = new InfoContEvtMsgAgteReactivo("victimaAsignadaARobot",infoVictimaAsignada);
             this.getComunicator().enviarInfoAotroAgente(msg, VocabularioRosace.IdentAgteControladorSimulador);
                   this.getEnvioHechos().actualizarHechoWithoutFireRules(objetivoEjecutantedeTarea);
-                  trazas.aceptaNuevaTrazaEjecReglas(nombreAgenteEmisor, "Se Resuelve el objetivo  :"+ objetivoEjecutantedeTarea.getgoalId() +
+                  trazas.aceptaNuevaTrazaEjecReglas(nombreAgenteEmisor, "Se Resuelve el objetivo porque no hay miembros activos en el equipo :"+ objetivoEjecutantedeTarea.getgoalId() +
                           " relativo a la victima : "+ objetivoEjecutantedeTarea.getobjectReferenceId()+" \n");
               }
                this.getEnvioHechos().eliminarHecho(miEvaluacion);

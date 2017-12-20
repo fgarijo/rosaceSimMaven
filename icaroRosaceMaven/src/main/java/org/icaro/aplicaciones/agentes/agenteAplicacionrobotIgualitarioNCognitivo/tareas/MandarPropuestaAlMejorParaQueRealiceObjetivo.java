@@ -41,9 +41,10 @@ public class MandarPropuestaAlMejorParaQueRealiceObjetivo extends TareaSincrona 
                 miPropuesta.setJustificacion(infoDecision.getMi_eval());
 
                 trazas.aceptaNuevaTrazaEjecReglas(this.identAgente, "Se Ejecuta la Tarea :" + this.identTarea + " Se envia propuesta : "
-                        + VocabularioRosace.MsgPropuesta_Para_Q_vayaOtro + " Al Agente : " + nombreAgenteReceptor);
+                        + VocabularioRosace.MsgPropuesta_Para_Q_vayaOtro + " Al Agente : " + nombreAgenteReceptor + " MiEvaluacion : " + infoDecision.getMi_eval());
+                        
                 this.getComunicator().enviarInfoAotroAgente(miPropuesta, nombreAgenteReceptor);
-                infoDecision.setheInformadoAlmejorParaQueAsumaElObjetivo(Boolean.TRUE);
+                infoDecision.setheInformadoAlmejorParaQueAsumaElObjetivo(true);
                 this.getEnvioHechos().actualizarHecho(infoDecision);
                 trazas.aceptaNuevaTrazaEjecReglas(this.identAgente, "Se Genera un timeout de :" + VocabularioRosace.TimeOutMiliSecConseguirObjetivo + 
                          " Con mensaje  : " + VocabularioRosace.MsgTimeoutRecibirConfirmacionAsumirObjetivo);

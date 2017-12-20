@@ -80,6 +80,7 @@ public class VocabularioRosace extends NombresPredefinidos{
     static public  final String MsgeRobotBloqueadoPorOrden="robotBloqueadoPorOrden";
     static public  final String MsgeInfoEstadoAgente="infoEstadoAgente";
     static public  final String MsgePeticionAsumirObjetivo="peticionAsumirObjetivo";
+    static public  final String MsgePeticionConfirmarEquipo="peticionConfirmarEquipo";
     static public  final String IdentIteracionProcesoInformesCR ="procesamientoInformesCR";
     static public  final String IdentTareaTimeOutRecibirEvaluaciones1 ="TimeOutRecibirEvaluaciones1";
     static public  final String IdentTareaTimeOutRecibirEvaluaciones2 ="TimeOutRecibirEvaluaciones2";
@@ -149,7 +150,7 @@ public class VocabularioRosace extends NombresPredefinidos{
     static public  final String NombreFicheroSerieLlegadaYasignacion = "serieLlegadaYasignacionVictimas";
     static public  final String NombreFicheroSerieAsignacion = "serieAsignacionVictimas";
     static public  final String NombreFicheroEscenarioSimulacion = "identFicheroEscenarioSimulacion";
-    static public  final int TimeOutMiliSecConseguirObjetivo= 8000;
+    static public  final int TimeOutMiliSecConseguirObjetivo= 10000;
     static public  enum PeticionAgteControlSimul{TerminarSimulacion,mostrarEscenarioActualSimulado,pararRobot,sendSequenceOfSimulatedVictimsToRobotTeam,enviarIdentsEquipo};
     static public  enum EstadoMovimientoRobot {Indefinido,RobotParado, RobotEnMovimiento, RobotBloqueado, RobotBloqueadoPorObstaculo,RobotavanceImposible,enDestino, error};
     public static  enum EvalEnergiaRobot {sinEnergia,energiaSuficiente,EnergiaJusta, EnergiaInsuficiente };

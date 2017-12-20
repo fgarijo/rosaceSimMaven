@@ -4,6 +4,7 @@
  */
 package org.icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.tareas;
 import org.icaro.aplicaciones.Rosace.informacion.DecisionAgente;
+import org.icaro.aplicaciones.Rosace.informacion.Victim;
 import org.icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.informacion.InfoParaDecidirQuienVa;
 import org.icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Focus;
 import org.icaro.infraestructura.entidadesBasicas.procesadorCognitivo.MisObjetivos;
@@ -19,24 +20,34 @@ public class AceptarDecisionDeOtroAgente extends TareaSincrona{
     @Override
    public void ejecutar(Object... params) {
 	   try {
-             Objetivo ayudarVictima = (Objetivo) params[0];
+             Victim victimaImplicada = (Victim) params[0];
              Objetivo decidirQuienVa = (Objetivo)params[1];
              InfoParaDecidirQuienVa infoDecision = (InfoParaDecidirQuienVa)params[2];
              Focus focoActual = (Focus)params[3];
              DecisionAgente decisionOtroAgente= (DecisionAgente)params[4];
              String nombreAgenteEmisor = this.getIdentAgente();
+             String identAgtEnviaDecision=decisionOtroAgente.identAgente;
+             if(infoDecision.getAgentesEquipo().contains(identAgtEnviaDecision)){
              decidirQuienVa.setSolved();
-             infoDecision.objetivoAsumidoPorOtroAgte= true;
+             infoDecision.setobjetivoAsumidoPorOtroAgte(true);
+             victimaImplicada.setrobotResponsableId(identAgtEnviaDecision);
                 this.getEnvioHechos().actualizarHechoWithoutFireRules(infoDecision);
                 this.getEnvioHechos().actualizarHechoWithoutFireRules(decidirQuienVa);
-                this.getEnvioHechos().eliminarHecho(decisionOtroAgente);
-                this.getEnvioHechos().actualizarHecho(focoActual);
-            trazas.aceptaNuevaTrazaEjecReglas(identAgente, "Se ha ejecutado la tarea " + identTarea
-                            + " Se ha tomado una decision para salvar a la victima :  " + decisionOtroAgente.getidentObjectRefDecision() + "\n"+
-                              " Agente a cargo de la tarea : " +  decisionOtroAgente.identAgente +    
+                this.getEnvioHechos().actualizarHechoWithoutFireRules(victimaImplicada);
+                 this.getEnvioHechos().actualizarHecho(focoActual);
+                trazas.aceptaNuevaTrazaEjecReglas(identAgente, "Se ha ejecutado la tarea " + identTarea
+                            + " Se ha tomado una decision para salvar a la victima :  " + victimaImplicada.getName() + "\n"+
+                              " Agente a cargo de la tarea : " +  identAgtEnviaDecision +    
                             "Objetivo conseguido :  " + decidirQuienVa + "El foco esta en el objetivo  :  " + focoActual+ "\n");
+             }else
+                 trazas.aceptaNuevaTrazaEjecReglas(identAgente, "Se ha ejecutado la tarea " + identTarea
+                            + " Se ha tomado una decision para salvar a la victima :  " + decisionOtroAgente.getidentObjectRefDecision() + "\n"+
+                              " Agente a cargo de la tarea : " +  identAgtEnviaDecision + " Pero el agente no esta en mi equipo porque puede estar bloqeado"+ "\n");     
+                this.getEnvioHechos().eliminarHecho(decisionOtroAgente);
+               
+            
                             
-            System.out.println("\n"+nombreAgenteEmisor +"Se ejecuta la tarea " + this.getIdentTarea()+ " Se actualiza el  objetivo:  "+ ayudarVictima+"\n\n" );
+            System.out.println("\n"+nombreAgenteEmisor +"Se ejecuta la tarea " + this.getIdentTarea()+ " Se actualiza el  objetivo:  "+ decidirQuienVa+"\n\n" );
                           
              
        } catch (Exception e) {

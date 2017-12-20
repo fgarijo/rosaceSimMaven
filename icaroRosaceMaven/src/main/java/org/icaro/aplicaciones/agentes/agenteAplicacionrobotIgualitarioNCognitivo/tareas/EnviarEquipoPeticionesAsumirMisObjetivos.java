@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.PriorityBlockingQueue;
 import org.icaro.aplicaciones.Rosace.informacion.Victim;
+import org.icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
 
 /**
  *
@@ -39,7 +40,7 @@ public class EnviarEquipoPeticionesAsumirMisObjetivos extends TareaSincrona{
              infoTransmisionObjs = new InfoTransimisionObjetivos(identAgente,miEquipo,miEstatus.getcausaCambioEstado());
              // Enviamos las propuestas a los miembros del equipo
              Iterator<Objetivo>  iterObj = misObjsAccion.getMisObjetivosPriorizados().iterator();
-            ArrayList<String> idsAgtesMiequipo = miEquipo.getTeamMemberIDs();
+            ArrayList<String> idsAgtesMiequipo = miEquipo.getIDsMiembrosActivos();
             trazas.aceptaNuevaTrazaEjecReglas(identAgente, "  Se ejecuta la tarea : " + identTarea 
                       + " Objetivos a transmitir : "+ misObjsAccion.getMisObjetivosPriorizados().toString() +"\n"+
                       "Agentes en mi equipo: " + idsAgtesMiequipo ); 
@@ -47,13 +48,16 @@ public class EnviarEquipoPeticionesAsumirMisObjetivos extends TareaSincrona{
   	  	  //Hay al menos un objetivo    		
                 Objetivo obj = iterObj.next();
 //                if(obj.getgoalId().equals(idObjetivoAtrasmitir) ){
-                if( obj.getgoalId().equals("AyudarVictima")){
+                if( obj.getgoalId().equals("AyudarVictima")&&(obj.getState()!=Objetivo.SOLVED )){
                 String obrefId = obj.getobjectReferenceId();
                 PeticionAsumirObjetivo petAsumirObj = new PeticionAsumirObjetivo(this.identAgente, obj, (RobotStatus1)miEstatus); 
 //                petAsumirObj.setinfoComplementaria((Victim)victimas.getVictimToRescue(obrefId).clone());
                 this.getComunicator().informaraGrupoAgentes(petAsumirObj, idsAgtesMiequipo);
                 infoTransmisionObjs.addInfoPropuestaEnviada(obrefId);
                 trazas.aceptaNuevaTrazaEjecReglas(identAgente, " Se envia una peticion al equipo para salvar a la victima : "+obrefId+ "Se aniade la victima a InfoTransimisionObjetivos . Contenido :  " + infoTransmisionObjs +"\n");
+                trazas.aceptaNuevaTraza(new InfoTraza("OrdenAsignacion",
+                                                     " El robot " + this.identAgente + " delega el salvamento de la victima " + obrefId+"\n",
+                                                     InfoTraza.NivelTraza.debug));
                 }
             }
              this.getEnvioHechos().insertarHecho(infoTransmisionObjs);

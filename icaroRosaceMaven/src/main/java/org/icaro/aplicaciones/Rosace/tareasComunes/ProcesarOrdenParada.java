@@ -79,8 +79,8 @@ public class ProcesarOrdenParada extends TareaSincrona {
             System.out.println( "\n"+identTarea+" Miestado  "+ infoMiEstado.toString() +" \n\n" ); 
                 this.getComunicator().informaraGrupoAgentes(infoMiEstado, idsMiembroActivos);
                 this.getEnvioHechos().eliminarHecho(ordenCC);
-             this.getEnvioHechos().eliminarHechoWithoutFireRules(miEstatus);
-             this.getEnvioHechos().insertarHecho(miEstatus.clone());
+//             this.getEnvioHechos().eliminarHechoWithoutFireRules(miEstatus);
+             this.getEnvioHechos().actualizarHecho(miEstatus);
              if(infoDecision!=null){
 //                EvaluacionAgente miEval = new EvaluacionAgente(identAgente, Integer.MAX_VALUE);
                 infoDecision.setMi_eval(Integer.MAX_VALUE);
