@@ -5,12 +5,8 @@
 
 package org.icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.informacion;
 import org.icaro.aplicaciones.Rosace.informacion.*;
-import org.icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
-import org.icaro.infraestructura.recursosOrganizacion.configuracion.ItfUsoConfiguracion;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 /**
  *
  * @author Francisco J Garijo
@@ -130,6 +126,17 @@ public class InfoParaDecidirQuienVa implements Serializable{
          }
          return evalRecibidas;
      }
+     public synchronized void eliminarAgenteEquipo(String idAgte){
+         int indiceAgte = agentesEquipo.indexOf(idAgte);
+         if (indiceAgte>-1 ){ // El agente a  eliminar esta en el equipo
+             respuestasAgentes.remove(indiceAgte);
+             evaluacionesRecibidas.remove(indiceAgte);
+             confirmacionesAgentes.remove(indiceAgte);
+             agentesEquipo.remove(indiceAgte);
+             actualizarAtributos();
+             
+         }
+     }
     public synchronized ArrayList getAgentesEquipo(){
           return agentesEquipo;
      }
@@ -193,8 +200,10 @@ public class InfoParaDecidirQuienVa implements Serializable{
              if(evaluacion_local<mejor_eval){
                  mejorAgente = (String)agentesEquipo.get(i);
                  mejor_eval = evaluacion_local;
+                 indiceAgenteConMejorEvaluacion=i;
              }
          }
+         valorMinimoCosteRecibido=mejor_eval;
          return mejorAgente;
          }else return null;
      }
@@ -290,21 +299,47 @@ public class InfoParaDecidirQuienVa implements Serializable{
           Integer eval = evaluacion.getEvaluacion();
           Integer indiceAgente = agentesEquipo.indexOf ( evaluacion.getIdentAgente());
           // Si el agente no pertenece al equipo ignoro la evalucion que puede ser la mia
-          if (indiceAgente != -1 ) {
-              if (eval < valorMinimoCosteRecibido   ){
-                    // Si la evaluacion recibida es menor que la mejor evaluacion actualizo el valor de la mejor evaluacion
-                    valorMinimoCosteRecibido = eval;
-                    indiceAgenteConMejorEvaluacion = indiceAgente;
-              }
-
+          if (indiceAgente != -1 ) {           
               if ((Integer)evaluacionesRecibidas.get(indiceAgente)== 0 ){
                     // Si recibimos otra evaluacion del mismo agente no incrementamos     
                     numeroEvaluacionesRecibidas ++;
               }
-                
+              if (eval < valorMinimoCosteRecibido   ){
+                    // Si la evaluacion recibida es menor que la mejor evaluacion actualizo el valor de la mejor evaluacion
+                    valorMinimoCosteRecibido = eval;
+                    indiceAgenteConMejorEvaluacion = indiceAgente;
+              }else if (indiceAgenteConMejorEvaluacion == indiceAgente){
+                  dameIdentMejor(); // se actualiza el valorMinimoCosteRecibido y el indice del agnte con el valor del mejor
+              }   
               evaluacionesRecibidas.set(indiceAgente, eval);//guardamos la evaluacion recibida
+              actualizarAtributos();
 
-              if (numeroEvaluacionesRecibidas == agentesEquipo.size()){
+//              if (numeroEvaluacionesRecibidas == agentesEquipo.size()){
+//                    hanLlegadoTodasLasEvaluaciones = true;
+//                    // Caluculo si tengo la mejor evaluacio o si hay empate con otros
+//                    if (mi_eval > valorMinimoCosteRecibido ){
+//                        noSoyElMejor=true; 
+//                        hayEmpates = false;
+//                        tengoLaMejorEvaluacion = false;
+//                    }else
+//                        if (mi_eval == valorMinimoCosteRecibido ){
+//                             tengoLaMejorEvaluacion = false;
+//                             hayEmpates = true;
+//                             noSoyElMejor=false;
+//                        }else {// mi evaluacion es menor
+//                             tengoLaMejorEvaluacion = true;
+//                             hayEmpates = false;
+//                             noSoyElMejor=false;
+//                        }
+//              }
+                
+          }
+          }
+          // Si la evaluacion es -1 es decir esta fuera de rango  ignoro  la evaluacion
+          // el motor la elimina
+    }
+     public synchronized void actualizarAtributos() {
+         if (numeroEvaluacionesRecibidas == agentesEquipo.size()){
                     hanLlegadoTodasLasEvaluaciones = true;
                     // Caluculo si tengo la mejor evaluacio o si hay empate con otros
                     if (mi_eval > valorMinimoCosteRecibido ){
@@ -322,13 +357,7 @@ public class InfoParaDecidirQuienVa implements Serializable{
                              noSoyElMejor=false;
                         }
               }
-                
-          }
-          }
-          // Si la evaluacion es -1 es decir esta fuera de rango  ignoro  la evaluacion
-          // el motor la elimina
-    }
-    
+     }
     public synchronized void addConfirmacionRealizacionObjetivo(AceptacionPropuesta confObjetivo) {
          if(agentesEquipo!=null){
         String identObj = confObjetivo.getmsgAceptacionPropuesta();

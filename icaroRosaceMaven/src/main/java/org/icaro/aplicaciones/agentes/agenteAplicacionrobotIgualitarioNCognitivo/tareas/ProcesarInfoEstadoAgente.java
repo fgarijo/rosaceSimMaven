@@ -40,16 +40,18 @@ public class ProcesarInfoEstadoAgente extends TareaSincrona {
             // Se Verifica que el robot que hace la propuesta esta bloqueado
 //                  RobotStatus1 estatusRobot = (RobotStatus1)peticionRecibida.getJustificacion();
             String idAgteqEnviasuEstado = infoEstadoRobot.getidentAgte();
-                  if(infoEstadoRobot.getBloqueado())
+//                  if(infoEstadoRobot.getBloqueado())
             // Actualizo el equipo
                       miEquipo.setEstadoTeamMember(infoEstadoRobot);
-                  if(infoDecision !=null){
+                  if(infoDecision !=null&&infoEstadoRobot.getBloqueado() ){
                  String idVictimaEnDecision = infoDecision.getidElementoDecision();
                      Victim victimaImplicada = victims2R.getVictimToRescue(idVictimaEnDecision);
                              victimaImplicada.setrobotResponsableId(null);
             // Se crea una evaluacion disuasoria con maximo coste y se procesa como si el agte la hubiera enviado
-                      EvaluacionAgente evalDisuasoria = new EvaluacionAgente (idAgteqEnviasuEstado,Integer.MAX_VALUE );
-                      infoDecision.addNuevaEvaluacion(evalDisuasoria);
+            // Actualizar el equipo en infoDecision
+//                      EvaluacionAgente evalDisuasoria = new EvaluacionAgente (idAgteqEnviasuEstado,Integer.MAX_VALUE );
+//                      infoDecision.addNuevaEvaluacion(evalDisuasoria);
+                      infoDecision.eliminarAgenteEquipo(idAgteqEnviasuEstado);
                       infoDecision.setobjetivoAsumidoPorOtroAgte(false); // en caso de que lo hubiera asumido
                 
                  this.getEnvioHechos().actualizarHecho(victimaImplicada);

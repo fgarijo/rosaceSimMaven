@@ -514,14 +514,7 @@ public void guardarCasoYconfirmarVisualizacionResultados(){
             Exceptions.printStackTrace(ex);
         }
         if (infoCasoSimul.todasLasVictimasRescatadas()) {
-//            try {
-////                infoCasoSimul.ordenarInfoRescateVictimas();
-//                itfUsoRecursoPersistenciaEntornosSimulacion.guardarInfoCasoSimulacion(this.infoCasoSimul);
-//                this.informarEquipoFinSimulacion();
-////                this.visualizarYguardarResultadosCaso();
-//            } catch (Exception ex) {
-//                Exceptions.printStackTrace(ex);
-//            }
+            trazarInfoRescateVictimas ();
             
             this.informaraMiAutomata(VocabularioRosace.informacionFinSimulacion);
         }
@@ -644,5 +637,19 @@ public void guardarCasoYconfirmarVisualizacionResultados(){
         } catch (Exception ex) {
             Logger.getLogger(AccionesSemanticasAgenteAplicacionAgteControladorSimuladorRosace.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private void trazarInfoRescateVictimas( ){
+        trazas.aceptaNuevaTraza(new InfoTraza("OrdenRescate",
+                                               "\n"+ " Escenario : " +escenarioActual.getIdentEscenario()+ "\n", InfoTraza.NivelTraza.debug));
+      VictimasSalvadas victimasSrobot;
+        for (String idRobot:equipo.getTeamMemberIDs() ){
+        victimasSrobot=   infoCasoSimul.getIdentsVictimasSalvadasRobot(idRobot);
+        if (victimasSrobot!=null)
+            trazas.aceptaNuevaTraza(new InfoTraza("OrdenRescate",
+                                               "\n"+ " Victimas salvadas por el robot : " +idRobot + 
+                                                 victimasSrobot.getVictimas().toString(), InfoTraza.NivelTraza.debug));   
+         
+      }
     }
 }

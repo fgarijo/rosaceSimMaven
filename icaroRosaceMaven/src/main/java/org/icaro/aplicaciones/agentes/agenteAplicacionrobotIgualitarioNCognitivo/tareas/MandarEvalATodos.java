@@ -53,22 +53,24 @@ import java.util.ArrayList;
               infoDecision.setRespuestasEsperadas(agentesEquipo.size());
               infoDecision.setMiEvaluacionEnviadaAtodos(true);
               infoDecision.sethanLlegadoTodasLasEvaluaciones(false);
-             
-              this.getEnvioHechos().actualizarHechoWithoutFireRules(infoDecision);
        //       this.generarInformeOK(identTarea, objetivoEjecutantedeTarea, nombreAgenteEmisor, VocabularioRosace.ResEjTaskMiEvalucionEnviadaAlEquipo);
               trazas.aceptaNuevaTrazaEjecReglas(nombreAgenteEmisor, "Numero de agentes de los que espero respuesta:" + agentesEquipo.size()+"\n");
               this.generarInformeTemporizadoFromConfigProperty(VocabularioRosace.IdentTareaTimeOutRecibirEvaluaciones1,  objetivoEjecutantedeTarea, 
                       nombreAgenteEmisor,  idVictima);
               }else{ // El robot es el unico disponible por ello considera que el objetivo esta conseguido
                   objetivoEjecutantedeTarea.setSolved();
+                  infoDecision.sethanLlegadoTodasLasEvaluaciones(true);
+                  infoDecision.settengoLaMejorEval();
                 long tiempoActual = System.currentTimeMillis();
                 InfoAgteAsignacionVictima infoVictimaAsignada = new InfoAgteAsignacionVictima (this.identAgente,idVictima,tiempoActual,infoDecision.getMi_eval());
                 InfoContEvtMsgAgteReactivo msg = new InfoContEvtMsgAgteReactivo("victimaAsignadaARobot",infoVictimaAsignada);
             this.getComunicator().enviarInfoAotroAgente(msg, VocabularioRosace.IdentAgteControladorSimulador);
                   this.getEnvioHechos().actualizarHechoWithoutFireRules(objetivoEjecutantedeTarea);
+                  this.getEnvioHechos().actualizarHechoWithoutFireRules(infoDecision);
                   trazas.aceptaNuevaTrazaEjecReglas(nombreAgenteEmisor, "Se Resuelve el objetivo porque no hay miembros activos en el equipo :"+ objetivoEjecutantedeTarea.getgoalId() +
                           " relativo a la victima : "+ objetivoEjecutantedeTarea.getobjectReferenceId()+" \n");
               }
+               this.getEnvioHechos().actualizarHechoWithoutFireRules(infoDecision);
                this.getEnvioHechos().eliminarHecho(miEvaluacion);
              } // en el caso de que ya la haya enviado la evaluacion no hago nada
 		} catch (Exception e) {

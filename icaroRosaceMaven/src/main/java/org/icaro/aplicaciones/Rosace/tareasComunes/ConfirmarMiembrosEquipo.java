@@ -36,17 +36,26 @@ import org.icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Objetivo;
              Focus focoActual = (Focus)params[2];
               nombreAgenteEmisor = this.identAgente;
               agentesEquipo = equipoInfo.getTeamMemberIDs();
-              if(equipoInfo.getIDsMiembrosActivos().size()<agentesEquipo.size()){
-              trazas.aceptaNuevaTrazaEjecReglas(identAgente, "Se Ejecuta la Tarea : "+ identTarea + " Los agtes de mi equipo son : " + agentesEquipo );
-                        //            trazas.aceptaNuevaTraza(new InfoTraza(nombreAgenteEmisor, "Enviamos la evaluacion " + miEvaluacion, InfoTraza.NivelTraza.masterIA));          
+              ArrayList <String>  agtesConMiRol = equipoInfo.getTeamMemberIDsWithMyRol();
+              if(agtesConMiRol.size()<agentesEquipo.size()){
+              trazas.aceptaNuevaTrazaEjecReglas(identAgente, "Se Ejecuta la Tarea : "+ identTarea + " Los agtes con mi rol de mi equipo son : " + agtesConMiRol );        
               PeticionAgente petConfirmarEquipo = new PeticionConfirmarEquipo(identAgente,VocabularioRosace.MsgePeticionConfirmarEquipo,VocabularioRosace.IdentMisionEquipo);
-              trazas.aceptaNuevaTrazaEjecReglas(identAgente, " Enviamos peticion cnfirmar equipo " + petConfirmarEquipo.toString());  
-              this.getComunicator().informaraGrupoAgentes(petConfirmarEquipo, agentesEquipo);
+              trazas.aceptaNuevaTrazaEjecReglas(identAgente, " Enviamos peticion confirmar equipo " + petConfirmarEquipo.toString());  
+        //      this.getComunicator().informaraGrupoAgentes(petConfirmarEquipo, agentesEquipo);
+        // Se envia la peticion a los agentes de los que no tengo el rol
+        String identAgteAverificar ;
+                for (int i = 0; i < agentesEquipo.size();  i++ ){
+             identAgteAverificar = agentesEquipo.get(i);
+             if ( !agtesConMiRol.contains(identAgteAverificar)){
+                      this.getComunicator().enviarInfoAotroAgente(petConfirmarEquipo, identAgteAverificar);
+                      trazas.aceptaNuevaTrazaEjecReglas(nombreAgenteEmisor, " Envio mensaje de peticion de rol ala gente : " + identAgteAverificar ); 
+                    }
+            } 
                this.getEnvioHechos().insertarHecho(petConfirmarEquipo);
                this.getEnvioHechos().eliminarHecho(informe);
 //               this.getEnvioHechos().actualizarHecho(focoActual);
-              trazas.aceptaNuevaTrazaEjecReglas(nombreAgenteEmisor, " Numero de agentes de los que espero respuesta: " + agentesEquipo.size() );     
-              this.generarInformeTemporizadoFromConfigProperty(VocabularioRosace.IdentTareaTimeOutContactarMiembrosEquipo,null,nombreAgenteEmisor, null);
+                 
+              this.generarInformeTemporizadoFromConfigProperty(VocabularioRosace.IdentTareaTimeOutRecibirRespuestasEquipo,null,nombreAgenteEmisor, null);
                  }  else{ // tiene todos los miembros del equipo
                   Objetivo objFocalizado= focoActual.getFoco();
                   objFocalizado.setSolved();

@@ -47,7 +47,7 @@ public class ProcesarInformeLlegadaDestino extends TareaAsincrona{
              Informe informeRecibido = (Informe) params[5];
 //             trazas.aceptaNuevaTraza(new InfoTraza(this.identAgente, "Se Ejecuta la Tarea :"+ this.identTarea , InfoTraza.NivelTraza.info));
              trazas.aceptaNuevaTrazaEjecReglas(this.identAgente, " Se Procesa el informe   recibido por el agente :"+ "\n"+ informeRecibido.referenciaContexto +" Cuyo contenido:"+informeRecibido.contenidoInforme + "\n");
-            trazas.aceptaNuevaTraza(new InfoTraza("Orden rescate",
+            trazas.aceptaNuevaTraza(new InfoTraza("OrdenRescate",
                                                      " El robot " + this.identAgente + " ha salvado a la victima " + informeRecibido.referenciaContexto+"\n",
                                                      InfoTraza.NivelTraza.debug));
     // se actualiza el coste de la  vicitima salvada

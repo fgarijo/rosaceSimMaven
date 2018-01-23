@@ -37,19 +37,23 @@ public class ProcesarPeticionAsumirObjetivo extends TareaSincrona {
                   MisObjetivos misObjsDecision= (MisObjetivos)params[2];
                   InfoEquipo miEquipo =  (InfoEquipo)params[3];
                   Focus foco = (Focus)params[4];
+                  InfoParaDecidirQuienVa infodecision = (InfoParaDecidirQuienVa)params[5];
 //                  VictimsToRescue victims = (VictimsToRescue)params[4];
             // Se Verifica que el robot que hace la propuesta esta bloqueado
             String identAgteEnviaPeticion= peticionRecibida.getIdentAgente();
                   RobotStatus1 estatusRobot = (RobotStatus1)peticionRecibida.getJustificacion();
+                    String idvictima = victimaImplicada.getName();
                   if(estatusRobot.getBloqueado()){
             // Actualizo el equipo
                       miEquipo.setTeamMemberStatus( estatusRobot);
-                      miEquipo.eliminarIdentAgteDeMiEquipo(identAgteEnviaPeticion);
-            // Se asume que el objetivo es "SalvarVictima" y se trabaja con la referencia a  la victima     
-            // Se asume la peticion generando un objetivo para ver quien se hace cargo de salvar a la victima
-//                 Victim victimaRescate= (Victim) peticionRecibida.getinfoComplementaria();
-//                 if(victimaRescate!=null){
-                 String idvictima = victimaImplicada.getName();
+                 if ( infoDecision!=null){
+                     infoDecision.eliminarAgenteEquipo(identAgteEnviaPeticion);
+                     this.getEnvioHechos().actualizarHecho(infoDecision);
+                     this.trazas.aceptaNuevaTrazaEjecReglas(this.getIdentAgente(), 
+                        "Se ejecuta la tarea : " + this.getIdentTarea() + " Peticion recibida  del robot :  " + identAgteEnviaPeticion +"\n"+
+                       " Durante el proceso de decision. idVictima implicada : "+idvictima +" Estado del robot proponente bloqueado? : "+estatusRobot.getBloqueado()+
+                                "El foco esta en el objetivo : " + foco.getFoco()+ "\n" ); 
+                 } else{    
                  AyudarVictima nuevoObjAyudarVictima= new AyudarVictima(idvictima);
                  nuevoObjAyudarVictima.setPriority(victimaImplicada.getPriority());
                  victimaImplicada.setrobotResponsableId(null);
@@ -62,7 +66,7 @@ public class ProcesarPeticionAsumirObjetivo extends TareaSincrona {
 //                 if (foco.getFoco()==null)foco.setFoco(newDecision);               
 //                 this.getEnvioHechos().actualizarHecho(miEquipo);
 //                 this.getEnvioHechos().actualizarHechoWithoutFireRules(misObjsDecision);
-                 peticionRecibida.setpeticionAsumida(true);
+//                 peticionRecibida.setpeticionAsumida(true);
                  this.getEnvioHechos().actualizarHecho(victimaImplicada);
                  this.getEnvioHechos().actualizarHecho(nuevoObjAyudarVictima);
                  this.getEnvioHechos().actualizarHecho(newDecision);
@@ -70,15 +74,16 @@ public class ProcesarPeticionAsumirObjetivo extends TareaSincrona {
                 
                  this.trazas.aceptaNuevaTrazaEjecReglas(this.getIdentAgente(), 
                         " Se ejecuta la tarea : " + this.getIdentTarea() + " Peticion recibida del robot :  " + identAgteEnviaPeticion +"\n"+
-                        "  idVictima implicada : "+idvictima +" Estado del robot proponente bloqueado? : "+estatusRobot.getBloqueado()+"\n"+
+                        " Cuando no esta en un  proceso de decision.  idVictima implicada : "+idvictima +" Estado del robot proponente bloqueado? : "+estatusRobot.getBloqueado()+"\n"+
                          "  Se generan los objetivos  : " +newDecision + " y : " + nuevoObjAyudarVictima  +"\n"+    
                                 " El foco esta en el objetivo : " + foco.getFoco()+ "\n" +
                                 "  Miembros en mi equipo : " + miEquipo.getIDsMiembrosActivos().toString()+ "\n"); 
+                  }
                   }else
                      this.trazas.aceptaNuevaTrazaEjecReglas(this.getIdentAgente(), 
                         "Se ejecuta la tarea : " + this.getIdentTarea() + " Peticion recibida del robot :  " + identAgteEnviaPeticion +"\n"+
                         " la victima implicada es null. Estado del robot proponente bloqueado? : "+estatusRobot.getBloqueado()+
-                                "El foco esta en el objetivo : " + foco.getFoco()+ "\n" );  
+                                "El foco esta en el objetivo : " + foco.getFoco()+ "\n" ); 
                 this.getEnvioHechos().eliminarHecho(peticionRecibida);
                 if(foco.getFoco()==null)foco.setFoco(misObjsDecision.getobjetivoMasPrioritario());
                 this.getEnvioHechos().actualizarHecho(foco);

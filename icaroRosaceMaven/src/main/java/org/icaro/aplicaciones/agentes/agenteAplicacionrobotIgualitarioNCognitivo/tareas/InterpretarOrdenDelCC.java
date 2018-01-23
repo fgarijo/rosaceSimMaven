@@ -54,7 +54,8 @@ public class InterpretarOrdenDelCC extends TareaSincrona{
 //                 this.getEnvioHechos().insertarHecho(newDecision);
                  this.getEnvioHechos().eliminarHecho(ccOrdenAyudarVictima);
                  trazas.aceptaNuevaTrazaEjecReglas(this.identAgente, "Se Ejecuta la Tarea :"+ this.identTarea +" Se crea el  objetivo:  "+ newAyudarVictima+ "  y el objetivo : "+ newDecision+
-                         " Se actualiza el foco : " + foco.getFoco()+ "\n");
+                         " Se actualiza el foco : " + foco.getFoco()+ "\n"+ " Objetivos decision en la cola : " + misObjsDecision.getMisObjetivosPriorizados().toString()+
+                         "\n"+ " Objetivo mas prioritario : "+ misObjsDecision.getobjetivoMasPrioritario().toString()+ "\n");
             System.out.println("\n"+nombreAgenteEmisor +"Se ejecuta la tarea " + this.getIdentTarea()+ " Se crea el  objetivo:  "+ newAyudarVictima+"\n\n" );
 //             }
         //         Si el foco esta en un objetivo solved

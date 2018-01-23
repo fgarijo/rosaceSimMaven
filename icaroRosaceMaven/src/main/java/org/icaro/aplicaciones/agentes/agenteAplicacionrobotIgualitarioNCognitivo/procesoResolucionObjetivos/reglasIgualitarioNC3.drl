@@ -137,7 +137,7 @@ when
 //    miEquipo: InfoEquipo(idTeam:teamId,inicioContactoConEquipo== true)
  //   misObjs: MisObjetivos()
     peticionConf:PeticionConfirmarEquipo(identAgente == agentId)
-    infoTarea: InformeDeTarea(identTarea == VocabularioRosace.IdentTareaTimeOutContactarMiembrosEquipo)
+    infoTarea: InformeDeTarea(identTarea == VocabularioRosace.IdentTareaTimeOutRecibirRespuestasEquipo)
     obj1 : DefinirMiEquipo(state == Objetivo.SOLVING)
     focoActual : Focus(foco == obj1)
 then
@@ -227,7 +227,6 @@ end
 rule "Asignacion de  la victima tras conocer el equipo "
 no-loop true
  when
-    miEquipo: InfoEquipo()
     victimaCC:Victim(idVict:name)
     victims2R:VictimsToRescue(lastVictimToRescue==victimaCC)
     obj1 : DefinirMiEquipo(state == Objetivo.SOLVED)
@@ -241,7 +240,7 @@ no-loop true
     System.out.println( "\n"+agentId +"( ID Victima: " +idVict + " ) EJECUTO LA REGLA: "+drools.getRule().getName()+"\n\n" );
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId,"\n"+" EJECUTO LA REGLA: " + drools.getRule().getName()); 
 end
-*/
+
 
 //El centro de control manda un mensaje de peticion de ayuda a la victima  para que vaya el robot
 // Si no tengo ningun objetivo focalizado lo atiendo
@@ -262,6 +261,22 @@ salience 10
     System.out.println( "\n"+agentId +" EJECUTO LA REGLA: "+drools.getRule().getName()+"\n\n" );
     System.out.println( "\n"+agentId + "Foco: NULL " +" \n\n" ); 
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId,"\n"+"( ID Victima: "+$idVict + " ) EJECUTO LA REGLA " + drools.getRule().getName() + "\n");  
+end
+*/
+rule "Interpreto la orden del CC cuando no estoy en un proceso de  decision"
+salience 10 
+ when
+    victimaCC:Victim(idVict:name)   
+    obj1 : AyudarVictima(state == Objetivo.PENDING, victimId == idVict)
+    focoActual : Focus(objFocalizado : foco  )
+    not (exists ( InfoParaDecidirQuienVa()))
+    ccOrden:OrdenCentroControl(mensajeOrden == VocabularioRosace.MsgOrdenCCAyudarVictima,justificacion != victimaCC )
+ then
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(InterpretarOrdenDelCC.class); //crea el  objetivo ayudar victima
+    tarea.ejecutar(objetivosDecision,ccOrden,victimsArescatar, focoActual ); 
+    System.out.println( "\n"+agentId +" EJECUTO LA REGLA: "+drools.getRule().getName()+"\n\n" );
+    System.out.println( "\n"+agentId + "Foco: NULL " +" \n\n" ); 
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId,"\n"+"( ID Victima: "+idVict + " ) EJECUTO LA REGLA " + drools.getRule().getName() + "\n");  
 end
 
 //rule "Me piden mi evaluacion sobre una victima sobre la que no he se ha decidido nada "
@@ -473,6 +488,22 @@ salience 10
     System.out.println( "\n"+agentId + "Foco: Estoy en  el objetivo "+focoActual.toString()+" \n\n" );
 end
 */
+rule " Foc4: Focalizacion en una nueva decision e inicio de ayuda a victima "
+ when
+    victimaCC:Victim(idVict:name)
+    estatusRobot :RobotStatus1(bloqueado==false)
+    objAcc :AyudarVictima(state == Objetivo.PENDING, victimId == idVict)   
+    objDec: DecidirQuienVa (state == Objetivo.SOLVED,objectDecisionId == idVict )
+    focoActual:Focus(foco == objDec)
+    infoDecision: InfoParaDecidirQuienVa(idElementoDecision == idVict)
+ then 
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(ActualizarObjsAccionyDecision1.class);
+    tarea.ejecutar(objetivosAccion,objetivosDecision, objAcc,infoDecision,focoActual, estatusRobot, victimaCC);
+    System.out.println( "\n"+agentId +" EJECUTO LA REGLA: "+drools.getRule().getName()+" \n\n" );
+    System.out.println( "\n"+agentId + "Foco: Estoy en  el objetivo "+focoActual.toString()+" \n\n" );
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId,"\n"+"( ID Victima: "+idVict + " ) EJECUTO LA REGLA " + drools.getRule().getName() + "\n");
+end
+/*
 rule " Foc4: Re-focalizacion  en el  ultimo objetivo despues de conseguir decidirQuienVa "
  when
     victimaCC:Victim(idVict:name)
@@ -498,12 +529,12 @@ when
     victimaCC:Victim(idVict:name)
   //  misObjsAcc: MisObjetivos(categoria==VocabularioRosace.IdentCategoriaObjetivosAccion)
  //   misObjsDec: MisObjetivos(categoria==VocabularioRosace.IdentCategoriaObjetivosDecision)
-    estatusRobot :RobotStatus1()
+    estatusRobot :RobotStatus1(bloqueado==false)
  //   victims2R:VictimsToRescue(victims2Rescue!=null)
     objAcc :AyudarVictima(state == Objetivo.PENDING, victimId == idVict)   
     objDec: DecidirQuienVa (state == Objetivo.SOLVED,objectDecisionId == idVict )
     infoDecision: InfoParaDecidirQuienVa(idElementoDecision == idVict,tengoLaMejorEvaluacion == true, miDecisionParaAsumirElObjetivoEnviadaAtodos == true)
-    focoActual:Focus()
+    focoActual:Focus(foco == objDec)
  then
 //    TareaSincrona tarea = gestorTareas.crearTareaSincrona(EncolarObjetivoActualizarFocoIGN1.class);
     TareaSincrona tarea = gestorTareas.crearTareaSincrona(ActualizarObjsAccionyDecision.class);
@@ -642,7 +673,7 @@ rule "Proceso timeout para recibir asumpcion objetivo DecidirQuienVa "
     focoActual : Focus(foco == obj2)
     infoTarea: InformeDeTarea(referenciaContexto==idObjetivo,contenidoInforme==VocabularioRosace.MsgTimeoutRecibirConfirmacionAsumirObjetivo)
  then
-    TareaSincrona tarea = gestorTareas.crearTareaSincrona(AsimilarDecisionAsignVictimaOtroAgte.class);
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(AsumirDecisionAsignVictimaOtroAgte.class);
     tarea.ejecutar(objetivosDecision, obj1,obj2,infoDecision,focoActual,victimaCC);
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId,"\n"+"( ID Victima: "+idVict + " ) EJECUTO LA REGLA " + drools.getRule().getName() + "\n");
     System.out.println( "\n"+agentId +" EJECUTO LA REGLA: "+drools.getRule().getName()+" \n\n" );
@@ -1291,28 +1322,26 @@ end
 //   Lo trato con prioridad porque puede afectar a la informacion del equipo        
 //==========================================================================
 //
-/*
+
 rule "Tratamiento de una  peticion para asumir un objetivo durante el proceso de decision"
 no-loop true
-//salience 10
+salience 10
  when
-//   miEquipo: InfoEquipo()
    miStatus:RobotStatus1(bloqueado==false)
    victimaCC: Victim(idVict:name,robotResponsableId!=null)   
     peticion:PeticionAsumirObjetivo(peticionAsumida== false,identObjectRefPeticion==idVict)
-    objDecision:DecidirQuienVa(objectDecisionId != idVict,state==Objetivo.SOLVING) 
- //   victimas:VictimsToRescue(victims2Rescue!=null)
+    objDecision:DecidirQuienVa(idObjDec:objectDecisionId,state==Objetivo.SOLVING)
+    infoDecision:InfoParaDecidirQuienVa(idElementoDecision == idObjDec)
     focoActual : Focus( foco==objDecision )
  then
     TareaSincrona tarea = gestorTareas.crearTareaSincrona(ProcesarPeticionAsumirObjetivo.class); //crea el  objetivo ayudar victima
-    tarea.ejecutar(victimaCC,peticion,objetivosDecision,miEquipo,focoActual); 
+    tarea.ejecutar(victimaCC,peticion,objetivosDecision,miEquipo,focoActual,infoDecision); 
     System.out.println( "\n"+agentId +"( ID Victima: "+idVict+" EJECUTO LA REGLA: "+drools.getRule().getName()+"\n\n" );
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId,"\n"+"( ID Victima: "+idVict + " ) EJECUTO LA REGLA " + drools.getRule().getName() + "\n");
 end
 
-*/
 rule "Tratamiento de una  peticion para asumir un objetivo con foco null"
-no-loop true
+//no-loop true
 salience 10
  when
  //  miEquipo: InfoEquipo()
@@ -1320,13 +1349,14 @@ salience 10
 //   victimaCC: Victim(idVict:name,robotResponsableId!=null)
     victimaCC: Victim(idVict:name)
     peticion:PeticionAsumirObjetivo(peticionAsumida== false,identObjectRefPeticion==idVict)
+    not(exists (InfoParaDecidirQuienVa()))
   //  objDecision:DecidirQuienVa(objectDecisionId != idVict,state==Objetivo.SOLVING) 
  //   victimas:VictimsToRescue(victims2Rescue!=null)
  //   focoActual : Focus( foco==null )
  focoActual : Focus()
  then
     TareaSincrona tarea = gestorTareas.crearTareaSincrona(ProcesarPeticionAsumirObjetivo.class); //crea el  objetivo ayudar victima
-    tarea.ejecutar(victimaCC,peticion,objetivosDecision,miEquipo,focoActual); 
+    tarea.ejecutar(victimaCC,peticion,objetivosDecision,miEquipo,focoActual, null); 
     System.out.println( "\n"+agentId +"( ID Victima: "+idVict+" EJECUTO LA REGLA: "+drools.getRule().getName()+"\n\n" );
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId,"\n"+"( ID Victima: "+idVict + " ) EJECUTO LA REGLA " + drools.getRule().getName() + "\n");
 end
