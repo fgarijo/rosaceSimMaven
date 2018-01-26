@@ -64,6 +64,6 @@ import java.util.HashSet;
     public RobotStatus getRobotStatus ( String robotId)throws Exception;
     public EscenarioSimulacionRobtsVictms obtenerInfoEscenarioSimulacion(String rutaFicheroEscenario)throws Exception;
     public boolean  eliminarEscenarioSimulacion(String rutaFicheroInfoPersistencia)throws Exception;
-    public boolean guardarInfoEscenarioSimulacion(EscenarioSimulacionRobtsVictms escenario)throws Exception;
+    public boolean guardarInfoEscenarioSimulacion(EscenarioSimulacionRobtsVictms escenario, boolean renombrarEscenario)throws Exception;
     public HashSet obtenerIdentsEscenarioSimulacion()throws Exception;
 }

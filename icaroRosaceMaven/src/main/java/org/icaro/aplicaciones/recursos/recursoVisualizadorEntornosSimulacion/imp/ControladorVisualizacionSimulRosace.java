@@ -204,44 +204,44 @@ public class ControladorVisualizacionSimulRosace {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void peticionGuardarEscenario(EscenarioSimulacionRobtsVictms escenarioComp) {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        // si no hay un escenario actual definido indicamos al usuario que no hay escenario definido
-        // si en el escenario a guardar no hay robots ni victimas se lo decimos
-        escenarioEdicionComp = escenarioComp;
-        if (escenarioEdicionComp.getNumRobots() <= 0) {
-            visorEditorEscen.visualizarConsejo(tituloAvisoEscenSinRobotsDefinidos, mensajeEscenarioSinRobots, recomendacionDefinirRobots);
-        } else {
-            int respuesta = visorEditorEscen.confirmarPeticionGuardarEscenario("Se va a guardar el escenario : ");
-            if (respuesta == JOptionPane.OK_OPTION) {
-
-                ArrayList<String> robotNombres = escenarioComp.getListIdentsRobots();
-                for (String ideRobot : robotNombres) {
-//                 String ideRobot = (String)robtIter.next();
-                    RobotStatus1 infoRobot = (RobotStatus1) escenarioComp.getRobotInfo(ideRobot);
-                    List<RobotCapability> capacidades = infoRobot.getRobotCapabilities();
-                    System.out.println("Desde peticion Guardar Lista de capacidades a guardar del robot  : " + ideRobot + "Capacidades : " + capacidades.toString());
-                }
-                System.out.println("Desde peticion Guardar Numero de Robots  : " + escenarioEdicionComp.getNumRobots() + " Numero de victimas : " + escenarioEdicionComp.getNumVictimas());
-//             if (itfPersistenciaSimul==null)   
-//                persistenciaLocal.guardarInfoEscenarioSimulacion(directorioPersistencia, escenarioEdicionComp);
-//             else 
-                try {
-                    itfPersistenciaSimul.guardarInfoEscenarioSimulacion(escenarioEdicionComp);
-                } catch (Exception ex) {
-                    Exceptions.printStackTrace(ex);
-                }
-                if (peticionObtenerEscenarioValido && !escenarioValidoObtenido) {
-                    // se envia el escenario al agente controlador que puede estar esperandolo
-                    notifEvts.sendInfoEscenarioSeleccionado(escenarioEdicionComp);
-                }
-            }
-            if (!visorMovientoIniciado) {
-                visorControlSim.visualizarIdentsEquipoRobot(escenarioComp.getListIdentsRobots());
-                visorControlSim.setIdentEscenarioActual(escenarioComp.getIdentEscenario());
-            }
-        }
-    }
+//    public void peticionGuardarEscenario(EscenarioSimulacionRobtsVictms escenarioComp) {
+////        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//        // si no hay un escenario actual definido indicamos al usuario que no hay escenario definido
+//        // si en el escenario a guardar no hay robots ni victimas se lo decimos
+//        escenarioEdicionComp = escenarioComp;
+//        if (escenarioEdicionComp.getNumRobots() <= 0) {
+//            visorEditorEscen.visualizarConsejo(tituloAvisoEscenSinRobotsDefinidos, mensajeEscenarioSinRobots, recomendacionDefinirRobots);
+//        } else {
+//            int respuesta = visorEditorEscen.confirmarPeticionGuardarEscenario("Se va a guardar el escenario : ");
+//            if (respuesta == JOptionPane.OK_OPTION) {
+//
+//                ArrayList<String> robotNombres = escenarioComp.getListIdentsRobots();
+//                for (String ideRobot : robotNombres) {
+////                 String ideRobot = (String)robtIter.next();
+//                    RobotStatus1 infoRobot = (RobotStatus1) escenarioComp.getRobotInfo(ideRobot);
+//                    List<RobotCapability> capacidades = infoRobot.getRobotCapabilities();
+//                    System.out.println("Desde peticion Guardar Lista de capacidades a guardar del robot  : " + ideRobot + "Capacidades : " + capacidades.toString());
+//                }
+//                System.out.println("Desde peticion Guardar Numero de Robots  : " + escenarioEdicionComp.getNumRobots() + " Numero de victimas : " + escenarioEdicionComp.getNumVictimas());
+////             if (itfPersistenciaSimul==null)   
+////                persistenciaLocal.guardarInfoEscenarioSimulacion(directorioPersistencia, escenarioEdicionComp);
+////             else 
+//                try {
+//                    itfPersistenciaSimul.guardarInfoEscenarioSimulacion(escenarioEdicionComp);
+//                } catch (Exception ex) {
+//                    Exceptions.printStackTrace(ex);
+//                }
+//                if (peticionObtenerEscenarioValido && !escenarioValidoObtenido) {
+//                    // se envia el escenario al agente controlador que puede estar esperandolo
+//                    notifEvts.sendInfoEscenarioSeleccionado(escenarioEdicionComp);
+//                }
+//            }
+//            if (!visorMovientoIniciado) {
+//                visorControlSim.visualizarIdentsEquipoRobot(escenarioComp.getListIdentsRobots());
+//                visorControlSim.setIdentEscenarioActual(escenarioComp.getIdentEscenario());
+//            }
+//        }
+//    }
 
     public void mostrarEscenarioMovimiento(EscenarioSimulacionRobtsVictms escenarioComp) {
         // Esta peticion viene del agente controlador y supone que el escenario es valido

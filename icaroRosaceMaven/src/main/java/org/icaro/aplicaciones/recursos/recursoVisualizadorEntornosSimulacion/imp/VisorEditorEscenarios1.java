@@ -78,9 +78,11 @@ public class VisorEditorEscenarios1 extends javax.swing.JFrame {
     private boolean intencionUsuarioCrearRobot;
     private boolean intencionUsuarioCrearVictima;
     private boolean entidadSeleccionadaParaMover;
+    private boolean escenarioGuardado;
+    private boolean escenarioModificado;
     private int numeroRobots, numeroVictimas;
     private volatile GestionEscenariosSimulacion gestionEscComp;
-    private volatile EscenarioSimulacionRobtsVictms escenarioActualComp;
+    private  EscenarioSimulacionRobtsVictms escenarioActualComp;
     private ComponentMover moverComp;
     private ControladorGestionEscenariosRosace controladorGestionEsc;
     private volatile PersistenciaVisualizadorEscenarios persistencia;
@@ -561,8 +563,11 @@ public class VisorEditorEscenarios1 extends javax.swing.JFrame {
     private void jMenuItemGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemGuardarActionPerformed
         // TODO add your handling code here:
          System.out.println("Ha pulsado el botón Guardar Escenario");
+         if(!escenarioGuardado||escenarioModificado){
          actualizarCoordenadasEntidades();
          controladorGestionEsc.peticionGuardarEscenario(escenarioActualComp);
+         escenarioGuardado=true;escenarioModificado=false;
+         }
     }//GEN-LAST:event_jMenuItemGuardarActionPerformed
 
     private void jPopupMenuAcionEntidadPopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jPopupMenuAcionEntidadPopupMenuWillBecomeVisible
@@ -651,7 +656,8 @@ public class VisorEditorEscenarios1 extends javax.swing.JFrame {
 
     private void jMenuItemSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSalirActionPerformed
         // TODO add your handling code here:
-        this.controladorGestionEsc.peticionSalirEditor();
+        System.out.println(" Variable escenarioModificado : = "+ escenarioModificado );
+        this.controladorGestionEsc.peticionSalirEditor(escenarioModificado);
     }//GEN-LAST:event_jMenuItemSalirActionPerformed
 
     private void formMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseReleased
@@ -743,6 +749,7 @@ public class VisorEditorEscenarios1 extends javax.swing.JFrame {
 //       listaEntidadesEnEscenario.add(label);
         
        moverComp.registerComponent(label);
+       
         return label;
     }
     private synchronized String geIdentEntidad(int tipoEntidad){
@@ -801,6 +808,7 @@ public class VisorEditorEscenarios1 extends javax.swing.JFrame {
         return etiqueta;   
     }
     public void addEntidadEnEscenario (String rutaIcono, String idEntidad, Point puntoLoc){
+        escenarioModificado=true;
          JLabel label = new JLabel();
            label.setText(idEntidad);
         label.setBounds(10, 10, 100, 100);
@@ -815,6 +823,8 @@ public class VisorEditorEscenarios1 extends javax.swing.JFrame {
     }
     public void eliminarEntidadSeleccionada (){
      JLabel entidadAeliminar=   (JLabel) moverComp.getUltimoComponenteSeleccionado();
+     escenarioModificado=true;
+     
 //        escenrioSimComp.eliminarEntidad(((JLabel)moverComp.eliminarUltimoCompSeleccionado()).getName());
 //     moverComp.deregisterComponent(entidadAeliminar);
 int indiceEntidad =0;
@@ -838,6 +848,7 @@ int indiceEntidad =0;
     actualizarInfoEquipoEnEscenario ();
     }
     public void actualizarInfoEquipoEnEscenario (){
+//        escenarioModificado=true;
         jTextFieldModeloOrganizacion.setText(""+modeloOrganizativo);
         intervalNumRobots.setText(""+numeroRobots);
         intervalNumVictimas.setText(""+numeroVictimas);
@@ -868,12 +879,9 @@ int indiceEntidad =0;
     private void setEscenarioActualComp(EscenarioSimulacionRobtsVictms escenActualComp){
         escenarioActualComp = escenActualComp;
     }
-     private void setPersistencia(PersistenciaVisualizadorEscenarios persistEscenario) {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    persistencia = persistEscenario;
-     }
      public void visualizarEscenario(EscenarioSimulacionRobtsVictms infoEscenario ){
          eliminarEntidadesEscenario();
+         System.out.println( "Se Va a visualizar el escenario con identificador "+ infoEscenario.getIdentEscenario() ); 
          escenarioActualComp= infoEscenario;
          listaIdentsRobots=infoEscenario.getListIdentsRobots();
          listaIdentsVictimas=infoEscenario.getListIdentsVictims();
@@ -920,32 +928,14 @@ int indiceEntidad =0;
          }
          this.setLocation(100,100);
          this.setVisible(true);
+          escenarioModificado=false;
      }
-     private void peticionGuardarEscenario (){
-         setLocationRelativeTo(this);
-//        escenarioActualComp.setIdentEscenario(jTextFieldIdentEquipo.getText());
-        escenarioActualComp.setIdentificadorNormalizado(); 
-        jTextFieldIdentEquipo.setText(escenarioActualComp.getIdentEscenario());
-        String smsg = "Se va a guardar el escenario: " + escenarioActualComp.getIdentEscenario();
-       int respuesta= JOptionPane.showConfirmDialog(rootPane, smsg,"Confirmar GuardarEscenario",JOptionPane.OK_CANCEL_OPTION );
-        //         jOptionPaneAvisoError.setToolTipText(smsg);
-       if (respuesta==JOptionPane.OK_OPTION){
-           gestionEscComp.addEscenario(escenarioActualComp);
-           this.actualizarCoordenadasEntidades();
-             persistencia.guardarInfoEscenarioSimulacion(directorioPersistencia, escenarioActualComp);
-       }
-     }
+     
      public int confirmarPeticionGuardarEscenario (String msgConfirmacion){
          escenarioActualComp.setIdentificadorNormalizado();
          jTextFieldIdentEquipo.setText(escenarioActualComp.getIdentEscenario());
         String smsg = msgConfirmacion + jTextFieldIdentEquipo.getText();
-//       int respuesta= JOptionPane.showConfirmDialog(rootPane, smsg,"Confirmar GuardarEscenario",JOptionPane.OK_CANCEL_OPTION );
-        //         jOptionPaneAvisoError.setToolTipText(smsg);
        return JOptionPane.showConfirmDialog(rootPane, smsg,"Confirmar GuardarEscenario",JOptionPane.OK_CANCEL_OPTION );
-//       if (respuesta==JOptionPane.OK_OPTION){
-//           gestionEscComp.addEscenario(escenarioActualComp);
-//             persistencia.guardarInfoEscenarioSimulacion(directorioPersistencia, escenarioActualComp);
-//       }
      }
      private void eliminarEntidadesEscenario(){
          JLabel labelActual;             
@@ -1102,32 +1092,9 @@ public void visualizarConsejo (String titulo, String msgConsejo, String recomend
         gestionEscComp.eliminarEscenario(ficheroseleccionado.getName());
          System.out.println("Se elimina el fichero :  "+ficheroseleccionado.getName());
       }
-    }    
-        
-           
+    }         
     }
-private void peticionAbrirEscenario() {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    FileNameExtensionFilter filter = new FileNameExtensionFilter("ficheros xml","xml","txt" );
-   
-      jFileChooser1.setFileFilter(filter);
-      jFileChooser1.setCurrentDirectory(new File(directorioPersistencia));
-      jFileChooser1.setFileSelectionMode(JFileChooser.FILES_ONLY);
-       int returnVal = jFileChooser1.showOpenDialog(this);
-    if (returnVal == JFileChooser.APPROVE_OPTION) {
-        File selectedFile = jFileChooser1.getSelectedFile();
-        escenarioActualComp = persistencia.obtenerInfoEscenarioSimulacion(selectedFile.getAbsolutePath());
-        escenarioActualComp.setGestorEscenarios(gestionEscComp);
-        visualizarEscenario(escenarioActualComp);
-        
-//               fileName = selectedFile.getName();
-        // enviariamos el fichero a la persistencia para que nos diera el contenido
-        // se visualiza un escenario a partir de la información almacenada
-        System.out.println("Ejecuto  accion sobre el fichero "+selectedFile.getAbsolutePath());
-    } else {
-        System.out.println("File access cancelled by user.");
-    }
-    }
+
    public File peticionUsuarioSeleccionarFichero(String directorio, String motivo){
        FileNameExtensionFilter filter = new FileNameExtensionFilter("ficheros xml","xml","txt" );
       jFileChooser1.setDialogTitle(motivo);
@@ -1148,7 +1115,10 @@ private void peticionAbrirEscenario() {
       int numFiles = dir.list().length ;
       return(numFiles > 0);
       }
-     
+     public boolean getescenarioModificado(){
+         escenarioModificado=moverComp.getCambios();
+         return escenarioModificado;
+     }
      public File solicitarSeleccionFichero(){
       FileNameExtensionFilter filter = new FileNameExtensionFilter("ficheros xml","xml","txt" );
       jFileChooser1.setFileFilter(filter);

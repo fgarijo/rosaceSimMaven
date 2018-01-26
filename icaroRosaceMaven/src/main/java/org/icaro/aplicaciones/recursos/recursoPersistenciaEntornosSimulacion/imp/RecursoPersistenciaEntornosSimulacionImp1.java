@@ -94,39 +94,34 @@ public class RecursoPersistenciaEntornosSimulacionImp1 extends ImplRecursoSimple
                 infoVictimasAsigandas = new ArrayList<InfoAgteAsignacionVictima>();
                 identsEscenarioSimulacion = new HashSet<String>();
                 identsResultadosSimulacion = new HashSet<String>();
-                // pruebas 
-//            File f =    obtenerFicheroEscenario("modeloOrg_JerarquicoNumRobts_5NumVicts_5");
-//            HashSet set = obtenerIdentsEscenarioSimulacion(directorioPersistencia);
-//            EscenarioSimulacionRobtsVictms escenario = obtenerInfoEscenarioSimulacion("modeloOrg_JerarquicoNumRobts_5NumVicts_5");
-//            this.guardarInfoEscenarioSimulacion(escenario);
-//                robotsDefinidos = getTeamRobotStatus();
         } catch (Exception ex) {
             Logger.getLogger(RecursoPersistenciaEntornosSimulacionImp1.class.getName()).log(Level.SEVERE, null, ex);
  //           return null;
         }
      }
-    public boolean guardarInfoEscenarioSimulacion(EscenarioSimulacionRobtsVictms escenario){
+    public boolean guardarInfoEscenarioSimulacion(EscenarioSimulacionRobtsVictms escenario, boolean renombrarEscenario){
+        
          Serializer serializer = new Persister();
-//         String identFichero = VocabularioRosace.rutaPersistenciaEscenarios+File.separator+escenario.getIdentEscenario()+".xml";
          try {
              String identFichero = escenario.getIdentEscenario()+extFicheroXML;
-             
+             System.out.println("Ejecuto una peticion para guardar el fichero   : "+ identFichero);
 //             File ficheroEscenario = this.obtenerFicheroEscenario(identFichero);
-             if (identsEscenarioSimulacion.contains(identFichero)){// Se renombra el fichero agnadiendo 
+             if (identsEscenarioSimulacion.contains(identFichero)&&renombrarEscenario){// Se renombra el fichero agnadiendo 
                  identFichero = this.renombrarFichero(identFichero);
+                 identsEscenarioSimulacion.add(identFichero);
              }
-             identsEscenarioSimulacion.add(identFichero);
+             
              identFichero = directorioFicherosPersistenciaEscenarios+File.separator+identFichero;
              File ficheroEscenario = new File (identFichero);
              serializer.write(escenario, ficheroEscenario);
              ArrayList<String> robotNombres = escenario.getListIdentsRobots();
-             for (String ideRobot:robotNombres){
+//             for (String ideRobot:robotNombres){
 //                 String ideRobot = (String)robtIter.next();
-              RobotStatus1 infoRobot = (RobotStatus1) escenario.getRobotInfo(ideRobot);
-             
-              List<RobotCapability> capacidades=infoRobot.getRobotCapabilities();
-                 System.out.println(" Desde persistencia Lista de capacidades a guardar del robot  : " + ideRobot+"Capacidades : "+ capacidades.toString() );
-             }
+//              RobotStatus1 infoRobot = (RobotStatus1) escenario.getRobotInfo(ideRobot);
+//             
+//              List<RobotCapability> capacidades=infoRobot.getRobotCapabilities();
+//                 System.out.println(" Desde persistencia Lista de capacidades a guardar del robot  : " + ideRobot+"Capacidades : "+ capacidades.toString() );
+//             }
               System.out.println("Desde peticion Guardar Numero de Robots  : " + escenario.getNumRobots()+" Numero de victimas : "+ escenario.getNumVictimas());
 
 //          serializer.write(escenario, new File(rutaFicheroInfoPersistencia+identFichero+".xml"));
@@ -134,8 +129,6 @@ public class RecursoPersistenciaEntornosSimulacionImp1 extends ImplRecursoSimple
           System.out.println("En el fichero   : "+ identFichero);
           System.out.println("Se va a guardar  : "+ escenario.toString() );
           return true;
-          
-        
         } catch (Exception e) { // catches ANY exception
             e.printStackTrace();
             return false;

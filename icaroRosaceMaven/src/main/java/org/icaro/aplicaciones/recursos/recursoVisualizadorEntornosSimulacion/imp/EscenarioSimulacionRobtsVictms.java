@@ -206,12 +206,12 @@ public void setIdentEscenario(String escenarioId) {
 }
     public synchronized String getIdentEscenario() {
 //        throw new UnsupportedOperationException("Not supported yet."); 
-    if ( migestor!=null)return migestor.getIdentEscenario(modeloOrganizativo, numRobots, numVictimas);
+//    if ( migestor!=null)return migestor.getIdentEscenario(modeloOrganizativo, numRobots, numVictimas);
         return this.identEscenario;
     }
    public synchronized void  setIdentificadorNormalizado(){
        // se lo pide al gestor para que verifique posibles conflictos
-      this.identEscenario= migestor.getIdentEscenario(modeloOrganizativo, numRobots, numVictimas);
+    if ( migestor!=null)  this.identEscenario= migestor.getIdentEscenario(modeloOrganizativo, numRobots, numVictimas);
     
 } 
    public ArrayList getListIdentsRobots(){

@@ -128,8 +128,8 @@ public  class ClaseGeneradoraRecursoPersistenciaEntornosSimulacion extends ImplR
     }
 
     @Override
-    public boolean guardarInfoEscenarioSimulacion( EscenarioSimulacionRobtsVictms escenario) throws Exception {
-        return impRecPersistenciaXML.guardarInfoEscenarioSimulacion(escenario);
+    public boolean guardarInfoEscenarioSimulacion( EscenarioSimulacionRobtsVictms escenario, boolean renombrarEscenario) throws Exception {
+        return impRecPersistenciaXML.guardarInfoEscenarioSimulacion(escenario,renombrarEscenario );
     }
 
     @Override
