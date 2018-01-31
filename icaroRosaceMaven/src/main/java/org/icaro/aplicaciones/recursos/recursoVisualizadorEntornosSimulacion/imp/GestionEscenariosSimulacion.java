@@ -50,6 +50,19 @@ public class GestionEscenariosSimulacion {
          }
          return identEscenario;
      }
+     public synchronized String getNewVersionEscenario (String idEscenario){
+         String idEscenarioBase= idEscenario.substring(0,idEscenario.lastIndexOf("_"));
+         int indiceEscenarioRepetido = Integer.parseInt(idEscenario.substring(idEscenario.lastIndexOf("_")+1));
+        System.out.println(" Nueva version Escenario. Escenario Base : "+ idEscenarioBase + " Subindice recibido : "+indiceEscenarioRepetido ); 
+         identsEscenarios.add(idEscenario+tipoFichero);
+         indiceEscenarioRepetido++;
+         String identEscenarioNuevo=idEscenarioBase+"_"+indiceEscenarioRepetido;
+         identsEscenarios.add(identEscenarioNuevo+tipoFichero);
+          System.out.println(" Nueva version Escenario. Ident escenario  :" +identEscenarioNuevo);
+          return identEscenarioNuevo;
+         
+     }
+     
      public void  setIdentsEscenariosSimulacion ( HashSet setIdentsEscenarios){
          identsEscenarios = setIdentsEscenarios;
      }

@@ -488,7 +488,7 @@ public class VisorEditorEscenarios1 extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.out.println("Ha pulsado el botón Guardar escenario");
         actualizarCoordenadasEntidades();
-        controladorGestionEsc.peticionGuardarEscenario(escenarioActualComp);
+        controladorGestionEsc.peticionGuardarEscenario(escenarioActualComp,moverComp.getCambios());
     }//GEN-LAST:event_jButtonGuardarEscenarioActionPerformed
 
     private void intervalNumRobotsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_intervalNumRobotsActionPerformed
@@ -507,18 +507,7 @@ public class VisorEditorEscenarios1 extends javax.swing.JFrame {
         // TODO add your handling code here:
          // TODO add your handling code here:
         actualizarCoordenadasEntidades();
-        controladorGestionEsc.peticionGuardarEscenario (escenarioActualComp);
-//         System.out.println("Ha pulsado el botón Aceptar valores Robots y victimas");
-//        String valor ;
-//        setLocationRelativeTo(this);
-//        escenarioActualComp.setIdentEscenario(jTextFieldIdentEquipo.getText());
-//        persistencia.guardarInfoEscenarioSimulacion(directorioPersistencia, escenarioActualComp);
-//
-//        //         String smsg = "Puede cambiar el valor en milisegundos en que deben enviarse las coordenadas";
-//
-//        String smsg = "Se va a guardar el escenario: " +jTextFieldIdentEquipo.getText() ;
-//        JOptionPane.showConfirmDialog(rootPane, smsg,"Confirmar GuardarEscenario",JOptionPane.OK_CANCEL_OPTION );
-//        //         jOptionPaneAvisoError.setToolTipText(smsg);
+        controladorGestionEsc.peticionGuardarEscenario (escenarioActualComp,moverComp.getCambios());
     }//GEN-LAST:event_jMenuItemGuardarEscenarioActionPerformed
 
     private void jButtonGuardarEscenarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonGuardarEscenarioMousePressed
@@ -563,9 +552,10 @@ public class VisorEditorEscenarios1 extends javax.swing.JFrame {
     private void jMenuItemGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemGuardarActionPerformed
         // TODO add your handling code here:
          System.out.println("Ha pulsado el botón Guardar Escenario");
+         escenarioModificado=moverComp.getCambios();
          if(!escenarioGuardado||escenarioModificado){
          actualizarCoordenadasEntidades();
-         controladorGestionEsc.peticionGuardarEscenario(escenarioActualComp);
+         controladorGestionEsc.peticionGuardarEscenario(escenarioActualComp,escenarioModificado);
          escenarioGuardado=true;escenarioModificado=false;
          }
     }//GEN-LAST:event_jMenuItemGuardarActionPerformed
@@ -612,7 +602,7 @@ public class VisorEditorEscenarios1 extends javax.swing.JFrame {
         // lo que tiene
         if (escenarioActualComp.getNumRobots()> 0){
 //            peticionGuardarEscenario();
-            this.controladorGestionEsc.peticionGuardarEscenario(escenarioActualComp);
+            this.controladorGestionEsc.peticionGuardarEscenario(escenarioActualComp,moverComp.getCambios());
             // Se avisa de que el escenario actual se va a guardar antes de abrir el nuevo
 //            escenarioActualComp.setIdentEscenario(jTextFieldIdentEquipo.getText());
 //       
@@ -656,7 +646,9 @@ public class VisorEditorEscenarios1 extends javax.swing.JFrame {
 
     private void jMenuItemSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSalirActionPerformed
         // TODO add your handling code here:
+        escenarioModificado=moverComp.getCambios()||escenarioModificado;
         System.out.println(" Variable escenarioModificado : = "+ escenarioModificado );
+        this.actualizarCoordenadasEntidades();
         this.controladorGestionEsc.peticionSalirEditor(escenarioModificado);
     }//GEN-LAST:event_jMenuItemSalirActionPerformed
 
@@ -685,8 +677,8 @@ public class VisorEditorEscenarios1 extends javax.swing.JFrame {
           evt.consume();
          
     }  
-     public int solicitarConfirmacion(String texto){
-        return( JOptionPane.showConfirmDialog(rootPane, texto));  
+     public int solicitarConfirmacion(String texto, String tituloVentana){
+        return( JOptionPane.showConfirmDialog(rootPane, texto,tituloVentana,JOptionPane.YES_NO_CANCEL_OPTION ));  
      }
 
     public void visualizarIdentsEquipoRobot ( ArrayList<String> equipoIds){
@@ -854,6 +846,8 @@ int indiceEntidad =0;
         intervalNumVictimas.setText(""+numeroVictimas);
         identEquipoActual=orgModelo+modeloOrganizativo+numRobots+numeroRobots+numVictims+numeroVictimas+subIndiceEscRepetido;
         jTextFieldIdentEquipo.setText(""+identEquipoActual);
+        escenarioActualComp.setIdentEscenario(identEquipoActual);
+        
     }
    
     public void actualizarCoordenadasEntidades(){
@@ -876,45 +870,42 @@ int indiceEntidad =0;
         escenarioActualComp.setNumVictimas(numVictims);
        System.out.println( "Robots y victimas despues de la actualizacion. Num Robots :  "+escenarioActualComp.getNumRobots()+ " Num Vicitimas : " + escenarioActualComp.getNumVictimas() );
     }
-    private void setEscenarioActualComp(EscenarioSimulacionRobtsVictms escenActualComp){
+    public void setEscenarioActualComp(EscenarioSimulacionRobtsVictms escenActualComp){
         escenarioActualComp = escenActualComp;
     }
      public void visualizarEscenario(EscenarioSimulacionRobtsVictms infoEscenario ){
          eliminarEntidadesEscenario();
-         System.out.println( "Se Va a visualizar el escenario con identificador "+ infoEscenario.getIdentEscenario() ); 
+         String identEscenario=infoEscenario.getIdentEscenario();
+         System.out.println( "Se Va a visualizar el escenario con identificador "+ identEscenario ); 
          escenarioActualComp= infoEscenario;
          listaIdentsRobots=infoEscenario.getListIdentsRobots();
          listaIdentsVictimas=infoEscenario.getListIdentsVictims();
          modeloOrganizativo=infoEscenario.getmodeloOrganizativo();
          numeroRobots = infoEscenario.getNumRobots();
          numeroVictimas = infoEscenario.getNumVictimas();
-         jTextFieldIdentEquipo.setText(""+infoEscenario.getIdentEscenario());
-         jTextFieldModeloOrganizacion.setText(""+modeloOrganizativo);
-         intervalNumRobots.setText(""+numeroRobots);
-         intervalNumVictimas.setText(""+numeroVictimas);
+         
+//         jTextFieldIdentEquipo.setText(""+infoEscenario.getIdentEscenario());
+//         jTextFieldModeloOrganizacion.setText(""+modeloOrganizativo);
+//         intervalNumRobots.setText(""+numeroRobots);
+//         intervalNumVictimas.setText(""+numeroVictimas);
          String rutaImagen;
          Set entidades;
          Iterator entries;
          if (numeroRobots>0) {
          rutaImagen=VocabularioRosace.RUTA_ICONOS_ESCENARIOS+imageniconoRobot;
           entidades = infoEscenario.getRobots();
-//          entidades.remove("robotInit");
           entries = entidades.iterator();
           Entry thisEntry;
           RobotStatus1 robotInfo;
         while (entries.hasNext()) {
              thisEntry = (Entry) entries.next();
              robotInfo = (RobotStatus1)thisEntry.getValue();
-//            addEntidadEnEscenario(rutaImagen,(String)thisEntry.getKey(),(Point)thisEntry.getValue());
             addEntidadEnEscenario(rutaImagen,(String)thisEntry.getKey(),robotInfo.getLocPoint());
-//         intervalNumRobots.setText(""+infoEscenario.getNumRobots());
-//         intervalNumVictimas.setText(""+escenrioSimComp.getNumVictimas());
         }
          }
          if (numeroVictimas>0) {
             rutaImagen=VocabularioRosace.RUTA_ICONOS_ESCENARIOS+imageniconoMujer;
             entidades = infoEscenario.getSetVictims();
-//            entidades.remove("victimInit");
             entries = entidades.iterator();
             Entry thisEntry ;
             Victim victimInfo ;
@@ -922,13 +913,13 @@ int indiceEntidad =0;
                  thisEntry = (Entry) entries.next();
                  victimInfo = (Victim)thisEntry.getValue();
                 addEntidadEnEscenario(rutaImagen,(String)thisEntry.getKey(),victimInfo.getLocPoint());
-//         intervalNumRobots.setText(""+infoEscenario.getNumRobots());
-//         intervalNumVictimas.setText(""+escenrioSimComp.getNumVictimas());
             }
          }
+         this.actualizarInfoEquipoEnEscenario();
          this.setLocation(100,100);
          this.setVisible(true);
-          escenarioModificado=false;
+          escenarioModificado= (!identEscenario.equals(this.identEquipoActual));
+          System.out.println( "El identificador del escenario tras su visualizacion es : "+ identEquipoActual + " El escenario hasido modificado :" + escenarioModificado );
      }
      
      public int confirmarPeticionGuardarEscenario (String msgConfirmacion){
@@ -1073,6 +1064,10 @@ int indiceEntidad =0;
     public void setGestorEscenarionComp(GestionEscenariosSimulacion gestEscComp ) {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     this.gestionEscComp=gestEscComp;
+    }
+    public EscenarioSimulacionRobtsVictms getEscenarionComp() {
+
+    return this.escenarioActualComp;
     }
 
 public void visualizarConsejo (String titulo, String msgConsejo, String recomendacion){

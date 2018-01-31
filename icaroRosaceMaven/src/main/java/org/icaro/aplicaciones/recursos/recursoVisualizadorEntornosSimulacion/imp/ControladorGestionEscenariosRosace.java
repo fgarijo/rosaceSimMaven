@@ -63,8 +63,8 @@ public class ControladorGestionEscenariosRosace {
     JLabel entidadSeleccionada = null;
     private WidgetAction moveAction = ActionFactory.createMoveAction();
     private Point ultimoPuntoClic;
-    private boolean intencionUsuarioCrearRobot;
-    private boolean intencionUsuarioCrearVictima;
+    private boolean intencionUsuarioCrearEscenario;
+    private boolean intencionUsuarioEditarEscenario;
 //    private boolean entidadSeleccionadaParaMover;
     private boolean escenarioSimulAbierto = false;
     private boolean escenarioEdicionAbierto = false;
@@ -211,7 +211,7 @@ public class ControladorGestionEscenariosRosace {
             visorEditorEscen.setVisible(true);
             }else{
             escenarioEdicionComp = escenario;
-//            escenarioEdicionComp.setGestorEscenarios(gestionEscComp);
+            escenarioEdicionComp.setGestorEscenarios(gestionEscComp);
             identEquipoActual = escenarioEdicionComp.getIdentEscenario();
             this.memComunControladores.setescenarioEdicion(escenarioEdicionComp);
             this.visorEditorEscen.visualizarEscenario(escenario);
@@ -354,7 +354,7 @@ System.out.println(" Ejecuto una operacion para obtener el computacional del fic
 
     }
 
-    public void peticionGuardarEscenario(EscenarioSimulacionRobtsVictms escenarioComp) {
+    public void peticionGuardarEscenario(EscenarioSimulacionRobtsVictms escenarioComp,boolean escCompModificado) {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         // si no hay un escenario actual definido indicamos al usuario que no hay escenario definido
         // si en el escenario a guardar no hay robots ni victimas se lo decimos
@@ -363,28 +363,20 @@ System.out.println(" Ejecuto una operacion para obtener el computacional del fic
         if (escenarioEdicionComp.getNumRobots() <= 0) {
             visorEditorEscen.visualizarConsejo(tituloAvisoEscenSinRobotsDefinidos, mensajeEscenarioSinRobots, recomendacionDefinirRobots);
         } else {
-            int respuesta = visorEditorEscen.confirmarPeticionGuardarEscenario("Se va a guardar el escenario : ");
-            if (respuesta == JOptionPane.OK_OPTION) {
-
-//                ArrayList<String> robotNombres = escenarioComp.getListIdentsRobots();
-//                for (String ideRobot : robotNombres) {
-////                 String ideRobot = (String)robtIter.next();
-//                    RobotStatus1 infoRobot = (RobotStatus1) escenarioComp.getRobotInfo(ideRobot);
-//                    List<RobotCapability> capacidades = infoRobot.getRobotCapabilities();
-//                    System.out.println("Desde peticion Guardar Lista de capacidades a guardar del robot  : " + ideRobot + "Capacidades : " + capacidades.toString());
-//                }
+//            int respuesta = visorEditorEscen.confirmarPeticionGuardarEscenario("Se va a guardar el escenario : ");
+//            if (respuesta == JOptionPane.OK_OPTION) {
                 System.out.println("Desde peticion Guardar Numero de Robots  : " + escenarioEdicionComp.getNumRobots() + " Numero de victimas : " + escenarioEdicionComp.getNumVictimas());
                 try {   
-                  boolean renombrarEscenario = true ;
-                  if(escenarioGuardado)renombrarEscenario=false;
-                     else if(!visorEditorEscen.getescenarioModificado())renombrarEscenario=false;
-                 escenarioGuardado= itfPersistenciaSimul.guardarInfoEscenarioSimulacion(escenarioEdicionComp,renombrarEscenario);
+//                  boolean renombrarEscenario = true ;
+//                  if(escenarioGuardado)renombrarEscenario=false;
+//                     else if(!visorEditorEscen.getescenarioModificado())renombrarEscenario=false;
+                if(!escenarioGuardado||escCompModificado)
+                 escenarioGuardado= itfPersistenciaSimul.guardarInfoEscenarioSimulacion(escenarioEdicionComp,false);
                 } catch (Exception ex) {
                     Exceptions.printStackTrace(ex);
                 } 
             }
 //          
-        }
     }
 
     public void peticionMostrarEscenarioMovimiento(EscenarioSimulacionRobtsVictms escenarioComp) {
@@ -517,9 +509,9 @@ System.out.println(" Ejecuto una operacion para obtener el computacional del fic
         return escenarioSimulAbierto;
     }
 
-    public int peticionConfirmacionInformacion(String preguntaAconfirmar) {
-        return visorEditorEscen.solicitarConfirmacion(preguntaAconfirmar);
-    }
+//    public int peticionConfirmacionInformacion(String preguntaAconfirmar, String tituloVenana) {
+//        return visorEditorEscen.solicitarConfirmacion(preguntaAconfirmar);
+//    }
 
     public File peticionSeleccionarEscenario() {
  System.out.println(" Ejecuto una peticion para Seleccionar  un escenario  : " );
@@ -585,15 +577,48 @@ System.out.println(" Ejecuto una operacion para obtener el computacional del fic
     }
 
     void peticionSalirEditor(boolean escCompModificado) {
-      System.out.println(" Ejecuto una peticion para Salir del editor . El escenario computacional hasido modificado  " +escCompModificado );  
-    if(memComunControladores.getescenarioEdicionAbierto()&&escCompModificado){
-        int resultadoPeticion= this.peticionConfirmacionInformacion(" tiene un escenario abierto.  ¿Desea guardarlo antes de salir ?");
-        if(resultadoPeticion== JOptionPane.OK_OPTION) 
-            this.peticionGuardarEscenario(escenarioEdicionComp);
-        else if(resultadoPeticion== JOptionPane.CANCEL_OPTION) return;
+      System.out.println(" Ejecuto una peticion para Salir del editor . El escenario computacional ha sido modificado  " +escCompModificado );  
+        int  resultadoPeticion=0 ;
+      if(creandoEscenario){
+        creandoEscenario = false;
+        if(!escenarioGuardado|| escCompModificado){
+         resultadoPeticion=    this.visorEditorEscen.solicitarConfirmacion(" Desea guardar  el escenario actual ? ", "Guardar Escenario");
+              if(resultadoPeticion== JOptionPane.YES_OPTION) escenarioGuardado= accExt.guardarEscenario(true); // se guarda renombrandolo 
+              if(resultadoPeticion== JOptionPane.CANCEL_OPTION)creandoEscenario = true;
+        }else {} // escenario guardado y no modificado despues de guardar, se sale del editor
+    
     }
+        else // se esta editando un escenario escenario
+            if(escCompModificado){
+                  resultadoPeticion= this.visorEditorEscen.solicitarConfirmacion(" Desea guardar los cambios efectuados en el escenario? ", "Guardar Escenario");
+                if(resultadoPeticion== JOptionPane.YES_OPTION){
+                    resultadoPeticion= this.visorEditorEscen.solicitarConfirmacion(" Si desea que los cambios se guarden en el mismo fichero pulse SI . Pulse  NO para guardar los cambios en una nueva version del escenario  ", "Guardar Escenario");
+                    
+                    switch (resultadoPeticion) {
+                        case JOptionPane.YES_OPTION:
+                            System.out.println(" Ejecuto una peticion para guardar el escenario reescribiendo el original " );
+                            escenarioGuardado= accExt.guardarEscenario(false); //" se guarda sin renombrar 
+                            break;
+                        case JOptionPane.NO_OPTION:
+                            this.escenarioEdicionComp = visorEditorEscen.getEscenarionComp();
+                            String identEscNuevo = escenarioEdicionComp.getNewIdentEscenario();
+                            this.visorEditorEscen.setEscenarioActualComp(escenarioEdicionComp);
+                            System.out.println(" Ejecuto una peticion para guardar el escenario . Se crea una nueva version del escenario con identificador  " +identEscNuevo );
+                            this.visorEditorEscen.confirmarPeticionGuardarEscenario(" Se crea una nueva version del escenario y se guarda en el fichero : ");
+                            escenarioGuardado= accExt.guardarEscenario(false);
+                            break;
+                        default:
+                            break;
+                    }
+                    
+                }else {} // desea salir sin guardar  los cambios
+                escenarioGuardado= accExt.guardarEscenario(false); //" se guarda sin renombrar 
+            }
+    if( !(resultadoPeticion==JOptionPane.CANCEL_OPTION)){
     this.memComunControladores.setescenarioEdicionAbierto(false);
+    memComunControladores.setescenarioEdicionAbierto(false);
     this.visorEditorEscen.dispose();
+    }
     }
     
     
@@ -867,7 +892,15 @@ System.out.println(" Ejecuto una operacion para obtener el computacional del fic
             estadoCrtEsc.entidadSeleccionadaParaMover = true;
             estadoCrtEsc.escenarioEdicionAbierto = true;
         }
-
+         boolean guardarEscenario(boolean renombrarEscenario){
+            try {   
+                escenarioEdicionComp=visorEditorEscen.getEscenarionComp();
+                 return itfPersistenciaSimul.guardarInfoEscenarioSimulacion(escenarioEdicionComp,renombrarEscenario);
+                } catch (Exception ex) {
+                    Exceptions.printStackTrace(ex);
+                }
+            return false;
+        }
          boolean existEscenario(String modOrganizativo, int numRobots) {
             if (estadoCrtEsc.hayEscenDefinidosConModOrgyNumRobots) {
                 return true;

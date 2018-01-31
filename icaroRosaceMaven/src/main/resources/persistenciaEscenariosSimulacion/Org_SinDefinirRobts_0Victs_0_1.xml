@@ -1,0 +1,36 @@
+<escenarioSimulacion>
+   <identEscenario>Org_SinDefinirRobts_0Victs_0_1</identEscenario>
+   <modeloOrganizativo>SinDefinir</modeloOrganizativo>
+   <numRobots>0</numRobots>
+   <numVictimas>0</numVictimas>
+   <robots key="initRobot">
+      <robotStatus1>
+         <idRobot>initRobot</idRobot>
+         <idRobotRol>indefinido</idRobotRol>
+         <availableEnergy>100000</availableEnergy>
+         <robotCoordinateActualP>
+            <x>1</x>
+            <y>1</y>
+         </robotCoordinateActualP>
+         <robotCapabilities class="java.util.ArrayList">
+            <robotCapability nombre="radar">
+               <descripcion>radar del robot</descripcion>
+            </robotCapability>
+         </robotCapabilities>
+      </robotStatus1>
+   </robots>
+   <victimas key="initVictim">
+      <victim>
+         <name>initVictim</name>
+         <priority>100</priority>
+         <requiredCompetencies class="java.util.ArrayList">
+            <competency>25</competency>
+            <competency>25</competency>
+         </requiredCompetencies>
+         <victimCoordinateP>
+            <x>1</x>
+            <y>1</y>
+         </victimCoordinateP>
+      </victim>
+   </victimas>
+</escenarioSimulacion>

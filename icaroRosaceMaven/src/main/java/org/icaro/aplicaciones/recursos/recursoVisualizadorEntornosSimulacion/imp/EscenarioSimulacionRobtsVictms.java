@@ -209,6 +209,13 @@ public void setIdentEscenario(String escenarioId) {
 //    if ( migestor!=null)return migestor.getIdentEscenario(modeloOrganizativo, numRobots, numVictimas);
         return this.identEscenario;
     }
+    public synchronized String getNewIdentEscenario() {
+    if ( migestor!=null){
+       identEscenario= migestor.getNewVersionEscenario(identEscenario);
+//        identEscenario= migestor.getIdentEscenario(modeloOrganizativo, numRobots, numVictimas);
+    }
+        return this.identEscenario;
+    }
    public synchronized void  setIdentificadorNormalizado(){
        // se lo pide al gestor para que verifique posibles conflictos
     if ( migestor!=null)  this.identEscenario= migestor.getIdentEscenario(modeloOrganizativo, numRobots, numVictimas);
