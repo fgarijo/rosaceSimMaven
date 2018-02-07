@@ -628,6 +628,7 @@ public class VisorEditorEscenarios1 extends javax.swing.JFrame {
         modeloOrganizativo = "Jerarquico";
         jTextFieldModeloOrganizacion.setText(modeloOrganizativo);
         escenarioActualComp.setmodeloOrganizativo(modeloOrganizativo);
+        identEquipoActual=gestionEscComp.getIdentEscenario(modeloOrganizativo, numeroRobots, numeroVictimas);
         this.actualizarInfoEquipoEnEscenario();
     }//GEN-LAST:event_jMenuItemModeloJerarquicoActionPerformed
 
@@ -636,19 +637,21 @@ public class VisorEditorEscenarios1 extends javax.swing.JFrame {
          modeloOrganizativo = "Igualitario";
         jTextFieldModeloOrganizacion.setText(modeloOrganizativo);
         escenarioActualComp.setmodeloOrganizativo(modeloOrganizativo);
+        identEquipoActual=gestionEscComp.getIdentEscenario(modeloOrganizativo, numeroRobots, numeroVictimas);
         this.actualizarInfoEquipoEnEscenario();
     }//GEN-LAST:event_jMenuItemModeloIgualitarioActionPerformed
 
     private void jMenuItemEliminarEscenarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEliminarEscenarioActionPerformed
         // TODO add your handling code here:
-        peticionEliminarEscenario();
+//        peticionEliminarEscenario();
+            controladorGestionEsc.peticionEliminarEscenarioSimulGuardado();
     }//GEN-LAST:event_jMenuItemEliminarEscenarioActionPerformed
 
     private void jMenuItemSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSalirActionPerformed
         // TODO add your handling code here:
         escenarioModificado=moverComp.getCambios()||escenarioModificado;
         System.out.println(" Variable escenarioModificado : = "+ escenarioModificado );
-        this.actualizarCoordenadasEntidades();
+        if(escenarioModificado)this.actualizarCoordenadasEntidades();
         this.controladorGestionEsc.peticionSalirEditor(escenarioModificado);
     }//GEN-LAST:event_jMenuItemSalirActionPerformed
 
@@ -735,6 +738,7 @@ public class VisorEditorEscenarios1 extends javax.swing.JFrame {
         label.setIcon(new ImageIcon(rutaImagen));
         label.setLocation(coordX, coordY);
         this.listaEntidadesEnEscenario.add(label);
+        identEquipoActual=gestionEscComp.getIdentEscenario(modeloOrganizativo, numeroRobots, numeroVictimas);
         actualizarInfoEquipoEnEscenario ();
         System.out.println( "Se crea la entidad : "+label.getText()+ " Coordenadas : X =" + coordX +" , Y = " +coordY );
 //       tablaEntidadesEnEscenario.put(identEntidad, label);
@@ -837,17 +841,23 @@ int indiceEntidad =0;
        escenarioActualComp.eliminarEntidad(identEntidad);
        listaEntidadesEnEscenario.remove(entidadAeliminar);
         System.out.println( "Se elimina la entidad : "+entidadAeliminar.getText()+ "Indice en tabla ident :"+ indiceEntidad + " Coordenadas : X =" + entidadAeliminar.getX() +" , Y = " +entidadAeliminar.getY() );
-    actualizarInfoEquipoEnEscenario ();
+        identEquipoActual=gestionEscComp.getIdentEscenario(modeloOrganizativoInicial, numeroRobots, numeroVictimas);
+        actualizarInfoEquipoEnEscenario ();
     }
     public void actualizarInfoEquipoEnEscenario (){
 //        escenarioModificado=true;
         jTextFieldModeloOrganizacion.setText(""+modeloOrganizativo);
         intervalNumRobots.setText(""+numeroRobots);
         intervalNumVictimas.setText(""+numeroVictimas);
-        identEquipoActual=orgModelo+modeloOrganizativo+numRobots+numeroRobots+numVictims+numeroVictimas+subIndiceEscRepetido;
+//        identEquipoActual=orgModelo+modeloOrganizativo+numRobots+numeroRobots+numVictims+numeroVictimas+subIndiceEscRepetido
         jTextFieldIdentEquipo.setText(""+identEquipoActual);
         escenarioActualComp.setIdentEscenario(identEquipoActual);
-        
+        jTextFieldIdentEquipo.setText(""+identEquipoActual);
+    }
+    private void actualizarIdentEscenario(String idenEscenario){
+        if(idenEscenario!=null)identEquipoActual=gestionEscComp.getNewVersionEscenario(idenEscenario);
+        else identEquipoActual = gestionEscComp.getIdentEscenario(modeloOrganizativo, numeroRobots, numeroVictimas);
+        escenarioActualComp.setIdentEscenario(idenEscenario);
     }
    
     public void actualizarCoordenadasEntidades(){
@@ -883,6 +893,7 @@ int indiceEntidad =0;
          modeloOrganizativo=infoEscenario.getmodeloOrganizativo();
          numeroRobots = infoEscenario.getNumRobots();
          numeroVictimas = infoEscenario.getNumVictimas();
+         identEquipoActual=identEscenario;
          
 //         jTextFieldIdentEquipo.setText(""+infoEscenario.getIdentEscenario());
 //         jTextFieldModeloOrganizacion.setText(""+modeloOrganizativo);
@@ -918,7 +929,7 @@ int indiceEntidad =0;
          this.actualizarInfoEquipoEnEscenario();
          this.setLocation(100,100);
          this.setVisible(true);
-          escenarioModificado= (!identEscenario.equals(this.identEquipoActual));
+//          escenarioModificado= (!identEscenario.equals(this.identEquipoActual));
           System.out.println( "El identificador del escenario tras su visualizacion es : "+ identEquipoActual + " El escenario hasido modificado :" + escenarioModificado );
      }
      
@@ -947,6 +958,7 @@ int indiceEntidad =0;
      public int selecciondeFichero(){
       FileNameExtensionFilter filter = new FileNameExtensionFilter("ficheros xml","xml","txt" );
       jFileChooser1.setFileFilter(filter);
+      jFileChooser1.setApproveButtonText("Eliminar");
       File dir = jFileChooser1.getCurrentDirectory();
      int returnVal = jFileChooser1.showOpenDialog(this);
       jFileChooser1.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -1094,6 +1106,7 @@ public void visualizarConsejo (String titulo, String msgConsejo, String recomend
        FileNameExtensionFilter filter = new FileNameExtensionFilter("ficheros xml","xml","txt" );
       jFileChooser1.setDialogTitle(motivo);
       jFileChooser1.setFileFilter(filter);
+      jFileChooser1.setApproveButtonText("Eliminar");
       jFileChooser1.setCurrentDirectory(new File(directorioPersistencia));
       jFileChooser1.setFileSelectionMode(JFileChooser.FILES_ONLY);
        int returnVal = jFileChooser1.showOpenDialog(this);
@@ -1117,6 +1130,7 @@ public void visualizarConsejo (String titulo, String msgConsejo, String recomend
      public File solicitarSeleccionFichero(){
       FileNameExtensionFilter filter = new FileNameExtensionFilter("ficheros xml","xml","txt" );
       jFileChooser1.setFileFilter(filter);
+      jFileChooser1.setApproveButtonText("Abrir");
       File dir = jFileChooser1.getCurrentDirectory();
      int returnVal = jFileChooser1.showOpenDialog(this);
       jFileChooser1.setFileSelectionMode(JFileChooser.FILES_ONLY);

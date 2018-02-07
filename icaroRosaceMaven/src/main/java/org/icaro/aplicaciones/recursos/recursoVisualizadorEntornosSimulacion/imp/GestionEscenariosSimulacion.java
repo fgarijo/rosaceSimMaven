@@ -13,32 +13,22 @@ import java.util.HashSet;
  * @author FGarijo
  */
 public class GestionEscenariosSimulacion {
-       private HashMap tablaEscenariosDefinidos;
+       private final HashMap tablaEscenariosDefinidos;
 	//arraylist que contiene los paneles visualizados
     private EscenarioSimulacionRobtsVictms infoEscenario;
 //    private ItfUsoRecursoPersistenciaEntornosSimulacion itfPersistencia;
 //   private LinkedList<String> listaElementosTrazables  ;
     private HashSet identsEscenarios;
-    private String numRobots = "Robts_";
-    private String numVictims = "Victs_";
-    private String orgModelo = "Org_";
-    private String  orgModeloInicial = "SinDefinir";
-    private String tipoFichero=".xml";
+    private final String numRobots = "Robts_";
+    private final String numVictims = "Victs_";
+    private final String orgModelo = "Org_";
+    private  String  orgModeloInicial = "SinDefinir";
+    private final String tipoFichero=".xml";
 
      public GestionEscenariosSimulacion (){
         tablaEscenariosDefinidos = new HashMap();      
         identsEscenarios = new HashSet();
      }
-//     public void setItfUsoPersistencia (ItfUsoRecursoPersistenciaEntornosSimulacion persitenciaItf){
-//         itfPersistencia = persitenciaItf;
-//     }
-//     public void obtenerEscenariosGuardados (){
-//           try {
-//               identsEscenarios = itfPersistencia.obtenerIdentsEscenarioSimulacion();
-//           } catch (Exception ex) {
-//               Exceptions.printStackTrace(ex);
-//           }
-//}
      public synchronized String getIdentEscenario (String orgTipo,int numRobts, int numVictm){
          String identEscenarioBase = orgModelo+orgTipo+numRobots+numRobts+numVictims+numVictm;
          int indiceEscenarioRepetido = 0;
@@ -53,11 +43,12 @@ public class GestionEscenariosSimulacion {
      public synchronized String getNewVersionEscenario (String idEscenario){
          String idEscenarioBase= idEscenario.substring(0,idEscenario.lastIndexOf("_"));
          int indiceEscenarioRepetido = Integer.parseInt(idEscenario.substring(idEscenario.lastIndexOf("_")+1));
-        System.out.println(" Nueva version Escenario. Escenario Base : "+ idEscenarioBase + " Subindice recibido : "+indiceEscenarioRepetido ); 
-         identsEscenarios.add(idEscenario+tipoFichero);
-         indiceEscenarioRepetido++;
          String identEscenarioNuevo=idEscenarioBase+"_"+indiceEscenarioRepetido;
-         identsEscenarios.add(identEscenarioNuevo+tipoFichero);
+        System.out.println(" Nueva version Escenario. Escenario Base : "+ idEscenarioBase + " Subindice recibido : "+indiceEscenarioRepetido ); 
+         while (identsEscenarios.contains(identEscenarioNuevo+tipoFichero)){
+             indiceEscenarioRepetido ++;
+             identEscenarioNuevo =idEscenarioBase+"_"+indiceEscenarioRepetido;
+         }
           System.out.println(" Nueva version Escenario. Ident escenario  :" +identEscenarioNuevo);
           return identEscenarioNuevo;
          

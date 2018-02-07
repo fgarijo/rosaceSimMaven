@@ -1,16 +1,16 @@
 <escenarioSimulacion>
-   <identEscenario>Org_IgualitarioRobts_4Victs_3_0</identEscenario>
+   <identEscenario>Org_IgualitarioRobts_3Victs_4_0</identEscenario>
    <modeloOrganizativo>Igualitario</modeloOrganizativo>
-   <numRobots>4</numRobots>
-   <numVictimas>3</numVictimas>
+   <numRobots>3</numRobots>
+   <numVictimas>4</numVictimas>
    <robots key="Robot1">
       <robotStatus1>
          <idRobot>Robot1</idRobot>
          <idRobotRol>indefinido</idRobotRol>
          <availableEnergy>100000</availableEnergy>
          <robotCoordinateActualP>
-            <x>54</x>
-            <y>11</y>
+            <x>115</x>
+            <y>79</y>
          </robotCoordinateActualP>
          <robotCapabilities class="java.util.ArrayList">
             <robotCapability nombre="radar">
@@ -25,26 +25,10 @@
          <idRobotRol>indefinido</idRobotRol>
          <availableEnergy>100000</availableEnergy>
          <robotCoordinateActualP>
-            <x>52</x>
-            <y>277</y>
+            <x>726</x>
+            <y>285</y>
          </robotCoordinateActualP>
          <robotCapabilities class="java.util.ArrayList"/>
-      </robotStatus1>
-   </robots>
-   <robots key="Robot3">
-      <robotStatus1>
-         <idRobot>Robot3</idRobot>
-         <idRobotRol>indefinido</idRobotRol>
-         <availableEnergy>100000</availableEnergy>
-         <robotCoordinateActualP>
-            <x>27</x>
-            <y>122</y>
-         </robotCoordinateActualP>
-         <robotCapabilities class="java.util.ArrayList">
-            <robotCapability nombre="radar">
-               <descripcion>radar del robot</descripcion>
-            </robotCapability>
-         </robotCapabilities>
       </robotStatus1>
    </robots>
    <robots key="Robot2">
@@ -53,8 +37,8 @@
          <idRobotRol>indefinido</idRobotRol>
          <availableEnergy>100000</availableEnergy>
          <robotCoordinateActualP>
-            <x>431</x>
-            <y>179</y>
+            <x>52</x>
+            <y>288</y>
          </robotCoordinateActualP>
          <robotCapabilities class="java.util.ArrayList">
             <robotCapability nombre="radar">
@@ -63,6 +47,22 @@
          </robotCapabilities>
       </robotStatus1>
    </robots>
+   <victimas key="Victima4">
+      <victim>
+         <name>Victima4</name>
+         <priority>100</priority>
+         <requiredCompetencies class="java.util.ArrayList">
+            <competency>25</competency>
+            <competency>25</competency>
+            <competency>25</competency>
+            <competency>25</competency>
+         </requiredCompetencies>
+         <victimCoordinateP>
+            <x>246</x>
+            <y>187</y>
+         </victimCoordinateP>
+      </victim>
+   </victimas>
    <victimas key="Victima3">
       <victim>
          <name>Victima3</name>
@@ -74,8 +74,8 @@
             <competency>25</competency>
          </requiredCompetencies>
          <victimCoordinateP>
-            <x>50</x>
-            <y>201</y>
+            <x>555</x>
+            <y>364</y>
          </victimCoordinateP>
       </victim>
    </victimas>
@@ -89,11 +89,10 @@
             <competency>25</competency>
             <competency>25</competency>
             <competency>25</competency>
-            <competency>25</competency>
          </requiredCompetencies>
          <victimCoordinateP>
-            <x>150</x>
-            <y>72</y>
+            <x>158</x>
+            <y>411</y>
          </victimCoordinateP>
       </victim>
    </victimas>
@@ -107,11 +106,10 @@
             <competency>25</competency>
             <competency>25</competency>
             <competency>25</competency>
-            <competency>25</competency>
          </requiredCompetencies>
          <victimCoordinateP>
-            <x>476</x>
-            <y>292</y>
+            <x>380</x>
+            <y>275</y>
          </victimCoordinateP>
       </victim>
    </victimas>

@@ -97,6 +97,14 @@ public class MemComunControladores {
     public synchronized EscenarioSimulacionRobtsVictms getescenarioSimulacion(){
         return escenarioSimulacion ;
     }
+    public synchronized String getIdentescenarioSimulacion(){
+        if(escenarioSimulacion!=null) return escenarioSimulacion.getIdentEscenario();
+        else return null; 
+    }
+    public synchronized String getIdentescenarioEdicion(){
+        if(escenarioEdicion!=null) return escenarioEdicion.getIdentEscenario();
+        else return null; 
+    }
     public synchronized void setescenarioEdicion(EscenarioSimulacionRobtsVictms escenarioEdi){
         escenarioEdicion = escenarioEdi;
     }

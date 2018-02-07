@@ -1,5 +1,5 @@
 <escenarioSimulacion>
-   <identEscenario>Org_IgualitarioRobts_2Victs_2_1</identEscenario>
+   <identEscenario>Org_IgualitarioRobts_2Victs_2_3</identEscenario>
    <modeloOrganizativo>Igualitario</modeloOrganizativo>
    <numRobots>2</numRobots>
    <numVictimas>2</numVictimas>
@@ -9,8 +9,8 @@
          <idRobotRol>indefinido</idRobotRol>
          <availableEnergy>100000</availableEnergy>
          <robotCoordinateActualP>
-            <x>59</x>
-            <y>306</y>
+            <x>115</x>
+            <y>79</y>
          </robotCoordinateActualP>
          <robotCapabilities class="java.util.ArrayList">
             <robotCapability nombre="radar">
@@ -25,8 +25,8 @@
          <idRobotRol>indefinido</idRobotRol>
          <availableEnergy>100000</availableEnergy>
          <robotCoordinateActualP>
-            <x>105</x>
-            <y>114</y>
+            <x>52</x>
+            <y>288</y>
          </robotCoordinateActualP>
          <robotCapabilities class="java.util.ArrayList">
             <robotCapability nombre="radar">
@@ -41,10 +41,25 @@
          <priority>100</priority>
          <requiredCompetencies class="java.util.ArrayList">
             <competency>25</competency>
+            <competency>25</competency>
          </requiredCompetencies>
          <victimCoordinateP>
-            <x>515</x>
-            <y>110</y>
+            <x>428</x>
+            <y>318</y>
+         </victimCoordinateP>
+      </victim>
+   </victimas>
+   <victimas key="Victima1">
+      <victim>
+         <name>Victima1</name>
+         <priority>100</priority>
+         <requiredCompetencies class="java.util.ArrayList">
+            <competency>25</competency>
+            <competency>25</competency>
+         </requiredCompetencies>
+         <victimCoordinateP>
+            <x>465</x>
+            <y>112</y>
          </victimCoordinateP>
       </victim>
    </victimas>

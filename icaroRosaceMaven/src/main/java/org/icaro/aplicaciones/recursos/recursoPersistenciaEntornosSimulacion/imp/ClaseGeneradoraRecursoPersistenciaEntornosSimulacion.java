@@ -123,8 +123,8 @@ public  class ClaseGeneradoraRecursoPersistenciaEntornosSimulacion extends ImplR
     }
 
     @Override
-    public boolean eliminarEscenarioSimulacion(String rutaFicheroInfoPersistencia) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean eliminarEscenarioSimulacion(String identEscenario) throws Exception {
+        return impRecPersistenciaXML.eliminarEscenarioSimulacion(identEscenario);
     }
 
     @Override

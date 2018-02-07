@@ -1,5 +1,5 @@
 <escenarioSimulacion>
-   <identEscenario>Org_IgualitarioRobts_4Victs_3_0</identEscenario>
+   <identEscenario>Org_IgualitarioRobts_4Victs_3_6</identEscenario>
    <modeloOrganizativo>Igualitario</modeloOrganizativo>
    <numRobots>4</numRobots>
    <numVictimas>3</numVictimas>
@@ -72,6 +72,7 @@
             <competency>25</competency>
             <competency>25</competency>
             <competency>25</competency>
+            <competency>25</competency>
          </requiredCompetencies>
          <victimCoordinateP>
             <x>50</x>
@@ -90,10 +91,11 @@
             <competency>25</competency>
             <competency>25</competency>
             <competency>25</competency>
+            <competency>25</competency>
          </requiredCompetencies>
          <victimCoordinateP>
-            <x>150</x>
-            <y>72</y>
+            <x>430</x>
+            <y>64</y>
          </victimCoordinateP>
       </victim>
    </victimas>
@@ -102,6 +104,7 @@
          <name>Victima1</name>
          <priority>100</priority>
          <requiredCompetencies class="java.util.ArrayList">
+            <competency>25</competency>
             <competency>25</competency>
             <competency>25</competency>
             <competency>25</competency>
