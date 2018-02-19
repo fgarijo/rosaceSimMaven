@@ -601,6 +601,7 @@ public class VisorControlSimuladorRosace extends javax.swing.JFrame {
      int returnVal = jFileChooser1.showOpenDialog(this);
       jFileChooser1.setFileSelectionMode(JFileChooser.FILES_ONLY);
        jFileChooser1.setCurrentDirectory(dir);
+       jFileChooser1.setApproveButtonText("Abrir");
 //       int returnVal = jFileChooser1.showOpenDialog(this);
     if (returnVal == JFileChooser.APPROVE_OPTION) {
         ultimoFicheroEscenarioSeleccionado = jFileChooser1.getSelectedFile();

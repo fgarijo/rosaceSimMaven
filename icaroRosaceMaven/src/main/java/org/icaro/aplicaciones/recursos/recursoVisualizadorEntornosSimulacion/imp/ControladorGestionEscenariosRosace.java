@@ -57,6 +57,8 @@ public class ControladorGestionEscenariosRosace {
     private String tituloAvisoEscenSinRobotsDefinidos = "Escenario sin Robots definidos";
     private String mensajeEscenarioSinRobots = "No se han definido Robots en el escenario ";
     private String recomendacionDefinirRobots = " Definir Robots y Victimas con el botón derecho para poder guardar el escenario ";
+    private String textoBotonAbrir="Abrir";
+    private String textoBotonEliminar="Eliminar";
     private Map<String, JLabel> tablaEntidadesEnEscenario;
     private ArrayList<JLabel> listaEntidadesEnEscenario;
     private JPanel panelVisor;
@@ -194,29 +196,29 @@ public class ControladorGestionEscenariosRosace {
         int numeroIntentos = 0;
         boolean ficheroSeleccionadoValido = false;
         EscenarioSimulacionRobtsVictms escenario = null;
-        while (numeroIntentos <= this.maxIntentosPeticionSeleccionEscenario && !ficheroSeleccionadoValido) {
-            escenario = this.seleccionarUnFicheroEntreLosExistentes();
-            if (escenario != null) {
-                ficheroSeleccionadoValido = true;
-            } else {
-                visorEditorEscen.visualizarConsejo("Fichero seleccionado Nulo ", "No se ha seleccionada ningun fichero", "Seleccione otro fichero o  cree uno nuevo ");
-            }
-            numeroIntentos++;
-        }
-        if (ficheroSeleccionadoValido) {
+        escenario = this.seleccionarUnFicheroEntreLosExistentes();
+//        while (numeroIntentos <= this.maxIntentosPeticionSeleccionEscenario && !ficheroSeleccionadoValido) {
+//            escenario = this.seleccionarUnFicheroEntreLosExistentes();
+//            if (escenario != null) {
+//                ficheroSeleccionadoValido = true;
+//            } else {
+//                visorEditorEscen.visualizarConsejo("Fichero seleccionado Nulo ", "No se ha seleccionada ningun fichero", "Seleccione otro fichero o  cree uno nuevo ");
+//            }
+//            numeroIntentos++;
+//        }
+//        if (ficheroSeleccionadoValido) {
+            if(escenario!=null){
             String identEscenarioSeleccionado = escenario.getIdentEscenario();
-            if (this.escenarioEdicionAbierto && !escenarioEdicionComp.getIdentEscenario().equals(identEscenarioSeleccionado)) {
-                // Ya tiene abierto el escenario
-                visorEditorEscen.setVisible(true);
-            } else {
+            if (!this.escenarioEdicionAbierto ||!escenarioEdicionComp.getIdentEscenario().equals(identEscenarioSeleccionado)) {
                 escenarioEdicionComp = escenario;
                 escenarioEdicionComp.setGestorEscenarios(gestionEscComp);
                 identEquipoActual = escenarioEdicionComp.getIdentEscenario();
                 this.memComunControladores.setescenarioEdicion(escenarioEdicionComp);
                 this.visorEditorEscen.visualizarEscenario(escenarioEdicionComp);
                 this.memComunControladores.setescenarioEdicionAbierto(true);
+                visorEditorEscen.setVisible(true);
 //        this.memComunControladores.setcambioEnEscenarioSimulacion(true);
-//        this.memComunControladores.setescenarioSimulacionAbierto(true);  
+        this.memComunControladores.setescenarioEdicionAbierto(true);  
             }
         }
     }
@@ -230,11 +232,11 @@ public class ControladorGestionEscenariosRosace {
         this.memComunControladores.setnumRobotsdefsEnOrganizacion(numRobots);
         EscenarioSimulacionRobtsVictms escenario = null;
         while (numeroIntentos <= this.maxIntentosPeticionSeleccionEscenario && !ficheroSeleccionadoValido) {
-            resultadoSeleccion = visorEditorEscen.selecciondeFichero();
+            resultadoSeleccion = visorEditorEscen.selecciondeFichero("Abrir");
             if (resultadoSeleccion == this.USUARIO_CANCELA_SELECCION) {
                 numeroIntentos = maxIntentosPeticionSeleccionEscenario;
             } else if (resultadoSeleccion == this.FICHERO_SELECCIONADO) {
-                escenario = obtenerComputacionalDePersistencia(visorEditorEscen.getUltimoFicheroEscenarioSeleccionado());
+                escenario = accExt.obtenerComputacionalDePersistencia(visorEditorEscen.getUltimoFicheroEscenarioSeleccionado());
                 if (escenario == null) {
                     visorEditorEscen.visualizarConsejo("Fichero seleccionado Nulo ", "Se debe eleccionar un fichero con modelo organizativo : " + modOrganizativo
                             + " y numero  = : " + numRobots, "Seleccione otro fichero o  cree uno nuevo ");
@@ -307,10 +309,10 @@ public class ControladorGestionEscenariosRosace {
             peticionCrearEscenario();
             return null;
         }
-        File ficheroSeleccionado = visorEditorEscen.solicitarSeleccionFichero();
-        if (ficheroSeleccionado == null) {
-            visorControlSim.visualizarConsejo(tituloAvisoEscenarioNoDefinido, mensajeEscenarioNoSeleccionado, recomendacionDefinirEscenario);
-        } else {
+        File ficheroSeleccionado = visorEditorEscen.solicitarSeleccionFichero(textoBotonAbrir);
+        if (ficheroSeleccionado != null) 
+//            visorControlSim.visualizarConsejo(tituloAvisoEscenarioNoDefinido, mensajeEscenarioNoSeleccionado, recomendacionDefinirEscenario);
+        
             try {
                 String idFicheroSeleccionado = ficheroSeleccionado.getName();
                 escenarioSeleccionado = itfPersistenciaSimul.obtenerInfoEscenarioSimulacion(idFicheroSeleccionado);
@@ -320,26 +322,26 @@ public class ControladorGestionEscenariosRosace {
                 Exceptions.printStackTrace(ex);
                 System.out.println("Desde peticion Abrir escenario . No se encuentra el fichero Ident Fichero : " + ficheroSeleccionado.getAbsolutePath());
             }
-        }
+        
         return escenarioSeleccionado;
     }
 
-    private EscenarioSimulacionRobtsVictms obtenerComputacionalDePersistencia(File ficheroSeleccionado) {
-//    File ficheroSeleccionado=   visorEditorEscen.solicitarSeleccionFichero();
-        System.out.println(" Ejecuto una operacion para obtener el computacional del fichero seleccionado : " + ficheroSeleccionado.getName());
-        EscenarioSimulacionRobtsVictms escenarioComp = null;
-        if (ficheroSeleccionado == null) {
-            visorEditorEscen.visualizarConsejo("Fichero Seleccionado null", mensajeEscenarioNoSeleccionado, recomendacionDefinirEscenario);
-        } else {
-            try {
-                escenarioComp = itfPersistenciaSimul.obtenerInfoEscenarioSimulacion(ficheroSeleccionado.getName());
-            } catch (Exception ex) {
-                Exceptions.printStackTrace(ex);
-                System.out.println("Desde peticion Abrir escenario . No se encuentra el fichero Ident Fichero : " + ficheroSeleccionado.getAbsolutePath());
-            }
-        }
-        return escenarioComp;
-    }
+//    private EscenarioSimulacionRobtsVictms obtenerComputacionalDePersistencia(File ficheroSeleccionado) {
+////    File ficheroSeleccionado=   visorEditorEscen.solicitarSeleccionFichero();
+//        System.out.println(" Ejecuto una operacion para obtener el computacional del fichero seleccionado : " + ficheroSeleccionado.getName());
+//        EscenarioSimulacionRobtsVictms escenarioComp = null;
+//        if (ficheroSeleccionado == null) {
+//            visorEditorEscen.visualizarConsejo("Fichero Seleccionado null", mensajeEscenarioNoSeleccionado, recomendacionDefinirEscenario);
+//        } else {
+//            try {
+//                escenarioComp = itfPersistenciaSimul.obtenerInfoEscenarioSimulacion(ficheroSeleccionado.getName());
+//            } catch (Exception ex) {
+//                Exceptions.printStackTrace(ex);
+//                System.out.println("Desde peticion Abrir escenario . No se encuentra el fichero Ident Fichero : " + ficheroSeleccionado.getAbsolutePath());
+//            }
+//        }
+//        return escenarioComp;
+//    }
 
 //    public void peticionEliminarEscenarioSimulActual() {
 //        if (estadoCrtEsc.reqEliminarEscenarioSimulacion()) {
@@ -359,7 +361,8 @@ public class ControladorGestionEscenariosRosace {
     }
 
     public void peticionEliminarEscenarioSimulGuardado() {
-        File ficheroseleccionado = this.visorEditorEscen.peticionUsuarioSeleccionarFichero(directorioPersistencia, "Seleccionar Fichero a Eliminar");
+//        File ficheroseleccionado = this.visorEditorEscen.peticionUsuarioSeleccionarFichero(directorioPersistencia, "Seleccionar Fichero a Eliminar");
+    File ficheroseleccionado = this.visorEditorEscen.solicitarSeleccionFichero(textoBotonEliminar);
         if (ficheroseleccionado != null) {
             String identFicheroSelec = ficheroseleccionado.getName();
             String smsg;
@@ -371,17 +374,17 @@ public class ControladorGestionEscenariosRosace {
 //                    visorMovimientoEscen.dispose();
                     memComunControladores.setescenarioSimulacionAbierto(false);
                 }
-            } else if (identFicheroSelec.equals(memComunControladores.getIdentescenarioEdicion()+".xml")) {
+            } 
+            if (identFicheroSelec.equals(memComunControladores.getIdentescenarioEdicion()+".xml")) {
                 smsg = " El escenario que ha seleccionado para eliminar es el escenario que esta editando . Quiere eliminarlo ?";
                 if (accExt.eliminarEscenario(identFicheroSelec, smsg)) {
                     visorEditorEscen.dispose();
                     memComunControladores.setescenarioEdicionAbierto(false);
                 }
-            } else {
-                smsg = "Se va a eliminar el escenario: " ;
+            }else{
+                smsg = "Se va a eliminar el escenario: "+ identFicheroSelec ;
                 accExt.eliminarEscenario(identFicheroSelec, smsg);
             }
-            
             System.out.println(" Se ejcuta peticion para eliminar el fichero :  " + identFicheroSelec + " Mensaje aviso : "+smsg);
         }
     }
@@ -775,7 +778,7 @@ public class ControladorGestionEscenariosRosace {
                 return null;
             }
             // precondiciones fichero Escenarios != null 
-            File ficheroSeleccionado = visorEditorEscen.solicitarSeleccionFichero();
+            File ficheroSeleccionado = visorEditorEscen.solicitarSeleccionFichero(textoBotonAbrir);
             if (ficheroSeleccionado == null) {
                 visorControlSim.visualizarConsejo(tituloAvisoEscenarioNoDefinido, mensajeEscenarioNoSeleccionado, recomendacionDefinirEscenario);
             } else {

@@ -955,10 +955,10 @@ int indiceEntidad =0;
          } 
  
      }
-     public int selecciondeFichero(){
+     public int selecciondeFichero(String textoBotonAprob){
       FileNameExtensionFilter filter = new FileNameExtensionFilter("ficheros xml","xml","txt" );
       jFileChooser1.setFileFilter(filter);
-      jFileChooser1.setApproveButtonText("Eliminar");
+      jFileChooser1.setApproveButtonText(textoBotonAprob);
       File dir = jFileChooser1.getCurrentDirectory();
      int returnVal = jFileChooser1.showOpenDialog(this);
       jFileChooser1.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -1127,10 +1127,10 @@ public void visualizarConsejo (String titulo, String msgConsejo, String recomend
          escenarioModificado=moverComp.getCambios();
          return escenarioModificado;
      }
-     public File solicitarSeleccionFichero(){
+     public File solicitarSeleccionFichero(String textoABotonAprob){
       FileNameExtensionFilter filter = new FileNameExtensionFilter("ficheros xml","xml","txt" );
       jFileChooser1.setFileFilter(filter);
-      jFileChooser1.setApproveButtonText("Abrir");
+      jFileChooser1.setApproveButtonText(textoABotonAprob);
       File dir = jFileChooser1.getCurrentDirectory();
      int returnVal = jFileChooser1.showOpenDialog(this);
       jFileChooser1.setFileSelectionMode(JFileChooser.FILES_ONLY);
