@@ -147,13 +147,6 @@
     </build> 
     
     <dependencies>
-        
-        <dependency>
-            <groupId>org.icaro</groupId>
-            <artifactId>icaroGestoresconInfrastr</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <type>jar</type>
-        </dependency>
  <!--
      <dependency>
             <groupId>org.icaro</groupId>
@@ -179,6 +172,11 @@
             <artifactId>jfreechart</artifactId>
             <version>1.0.19</version>
             <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>icaroGestoresyInfrastr</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 </project>
