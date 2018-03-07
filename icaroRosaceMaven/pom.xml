@@ -9,7 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     </parent>
     -->
-    <groupId>org.icaro</groupId>
+    <groupId>org.github.fgarijo</groupId>
     <artifactId>icaroRosaceMaven</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>icaroRosaceMaven</name>

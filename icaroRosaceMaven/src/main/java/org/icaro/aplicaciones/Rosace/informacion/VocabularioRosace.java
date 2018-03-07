@@ -23,6 +23,7 @@ public class VocabularioRosace extends NombresPredefinidos{
     public static final String IdentRolAgtesSubordinados= "robotSubordinado";
     public static final String IdentRolAgtesSubordinadosConCR= "robotSubordinadoConCR";
     public static final String IdentRolAgtesIgualitarios = "robotIgualitario";
+    public static final String IdentRolAgtesIgualitariosCoord = "robotIgualitarioCoord";
     public static final String NombreEstadoRobotBloqueado = "robotBloqueado";
     public static final String NombreEstadoRobotParado = "robotParado";
     public static final String DescrExpectComunicacionConJefe="miComunicacionConJefe";

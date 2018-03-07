@@ -44,22 +44,22 @@
 	********************************************************************************************************-->
 <icaro:DescComportamientoAgentesAplicacion>
     <icaro:DescComportamientoAgente
-       nombreComportamiento="AgenteAplicacionAgteControladorSimuladorRosace" rol="AgenteAplicacion" localizacionComportamiento="icaro.aplicaciones.agentes.agenteAplicacionAgteControladorSimuladorRosaceReactivo.comportamiento"
+       nombreComportamiento="AgenteAplicacionAgteControladorSimuladorRosace" rol="AgenteAplicacion" localizacionComportamiento="org.icaro.aplicaciones.agentes.agenteAplicacionAgteControladorSimuladorRosaceReactivo.comportamiento"
                             tipo="Reactivo" />
     <icaro:DescComportamientoAgente
-       nombreComportamiento="AgenteAplicacionIgualitarioCoord" rol="AgenteAplicacion" localizacionComportamiento="icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo" tipo="Cognitivo" 
-       localizacionFicheroReglas="icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.procesoResolucionObjetivos.reglasIgualitarioCoordConocerse1.drl"/>
+       nombreComportamiento="AgenteAplicacionIgualitarioCoord" rol="AgenteAplicacion" localizacionComportamiento="org.icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo" tipo="Cognitivo" 
+       localizacionFicheroReglas="org.icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.procesoResolucionObjetivos.reglasIgualitarioCoordConocerse1.drl"/>
      <icaro:DescComportamientoAgente  
-       nombreComportamiento="AgenteAplicacionIgualitario" rol="AgenteAplicacion" localizacionComportamiento="icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo" tipo="Cognitivo"
-       localizacionFicheroReglas="icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.procesoResolucionObjetivos.reglasIgualitarioConocerse1.drl"/>
+       nombreComportamiento="AgenteAplicacionIgualitario" rol="AgenteAplicacion" localizacionComportamiento="org.icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo" tipo="Cognitivo"
+       localizacionFicheroReglas="org.icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.procesoResolucionObjetivos.reglasIgualitarioConocerse1.drl"/>
 </icaro:DescComportamientoAgentesAplicacion>
 </icaro:DescComportamientoAgentes>
 	<!--******************************************************************************************************
 	******************   Descripcion de los recursos de aplicacion                          ******************
 	********************************************************************************************************-->
 <icaro:DescRecursosAplicacion>
-        <icaro:DescRecursoAplicacion nombre="RecursoVisualizadorEntornosSimulacion" localizacionClaseGeneradora="icaro.aplicaciones.recursos.recursoVisualizadorEntornosSimulacion.imp.ClaseGeneradoraRecursoVisualizadorEntornosSimulacion"/>			            		
-	<icaro:DescRecursoAplicacion nombre="RecursoPersistenciaEntornosSimulacion" localizacionClaseGeneradora="icaro.aplicaciones.recursos.recursoPersistenciaEntornosSimulacion.imp.ClaseGeneradoraRecursoPersistenciaEntornosSimulacion"/>			            		
+        <icaro:DescRecursoAplicacion nombre="RecursoVisualizadorEntornosSimulacion" localizacionClaseGeneradora="org.icaro.aplicaciones.recursos.recursoVisualizadorEntornosSimulacion.imp.ClaseGeneradoraRecursoVisualizadorEntornosSimulacion"/>			            		
+	<icaro:DescRecursoAplicacion nombre="RecursoPersistenciaEntornosSimulacion" localizacionClaseGeneradora="org.icaro.aplicaciones.recursos.recursoPersistenciaEntornosSimulacion.imp.ClaseGeneradoraRecursoPersistenciaEntornosSimulacion"/>			            		
 </icaro:DescRecursosAplicacion>
 
 </icaro:DescripcionComponentes>
