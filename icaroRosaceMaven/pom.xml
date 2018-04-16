@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 <!-- This Project 
     <parent>
-    <groupId>org.icaro</groupId>
+    <groupId>icaro</groupId>
     <artifactId>rosaceMavenModulos</artifactId>
     <version>1.0-SNAPSHOT</version>
     </parent>
@@ -123,7 +123,7 @@
      <build>
         <resources>
         <resource>
-          <directory>src/main/java/org/icaro</directory>
+          <directory>src/main/java/icaro</directory>
             <excludes>
 		<exclude>**/*.java</exclude>
             </excludes>
@@ -149,12 +149,12 @@
     <dependencies>
  <!--
      <dependency>
-            <groupId>org.icaro</groupId>
+            <groupId>icaro</groupId>
             <artifactId>Infreaestructura00</artifactId>
             <version>0.0.1</version>
             <type>jar</type>
         </dependency>
--->
+-->   
         <dependency>
             <groupId>org.simpleframework</groupId>
             <artifactId>simple-xml</artifactId>
@@ -173,10 +173,19 @@
             <version>1.0.19</version>
             <type>jar</type>
         </dependency>
+  <!--       
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>icaroGestoresyInfrastr</artifactId>
             <version>${project.version}</version>
+        </dependency>
+        
+        -->
+        <dependency>
+            <groupId>org.github.fgarijo</groupId>
+            <artifactId>icaroGestoresconInfrastr</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>jar</type>
         </dependency>
     </dependencies>
 </project>

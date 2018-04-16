@@ -1,32 +1,32 @@
 /*
  * F garijo
  */
-package org.icaro.gestores.gestorNodo.comportamiento;
+package icaro.gestores.gestorNodo.comportamiento;
 
 
-//import org.icaro.infraestructura.corba.ORBDaemonExec;
-import org.icaro.infraestructura.entidadesBasicas.comunicacion.EventoRecAgte;
-import org.icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
-import org.icaro.infraestructura.entidadesBasicas.comunicacion.AdaptadorRegRMI;
-import org.icaro.infraestructura.entidadesBasicas.comunicacion.ComunicacionAgentes;
-import org.icaro.infraestructura.entidadesBasicas.comunicacion.InfoContEvtMsgAgteReactivo;
-import org.icaro.infraestructura.patronAgenteReactivo.control.acciones.AccionesSemanticasAgenteReactivo;
-import org.icaro.infraestructura.entidadesBasicas.descEntidadesOrganizacion.DescInstanciaAgente;
-import org.icaro.infraestructura.entidadesBasicas.descEntidadesOrganizacion.DescInstanciaAgenteAplicacion;
-import org.icaro.infraestructura.entidadesBasicas.descEntidadesOrganizacion.DescInstanciaGestor;
-import org.icaro.infraestructura.entidadesBasicas.descEntidadesOrganizacion.DescInstanciaRecursoAplicacion;
-import org.icaro.infraestructura.entidadesBasicas.descEntidadesOrganizacion.jaxb.TipoAgente;
-import org.icaro.infraestructura.entidadesBasicas.interfaces.InterfazGestion;
-import org.icaro.infraestructura.patronAgenteCognitivo.factoriaEInterfacesPatCogn.FactoriaAgenteCognitivo;
-import org.icaro.infraestructura.patronAgenteReactivo.factoriaEInterfaces.FactoriaAgenteReactivo;
-import org.icaro.infraestructura.patronAgenteReactivo.factoriaEInterfaces.ItfGestionAgenteReactivo;
-import org.icaro.infraestructura.patronAgenteReactivo.factoriaEInterfaces.ItfUsoAgenteReactivo;
-import org.icaro.infraestructura.patronAgenteReactivo.factoriaEInterfaces.imp.HebraMonitorizacion;
-import org.icaro.infraestructura.patronRecursoSimple.FactoriaRecursoSimple;
-import org.icaro.infraestructura.recursosOrganizacion.configuracion.ItfUsoConfiguracion;
-import org.icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
-import org.icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza.NivelTraza;
-import org.icaro.infraestructura.recursosOrganizacion.repositorioInterfaces.imp.ClaseGeneradoraRepositorioInterfaces;
+//import icaro.infraestructura.corba.ORBDaemonExec;
+import icaro.infraestructura.entidadesBasicas.comunicacion.EventoRecAgte;
+import icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
+import icaro.infraestructura.entidadesBasicas.comunicacion.AdaptadorRegRMI;
+import icaro.infraestructura.entidadesBasicas.comunicacion.ComunicacionAgentes;
+import icaro.infraestructura.entidadesBasicas.comunicacion.InfoContEvtMsgAgteReactivo;
+import icaro.infraestructura.patronAgenteReactivo.control.acciones.AccionesSemanticasAgenteReactivo;
+import icaro.infraestructura.entidadesBasicas.descEntidadesOrganizacion.DescInstanciaAgente;
+import icaro.infraestructura.entidadesBasicas.descEntidadesOrganizacion.DescInstanciaAgenteAplicacion;
+import icaro.infraestructura.entidadesBasicas.descEntidadesOrganizacion.DescInstanciaGestor;
+import icaro.infraestructura.entidadesBasicas.descEntidadesOrganizacion.DescInstanciaRecursoAplicacion;
+import icaro.infraestructura.entidadesBasicas.descEntidadesOrganizacion.jaxb.TipoAgente;
+import icaro.infraestructura.entidadesBasicas.interfaces.InterfazGestion;
+import icaro.infraestructura.patronAgenteCognitivo.factoriaEInterfacesPatCogn.FactoriaAgenteCognitivo;
+import icaro.infraestructura.patronAgenteReactivo.factoriaEInterfaces.FactoriaAgenteReactivo;
+import icaro.infraestructura.patronAgenteReactivo.factoriaEInterfaces.ItfGestionAgenteReactivo;
+import icaro.infraestructura.patronAgenteReactivo.factoriaEInterfaces.ItfUsoAgenteReactivo;
+import icaro.infraestructura.patronAgenteReactivo.factoriaEInterfaces.imp.HebraMonitorizacion;
+import icaro.infraestructura.patronRecursoSimple.FactoriaRecursoSimple;
+import icaro.infraestructura.recursosOrganizacion.configuracion.ItfUsoConfiguracion;
+import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
+import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza.NivelTraza;
+import icaro.infraestructura.recursosOrganizacion.repositorioInterfaces.imp.ClaseGeneradoraRepositorioInterfaces;
 import java.io.Serializable;
 import java.net.InetAddress;
 import java.rmi.Remote;

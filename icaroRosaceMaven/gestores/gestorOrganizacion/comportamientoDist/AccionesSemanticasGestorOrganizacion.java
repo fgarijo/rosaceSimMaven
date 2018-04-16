@@ -1,26 +1,26 @@
 /*
  *  Copyright 2001 Telef�nica I+D. All rights reserved
  */
-package org.icaro.gestores.gestorOrganizacion.comportamientoDist;
+package icaro.gestores.gestorOrganizacion.comportamientoDist;
 
 
-//import org.icaro.infraestructura.corba.ORBDaemonExec;
-import org.icaro.infraestructura.entidadesBasicas.comunicacion.EventoRecAgte;
-import org.icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
-import org.icaro.infraestructura.entidadesBasicas.excepciones.ExcepcionEnComponente;
-import org.icaro.infraestructura.patronAgenteReactivo.control.acciones.AccionesSemanticasAgenteReactivo;
-import org.icaro.infraestructura.entidadesBasicas.descEntidadesOrganizacion.DescInstanciaAgente;
-import org.icaro.infraestructura.entidadesBasicas.descEntidadesOrganizacion.DescInstanciaGestor;
-import org.icaro.infraestructura.entidadesBasicas.interfaces.InterfazGestion;
-import org.icaro.infraestructura.entidadesBasicas.interfaces.InterfazUsoAgente;
-import org.icaro.infraestructura.patronAgenteReactivo.factoriaEInterfaces.FactoriaAgenteReactivo;
-import org.icaro.infraestructura.patronAgenteReactivo.factoriaEInterfaces.ItfGestionAgenteReactivo;
-import org.icaro.infraestructura.patronAgenteReactivo.factoriaEInterfaces.ItfUsoAgenteReactivo;
-import org.icaro.infraestructura.patronAgenteReactivo.factoriaEInterfaces.imp.HebraMonitorizacion;
-import org.icaro.infraestructura.recursosOrganizacion.configuracion.ItfUsoConfiguracion;
-import org.icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
-import org.icaro.infraestructura.recursosOrganizacion.repositorioInterfaces.imp.ClaseGeneradoraRepositorioInterfaces;
-import org.icaro.infraestructura.recursosOrganizacion.recursoTrazas.ItfUsoRecursoTrazas;
+//import icaro.infraestructura.corba.ORBDaemonExec;
+import icaro.infraestructura.entidadesBasicas.comunicacion.EventoRecAgte;
+import icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
+import icaro.infraestructura.entidadesBasicas.excepciones.ExcepcionEnComponente;
+import icaro.infraestructura.patronAgenteReactivo.control.acciones.AccionesSemanticasAgenteReactivo;
+import icaro.infraestructura.entidadesBasicas.descEntidadesOrganizacion.DescInstanciaAgente;
+import icaro.infraestructura.entidadesBasicas.descEntidadesOrganizacion.DescInstanciaGestor;
+import icaro.infraestructura.entidadesBasicas.interfaces.InterfazGestion;
+import icaro.infraestructura.entidadesBasicas.interfaces.InterfazUsoAgente;
+import icaro.infraestructura.patronAgenteReactivo.factoriaEInterfaces.FactoriaAgenteReactivo;
+import icaro.infraestructura.patronAgenteReactivo.factoriaEInterfaces.ItfGestionAgenteReactivo;
+import icaro.infraestructura.patronAgenteReactivo.factoriaEInterfaces.ItfUsoAgenteReactivo;
+import icaro.infraestructura.patronAgenteReactivo.factoriaEInterfaces.imp.HebraMonitorizacion;
+import icaro.infraestructura.recursosOrganizacion.configuracion.ItfUsoConfiguracion;
+import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
+import icaro.infraestructura.recursosOrganizacion.repositorioInterfaces.imp.ClaseGeneradoraRepositorioInterfaces;
+import icaro.infraestructura.recursosOrganizacion.recursoTrazas.ItfUsoRecursoTrazas;
 import java.rmi.RemoteException;
 import java.util.HashSet;
 import java.util.Set;
