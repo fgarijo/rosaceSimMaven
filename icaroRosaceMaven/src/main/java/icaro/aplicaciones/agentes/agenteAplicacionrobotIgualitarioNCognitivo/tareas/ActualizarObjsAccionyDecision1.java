@@ -69,7 +69,7 @@ public class ActualizarObjsAccionyDecision1 extends TareaSincrona {
                 }
                   focoActual.setFoco(objetivoDecision);
                   this.getEnvioHechos().eliminarHecho(infoDecision);     
-            }
+//            }
             // Si el robot es responsable del objetivo se deben actualizar los objetivos Accion
             if ( infoDecision.gettengoLaMejorEvaluacion()){
             miEvaluacion = infoDecision.getMi_eval();
@@ -78,7 +78,7 @@ public class ActualizarObjsAccionyDecision1 extends TareaSincrona {
             victima.setrobotResponsableId(identAgente);
             trazas.aceptaNuevaTrazaEjecReglas(identAgente, " Se ejecuta la tarea : " + identTarea + " Objetivo Decision Solved para la victima : " + objetivoAccion.toString()+ "\n"
                          + " Se pone a Solving el objetivo:  " + objetivoAccion 
-                    + "  La vicitma ha sido asignada la robot : " + victima.getrobotResponsableId()
+                    + "  La victima ha sido asignada al robot : " + victima.getrobotResponsableId()
                         + "  Estado del robot : " + EstadoMovimientoRobot.RobotEnMovimiento.name() + "\n" );          
             Objetivo nuevoObjAcc = misObjsAcc.getobjetivoMasPrioritario();
             itfcompMov = estatusRobot.getInfoCompMovt();
@@ -136,7 +136,8 @@ public class ActualizarObjsAccionyDecision1 extends TareaSincrona {
             trazas.aceptaNuevaTrazaEjecReglas(identAgente, " Posicion Robot : " +  estatusRobot.getRobotCoordinate()+ "\n"
                     + " estado del Movimiento del Robot: " + estadoMovRobot + " Victima objetivo  :  " + estatusRobot.getidentDestino()+ "\n"
                     + " Victima asignada  :  " + victima + " El objetivo decision esta en el foco.  El foco actual es : " + focoActual + "\n");
-        } catch (Exception e) {
+            }
+            } catch (Exception e) {
             e.printStackTrace();
         }
     }

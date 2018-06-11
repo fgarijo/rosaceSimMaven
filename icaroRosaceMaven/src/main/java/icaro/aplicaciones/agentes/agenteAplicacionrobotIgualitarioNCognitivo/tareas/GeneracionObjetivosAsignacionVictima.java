@@ -35,7 +35,7 @@ public class GeneracionObjetivosAsignacionVictima extends TareaSincrona{
                  AyudarVictima newAyudarVictima = new AyudarVictima (idVictim);
            //      newObjetivo.setvictimId(idVictim);
                  newAyudarVictima.setPriority(victim.getPriority());
-                 victims2R.addVictimToRescue(victim);
+                 victims2R.addVictimARescatar(victim);
                  DecidirQuienVa newDecision = new DecidirQuienVa(idVictim);
                  newDecision.setSolving();
                  this.getEnvioHechos().actualizarHechoWithoutFireRules(victims2R);

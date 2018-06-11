@@ -33,7 +33,8 @@ public class InterpretarOrdenDelCC extends TareaSincrona {
             String idVictim = victim.getName();
             AyudarVictima newAyudarVictima = new AyudarVictima(idVictim);
             newAyudarVictima.setPriority(victim.getPriority());
-            victims2R.addVictimToRescue(victim);
+            victims2R.addVictimARescatar(victim);
+            victims2R.setRobotPropietario(this.identAgente);
             DecidirQuienVa newDecision = new DecidirQuienVa(idVictim);
             newDecision.setSolving();
             misObjsDecision.addObjetivo(newDecision);

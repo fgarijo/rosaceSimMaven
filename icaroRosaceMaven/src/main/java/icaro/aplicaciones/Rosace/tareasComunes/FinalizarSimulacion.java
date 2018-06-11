@@ -115,7 +115,7 @@ public class FinalizarSimulacion extends TareaSincrona {
     	      String referenciaIdObjetivo = ob.getobjectReferenceId();
 
   	          //Obtener la victima de la cola
-  	          Victim victimaActualCola = victims2R.getVictimToRescue(referenciaIdObjetivo);  	          
+  	          Victim victimaActualCola = victims2R.getVictimARescatar(referenciaIdObjetivo);  	          
   	          String nameVictim = victimaActualCola.getName();
   	        
   	          aux.add(index, nameVictim);

@@ -15,7 +15,7 @@
     <!--        <icaro:propiedad atributo="rutaFicheroVictimasTest" valor = "src/utils/Esc_6Victimas_0IP_001.xml" />  -->
             <icaro:propiedad atributo="identFicheroEscenarioSimulacion" valor = "Org_IgualitarioRobts_4Victs_4_0.xml" />            
             <icaro:propiedad atributo="rutaFicheroRobotsTest" valor = "src/utils/Esc_Jerarquico_4Robots_001.xml" />
-            <icaro:propiedad atributo="timeMsTarea:TimeOutContactarMiembrosEquipo" valor = "4000" />
+            <icaro:propiedad atributo="timeMsTarea:TimeOutContactarMiembrosEquipo" valor = "2000" />
             <icaro:propiedad atributo="intervaloMilisegundosEnvioMensajesDesdeCC" valor = "10000" />   <!-- valor expresado en milisegundos -->  
             <icaro:propiedad atributo="timeMsTarea:TimeOutRecibirEvaluaciones1" valor = "6000" />   <!-- se usa en el igualitario y en el jerarquico -->                                                                        
             <icaro:propiedad atributo="timeMsTarea:TimeOutRecibirEvaluaciones2" valor = "6000" />

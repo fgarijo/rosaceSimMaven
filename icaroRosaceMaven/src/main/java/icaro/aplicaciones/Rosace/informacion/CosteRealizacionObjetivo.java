@@ -164,7 +164,7 @@ public class CosteRealizacionObjetivo {
     	PriorityBlockingQueue <Objetivo> colaobjetivos = misObjs.getMisObjetivosPriorizados();
 
     	Iterator<Objetivo> it = colaobjetivos.iterator();
-         boolean hayVictimasArescatar = victims2R.getvictims2Rescue().isEmpty();
+         boolean hayVictimasArescatar = victims2R.hayVictimasArescatar();
                
     	while (it.hasNext()&&hayVictimasArescatar){
   		  //Hay al menos un objetivo
@@ -172,7 +172,7 @@ public class CosteRealizacionObjetivo {
   	      String referenciaIdObjetivo = ob.getobjectReferenceId();
 	      //Obtener la victima de la cola
               if (referenciaIdObjetivo !=null){
-                    Victim  victimaActualCola = victims2R.getVictimToRescue(referenciaIdObjetivo);
+                    Victim  victimaActualCola = victims2R.getVictimARescatar(referenciaIdObjetivo);
                     if(victimaActualCola !=null){
                         int prioridadVictimaActualCola = victimaActualCola.getPriority();
                         tiempo = tiempo + (factorMultiplicativo*prioridadVictimaActualCola);
@@ -206,8 +206,8 @@ public class CosteRealizacionObjetivo {
         if (tamaniocola == 0 ) return  distanciaC1toC2(posicionActualRobot, coordinateNuevaVictima);
         else if (tamaniocola == 1){
          String refVictim = misObjs.getobjetivoMasPrioritario().getobjectReferenceId();
-            if(refVictim == null||(victims2R.getvictims2Rescue().isEmpty() ||
-                                   victims2R.getVictimToRescue(refVictim) == null )
+            if(refVictim == null||(victims2R.hayVictimasArescatar() ||
+                                   victims2R.getVictimARescatar(refVictim) == null )
                ) return distanciaC1toC2(posicionActualRobot, coordinateNuevaVictima);  
         }
             
@@ -228,7 +228,7 @@ public class CosteRealizacionObjetivo {
 //    	      		                  , InfoTraza.NivelTraza.info));       		        		                                                           		        		          		           
     	      
     	      //Obtener la victima de la cola
-    	      Victim victimaActualCola = victims2R.getVictimToRescue(referenciaIdObjetivo);    	          	      
+    	      Victim victimaActualCola = victims2R.getVictimARescatar(referenciaIdObjetivo);    	          	      
     	      int prioridadVictimaActualCola = victimaActualCola.getPriority();    	          	          	      
     	      Coordinate coordinateVictimaActualCola = victimaActualCola.getCoordinateVictim();
     	          	      
@@ -317,7 +317,7 @@ public class CosteRealizacionObjetivo {
   	      String referenciaIdObjetivo = ob.getobjectReferenceId();
 
 	      //Obtener la victima de la cola
-	      Victim victimaActualCola = victims2R.getVictimToRescue(referenciaIdObjetivo);
+	      Victim victimaActualCola = victims2R.getVictimARescatar(referenciaIdObjetivo);
 	      Coordinate coordinateVictimaActualCola = victimaActualCola.getCoordinateVictim();
 	      if (i==1){
 	    	  		//distancia del robot a la nueva victima
@@ -359,7 +359,7 @@ public class CosteRealizacionObjetivo {
   	      String referenciaIdObjetivo = ob.getobjectReferenceId();
 
 	      //Obtener la victima de la cola
-	      Victim victimaActualCola = victims2R.getVictimToRescue(referenciaIdObjetivo);    	          	      
+	      Victim victimaActualCola = victims2R.getVictimARescatar(referenciaIdObjetivo);    	          	      
 	      int prioridadVictimaActualCola = victimaActualCola.getPriority();
 	      
 	      tiempo = tiempo + (factorMultiplicativo*prioridadVictimaActualCola);

@@ -40,7 +40,7 @@ public class EncolarObjetivoActualizarFocoIGN extends TareaSincrona {
             VictimsToRescue victimas =(VictimsToRescue) params[6];
             String nombreAgenteEmisor = this.getIdentAgente();
 
-            //Para anotar en el fichero cuál es mi coste
+            //Para anotar en el fichero cual es mi coste
             int coste = 0;   //El coste se define como el MAYOR ENTERO - VALOR DE LA FUNCION DE EVALUACION
             //El que menor coste tiene es el que se hace cargo de la victima o dicho de otra manera
             //El que mayor función de evaluación tiene es el que se hace cargo de la victima
@@ -74,7 +74,7 @@ public class EncolarObjetivoActualizarFocoIGN extends TareaSincrona {
                 obj1.setSolving();
             }
             focoActual.setFoco(nuevoObj);
-            victima = victimas.getVictimToRescue(nuevoObj.getobjectReferenceId());          
+            victima = victimas.getVictimARescatar(nuevoObj.getobjectReferenceId());          
                 ItfUsoMovimientoCtrl itfcompMov = (ItfUsoMovimientoCtrl) infoComMov.getitfAccesoComponente();
 //                if (itfcompMov.estamosEnDestino(victima.getName())){
 //                    nuevoObj.setSolved();

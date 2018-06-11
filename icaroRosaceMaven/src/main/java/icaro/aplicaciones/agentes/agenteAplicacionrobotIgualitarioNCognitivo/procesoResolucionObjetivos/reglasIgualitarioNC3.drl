@@ -956,7 +956,7 @@ rule " Si un agente se ofrece para ir  lo acepto "
      not( exists ( AceptacionPropuesta(propuestaAceptada == propuesta  )))
   then
      TareaSincrona tarea = gestorTareas.crearTareaSincrona(MandarConfirmacionPropuesta.class);
-     tarea.ejecutar(victimaCC,propuesta ); 
+     tarea.ejecutar(victimaCC,propuesta,victimsArescatar ); 
      recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId,"\n"+"( ID Victima: "+idVict + " ) EJECUTO LA REGLA " + drools.getRule().getName() + "\n");
      System.out.println( "\n"+agentId +"( ID Victima: "+idVict + " ) EJECUTO LA REGLA "+drools.getRule().getName()+" El FOCO esta en : "+focoActual.toString()+" \n\n" );     
 end
@@ -1012,7 +1012,7 @@ when
     decisionOtroAgte:DecisionAgente(identAgente != agentId,identObjectRefDecision == idVict,decisionMsg == VocabularioRosace.MsgDecision_De_Asumir_Objetivo_Ir_Yo)
  then
     TareaSincrona tarea = gestorTareas.crearTareaSincrona(AceptarDecisionDeOtroAgente.class); ;
-    tarea.ejecutar(victimaCC,obj,infoDecision,focoActual,decisionOtroAgte );
+    tarea.ejecutar(victimaCC,obj,infoDecision,focoActual,decisionOtroAgte,victimsArescatar );
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId,"\n"+"( ID Victima: "+idVict + " ) EJECUTO LA REGLA " + drools.getRule().getName() + "\n");
     System.out.println( "\n"+agentId +"( ID Victima: "+idVict  +" EJECUTO LA REGLA: "+drools.getRule().getName()+" \n\n" ); 
 end
@@ -1027,7 +1027,7 @@ rule "Consecucion del Objetivo DecidirQuienVa sin pedir confirmacion"
     focoActual:Focus(foco == obj) 
   then
      TareaSincrona tarea = gestorTareas.crearTareaSincrona(MandarDecisionATodos.class);
-     tarea.ejecutar(obj,infoDecision,victimaCC);
+     tarea.ejecutar(obj,infoDecision,victimaCC,victimsArescatar);
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId,"\n"+"( ID Victima: "+idVict + " ) EJECUTO LA REGLA " + drools.getRule().getName() + "\n");
      recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId,"\n"+"( ID Victima: "+idVict +"  SE HA RESUELTO el objetivo : "+obj.getgoalId()+" El FOCO esta en : "+focoActual.toString()+" \n\n" );  
      System.out.println( "\n"+agentId +"( ID Victima: "+idVict +" EJECUTO LA REGLA: "+drools.getRule().getName()+" El FOCO esta en : "+focoActual.toString()+" \n\n" );
@@ -1216,7 +1216,7 @@ rule "Si no llegan las confirmaciones tras un tiempo de espera les informo de qu
       not (exists  DecisionAgente (identAgente != agentId, identObjectRefDecision == idVict))
    then
       TareaSincrona tarea = gestorTareas.crearTareaSincrona(MandarDecisionATodos.class);
-      tarea.ejecutar(obj,infoDecision,victimaCC);
+      tarea.ejecutar(obj,infoDecision,victimaCC,victimsArescatar);
       recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId,"\n"+"( ID Victima: "+idVict + " ) EJECUTO LA REGLA " + drools.getRule().getName() + "\n");
       retract (informeTarea2);
       System.out.println( "\n"+agentId +"( ID Victima: "+idVict + " ) EJECUTO LA REGLA "+drools.getRule().getName()+" \n\n" );
@@ -1237,7 +1237,7 @@ rule "Informar a todos de que voy Yo con acuerdo de Todos"
       not (exists  DecisionAgente (identAgente != agentId, identObjectRefDecision == idVict))
    then
       TareaSincrona tarea = gestorTareas.crearTareaSincrona(MandarDecisionATodos.class);
-      tarea.ejecutar(obj,infoDecision,victimaCC );
+      tarea.ejecutar(obj,infoDecision,victimaCC,victimsArescatar );
  //     retract (informeTarea);
       recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId,"\n"+"( ID Victima: "+idVict + " ) EJECUTO LA REGLA " + drools.getRule().getName() + "\n");
       System.out.println( "\n"+agentId +"( ID Victima: "+idVict + " ) EJECUTO LA REGLA "+drools.getRule().getName()+" \n\n" );

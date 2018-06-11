@@ -47,7 +47,7 @@ public class ProcesarPropuestaParaAsumirObjetivo extends TareaSincrona {
                        // Actualizo la tabla de costa estimado de victimas
                        aceptacionAsignacion.setidentObjectRefAcetPropuesta(propuestaRecibida.getIdentObjectRefPropuesta());
                        victima.setEstimatedCost(costeAyudaVictima);
-                       victimasRecibidas.addVictimToRescue(victima);
+                       victimasRecibidas.addVictimARescatar(victima);
                        this.getComunicator().enviarInfoAotroAgente(aceptacionAsignacion, propuestaRecibida.getIdentAgente());
                        this.getEnvioHechos().eliminarHechoWithoutFireRules(propuestaRecibida);
                        this.getEnvioHechos().actualizarHechoWithoutFireRules(victima);

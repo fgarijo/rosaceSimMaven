@@ -75,7 +75,7 @@ private ItfUsoMovimientoCtrl itfcompMov;
             AyudarVictima objetivoAsignado = new AyudarVictima(victima.getName());
                 objetivoAsignado.setPriority(victima.getPriority());
 //                objetivoAsignado.setSolving() ;
-                victimas.addVictimToRescue(victima);
+                victimas.addVictimARescatar(victima);
 //                misObjs.addObjetivo(objetivoAsignado);
             Objetivo objetivoActual = misObjs.getobjetivoMasPrioritario();
             String estadoMovRobot= null;
@@ -111,7 +111,7 @@ private ItfUsoMovimientoCtrl itfcompMov;
                         "estado del robot : "+estadoMovRobot+"\n");                   
                 }else {// El objetivo actual tiene mayor prioridad
                     // se  orden al movimiento de que cambie el destino                      
-                    victima = victimas.getVictimToRescue(objetivoActual.getobjectReferenceId());
+                    victima = victimas.getVictimARescatar(objetivoActual.getobjectReferenceId());
                     focoActual.setFoco(objetivoActual);
 //                    if (estadoMovRobot.equalsIgnoreCase(EstadoMovimientoRobot.RobotEnMovimiento.name())){   
 //                       itfcompMov.cambiaDestino(objetivoActual.getobjectReferenceId(), victima.getCoordinateVictim());

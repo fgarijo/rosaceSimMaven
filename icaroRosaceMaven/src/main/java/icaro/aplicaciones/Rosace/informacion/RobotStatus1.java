@@ -41,6 +41,7 @@ public class RobotStatus1 implements Cloneable{
     //No obstante esta clase ya ofrece metodos para poder considerarlos en el futuro 
     private float rangeProximity;
     private final double limiteDespalzamiento = 0.5;
+    private final int energyPerDistance= 20;
     @ElementList(entry="robotCapability")
     private  List<RobotCapability> robotCapabilities ;
 //    @Element(name="robotCapability")
@@ -199,6 +200,9 @@ public class RobotStatus1 implements Cloneable{
         if (robotCoordinateAnteriorP == null) return false;
         return (limiteDespalzamiento>=Math.abs(robotCoordinateActualP.getY()-robotCoordinateAnteriorP.getY()) && 
                 limiteDespalzamiento>=Math.abs(robotCoordinateActualP.getX()-robotCoordinateAnteriorP.getX()) );
+    }
+    public boolean hayEnergiaSuficiente( double distancia){
+        return ( (availableEnergy- distancia/energyPerDistance) >0) ;
     }
     public void setidentDestino(String destinoIdent){
          identDestino=destinoIdent ;

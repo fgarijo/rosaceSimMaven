@@ -8,9 +8,7 @@ import icaro.aplicaciones.Rosace.informacion.InfoEquipo;
 import icaro.aplicaciones.Rosace.informacion.VocabularioRosace;
 import icaro.aplicaciones.Rosace.informacion.InfoRolAgente;
 import icaro.aplicaciones.Rosace.informacion.RobotStatus1;
-import icaro.infraestructura.entidadesBasicas.interfaces.InterfazUsoAgente;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaSincrona;
-import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
 import java.util.ArrayList;
 import icaro.aplicaciones.Rosace.objetivosComunes.DefinirMiEquipo;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Focus;
@@ -22,7 +20,7 @@ import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Focus;
    public class ContactarMiembrosEquipo  extends TareaSincrona {
    private ArrayList <String> agentesEquipo;//resto de agentes que forman mi equipo                                
    private String nombreAgenteEmisor;
-   private long valorTemporizador = 5000;
+   private final long valorTemporizador = 5000;
    // private TimeOutRespuestas tiempoSinRecibirRespuesta;  //no usado
 	@Override
 	public void ejecutar(Object... params) {
@@ -41,12 +39,14 @@ import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Focus;
               equipoInfo.setidentMiRolEnEsteEquipo(miStatus.getIdRobotRol());
 //              this.getEnvioHechos().actualizarHechoWithoutFireRules(equipoInfo);
                DefinirMiEquipo definirMiequipoObj = new DefinirMiEquipo(VocabularioRosace.IdentMisionEquipo);
+//               this.generarInformeTemporizadoFromConfigProperty("timeMsTarea:TimeOutContactarMiembrosEquipo",null,nombreAgenteEmisor, null);
+            this.generarInformeTemporizado(valorTemporizador,this.identTarea,nombreAgenteEmisor, null);
                definirMiequipoObj.setSolving();
                focoActual.setFoco(definirMiequipoObj);
                this.getEnvioHechos().insertarHecho(definirMiequipoObj);
                this.getEnvioHechos().actualizarHecho(focoActual);
               trazas.aceptaNuevaTrazaEjecReglas(nombreAgenteEmisor, " Numero de agentes de los que espero respuesta: " + agentesEquipo.size() );     
-              this.generarInformeTemporizadoFromConfigProperty(VocabularioRosace.IdentTareaTimeOutContactarMiembrosEquipo,null,nombreAgenteEmisor, null);
+             
 //                this.generarInformeTemporizado(valorTemporizador,this.identTarea,null,nombreAgenteEmisor, null);
 		} catch (Exception e) {
 			e.printStackTrace();

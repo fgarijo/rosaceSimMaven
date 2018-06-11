@@ -53,10 +53,11 @@ public class ProcesarInformeLlegadaDestino extends TareaAsincrona{
     // se actualiza el coste de la  vicitima salvada
              itfcompMov = (ItfUsoMovimientoCtrl)infoCompMov.getitfAccesoComponente();
              String victimaRescatadaId = informeRecibido.getReferenciaContexto();
-             
+            
+//             System.out.println(" Robot : " + this.identAgente + " Se ejecuta  una peticion para eliminar la victima:  " + victimaRescatadaId + " Victimas Asignadas :" + victims.getIdtsVictimsAsignadas());
 //             victims.addEstimatedCostVictim2Rescue(victimaRescatadaId, 0);
             estadoComponente=estatusRobot.getestadoMovimiento();
-             victims.eliminarVictima(victimaRescatadaId);
+//             victims.eliminarVictima(victimaRescatadaId);
              this.getEnvioHechos().eliminarHecho(informeRecibido);
              this.informarControladorRescateVictima(victimaRescatadaId); // informamos al agente controlador
              // Se actualizan los objetivos, se da por conseguido el objetivo salvar a la victima
@@ -80,7 +81,7 @@ public class ProcesarInformeLlegadaDestino extends TareaAsincrona{
                   if( nuevoObjetivo.getState()!= Objetivo.SOLVED){
              // tiene  objetivos pendientes , se da la orden de que vaya a salvar a la victima
                       String idVictimaRescatar=nuevoObjetivo.getobjectReferenceId();
-                      victimaRescatar = victims.getVictimToRescue(idVictimaRescatar);
+                      victimaRescatar = victims.getVictimARescatar(idVictimaRescatar);
                      estatusRobot.setidentDestino(idVictimaRescatar);
 //                     itfcompMov.moverAdestino(nuevoObjetivo.getobjectReferenceId(), victimaRescatada.getCoordinateVictim(), velocidadCruceroPordefecto);
                      nuevoObjetivo.setSolving();
@@ -98,11 +99,12 @@ public class ProcesarInformeLlegadaDestino extends TareaAsincrona{
 //                   focoActual.refocusUltimoObjetivoSolving();
               // Se envian los cambios al motor   
                   
-                  this.getEnvioHechos().actualizarHechoWithoutFireRules(victims);
+//                  this.getEnvioHechos().actualizarHechoWithoutFireRules(victims);
 //                  this.getEnvioHechos().actualizarHechoWithoutFireRules(misObjsAccion);
                   this.getEnvioHechos().actualizarHechoWithoutFireRules(estatusRobot);
                   this.getEnvioHechos().actualizarHechoWithoutFireRules(objetivoConseguido);
                   this.getEnvioHechos().actualizarHecho(focoActual);
+                  victims.elimVictimAsignada(victimaRescatadaId);
                   trazas.aceptaNuevaTrazaEjecReglas(this.identAgente, "Se Ejecuta la Tarea :"+ this.identTarea +"\n"+
                            " El identificador de la victima  :"+ victimaRescatadaId + " y el del ultimo objetivo : "+objetivoConseguido.getobjectReferenceId()+" coinciden " +"\n"+
                            "EstadoComponente : "+estadoComponente+ " Objetivo mas prioritario en curso "+misObjsAccion.getobjetivoMasPrioritario().toString()+ "\n"+ "  El foco esta en el ojetivo :  "+focoActual + "\n");

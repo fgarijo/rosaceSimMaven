@@ -5,6 +5,7 @@
 package icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.tareas;
 import icaro.aplicaciones.Rosace.informacion.DecisionAgente;
 import icaro.aplicaciones.Rosace.informacion.Victim;
+import icaro.aplicaciones.Rosace.informacion.VictimsToRescue;
 import icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.informacion.InfoParaDecidirQuienVa;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Focus;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.MisObjetivos;
@@ -25,11 +26,13 @@ public class AceptarDecisionDeOtroAgente extends TareaSincrona{
              InfoParaDecidirQuienVa infoDecision = (InfoParaDecidirQuienVa)params[2];
              Focus focoActual = (Focus)params[3];
              DecisionAgente decisionOtroAgente= (DecisionAgente)params[4];
+             VictimsToRescue victimas= (VictimsToRescue)params[5];
              String nombreAgenteEmisor = this.getIdentAgente();
              String identAgtEnviaDecision=decisionOtroAgente.identAgente;
              if(infoDecision.getAgentesEquipo().contains(identAgtEnviaDecision)){
              decidirQuienVa.setSolved();
              infoDecision.setobjetivoAsumidoPorOtroAgte(true);
+             victimas.elimVictimAsignada(victimaImplicada.getName());
              victimaImplicada.setrobotResponsableId(identAgtEnviaDecision);
                 this.getEnvioHechos().actualizarHechoWithoutFireRules(infoDecision);
                 this.getEnvioHechos().actualizarHechoWithoutFireRules(decidirQuienVa);

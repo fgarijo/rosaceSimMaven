@@ -45,7 +45,7 @@ public class ProcesarInfoEstadoAgente extends TareaSincrona {
                       miEquipo.setEstadoTeamMember(infoEstadoRobot);
                   if(infoDecision !=null&&infoEstadoRobot.getBloqueado() ){
                  String idVictimaEnDecision = infoDecision.getidElementoDecision();
-                     Victim victimaImplicada = victims2R.getVictimToRescue(idVictimaEnDecision);
+                     Victim victimaImplicada = victims2R.getVictimARescatar(idVictimaEnDecision);
                              victimaImplicada.setrobotResponsableId(null);
             // Se crea una evaluacion disuasoria con maximo coste y se procesa como si el agte la hubiera enviado
             // Actualizar el equipo en infoDecision

@@ -5,6 +5,8 @@
 package icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.tareas;
 import icaro.aplicaciones.Rosace.informacion.DecisionAgente;
 import icaro.aplicaciones.Rosace.informacion.Victim;
+import icaro.aplicaciones.Rosace.informacion.VictimasSalvadas;
+import icaro.aplicaciones.Rosace.informacion.VictimsToRescue;
 import icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.informacion.InfoParaDecidirQuienVa;
 import icaro.aplicaciones.agentes.componentesInternos.movimientoCtrl.InfoCompMovimiento;
 import icaro.aplicaciones.agentes.componentesInternos.movimientoCtrl.ItfUsoMovimientoCtrl;
@@ -33,6 +35,7 @@ public class AsimilarDecisionAsignVictimaOtroAgte extends TareaSincrona{
              InfoParaDecidirQuienVa infoDecision = (InfoParaDecidirQuienVa)params[3];
              Focus focoActual = (Focus)params[4]; // el foco actual es decidir quien va 
              Victim victima = (Victim)params[5];
+              VictimsToRescue victimas = (VictimsToRescue)params[6];
              this.getEnvioHechos().eliminarHecho(decidirquienVa);
                 this.getEnvioHechos().eliminarHecho(ayudarVictima);
                 this.getEnvioHechos().eliminarHecho(infoDecision);

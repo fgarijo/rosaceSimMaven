@@ -69,7 +69,7 @@ public class MandarEvaluacionAQuienLaPide  extends TareaSincrona {
                if (identObjEvaluacion.equals(infoDecision.idElementoDecision)) miEvalDeRespuesta = infoDecision.getMi_eval();
                 else if( misObjtvs.existeObjetivoConEsteIdentRef(identObjEvaluacion))miEvalDeRespuesta = valorDisuasorioParaElquePideAcepteQueSoyYoElResponsable;
                       else { // Miro en la tabla de vicitimas si tengo la victima, 
-                        victimEnPeticion = victimasRecibidas.getVictimToRescue(identObjEvaluacion);
+                        victimEnPeticion = victimasRecibidas.getVictimARescatar(identObjEvaluacion);
                         if(victimEnPeticion != null){ // tengo la victima miro si tengo el valor estimado
                             if (victimEnPeticion.getisCostEstimated()) miEvalDeRespuesta = victimEnPeticion.getEstimatedCost();
                             else{ // calculo el coste y lo guardo en la victima
@@ -84,7 +84,7 @@ public class MandarEvaluacionAQuienLaPide  extends TareaSincrona {
                             victimEnPeticion.setEstimatedCost(miEvalDeRespuesta);
                             AyudarVictima newAyudarVictima = new AyudarVictima (identObjEvaluacion);
                             newAyudarVictima.setPriority(victimEnPeticion.getPriority());
-                            victimasRecibidas.addVictimToRescue(victimEnPeticion);
+                            victimasRecibidas.addVictimARescatar(victimEnPeticion);
                             DecidirQuienVa newDecision = new DecidirQuienVa(identObjEvaluacion);
                             newDecision.setSolving();   
                             this.getEnvioHechos().actualizarHechoWithoutFireRules(victimasRecibidas);

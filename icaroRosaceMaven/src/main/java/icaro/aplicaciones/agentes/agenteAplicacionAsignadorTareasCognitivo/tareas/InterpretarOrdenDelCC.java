@@ -38,11 +38,11 @@ public class InterpretarOrdenDelCC extends TareaSincrona{
         //          if((objetivoEjecutantedeTarea == null) |
         //             ((objetivoEjecutantedeTarea != null)&&((!idVictim.equals(objetivoEjecutantedeTarea.getobjectReferenceId()))&& (!misObjs.existeObjetivoConEsteIdentRef(idVictim))))){
            // se crea el objetivo y se inserta en el motor
-                 if (victims2R.getvictims2Rescue().isEmpty() || victims2R.getVictimToRescue(idVictim) == null )  {   
+                 if (!victims2R.hayVictimasArescatar() || !victims2R.victimaDefinida(victim))  {   
                  AyudarVictima newAyudarVictima = new AyudarVictima (idVictim);
            //      newObjetivo.setvictimId(idVictim);
                  newAyudarVictima.setPriority(victim.getPriority());
-                 victims2R.addVictimToRescue(victim);
+                 victims2R.addVictimARescatar(victim);
           //      if((objetivoEjecutantedeTarea == null)) newObjetivo.setSolving(); // se comienza el proceso para intentar conseguirlo                                        
            //       Se genera un objetivo para decidir quien se hace cargo de la ayuda y lo ponemos a solving
                  DecidirQuienVa newDecision = new DecidirQuienVa(idVictim);

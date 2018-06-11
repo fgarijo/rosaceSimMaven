@@ -66,11 +66,11 @@ public class FocalizarObjetivoMasPrioritario extends TareaSincrona{
             this.getComunicator().enviarInfoAotroAgente(msg, VocabularioRosace.IdentAgteControladorSimulador);  
                 AyudarVictima nuevoObj = new AyudarVictima(refVictima);
                 nuevoObj.setSolving() ;
-                victimas.addVictimToRescue(victima);
+                victimas.addVictimARescatar(victima);
                 misObjs.addObjetivo(nuevoObj);
                 focoActual.setFocusToObjetivoMasPrioritario(misObjs);
                 Objetivo objActual = focoActual.getFoco();
-                victima = victimas.getVictimToRescue(objActual.getobjectReferenceId());
+                victima = victimas.getVictimARescatar(objActual.getobjectReferenceId());
 //                 ItfUsoMovimientoCtrl itfcompMov = (ItfUsoMovimientoCtrl) infoComMov.getitfAccesoComponente();
 //            itfcompMov.moverAdestino(objActual.getobjectReferenceId(), victima.getCoordinateVictim(), velocidadCruceroPordefecto); // se pondra la verlocidad por defecto 
             trazas.aceptaNuevaTrazaEjecReglas(identAgente, "Se ejecuta la tarea : " + identTarea + " Se genera el  objetivo:  "+ nuevoObj+

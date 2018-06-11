@@ -69,7 +69,7 @@ public class MandarEvaluacionAQuienLaPide1 extends TareaSincrona {
             if (misObjtvsAccion.existeObjetivoConEsteIdentRef(identObjEvaluacion)) {
                 miEvalDeRespuesta = valorDisuasorioParaElquePideAcepteQueSoyYoElResponsable;
             } else { // Miro en la tabla de victimas si tengo la victima, 
-                victimEnPeticion = victimasRecibidas.getVictimToRescue(identObjEvaluacion);
+                victimEnPeticion = victimasRecibidas.getVictimARescatar(identObjEvaluacion);
                 if (victimaAdecidir != null) { // tengo la victima miro si tengo el valor estimado
                     if (victimaAdecidir.getisCostEstimated()) {
                         miEvalDeRespuesta = victimEnPeticion.getEstimatedCost();

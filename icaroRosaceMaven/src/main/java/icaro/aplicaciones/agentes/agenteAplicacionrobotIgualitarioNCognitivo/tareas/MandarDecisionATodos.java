@@ -7,6 +7,7 @@ package icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.ta
 
 import icaro.aplicaciones.Rosace.informacion.DecisionAgente;
 import icaro.aplicaciones.Rosace.informacion.Victim;
+import icaro.aplicaciones.Rosace.informacion.VictimsToRescue;
 import icaro.aplicaciones.Rosace.informacion.VocabularioRosace;
 import icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.informacion.InfoParaDecidirQuienVa;
 import icaro.gestores.informacionComun.VocabularioGestores;
@@ -27,6 +28,7 @@ public class MandarDecisionATodos extends TareaSincrona {
                  Objetivo objetivoDecision = (Objetivo)params[0];
                  InfoParaDecidirQuienVa  infoDecision = (InfoParaDecidirQuienVa)params[1];
                  Victim victima = (Victim) params[2];
+                 VictimsToRescue victimasArescatar = (VictimsToRescue) params[3];
                  DecisionAgente decision = new DecisionAgente (this.identAgente,VocabularioRosace.MsgPropuesta_Decision_Ir);
                              decision.setidentObjectRefDecision(victima.getName()); // En este caso el identificador se refiere a la victima
                              decision.setJustificacion(infoDecision.getMi_eval());
@@ -35,6 +37,7 @@ public class MandarDecisionATodos extends TareaSincrona {
                                                      " El robot " + this.identAgente + " se hace cargo de la victima " + victima.getName()+"\n",
                                                      InfoTraza.NivelTraza.debug));
                  this.getComunicator().informaraGrupoAgentes(decision, infoDecision.getAgentesEquipo());
+                 victimasArescatar.addVictimAsignada(victima);
                  objetivoDecision.setSolved();
                  infoDecision.setMiDecisionParaAsumirElObjetivoEnviadaAtodos(true);
                  this.getEnvioHechos().actualizarHechoWithoutFireRules(victima);

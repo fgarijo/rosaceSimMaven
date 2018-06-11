@@ -34,7 +34,7 @@ public class InicializarInfoWorkMemCRN1 extends TareaSincrona{
              RobotStatus1  miStatus = (RobotStatus1) params[2];
              miIdentAgte= this.getIdentAgente();
              this.getItfConfigMotorDeReglas().setDepuracionActivationRulesDebugging(false);
-             this.getItfConfigMotorDeReglas().setDepuracionHechosInsertados(false);
+             this.getItfConfigMotorDeReglas().setDepuracionHechosInsertados(true);
              this.getItfConfigMotorDeReglas().setDepuracionHechosModificados(false);
              this.getItfConfigMotorDeReglas().setFactHandlesMonitoring_beforeActivationFired_DEBUGGING(false);
              this.getItfConfigMotorDeReglas().setFactHandlesMonitoringRETRACT_DEBUGGING(false);

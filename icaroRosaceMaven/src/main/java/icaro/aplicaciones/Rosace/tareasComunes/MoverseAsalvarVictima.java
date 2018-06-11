@@ -63,7 +63,7 @@ public class MoverseAsalvarVictima extends TareaSincrona {
 //                 Objetivo    nuevoObj = misObjs.getobjetivoMasPrioritario();
 //                 if (nuevoObj != null) { 
                 
-                victima = victimasArescatar.getVictimToRescue(nuevoObj.getobjectReferenceId());
+                victima = victimasArescatar.getVictimARescatar(nuevoObj.getobjectReferenceId());
                  itfcompMov = (ItfUsoMovimientoCtrl) infoComMov.getitfAccesoComponente();
 //                itfcompMov.moverAdestino(nuevoObj.getobjectReferenceId(), victima.getCoordinateVictim(), velocidadCruceroPordefecto); // se pondra la verlocidad por defecto 
                 t.start();

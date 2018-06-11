@@ -15,6 +15,7 @@ import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaSincrona;
 import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
 import java.util.ArrayList;
 import icaro.aplicaciones.Rosace.informacion.Victim;
+import icaro.aplicaciones.Rosace.informacion.VictimsToRescue;
 
 /**
  *
@@ -37,10 +38,12 @@ public class MandarConfirmacionPropuesta  extends TareaSincrona {
 	public void ejecutar(Object... params) {
            Victim victima = (Victim)params[0];
            PropuestaAgente propuestaRecibida = (PropuestaAgente)params[1];
+            VictimsToRescue victimas = (VictimsToRescue)params[2];
            nombreAgenteEmisor = this.getAgente().getIdentAgente();
            identDeEstaTarea = this.getIdentTarea();
            try {
-                 trazas.aceptaNuevaTrazaEjecReglas(nombreAgenteEmisor, " Se Ejecuta la Tarea :"+ identDeEstaTarea + " Victima implicada : " + victima.getName() );
+                 trazas.aceptaNuevaTrazaEjecReglas(nombreAgenteEmisor, " Se Ejecuta la Tarea :"+ identDeEstaTarea + " Victima implicada : " + victima.getName()+
+                         " Se intenta eliminar la victima del conj de victimas asignadas : " + victimas.getIdtsVictimsAsignadas() );
 
                  nombreAgenteReceptor = propuestaRecibida.getIdentAgente();
                  victima.setrobotResponsableId(nombreAgenteReceptor);
@@ -48,7 +51,8 @@ public class MandarConfirmacionPropuesta  extends TareaSincrona {
                  propuestaAceptada.setidentObjectRefAcetPropuesta(propuestaRecibida.getIdentObjectRefPropuesta());
                  trazas.aceptaNuevaTrazaEjecReglas(nombreAgenteEmisor," Se Ejecuta la Tarea :"+ identDeEstaTarea + " Enviamos la confirmacion de la Propuesta: "+ propuestaRecibida + " Al agente " +nombreAgenteReceptor );
                  this.getComunicator().enviarInfoAotroAgente(propuestaAceptada, nombreAgenteReceptor);
-                 // Meto  la propuesta aceptada en el motor
+                 // La victimas se considero asignada para clacular el coste de salvarla
+                 victimas.elimVictimAsignada(victima.getName());
                  this.getEnvioHechos().insertarHechoWithoutFireRules(propuestaAceptada);
                  this.getEnvioHechos().insertarHecho(victima);
          //      this.getEnvioHechos().eliminarHechoWithoutFireRules(propuestaRecibida); // No hace falta porque al meterla en la confirmacion es como si se eliminara

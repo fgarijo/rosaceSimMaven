@@ -6,12 +6,10 @@
 package icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.tareas;
 import icaro.aplicaciones.Rosace.informacion.*;
 import icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.informacion.InfoParaDecidirQuienVa;
-import icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.MisObjetivos;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Objetivo;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaSincrona;
-import icaro.infraestructura.recursosOrganizacion.repositorioInterfaces.ItfUsoRepositorioInterfaces;
-import icaro.infraestructura.recursosOrganizacion.repositorioInterfaces.imp.ClaseGeneradoraRepositorioInterfaces;
+import java.util.ArrayList;
 
 /**
  *
@@ -42,7 +40,7 @@ public class ObtenerEvaluacionRealizarObjetivo extends TareaSincrona {
             VictimsToRescue victims2R =(VictimsToRescue)params[4];
             MisObjetivos misObjsAccion = (MisObjetivos)params[5];
             trazarCalculoCoste=true;
-            Coste coste = new Coste();
+            Coste1 coste = new Coste1();
             coste.setTrazar(true);
             robotLocation = robot.getInfoCompMovt().getCoordenadasActuales();
             robot.setRobotCoordinate(robotLocation);
@@ -61,7 +59,12 @@ public class ObtenerEvaluacionRealizarObjetivo extends TareaSincrona {
             System.out.println("Realizando  la evaluacion para el Robot ->" + this.identAgente);
             System.out.println("robotLocation->"+robotLocation);
             System.out.println("para la victima ->"+victim.toString());
-            System.out.println("victims2R->"+victims2R.getlastVictimToRescue().toString());
+//            ArrayList victimasAsignadas = victims2R.getIdtsVictimsAsignadas();
+//            int numVictimasAsignadas=0;
+//            if (victimasAsignadas!=null){
+//                numVictimasAsignadas= victimasAsignadas.size();
+//            System.out.println("victims2R->"+victimasAsignadas.toString());
+//            }
 //            System.out.println("misObjs->"+misObjs.getobjetivoMasPrioritario().toString());
             if (misObjsAccion.getobjetivoMasPrioritario()!=null)System.out.println("misObjs->"+misObjsAccion.getobjetivoMasPrioritario().toString());
 	        //Las sentencias siguientes permiten utilizar la funcion de evaluacion 3 que considera el recorrido que tendria que hacer y la engergia y el tiempo
@@ -72,8 +75,15 @@ public class ObtenerEvaluacionRealizarObjetivo extends TareaSincrona {
             if( robot.getBloqueado()){ // se envia una evaluacion maxima 
                 mi_eval= Integer.MAX_VALUE;
             }else{
-                funcionEvaluacion= coste.CalculoCosteAyudarVictima(identAgente, robotLocation, robot, victim, victims2R, misObjsAccion, "FuncionEvaluacion3");
-             mi_eval = (int)funcionEvaluacion;   //convierto de double a int porque la implementacion inicial de Paco usaba int    
+               
+//                funcionEvaluacion= coste.CalculoCosteAyudarVictima(identAgente, robotLocation, robot, victim, victims2R, misObjsAccion, "FuncionEvaluacion3");
+//             mi_eval = (int)funcionEvaluacion;   //convierto de double a int porque la implementacion inicial de Paco usaba int 
+//            ArrayList victimasArescatar= victims2R.getVictimsAsignadas();
+             if (victims2R.getVictimsAsignadas().isEmpty())mi_eval =coste.costeAyudarVictimaIndividual(identAgente, robotLocation, robot, victim, victims2R, misObjsAccion, identTarea);
+             else{
+                 int camino[] = coste.costeAyudarVictimaConVictmsAsignadas(identAgente, robotLocation, robot, victim, victims2R, misObjsAccion, identTarea);
+             mi_eval = camino[0];
+             victims2R.setCaminoMinimo(camino);
             }
 	     
             if(trazarCalculoCoste) {
@@ -88,7 +98,9 @@ public class ObtenerEvaluacionRealizarObjetivo extends TareaSincrona {
             this.getEnvioHechos().insertarHechoWithoutFireRules(eval);
             this.getEnvioHechos().insertarHechoWithoutFireRules(robot);
             this.getEnvioHechos().actualizarHecho(infoDecision);
-       } catch (Exception e) {
+       
+            }
+           } catch (Exception e) {
 		   e.printStackTrace();
        }
     }
