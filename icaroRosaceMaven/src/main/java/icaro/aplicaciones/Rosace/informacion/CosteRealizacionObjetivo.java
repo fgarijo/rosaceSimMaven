@@ -4,8 +4,10 @@ package icaro.aplicaciones.Rosace.informacion;
 import icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.informacion.InfoParaDecidirQuienVa;
 import icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.MisObjetivos;
+
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Objetivo;
 import icaro.infraestructura.recursosOrganizacion.repositorioInterfaces.ItfUsoRepositorioInterfaces;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.PriorityQueue;
 import java.util.concurrent.PriorityBlockingQueue;
@@ -161,7 +163,7 @@ public class CosteRealizacionObjetivo {
         int prioridadNuevaVictima = nuevaVictima.getPriority();
         // si la victima no esta entre las vicitimas a rescatar o en los objetivos
         
-    	PriorityBlockingQueue <Objetivo> colaobjetivos = misObjs.getMisObjetivosPriorizados();
+    	ArrayList colaobjetivos = misObjs.getMisObjetivosPriorizados();
 
     	Iterator<Objetivo> it = colaobjetivos.iterator();
          boolean hayVictimasArescatar = victims2R.hayVictimasArescatar();
@@ -194,7 +196,7 @@ public class CosteRealizacionObjetivo {
         Coordinate coordinateNuevaVictima = nuevaVictima.getCoordinateVictim();         
         int prioridadNuevaVictima = nuevaVictima.getPriority();
          Objetivo ob;
-    	PriorityBlockingQueue <Objetivo> colaobjetivos = misObjs.getMisObjetivosPriorizados();
+    	ArrayList<Objetivo>  colaobjetivos = misObjs.getMisObjetivosPriorizados();
     	int tamaniocola = colaobjetivos.size();
     	
         Victim victimaAnteriorCola = null;
@@ -298,7 +300,7 @@ public class CosteRealizacionObjetivo {
         double tiempoCamino = 0;     //Variable para calcular el tiempo para recorrer el camino de las victimas asignadas        
         double tiempoAux = 0;
         
-    	PriorityBlockingQueue <Objetivo> colaobjetivos = misObjs.getMisObjetivosPriorizados();
+    	ArrayList <Objetivo> colaobjetivos = misObjs.getMisObjetivosPriorizados();
     	int tamaniocola = colaobjetivos.size();
 
     	Iterator<Objetivo> it = colaobjetivos.iterator();
@@ -344,7 +346,7 @@ public class CosteRealizacionObjetivo {
 
 		double tiempo = 0;     //Variable para calcular el tiempo
 
-    	PriorityBlockingQueue <Objetivo> colaobjetivos = misObjs.getMisObjetivosPriorizados();
+    	ArrayList <Objetivo> colaobjetivos = misObjs.getMisObjetivosPriorizados();
     	int tamaniocola = colaobjetivos.size();
 
     	Iterator<Objetivo> it = colaobjetivos.iterator();
@@ -368,8 +370,6 @@ public class CosteRealizacionObjetivo {
 	}
 
 
-	
-	
 	public double calculaCosteTotalCompletarMisionAtenderVictimasFinalesAsignadas
                 (double par1TiempoRecorrerCaminoVictimasAsignadas, double pesoPar1, 
                 double par2TiempoAtencionVictimasAsignadas, double pesoPar2)        {		
@@ -394,13 +394,7 @@ public class CosteRealizacionObjetivo {
         private void addTraza( String nombreParametro, String valorParametro){
             trazaCalculoCoste.concat(nombreParametro+" : "+valorParametro + " ; \n ");
         }
-                
-	
-
-	
-	
-    
-    
+  
     //----------------------------------------------------
     //   METODOS UTILIDADES (NO EVALUAN COSTE)
     //----------------------------------------------------

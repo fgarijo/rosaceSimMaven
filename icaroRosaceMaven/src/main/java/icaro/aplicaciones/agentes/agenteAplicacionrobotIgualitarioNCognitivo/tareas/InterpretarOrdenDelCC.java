@@ -37,10 +37,12 @@ public class InterpretarOrdenDelCC extends TareaSincrona {
             victims2R.setRobotPropietario(this.identAgente);
             DecidirQuienVa newDecision = new DecidirQuienVa(idVictim);
             newDecision.setSolving();
-            misObjsDecision.addObjetivo(newDecision);
-            this.getEnvioHechos().insertarHecho(victim);
-            this.getEnvioHechos().actualizarHecho(newAyudarVictima);
-            Objetivo objetivoFocalizado = foco.getFoco();
+            misObjsDecision.addObjetivo(newDecision);      
+//            Objetivo objetivoFocalizado = foco.getFoco();
+            Objetivo objetivoFocalizado = misObjsDecision.getobjetivoMasPrioritario();
+            trazas.aceptaNuevaTrazaEjecReglas(this.identAgente, "Se Ejecuta la Tarea :" + this.identTarea + " Se crea el  objetivo:  " + newAyudarVictima + "  y el objetivo : " + newDecision
+                    + " Se actualiza el foco : " + foco.getFoco() + "\n" + " Objetivos decision en la cola : " + misObjsDecision.getMisObjetivosPriorizados().toString()
+                    + "\n" + " Objetivo mas prioritario : " + misObjsDecision.getobjetivoMasPrioritario().toString() + "\n");
             if (objetivoFocalizado == null || objetivoFocalizado.getState() == Objetivo.SOLVED) {
                 DecidirQuienVa decisionPendiente = (DecidirQuienVa) misObjsDecision.getobjetivoMasPrioritario();
                 foco.setFoco(decisionPendiente);
@@ -48,9 +50,9 @@ public class InterpretarOrdenDelCC extends TareaSincrona {
                 this.getEnvioHechos().actualizarHecho(foco);
             }
             this.getEnvioHechos().eliminarHecho(ccOrdenAyudarVictima);
-            trazas.aceptaNuevaTrazaEjecReglas(this.identAgente, "Se Ejecuta la Tarea :" + this.identTarea + " Se crea el  objetivo:  " + newAyudarVictima + "  y el objetivo : " + newDecision
-                    + " Se actualiza el foco : " + foco.getFoco() + "\n" + " Objetivos decision en la cola : " + misObjsDecision.getMisObjetivosPriorizados().toString()
-                    + "\n" + " Objetivo mas prioritario : " + misObjsDecision.getobjetivoMasPrioritario().toString() + "\n");
+            this.getEnvioHechos().insertarHecho(victim);
+            this.getEnvioHechos().actualizarHecho(newAyudarVictima);
+            
             System.out.println("\n" + nombreAgenteEmisor + "Se ejecuta la tarea " + this.getIdentTarea() + " Se crea el  objetivo:  " + newAyudarVictima + "\n\n");
         } catch (Exception e) {
             e.printStackTrace();

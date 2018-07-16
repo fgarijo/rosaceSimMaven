@@ -32,23 +32,20 @@ public class MandarDecisionATodos extends TareaSincrona {
                  DecisionAgente decision = new DecisionAgente (this.identAgente,VocabularioRosace.MsgPropuesta_Decision_Ir);
                              decision.setidentObjectRefDecision(victima.getName()); // En este caso el identificador se refiere a la victima
                              decision.setJustificacion(infoDecision.getMi_eval());
-                 trazas.aceptaNuevaTrazaEjecReglas(this.identAgente, " Se ejecuta la tarea : "+ this.getIdentTarea()+ " Enviamos la decision al Equipo : " + decision); 
+                 
                  trazas.aceptaNuevaTraza(new InfoTraza("OrdenAsignacion",
                                                      " El robot " + this.identAgente + " se hace cargo de la victima " + victima.getName()+"\n",
                                                      InfoTraza.NivelTraza.debug));
                  this.getComunicator().informaraGrupoAgentes(decision, infoDecision.getAgentesEquipo());
                  victimasArescatar.addVictimAsignada(victima);
+                 trazas.aceptaNuevaTrazaEjecReglas(this.identAgente, " Se ejecuta la tarea : "+ this.getIdentTarea()+ " Enviamos la decision al Equipo : " + decision +
+                         " La  victima asignada es : " + victima.getName() +
+                          " Mis victimas asignadas son : " + victimasArescatar.getIdtsVictimsAsignadas()+ " La victima mas proxima es : "+ victimasArescatar.getIdVictimaMasProxima()); 
                  objetivoDecision.setSolved();
                  infoDecision.setMiDecisionParaAsumirElObjetivoEnviadaAtodos(true);
                  this.getEnvioHechos().actualizarHechoWithoutFireRules(victima);
                 this.getEnvioHechos().actualizarHechoWithoutFireRules(infoDecision);
                 this.getEnvioHechos().actualizarHecho(objetivoDecision);
-                
-//                this.getEnvioHechos().actualizarHecho(objetivoDecision);
-//                this.generarInformeOK(identTarea, objetivoEjecutantedeTarea, this.identAgente, "DecisionDeIrEnviadaAtodos");
-                           //     trazas.aceptaNuevaTraza(new InfoTraza(nombreAgenteEmisor, "Numero de agentes de los que espero respuesta:" + agentesEquipo.size(), InfoTraza.NivelTraza.info));
-                           //            tiempoSinRecibirRespuesta.start();
-
 		    } catch (Exception e) {
 			     e.printStackTrace();
             }

@@ -66,11 +66,12 @@ public class MandarEvaluacionAQuienLaPide  extends TareaSincrona {
      // en  otro caso puede ser que sea otro el que tenga el objetivo, en este caso él le mandará un valor grande
      // si no tengo noticias del objetivo le mando un valor pequeno para que vaya el
      // si coincide con el que estoy trabajando le mando el valor 
+        victimEnPeticion = (Victim) peticionRecibida.getJustificacion();
                if (identObjEvaluacion.equals(infoDecision.idElementoDecision)) miEvalDeRespuesta = infoDecision.getMi_eval();
                 else if( misObjtvs.existeObjetivoConEsteIdentRef(identObjEvaluacion))miEvalDeRespuesta = valorDisuasorioParaElquePideAcepteQueSoyYoElResponsable;
-                      else { // Miro en la tabla de vicitimas si tengo la victima, 
-                        victimEnPeticion = victimasRecibidas.getVictimARescatar(identObjEvaluacion);
-                        if(victimEnPeticion != null){ // tengo la victima miro si tengo el valor estimado
+                      else { // Miro en la tabla de victimas si tengo la victima, 
+//                        victimEnPeticion = victimasRecibidas.getVictimARescatar(identObjEvaluacion);
+                        if(victimasRecibidas.victimaDefinida(victimEnPeticion)){ // tengo la victima miro si tengo el valor estimado
                             if (victimEnPeticion.getisCostEstimated()) miEvalDeRespuesta = victimEnPeticion.getEstimatedCost();
                             else{ // calculo el coste y lo guardo en la victima
                                miEvalDeRespuesta= calcularCosteEstimadoVictima();
@@ -79,7 +80,7 @@ public class MandarEvaluacionAQuienLaPide  extends TareaSincrona {
                             }
                                 }
                         else {// la victima no existe -> no se ha recibido el mensaje del CC. Calculo el coste y  meto los objetivos y la victima
-                            victimEnPeticion = (Victim) peticionRecibida.getJustificacion();
+                            
                             miEvalDeRespuesta= calcularCosteEstimadoVictima();
                             victimEnPeticion.setEstimatedCost(miEvalDeRespuesta);
                             AyudarVictima newAyudarVictima = new AyudarVictima (identObjEvaluacion);
@@ -87,7 +88,7 @@ public class MandarEvaluacionAQuienLaPide  extends TareaSincrona {
                             victimasRecibidas.addVictimARescatar(victimEnPeticion);
                             DecidirQuienVa newDecision = new DecidirQuienVa(identObjEvaluacion);
                             newDecision.setSolving();   
-                            this.getEnvioHechos().actualizarHechoWithoutFireRules(victimasRecibidas);
+//                            this.getEnvioHechos().actualizarHechoWithoutFireRules(victimasRecibidas);
                             this.getEnvioHechos().insertarHechoWithoutFireRules(victimEnPeticion);
                             this.getEnvioHechos().insertarHechoWithoutFireRules(newAyudarVictima);
                             this.getEnvioHechos().insertarHechoWithoutFireRules(newDecision);
@@ -109,21 +110,9 @@ public class MandarEvaluacionAQuienLaPide  extends TareaSincrona {
           }
    }
         private int calcularCosteEstimadoVictima(){
-          
-//          try{    		   
-//                ItfUsoRepositorioInterfaces itfUsoRepositorioInterfaces = NombresPredefinidos.REPOSITORIO_INTERFACES_OBJ;
-//                ItfUsoRecursoMorse morseResourceRef;
-//       		 morseResourceRef = (ItfUsoRecursoMorse) itfUsoRepositorioInterfaces.obtenerInterfaz(NombresPredefinidos.ITF_USO + 
-//       				                      "RecursoMorse1");
-//       		  robotLocation = morseResourceRef.getGPSInfo(nombreAgenteEmisor);
-//       		           
-//       	          }
-//   	              catch (Exception ex){
-//       		              ex.printStackTrace();
-//       	          }  
-          Coste coste = new Coste();
-          return coste.CalculoCosteAyudarVictima(nombreAgenteEmisor, robotLocation, robot, victimEnPeticion, victimasRecibidas, misObjtvs, "FuncionEvaluacion3");
-                              
+          Coste1 coste = new Coste1();      
+          int[]resultado=coste.costeAyudarVictimas(nombreAgenteEmisor, robotLocation, robot, victimEnPeticion, victimasRecibidas, misObjtvs, "FuncionEvaluacion3");
+               return resultado[1] ;              
         }
  	
 }

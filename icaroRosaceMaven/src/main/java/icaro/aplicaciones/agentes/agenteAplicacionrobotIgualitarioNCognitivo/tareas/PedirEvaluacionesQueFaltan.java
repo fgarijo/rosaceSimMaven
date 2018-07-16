@@ -40,7 +40,7 @@ public class PedirEvaluacionesQueFaltan extends TareaSincrona{
                           
                           trazas.aceptaNuevaTrazaEjecReglas(identAgente, "!!!!!!!!Pidiendo evaluacion al agente "+ agenteReceptor);
                                   PeticionAgente peticionEval = new PeticionAgente(this.getIdentAgente());
-                                  peticionEval.setidentObjectRefPeticion(objetivoEjecutantedeTarea.getobjectReferenceId());
+                                  peticionEval.setidentObjectRefPeticion(victima.getName());
                                   peticionEval.setMensajePeticion(VocabularioRosace.MsgPeticionEnvioEvaluaciones);
                                   peticionEval.setJustificacion(victima); // para que se sepa que evaluacion le pedimos
                                   comunicacion.enviarInfoAotroAgente(peticionEval, agenteReceptor);

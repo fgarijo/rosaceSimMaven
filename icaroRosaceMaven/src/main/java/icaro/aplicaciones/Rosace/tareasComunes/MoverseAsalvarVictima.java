@@ -11,9 +11,7 @@ import icaro.aplicaciones.agentes.componentesInternos.movimientoCtrl.ItfUsoMovim
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Focus;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.MisObjetivos;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Objetivo;
-import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaAsincrona;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaSincrona;
-import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
 import org.apache.log4j.Logger;
 
 /**
@@ -38,7 +36,7 @@ public class MoverseAsalvarVictima extends TareaSincrona {
             Objetivo objConseguido = focoActual.getFoco();
             if (objConseguido!= null){
                 objConseguido.setPriority(-1);
-                misObjsAccion.cambiarPrioridad(objConseguido);
+                misObjsAccion.addObjetivo(objConseguido);
             }
             Objetivo nuevoObj = misObjsAccion.getobjetivoMasPrioritario();
             trazas.aceptaNuevaTrazaEjecReglas(identAgente, " Se ejecuta la tarea " + identTarea
@@ -65,8 +63,8 @@ public class MoverseAsalvarVictima extends TareaSincrona {
                 
                 victima = victimasArescatar.getVictimARescatar(nuevoObj.getobjectReferenceId());
                  itfcompMov = (ItfUsoMovimientoCtrl) infoComMov.getitfAccesoComponente();
-//                itfcompMov.moverAdestino(nuevoObj.getobjectReferenceId(), victima.getCoordinateVictim(), velocidadCruceroPordefecto); // se pondra la verlocidad por defecto 
-                t.start();
+                itfcompMov.moverAdestino(nuevoObj.getobjectReferenceId(), victima.getCoordinateVictim(), velocidadCruceroPordefecto); // se pondra la verlocidad por defecto 
+//                t.start();
                  infoComMov.setitfAccesoComponente(itfcompMov);
                     nuevoObj.setSolving();
 //                    focoActual.setFoco(nuevoObj);

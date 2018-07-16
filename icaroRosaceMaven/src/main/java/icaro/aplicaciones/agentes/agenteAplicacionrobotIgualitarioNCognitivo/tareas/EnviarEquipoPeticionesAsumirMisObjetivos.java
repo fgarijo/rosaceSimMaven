@@ -9,17 +9,13 @@ import icaro.aplicaciones.Rosace.informacion.InfoEquipo;
 import icaro.aplicaciones.Rosace.informacion.PeticionAsumirObjetivo;
 import icaro.aplicaciones.Rosace.informacion.RobotStatus1;
 import icaro.aplicaciones.Rosace.informacion.VictimsToRescue;
-import icaro.aplicaciones.Rosace.objetivosComunes.TransferirObjetivos;
-import icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.informacion.InfoParaDecidirQuienVa;
 import icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.informacion.InfoTransimisionObjetivos;
-import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Focus;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.MisObjetivos;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Objetivo;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaSincrona;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.concurrent.PriorityBlockingQueue;
-import icaro.aplicaciones.Rosace.informacion.Victim;
+import icaro.aplicaciones.Rosace.objetivosComunes.AyudarVictima;
 import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
 
 /**
@@ -41,25 +37,27 @@ public class EnviarEquipoPeticionesAsumirMisObjetivos extends TareaSincrona{
              // Enviamos las propuestas a los miembros del equipo
              Iterator<Objetivo>  iterObj = misObjsAccion.getMisObjetivosPriorizados().iterator();
             ArrayList<String> idsAgtesMiequipo = miEquipo.getIDsMiembrosActivos();
+                ArrayList idsVictimasAsignadas = victimas.getIdtsVictimsAsignadas();
             trazas.aceptaNuevaTrazaEjecReglas(identAgente, "  Se ejecuta la tarea : " + identTarea 
-                      + " Objetivos a transmitir : "+ misObjsAccion.getMisObjetivosPriorizados().toString() +"\n"+
+                      + " Idents de las victimas a rescatar : "+ idsVictimasAsignadas +"\n"+
                       "Agentes en mi equipo: " + idsAgtesMiequipo ); 
-            while (iterObj.hasNext()){
-  	  	  //Hay al menos un objetivo    		
-                Objetivo obj = iterObj.next();
+             for(int i=0; i<idsVictimasAsignadas.size();i++){
+  	  	  //Hay al menos un objetivo 
+                  String idVictimaAsignada= (String)idsVictimasAsignadas.get(i);
+                Objetivo obj = new AyudarVictima(idVictimaAsignada);
 //                if(obj.getgoalId().equals(idObjetivoAtrasmitir) ){
-                if( obj.getgoalId().equals("AyudarVictima")&&(obj.getState()!=Objetivo.SOLVED )){
-                String obrefId = obj.getobjectReferenceId();
+//                if( obj.getgoalId().equals("AyudarVictima")&&(obj.getState()!=Objetivo.SOLVED )){
+//                String obrefId = obj.getobjectReferenceId();
                 PeticionAsumirObjetivo petAsumirObj = new PeticionAsumirObjetivo(this.identAgente, obj, (RobotStatus1)miEstatus); 
 //                petAsumirObj.setinfoComplementaria((Victim)victimas.getVictimToRescue(obrefId).clone());
                 this.getComunicator().informaraGrupoAgentes(petAsumirObj, idsAgtesMiequipo);
-                infoTransmisionObjs.addInfoPropuestaEnviada(obrefId);
-                trazas.aceptaNuevaTrazaEjecReglas(identAgente, " Se envia una peticion al equipo para salvar a la victima : "+obrefId+ "Se aniade la victima a InfoTransimisionObjetivos . Contenido :  " + infoTransmisionObjs +"\n");
+                infoTransmisionObjs.addInfoPropuestaEnviada(idVictimaAsignada);
+                trazas.aceptaNuevaTrazaEjecReglas(identAgente, " Se envia una peticion al equipo para salvar a la victima : "+idVictimaAsignada+ " Se aniade la victima a InfoTransimisionObjetivos . Contenido :  " + infoTransmisionObjs +"\n");
                 trazas.aceptaNuevaTraza(new InfoTraza("OrdenAsignacion",
-                                                     " El robot " + this.identAgente + " delega el salvamento de la victima " + obrefId+"\n",
+                                                     " El robot " + this.identAgente + " delega el salvamento de la victima " + idVictimaAsignada+"\n",
                                                      InfoTraza.NivelTraza.debug));
                 }
-            }
+            
              this.getEnvioHechos().insertarHecho(infoTransmisionObjs);
              // Activo un timeout para la decision. Cuando venza se decidira que hacer en funcion de la situacion del agente
              // Porque se supone que estoy esperando informaciones que no llegan. 

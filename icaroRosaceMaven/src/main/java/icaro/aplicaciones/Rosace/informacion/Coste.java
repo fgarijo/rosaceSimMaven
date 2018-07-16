@@ -5,8 +5,7 @@ import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.MisObjetivos;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Objetivo;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.PriorityQueue;
-import java.util.concurrent.PriorityBlockingQueue;
+
 
 public class Coste {
 
@@ -260,7 +259,7 @@ private void imprimirMatriz(int[][] matriz){
         int prioridadNuevaVictima = nuevaVictima.getPriority();
         // si la victima no esta entre las vicitimas a rescatar o en los objetivos
 
-        PriorityBlockingQueue<Objetivo> colaobjetivos = misObjs.getMisObjetivosPriorizados();
+       ArrayList <Objetivo> colaobjetivos = misObjs.getMisObjetivosPriorizados();
 
         Iterator<Objetivo> it = colaobjetivos.iterator();
         boolean hayVictimasArescatar = victims2R.hayVictimasArescatar();
@@ -294,7 +293,7 @@ private void imprimirMatriz(int[][] matriz){
         Coordinate coordinateNuevaVictima = nuevaVictima.getCoordinateVictim();
         int prioridadNuevaVictima = nuevaVictima.getPriority();
         Objetivo ob;
-        PriorityBlockingQueue<Objetivo> colaobjetivos = misObjs.getMisObjetivosPriorizados();
+        ArrayList<Objetivo> colaobjetivos = misObjs.getMisObjetivosPriorizados();
         int tamaniocola = colaobjetivos.size();
 
         Victim victimaAnteriorCola = null;
@@ -376,7 +375,7 @@ private void imprimirMatriz(int[][] matriz){
         double tiempoCamino = 0;     //Variable para calcular el tiempo para recorrer el camino de las victimas asignadas        
         double tiempoAux = 0;
 
-        PriorityBlockingQueue<Objetivo> colaobjetivos = misObjs.getMisObjetivosPriorizados();
+        ArrayList<Objetivo> colaobjetivos = misObjs.getMisObjetivosPriorizados();
         int tamaniocola = colaobjetivos.size();
 
         Iterator<Objetivo> it = colaobjetivos.iterator();
@@ -420,7 +419,7 @@ private void imprimirMatriz(int[][] matriz){
 
         double tiempo = 0;     //Variable para calcular el tiempo
 
-        PriorityBlockingQueue<Objetivo> colaobjetivos = misObjs.getMisObjetivosPriorizados();
+        ArrayList<Objetivo> colaobjetivos = misObjs.getMisObjetivosPriorizados();
         int tamaniocola = colaobjetivos.size();
 
         Iterator<Objetivo> it = colaobjetivos.iterator();

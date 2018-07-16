@@ -79,21 +79,29 @@ public class ObtenerEvaluacionRealizarObjetivo extends TareaSincrona {
 //                funcionEvaluacion= coste.CalculoCosteAyudarVictima(identAgente, robotLocation, robot, victim, victims2R, misObjsAccion, "FuncionEvaluacion3");
 //             mi_eval = (int)funcionEvaluacion;   //convierto de double a int porque la implementacion inicial de Paco usaba int 
 //            ArrayList victimasArescatar= victims2R.getVictimsAsignadas();
-             if (victims2R.getVictimsAsignadas().isEmpty())mi_eval =coste.costeAyudarVictimaIndividual(identAgente, robotLocation, robot, victim, victims2R, misObjsAccion, identTarea);
-             else{
-                 int camino[] = coste.costeAyudarVictimaConVictmsAsignadas(identAgente, robotLocation, robot, victim, victims2R, misObjsAccion, identTarea);
+//             if (victims2R.getVictimsAsignadas().isEmpty()){
+//                 int[] camino = new int[2];
+//                 mi_eval =coste.costeAyudarVictimaIndividual(identAgente, robotLocation, robot, victim, victims2R, misObjsAccion, identTarea);
+//                 camino[0]=mi_eval;
+//                 camino[1]=
+//             }
+//             else{
+                
+                 int camino[] = coste.costeAyudarVictimas(identAgente, robotLocation, robot, victim, victims2R, misObjsAccion, identTarea);
              mi_eval = camino[0];
              victims2R.setCaminoMinimo(camino);
-            }
+//            }
 	     
             if(trazarCalculoCoste) {
-                this.trazas.aceptaNuevaTrazaEjecReglas(identAgente," Se ejecuta la tarea :" + identTarea + coste.getTrazaCalculoCoste()+"\n");
+                this.trazas.aceptaNuevaTrazaEjecReglas(identAgente," Se ejecuta la tarea :" + identTarea + 
+                        " Mis victimas asignadas : " +victims2R.getIdtsVictimsAsignadas() + " Victima mas proxima : " + victims2R.getIdVictimaMasProxima()+"\n");
             }         
                                          
             EvaluacionAgente eval = new  EvaluacionAgente (identAgente, mi_eval);
             eval.setObjectEvaluationId(victim.getName());// Referenciamos la evaluacion con el ident de la victima
             infoDecision.setMi_eval(mi_eval);
             victim.setEstimatedCost(mi_eval);
+            victims2R.actualizarVictimARescatar(victim);
             infoDecision.setTengoMiEvaluacion(Boolean.TRUE);
             this.getEnvioHechos().insertarHechoWithoutFireRules(eval);
             this.getEnvioHechos().insertarHechoWithoutFireRules(robot);

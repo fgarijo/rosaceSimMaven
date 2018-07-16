@@ -99,7 +99,7 @@ public class FinalizarSimulacion extends TareaSincrona {
     private ArrayList getIdsVictimasFinalesAsignadas(MisObjetivos misObjs, VictimsToRescue victims2R){
     	ArrayList aux = new ArrayList();
 
-    	PriorityBlockingQueue <Objetivo> colaobjetivos = misObjs.getMisObjetivosPriorizados();
+    	ArrayList <Objetivo> colaobjetivos = misObjs.getMisObjetivosPriorizados();
     	int tamaniocola = colaobjetivos.size();
 
     	Iterator<Objetivo> it = colaobjetivos.iterator();

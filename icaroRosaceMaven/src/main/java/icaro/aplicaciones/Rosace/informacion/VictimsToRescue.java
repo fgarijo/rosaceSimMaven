@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class VictimsToRescue {
     //   private Map<String, Victim> victims2Rescue;
 
-    private ArrayList<Victim> victimasARescatar;
+    private  ArrayList victimasARescatar;
     private Victim victimaArescatar;
     private ArrayList<Integer> misVictimasAsignadas;
     private String robotPropietario;
@@ -33,7 +33,7 @@ public class VictimsToRescue {
 
     public void inicializar() {
         //   victims2Rescue = new HashMap <>();
-        victimasARescatar = new ArrayList<>();
+        victimasARescatar = new ArrayList();
         misVictimasAsignadas = new ArrayList<>();
         matrizCostes = new int[maxDim][maxDim];
         matrizCostes [0][0]=0;
@@ -60,17 +60,22 @@ public class VictimsToRescue {
 
         return indiceVictima;
     }
+     public synchronized void actualizarVictimARescatar(Victim victim) {
+         int indiceVictima = victimasARescatar.indexOf(victim);
+          if (indiceVictima < 0)  victimasARescatar.add(victim);
+          else victimasARescatar.set(indiceVictima, victim);
+     }
     private void distanciasDeVictimaEnMatrizCostes(int posicionVictima) {
         // El coste desde la posicion de la victima en la matriz de costes al resto de victimas no esta definido
         // La posicion de la victima estara en el extremo del array
 //        int indiceVictima = victims2R.addVictimARescatar(victima);
-        Victim victimaNueva = this.victimasARescatar.get(posicionVictima);
+        Victim victimaNueva = (Victim)this.victimasARescatar.get(posicionVictima);
         int valorCoste;
 //        System.out.println("Actualizo la matriz de costes para el agente " + robotPropietario + " y para  la victima en la posicion : " + indiceVictima);
         if (posicionVictima > 0) {
             Victim victimai = null;
             for (int i = 0; i < posicionVictima; i++) {
-                        victimai = victimasARescatar.get(i);   
+                        victimai = (Victim)victimasARescatar.get(i);   
                         valorCoste = (int) distanciaC1toC2(victimaNueva.getCoordinateVictim(), victimai.getCoordinateVictim());
                         matrizCostes[i][posicionVictima]=valorCoste;
                         matrizCostes[posicionVictima][i]=valorCoste;
@@ -122,7 +127,7 @@ public class VictimsToRescue {
         // costesRobot contiene los costes del robot a cada una de las victimas
         // costesRobot[0] ocupara la posicion [0][0]valor maximo
         // costesRobot[1]  ocupara la posicion [0][1]y [1][0] coste de salvar a la victima 1,
-        // costesRobot[2]  ocupara la posicion [0][2]y [2][0]coste de salvar a la victima 2,
+        // costesRobot[2]  ocupara la posicion [0][2]y [2][0]coste de salvar a la victima 2
 
         int dimMatriz = costesRobot.size() + 1;
         
@@ -170,14 +175,11 @@ public class VictimsToRescue {
         }
         return null;
     }
-//public synchronized Victim getVictimToRescue (String victimId){
-//   return  victims2Rescue.get(victimId);
-//}
 
     public synchronized Victim getVictimARescatar(String victimId) {
         Victim victima;
         for (int i = 0; i < victimasARescatar.size(); i++) {
-            victima = victimasARescatar.get(i);
+            victima = (Victim)victimasARescatar.get(i);
             if (victima.getName().equals(victimId)) {
                 return victima;
             }
@@ -189,7 +191,7 @@ public class VictimsToRescue {
         if(victimasARescatar.isEmpty())return -1;
         Victim victima;
         for (int i = 0; i < victimasARescatar.size(); i++) {
-            victima = victimasARescatar.get(i);
+            victima = (Victim)victimasARescatar.get(i);
             if (victima.getName().equals(victimId)) return i;
         }
         return -1;
@@ -199,9 +201,10 @@ public class VictimsToRescue {
             return null;
         }
         ArrayList identVictimasAsignadas = new ArrayList();
+        Victim victima;
         for (int i = 0; i < misVictimasAsignadas.size(); i++) {
-            String victimaId = victimasARescatar.get(misVictimasAsignadas.get(i)).getName();
-            identVictimasAsignadas.add(i, victimaId);
+            victima = (Victim)victimasARescatar.get(misVictimasAsignadas.get(i));
+            identVictimasAsignadas.add(i, victima.getName());
         }
         return identVictimasAsignadas;
     }
@@ -215,33 +218,108 @@ public synchronized ArrayList getVictimsAsignadas() {
         }
 
     }
+ public synchronized int[] minCaminoRobotVictsAsignadas(ArrayList costesRobot, boolean trazar) {
+     // Se utiliza la matriz de costes entre victimas y las victimas asignadas
+     // costesRobot[0] contiene el coste a la victima asignada en la posicion 0
+        // costesRobot[1] contiene el coste a la victima asignada en la posicion 1
+        // costesRobot[2] contiene el coste a la victima asignada en la posicion 2
+        int indiceCol = victimasARescatar.size()+1;
+         matrizCostes [indiceCol][indiceCol]=maximoCoste; 
+        int indiceFila;
+        int valorCoste;
+         for (int i = 0; i < costesRobot.size(); i++) {
+             indiceFila=misVictimasAsignadas.get(i);
+             valorCoste=(Integer)costesRobot.get(i);
+            matrizCostes [indiceFila][indiceCol]=valorCoste; 
+            matrizCostes [indiceCol][indiceFila]=valorCoste; 
+             if (trazar) {
+                    System.out.println("Coste  recibido del array de costes en la posicion : " + i 
+                            + " El valor de la matriz   ( " + indiceFila + " , " + indiceCol + " ) = " + valorCoste + " \n" );
+                }
+         }
+        int i, j, k, x, y;
+//        int NumNodos = matrizCostes[0].length; // filas de la matriz
+        int NumNodos = misVictimasAsignadas.size()+1;
+        int costeCaminoMinimo = 0;
+        boolean[] nodoAlcanzado = new boolean[NumNodos];
+//        int[] predNode = new int[NumNodos];
+        ultimoCaminoMinimoCalculado= new int[NumNodos];
+        int[] elemImplicados = new int[NumNodos];
+        nodoAlcanzado[0] = true;
+        elemImplicados[0] = indiceCol; // Se han anyadido los valores en esa columna
+        // copia los elementos de la matriz implicados . En la posicion 0 ponemos la columna donde se han definido las
+        // distancias del robot al resto de victimas
+        for (k = 1; k < NumNodos; k++) {
+            nodoAlcanzado[k] = false;
+            elemImplicados[k] =misVictimasAsignadas.get(k-1);
+            if (trazar) {
+                    System.out.println("Los elementos implicados para el calculo del camino son  : " + elemImplicados[k]
+                            + " Se le asigna el valor definido en la posicion :  "+ (k-1) +" del array de victimas asignadas \n" );
+                }
+        }
+        ultimoCaminoMinimoCalculado[0] = 0;
+//      matrizCostes[0][0]= Integer.MAX_VALUE;
+//      printReachSet(nodoAlcanzado );
+// System.out.print(" Nodo alcanzado "+ i + " ");
+//    int indiceBusqedaj= NumNodos+1;
+//    int indiceFila, indiceCol;
+        int nuevoCoste, costeMinimo;
+        
+        for (k = 1; k < NumNodos; k++) {
+//            x = y = elemImplicados[0];
+                 x = y = 0;
+                 costeMinimo= maximoCoste;
+            for (i = 0; i < NumNodos; i++) {
+                for (j = 0; j < NumNodos; j++) {
+                    indiceFila=elemImplicados[j];
+                    indiceCol=elemImplicados[i];
+                    nuevoCoste=matrizCostes[indiceFila][indiceCol];
+                     System.out.println("Se explora el nodo de la matriz de coste   :( " + indiceFila + " , " + indiceCol + " ) = " + nuevoCoste + " \n"
+                         + " El coste minimo es : " + costeMinimo + " \n" );
+                    if (nodoAlcanzado[i] && !nodoAlcanzado[j]&& i!=j
+//                            && matrizCostes[indiceFila][indiceCol] < matrizCostes[elemImplicados[x]][elemImplicados[y]]) {
+                     && nuevoCoste < costeMinimo) {
+                        costeMinimo= nuevoCoste; 
+                        x = i;
+                        y = j;
+//                        x=indiceFila;
+//                        y=indiceCol;
+                       
+                 System.out.println("Se cambia el valor del coste minimo  " + indiceFila + " , " + indiceCol + " ) = " + nuevoCoste + " \n"
+                         + " El coste minimo es : " + costeMinimo + " \n" 
+                             + " El valor de la matriz   ( " + indiceFila + " , " + indiceCol + " ) = " + costeMinimo + " \n" );        
+                    }
+                }
+            }
+            costeCaminoMinimo = costeCaminoMinimo +matrizCostes[elemImplicados[x]][elemImplicados[y]];
+            System.out.println("Arco de  coste  minimo: ("
+                    + +x + ","
+                    + +y + ")"
+                    + "coste = " + costeMinimo + " Coste del camino recorrido : " + costeCaminoMinimo);
 
-//    public synchronized void elimVictimAsignada(String idVict) {
-//        if (misVictimasAsignadas.isEmpty()) {
-//            System.out.println(" El conjunto de victimas asignadas al robot es nulo ");
-//        } else {
-//            System.out.println(" Se procesa una peticion para eliminar la victima:  " + idVict);
-//            int i = 0;
-//            boolean encontrado = false;
-//            int indiceVictima;
-//            while (i < misVictimasAsignadas.size() && !encontrado) {
-//                indiceVictima = misVictimasAsignadas.get(i);
-//                if (victimasARescatar.get(indiceVictima).getName().equals(idVict)) {
-//                    misVictimasAsignadas.remove(i);
-//                    encontrado = true;
-//                    System.out.println(" Se elimina la victima con identificador :  " + idVict + " que ocupa la  posicion : " + i + " en el vector de victimas asignadas");
-//                    if (misVictimasAsignadas.isEmpty()) hayVictimasXrescatar = false;
-//                }
-//            }
-//        } 
-//    }
+            ultimoCaminoMinimoCalculado[k] = elemImplicados[y];
+            nodoAlcanzado[y] = true;
+//         printReachSet(nodoAlcanzado );
+//            System.out.print(" Nodo alcanzado " + y + " ");
+            //System.out.println();
+//            System.out.println();
+        }
+//      int[] a= predNode;
+        ultimoCaminoMinimoCalculado[0] = costeCaminoMinimo;
+        for (i = 0; i < NumNodos; i++) {
+            System.out.println(ultimoCaminoMinimoCalculado[i] + " --> " + i);
+        }
+        ordenarVictimasAsignadas();
+        return ultimoCaminoMinimoCalculado;
+    }
     public synchronized void elimVictimAsignada(String idVict) {
         int indiceVictima=getIndiceVictimARescatar(idVict);
        if( indiceVictima<0)return;
        for (int i = 0; i < misVictimasAsignadas.size(); i++) {
            if(misVictimasAsignadas.get(i)==indiceVictima){
                misVictimasAsignadas.remove(i);
-               System.out.println(" Se elimina la victima con identificador :  " + idVict + " que ocupa la  posicion : " + i + " en el vector de victimas asignadas");
+               System.out.println(" Se elimina la victima con identificador :  " + idVict + " que ocupa la  posicion : " + i + " en el vector de victimas asignadas"+
+                       " Mis victimas asignadas son  " + misVictimasAsignadas);
            }
        }
     }
@@ -253,10 +331,12 @@ public synchronized ArrayList getVictimsAsignadas() {
         }
         hayVictimasXrescatar = true;
         System.out.println(" Se anyade el indice de  la victima " + indiceVictima + " con identificador " + victima.getName() + " a las victimas asignadas");
-
+//        if(misVictimasAsignadas.size()>1 )this.ordenarVictimasAsignadas();
     }
- public void setCaminoMinimo(int[] camino) {
+ 
+    public void setCaminoMinimo(int[] camino) {
      ultimoCaminoMinimoCalculado=camino;
+     this.ordenarVictimasAsignadas();
  }
     public synchronized void setRescued(String victimId) {
         Victim victima = getVictimARescatar(victimId);
@@ -275,9 +355,9 @@ public synchronized ArrayList getVictimsAsignadas() {
     public synchronized Victim getVictimaARescatar() {
         return victimaArescatar;
     }
-    public synchronized Victim getVictimaARescatar(int indiceVictima) {
-        if(indiceVictima<0||indiceVictima>=victimasARescatar.size())return null;
-        return victimasARescatar.get(indiceVictima);
+    public synchronized Victim getVictimaARescatar(Integer indiceVictima) {
+        if(indiceVictima<0||indiceVictima>victimasARescatar.size())return null;
+        return (Victim)victimasARescatar.get(indiceVictima);
     }
 
     public synchronized void eliminarVictima(String victimId) {
@@ -335,9 +415,29 @@ public synchronized ArrayList getVictimsAsignadas() {
 
     private void ordenarVictimasAsignadas() {
         // Se ha almacenado  un camino minimo en ultimoCaminoMinimoCalculado donde la posición 0 tiene el coste del camino y el resto las victimas implicadas
-        for ( int i=1;i<=ultimoCaminoMinimoCalculado.length; i++){
-            misVictimasAsignadas.set(i,ultimoCaminoMinimoCalculado[i]);
-           System.out.println(" Se ordenan la victimas asignadas. Se sustituye  la victima asignada con indice " + i+ " por  la victima en camino i con valor : " + ultimoCaminoMinimoCalculado[i]); 
+        // decrementamos tambien los valores porque se incrementan  las posiciones cuando se calcula el camino minimo
+         System.out.println(" Mis victimas asignadas. " + misVictimasAsignadas );
+         if(!misVictimasAsignadas.isEmpty()){
+        for ( int i=1;i<ultimoCaminoMinimoCalculado.length; i++){
+            misVictimasAsignadas.set(i-1,ultimoCaminoMinimoCalculado[i]);
+           System.out.println(" Se ordenan la victimas asignadas. Se sustituye  la victima asignada con indice " + (i-1)+ " por  valor del  camino i  : " + ultimoCaminoMinimoCalculado[i]+
+                   " Valor sustituido en la ordenacion . : " + (ultimoCaminoMinimoCalculado[i])); 
         }
+         }
+    }
+
+    public synchronized String getIdVictimaMasProxima() {
+        // Estara en la posicion 0 del vector de victimas asignadas
+        if(misVictimasAsignadas.isEmpty())return null;
+        return getVictimaARescatar(misVictimasAsignadas.get(0)).getName();
+    }
+    public synchronized Victim getVictimaMasProxima() {
+        // Estara en la posicion 0 del vector de victimas asignadas
+        // Despues de calcular un camino se ordenan las victimas asignadas de acuerdo con el calculo de la ruta
+        if(misVictimasAsignadas.isEmpty())return null;
+        Victim victimaMasProx = getVictimaARescatar(misVictimasAsignadas.get(0));
+//         System.out.println(" Se obtiene la victima mas proxima . El ultimo camino calculado es : " + ultimoCaminoMinimoCalculado[1]
+//                    + " Las victimas asignadas son :  " + misVictimasAsignadas + "La victima mas proxima es  : " + victimaMasProx.getName());
+        return victimaMasProx;
     }
 }

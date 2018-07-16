@@ -168,6 +168,38 @@ public class Coste1 {
 //        System.out.println(" Se ha calculado el coste del camino minimo  coste :  " + camino[0]);
         return minCamino(matrizCostes);
     }
+    public int[] costeAyudarVictimas(String nombreAgenteEmisor, Coordinate robotLocation, RobotStatus1 robot, Victim victima, VictimsToRescue victimas, MisObjetivos misObjs, String identFuncEval) {
+         identAgenteQusaCoste = nombreAgenteEmisor;
+        int valorCoste;
+        this.victims2R = victimas;
+        ArrayList misVictimasAsignadas = victims2R.getVictimsAsignadas();
+        System.out.println(" Victima a rescatar : " + victima.getName() + " Se  calcula los costes del robot a las victimas asignadas  " + misVictimasAsignadas);
+        //Calculo del coste del robot  a las victimas asignadas
+        if(misVictimasAsignadas.isEmpty()){ // no hay victimas asignadas 
+            int [] camino= new int[2];
+            double distanciaCamino = this.distanciaC1toC2(robotLocation, victima.getCoordinateVictim());    
+        if (robot.hayEnergiaSuficiente(distanciaCamino)) camino[0] = (int) distanciaCamino;   
+         else valorCoste = cotaMaxima;
+        camino[1] = victimas.addVictimARescatar(victima);
+        
+        return camino;
+        }
+        // hay varias victimas asignadas
+         misVictimasAsignadas.add(victims2R.addVictimARescatar(victima));
+        ArrayList costesRobtAvictsAsignadas = new ArrayList();
+        int dimArray = misVictimasAsignadas.size();
+        Victim victimai;
+        for (int i = 0; i < misVictimasAsignadas.size(); i++) {
+            victimai = victims2R.getVictimaARescatar((Integer) misVictimasAsignadas.get(i));
+            costesRobtAvictsAsignadas.add(i, (int) distanciaC1toC2(robot.getRobotCoordinate(), victimai.getCoordinateVictim()));
+//        victims2R.addCosteRescateAmatrizCostes(victima,victimai , (int)distanciaC1toC2(victima.getCoordinateVictim(), victimai.getCoordinateVictim()));
+        }
+        System.out.println(" Los costes desde la posicion del robot a las victimas asignadas son : " + costesRobtAvictsAsignadas);
+        // obtencion de la matriz de costes
+        return victims2R.minCaminoRobotVictsAsignadas(costesRobtAvictsAsignadas, trazar);
+//        int[][] matrizCostes = victims2R.getMatrizCostesVictimasAsign(costesRobtAvictsAsignadas, trazar);
+//        return minCamino(matrizCostes);
+    } 
 
     private void imprimirMatriz(int[][] matriz) {
         for (int x = 0; x < matriz.length; x++) {

@@ -190,12 +190,13 @@ when
 end
 
 rule " OrdCC1 : Interpreto la orden del CC cuando llegue"
- //salience 10
+ salience 10
  when
  //   InfoEquipo(identAgentePropietario== agentId)
     miStatus: RobotStatus1(idRobot == agentId,bloqueado==false )
     obj1 : DefinirMiEquipo(state == Objetivo.SOLVED)
-    focoActual : Focus(foco == null)
+   focoActual : Focus()
+//    focoActual : Focus(foco == null)
  //   misObjs: MisObjetivos(categoria==VocabularioRosace.IdentCategoriaObjetivosDecision)
  //   victims2R:VictimsToRescue(victims2Rescue!=null)
     ccOrden:OrdenCentroControl(mensajeOrden == VocabularioRosace.MsgOrdenCCAyudarVictima,victim:justificacion )
@@ -375,6 +376,7 @@ end
 //           
 //==========================================================================
 //
+/*
 rule "OrdMov1 Movimiento hacia una nueva victima tras conseguir salvar a la victima mas prioritaria"
     no-loop true
 when
@@ -417,7 +419,8 @@ end
 rule "InfoVictRes1 :Tratamiento Informe victima rescatada Consecucion del  objetivo Ayudar a la victima "
 no-loop true
 when
-    AyudarVictima(state == Objetivo.SOLVING, idVict:victimId)
+    objAccSolving:AyudarVictima(state == Objetivo.SOLVING, idVict:victimId)
+ //   victimaCC:Victim(name== idVict)
 //    victims2R:VictimsToRescue(victims2Rescue!=null)
 //    not (exists (DecidirQuienVa (state == Objetivo.SOLVING,objectReferenceId == idVict)))
 //    misObjs: MisObjetivos(categoria==VocabularioRosace.IdentCategoriaObjetivosAccion)
@@ -427,7 +430,7 @@ when
     informe: Informe ( referenciaContexto == idVict,contenidoInforme == VocabularioRosace.MsgeLlegadaDestino)
  then
  TareaSincrona tarea = gestorTareas.crearTareaAsincrona(ProcesarInformeLlegadaDestino.class);
-tarea.ejecutar(objetivosAccion,victimsArescatar,focoActual,miStatus,infoCompMov,informe );
+tarea.ejecutar(objetivosAccion,victimsArescatar,focoActual,miStatus,infoCompMov,informe,objAccSolving );
 recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId,"\n"+"( ID Victima: "+idVict + " ) EJECUTO LA REGLA " + drools.getRule().getName() + "\n");
 end
 
@@ -498,7 +501,7 @@ rule " Foc4: Focalizacion en una nueva decision e inicio de ayuda a victima "
     infoDecision: InfoParaDecidirQuienVa(idElementoDecision == idVict)
  then 
     TareaSincrona tarea = gestorTareas.crearTareaSincrona(ActualizarObjsAccionyDecision1.class);
-    tarea.ejecutar(objetivosAccion,objetivosDecision, objAcc,infoDecision,focoActual, estatusRobot, victimaCC);
+    tarea.ejecutar(objetivosAccion,objetivosDecision, objAcc,infoDecision,focoActual, estatusRobot, victimaCC,victimsArescatar);
     System.out.println( "\n"+agentId +" EJECUTO LA REGLA: "+drools.getRule().getName()+" \n\n" );
     System.out.println( "\n"+agentId + "Foco: Estoy en  el objetivo "+focoActual.toString()+" \n\n" );
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId,"\n"+"( ID Victima: "+idVict + " ) EJECUTO LA REGLA " + drools.getRule().getName() + "\n");
@@ -589,7 +592,7 @@ when
  //   victims2R:VictimsToRescue(victims2Rescue!=null)
     victimaCC:Victim(idVict:name,robotResponsableId==null)
  not (exists (DecidirQuienVa(state == Objetivo.SOLVING, objectReferenceId == idVict)))
-     peticionAgte: PeticionAgente( mensajePeticion == VocabularioRosace.MsgPeticionEnvioEvaluaciones,justificacion==victimaCC ) 
+     peticionAgte: PeticionAgente( mensajePeticion == VocabularioRosace.MsgPeticionEnvioEvaluaciones,identObjectRefPeticion==idVict ) 
     focoActual: Focus() 
     then
     retract(peticionAgte);
@@ -603,6 +606,7 @@ when
     System.out.println( "\n"+agentId +" EJECUTO LA REGLA: "+drools.getRule().getName()+" \n\n" );
     System.out.println( "\n"+agentId + "Foco: Estoy en  el objetivo "+focoActual.toString()+" \n\n" );
 end
+/*
 rule "Pet2a: Si me piden mi evaluacion en DecidirQuienVa  se la mando "
   when
      // Si me piden la evaluacion cuando estoy resolviendo el objetivo o cuando ya lo he resuelto
@@ -618,11 +622,12 @@ rule "Pet2a: Si me piden mi evaluacion en DecidirQuienVa  se la mando "
      peticionAgte: PeticionAgente( mensajePeticion == VocabularioRosace.MsgPeticionEnvioEvaluaciones,justificacion==victimaCC )
   then
      TareaSincrona tarea = gestorTareas.crearTareaSincrona(MandarEvaluacionAQuienLaPide1.class);
-     tarea.ejecutar(victimaCC,infoDecision,peticionAgte,objetivosAccion,robot,victimsArescatar); 
+     tarea.ejecutar(victimaCC,infoDecision,peticionAgte,objetivosDecision,robot,victimsArescatar); 
      recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId,"\n"+"( ID Victima: "+idVict + " ) EJECUTO LA REGLA " + drools.getRule().getName() + "\n");
      System.out.println( "\n"+agentId +" EJECUTO LA REGLA: "+drools.getRule().getName()+" \n\n" );
 end
-/*
+*/
+
 rule "Pet2: Si me piden mi evaluacion en DecidirQuienVa  se la mando "
   when
      // Si me piden la evaluacion cuando estoy resolviendo el objetivo o cuando ya lo he resuelto
@@ -635,10 +640,10 @@ rule "Pet2: Si me piden mi evaluacion en DecidirQuienVa  se la mando "
      obj:DecidirQuienVa(objectDecisionId == idVict)
      Focus(foco == obj) 
      infoDecision: InfoParaDecidirQuienVa(idElementoDecision == idVict,miEvaluacionEnviadaAtodos == true)
-     peticionAgte: PeticionAgente( mensajePeticion == VocabularioRosace.MsgPeticionEnvioEvaluaciones,justificacion==victimaCC )
+     peticionAgte: PeticionAgente( mensajePeticion == VocabularioRosace.MsgPeticionEnvioEvaluaciones,idVict==identObjectRefPeticion )
   then
      TareaSincrona tarea = gestorTareas.crearTareaSincrona(MandarEvaluacionAQuienLaPide.class);
-     tarea.ejecutar(obj,infoDecision,peticionAgte,objetivosAccion,robot,victimsArescatar); 
+     tarea.ejecutar(obj,infoDecision,peticionAgte,objetivosDecision,robot,victimsArescatar); 
      recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId,"\n"+"( ID Victima: "+idVict + " ) EJECUTO LA REGLA " + drools.getRule().getName() + "\n");
      System.out.println( "\n"+agentId +" EJECUTO LA REGLA: "+drools.getRule().getName()+" \n\n" );
 end
@@ -924,26 +929,24 @@ rule "  Proceso el segundo timeout de respuestas decido con lo que tengo"
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId,"\n"+"( ID Victima: "+idVict + " ) EJECUTO LA REGLA " + drools.getRule().getName() + "\n");
     System.out.println( "\n"+agentId +"( ID Victima: "+idVict + " ) EJECUTO LA REGLA "+drools.getRule().getName()+" \n\n" );
 end
-/*
+
 rule " Si me piden mi evaluacion en DecidirQuienVa se la mando "
   when
      // Si me piden la evaluacion cuando estoy resolviendo el objetivo o cuando ya lo he resuelto
-    misObj:MisObjetivos() 
     robot:RobotStatus1()
-    victims2R:VictimsToRescue(victims2Rescue!=null)
     victimaCC:Victim(idVict:name)   
      obj1:AyudarVictima(state == Objetivo.PENDING,victimId == idVict)
      obj:DecidirQuienVa(state==Objetivo.SOLVING,objectDecisionId == idVict)
      Focus(foco == obj) 
      infoDecision: InfoParaDecidirQuienVa(idElementoDecision == idVict,miEvaluacionEnviadaAtodos == true)
-     peticionAgte: PeticionAgente( mensajePeticion == VocabularioRosace.MsgPeticionEnvioEvaluaciones, identAgentePeticion:identAgente )
+     peticionAgte: PeticionAgente( mensajePeticion == VocabularioRosace.MsgPeticionEnvioEvaluaciones, identObjectRefPeticion==idVict )
   then
      TareaSincrona tarea = gestorTareas.crearTareaSincrona(MandarEvaluacionAQuienLaPide.class);
-     tarea.ejecutar(obj,infoDecision,peticionAgte,misObj,robot,victims2R); 
+     tarea.ejecutar(obj,infoDecision,peticionAgte,objetivosDecision,robot,victimsArescatar); 
      recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId,"\n"+"( ID Victima: "+idVict + " ) EJECUTO LA REGLA " + drools.getRule().getName() + "\n");
      System.out.println( "\n"+agentId +" EJECUTO LA REGLA: "+drools.getRule().getName()+" \n\n" );
 end
-*/
+
 rule " Si un agente se ofrece para ir  lo acepto "
   // supongo que ha recibido todas las evaluaciones y que es el mejor 
   when
@@ -1139,7 +1142,7 @@ rule " Si me piden mi evaluacion en ConfirmacionParaIr se la mando"
       focoActual:Focus(foco == obj)
       infoDecision:InfoParaDecidirQuienVa(idElementoDecision == idVict,tengoLaMejorEvaluacion == true)
  //  informeTarea:InformeDeTarea(identTarea == "ObtenerEvaluacionRealizarObjetivo")
-      peticionAgte: PeticionAgente( mensajePeticion == VocabularioRosace.MsgPeticionEnvioEvaluaciones,justificacion == idVict, identAgentePeticion:identAgente )
+      peticionAgte: PeticionAgente( mensajePeticion == VocabularioRosace.MsgPeticionEnvioEvaluaciones,identObjectRefPeticion==idVict, identAgentePeticion:identAgente )
    then
       // Le mando mi evaluacion al   agente que me  la pide
       TareaSincrona tarea = gestorTareas.crearTareaSincrona(MandarEvaluacionAQuienLaPide1.class);
