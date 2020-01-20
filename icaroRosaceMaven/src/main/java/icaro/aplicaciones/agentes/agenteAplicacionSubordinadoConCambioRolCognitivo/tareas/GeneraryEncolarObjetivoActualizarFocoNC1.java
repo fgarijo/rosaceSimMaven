@@ -74,8 +74,9 @@ private ItfUsoMovimientoCtrl itfcompMov;
 //       El robot tiene focalizado un objetivo conseguido. Esta parado en destino esperando recibir nuevas tareas     
             AyudarVictima objetivoAsignado = new AyudarVictima(victima.getName());
                 objetivoAsignado.setPriority(victima.getPriority());
+                victimas.addVictimAsignada(victima);
 //                objetivoAsignado.setSolving() ;
-                victimas.addVictimARescatar(victima);
+//                victimas.addVictimARescatar(victima);
 //                misObjs.addObjetivo(objetivoAsignado);
             Objetivo objetivoActual = misObjs.getobjetivoMasPrioritario();
             String estadoMovRobot= null;

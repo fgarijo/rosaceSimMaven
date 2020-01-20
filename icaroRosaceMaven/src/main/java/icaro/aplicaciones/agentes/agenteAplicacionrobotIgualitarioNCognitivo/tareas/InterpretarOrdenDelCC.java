@@ -43,7 +43,7 @@ public class InterpretarOrdenDelCC extends TareaSincrona {
             trazas.aceptaNuevaTrazaEjecReglas(this.identAgente, "Se Ejecuta la Tarea :" + this.identTarea + " Se crea el  objetivo:  " + newAyudarVictima + "  y el objetivo : " + newDecision
                     + " Se actualiza el foco : " + foco.getFoco() + "\n" + " Objetivos decision en la cola : " + misObjsDecision.getMisObjetivosPriorizados().toString()
                     + "\n" + " Objetivo mas prioritario : " + misObjsDecision.getobjetivoMasPrioritario().toString() + "\n");
-            if (objetivoFocalizado == null || objetivoFocalizado.getState() == Objetivo.SOLVED) {
+            if (objetivoFocalizado!= null || objetivoFocalizado.getState() == Objetivo.SOLVED) {
                 DecidirQuienVa decisionPendiente = (DecidirQuienVa) misObjsDecision.getobjetivoMasPrioritario();
                 foco.setFoco(decisionPendiente);
                 this.getEnvioHechos().actualizarHecho(decisionPendiente);

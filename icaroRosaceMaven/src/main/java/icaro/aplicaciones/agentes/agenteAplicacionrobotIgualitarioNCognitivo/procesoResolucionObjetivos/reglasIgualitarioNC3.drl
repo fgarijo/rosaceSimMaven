@@ -1355,8 +1355,8 @@ salience 10
     not(exists (InfoParaDecidirQuienVa()))
   //  objDecision:DecidirQuienVa(objectDecisionId != idVict,state==Objetivo.SOLVING) 
  //   victimas:VictimsToRescue(victims2Rescue!=null)
- //   focoActual : Focus( foco==null )
- focoActual : Focus()
+   focoActual : Focus( foco==null )
+// focoActual : Focus()
  then
     TareaSincrona tarea = gestorTareas.crearTareaSincrona(ProcesarPeticionAsumirObjetivo.class); //crea el  objetivo ayudar victima
     tarea.ejecutar(victimaCC,peticion,objetivosDecision,miEquipo,focoActual, null); 

@@ -70,9 +70,9 @@ public class ProcesarInformeLlegadaDestino extends TareaAsincrona {
             // se supone que este objetivo era el mas prioritario, si no lo era hay un problema
 //              Objetivo objetivoConseguido = misObjsAccion.getobjetivoMasPrioritario();
 //            this.getEnvioHechos().eliminarHecho(informeRecibido);
-            trazas.aceptaNuevaTrazaEjecReglas(this.identAgente, " Se Procesa el informe   recibido por el agente :" + informeRecibido.referenciaContexto + "\n"
+            trazas.aceptaNuevaTrazaEjecReglas(this.identAgente, " Se Procesa el informe   recibido por el agente :" + identAgente + "\n"
                     + " Cuyo contenido:" + informeRecibido.contenidoInforme + " Se informa al Agte controlador del rescate de la victima" + victimaRescatadaId + "\n"
-                    + " Elimino  la victima : " + victimaRescatadaId + " del conj de victimas asignadas.  Las victimas asignadas restantes son  " + victims.getIdtsVictimsAsignadas() + "\n");
+                    + " Elimino  la victima : " + victimaRescatadaId + " del conj de victimas asignadas. Las victimas asignadas restantes son: " + victims.getIdtsVictimsAsignadas() + "\n");
 //            Objetivo objetivoConseguido = misObjsAccion.getobjetivoEnCurso();
         
             Thread accesoCompMovimiento = new Thread() {
@@ -167,7 +167,6 @@ public class ProcesarInformeLlegadaDestino extends TareaAsincrona {
                     + " El identificador de la victima  :" + victimaRescatadaId + " y el del ultimo objetivo : " + objetivoConseguido.getobjectReferenceId() + " coinciden " + "\n"
                     + "EstadoComponente : " + estadoComponente + " Objetivo acccion  en curso " + nuevoObjetivoAccion + "\n" + "  El foco estaba en el objetivo :  " + objetivoFocalizado + "\n");
         } catch (Exception e) {
-            e.printStackTrace();
         }
 
     }

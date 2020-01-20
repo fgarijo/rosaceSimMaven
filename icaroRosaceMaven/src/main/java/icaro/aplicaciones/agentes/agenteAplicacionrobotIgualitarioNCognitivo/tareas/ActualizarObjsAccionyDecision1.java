@@ -137,6 +137,7 @@ public class ActualizarObjsAccionyDecision1 extends TareaSincrona {
                     victimaAsignada.setrobotResponsableId(identAgente);
                     victimaAsignada.setEstimatedCost(miEvaluacion);
                     this.getEnvioHechos().actualizarHecho(victimaAsignada);
+                    victimas.addVictimAsignada(victimaAsignada);
                     victimaRescatable = victimas.getVictimaMasProxima();
                     idvictimaRescatable=victimaRescatable.getName();
                     if (!idVictimaAsignada.equals(idvictimaRescatable)) {

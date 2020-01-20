@@ -66,7 +66,8 @@ public class FocalizarObjetivoMasPrioritario extends TareaSincrona{
             this.getComunicator().enviarInfoAotroAgente(msg, VocabularioRosace.IdentAgteControladorSimulador);  
                 AyudarVictima nuevoObj = new AyudarVictima(refVictima);
                 nuevoObj.setSolving() ;
-                victimas.addVictimARescatar(victima);
+//                victimas.addVictimARescatar(victima);
+                victimas.addVictimAsignada(victima);
                 misObjs.addObjetivo(nuevoObj);
                 focoActual.setFocusToObjetivoMasPrioritario(misObjs);
                 Objetivo objActual = focoActual.getFoco();

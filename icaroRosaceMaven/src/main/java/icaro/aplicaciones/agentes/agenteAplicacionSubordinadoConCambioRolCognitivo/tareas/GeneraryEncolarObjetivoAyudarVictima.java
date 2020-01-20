@@ -69,7 +69,8 @@ public class GeneraryEncolarObjetivoAyudarVictima extends TareaSincrona{
                  
            //      newObjetivo.setvictimId(idVictim);
                  nuevoObj.setPriority(victima.getPriority());      
-                victimas.addVictimARescatar(victima);
+//                victimas.addVictimARescatar(victima);
+                victimas.addVictimAsignada(victima);
                 misObjs.addObjetivo(nuevoObj);
 //                focoActual.setFocusToObjetivoMasPrioritario(misObjs);
 //                Objetivo objActual = focoActual.getFoco();

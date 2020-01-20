@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package icaro.aplicaciones.Rosace.informacion;
 
+
+import icaro.aplicaciones.Rosace.informacion.*;
 import java.util.ArrayList;
 
 /**
@@ -13,10 +14,9 @@ import java.util.ArrayList;
 public class VictimsToRescue {
     //   private Map<String, Victim> victims2Rescue;
 
-    private  ArrayList<Victim> victimasARescatar;
+    private  ArrayList victimasARescatar;
     private Victim victimaArescatar;
     private ArrayList<Integer> misVictimasAsignadas;
-    private ArrayList<String> misVictimasArescatarIds;
     private String robotPropietario;
     private int[][] matrizCostes;
     private boolean hayVictimasXrescatar;
@@ -30,24 +30,30 @@ public class VictimsToRescue {
         hayVictimasXrescatar = false;
         victimasARescatar = new ArrayList<>();
         matrizCostes = new int[maxDim][maxDim];
-         hayVictimasXrescatar = false;
-         misVictimasArescatarIds=new ArrayList<>();
     }
 
+    public void inicializar() {
+        //   victims2Rescue = new HashMap <>();
+        victimasARescatar = new ArrayList();
+        misVictimasAsignadas = new ArrayList<>();
+        matrizCostes = new int[maxDim][maxDim];
+        matrizCostes [0][0]=0;
+        hayVictimasXrescatar = false;
+    }
     public void setRobotPropietario(String robtId) {
         robotPropietario= robtId;
     }
 
     public synchronized int addVictimARescatar(Victim victim) {
-     //   int indiceVictima = victimasARescatar.indexOf(victim);
-        String identVictima=victim.getName();
-        int indiceVictima = misVictimasArescatarIds.indexOf(identVictima);
-        System.out.println(" La victima con identificador " + identVictima + " Se intenta anyadir  a las victimas a rescatar y su indice es : " + indiceVictima);
-        if (indiceVictima<0 ) {
-            misVictimasArescatarIds.add(identVictima);
+        int indiceVictima = victimasARescatar.indexOf(victim);
+        System.out.println(" La victima con identificador " + victim.getName() + " Se intenta anyadir  a las victimas a rescatar y su indice es : " + indiceVictima);
+        if (indiceVictima < 0) {
             victimasARescatar.add(victim);
             indiceVictima = victimasARescatar.indexOf(victim);
             matrizCostes[indiceVictima][indiceVictima] = 0;
+            // Se define el indice siguiente como indefinido y se usa para verificar si la fila y columna estan o no definidas
+//            matrizCostes[indiceVictima ][indiceVictima + 1] = -1;
+//             matrizCostes[indiceVictima+1 ][indiceVictima ] = -1;
             distanciasDeVictimaEnMatrizCostes( indiceVictima);
             System.out.println(" La victima con identificador " + victim.getName() + " Se anyade  a las victimas a rescatar y su indice es : " + indiceVictima);
 //            printMatrizCostesEntreVictimas();
@@ -56,7 +62,9 @@ public class VictimsToRescue {
         return indiceVictima;
     }
      public synchronized void actualizarVictimARescatar(Victim victim) {
-          if (!victimasARescatar.contains(victim) ) victimasARescatar.add(victim);
+         int indiceVictima = victimasARescatar.indexOf(victim);
+          if (indiceVictima < 0)  victimasARescatar.add(victim);
+          else victimasARescatar.set(indiceVictima, victim);
      }
     private void distanciasDeVictimaEnMatrizCostes(int posicionVictima) {
         // El coste desde la posicion de la victima en la matriz de costes al resto de victimas no esta definido
@@ -84,15 +92,11 @@ public class VictimsToRescue {
     }
 
     public  void addCosteRescateAmatrizCostes(Victim victim1, Victim victim2, int valor) {
-       // int indiceVictima1 = addVictimARescatar(victim1);
-       int indiceVictima1 =victimasARescatar.indexOf(victim1);
-      //  int indiceVictima2 = addVictimARescatar(victim2);
-      int indiceVictima2 =victimasARescatar.indexOf(victim2);
-      if(indiceVictima1<0||indiceVictima2<0)
-          System.out.println("Las victimas " + victim1.getName() + "o la victima" + victim2.getName() + " No han sido definidas "+ "\n" );
-                  else{
-                  matrizCostes[indiceVictima1][indiceVictima2] = valor;
-                  matrizCostes[indiceVictima2][indiceVictima1] = valor;}
+        int indiceVictima1 = addVictimARescatar(victim1);
+        int indiceVictima2 = addVictimARescatar(victim2);
+
+        matrizCostes[indiceVictima1][indiceVictima2] = valor;
+        matrizCostes[indiceVictima2][indiceVictima1] = valor;
 //        System.out.println("Costes  calculados de la matriz de costes entre victimas " + victim1.getName() + "y la victima" + victim2.getName() + "\n"
 //                + "El valor de la matriz   ( " + indiceVictima1 + ", " + indiceVictima2 + "  ) = " + valor + " \n"
 //                + "El valor de la matriz   ( " + indiceVictima2 + ", " + indiceVictima1 + "  ) = " + valor + " \n");
@@ -184,7 +188,7 @@ public class VictimsToRescue {
         return null;
     }
     
-    public synchronized int getIndiceVictimARescatar(String victimId) {
+    private int getIndiceVictimARescatar(String victimId) {
         if(victimasARescatar.isEmpty())return -1;
         Victim victima;
         for (int i = 0; i < victimasARescatar.size(); i++) {
@@ -200,10 +204,9 @@ public class VictimsToRescue {
         ArrayList identVictimasAsignadas = new ArrayList();
         Victim victima;
         for (int i = 0; i < misVictimasAsignadas.size(); i++) {
-//            victima = (Victim)victimasARescatar.get(misVictimasAsignadas.get(i));
-            identVictimasAsignadas.add(i, misVictimasArescatarIds.get(misVictimasAsignadas.get(i)));
+            victima = (Victim)victimasARescatar.get(misVictimasAsignadas.get(i));
+            identVictimasAsignadas.add(i, victima.getName());
         }
-        System.out.println("Los identificadores de las victimas asignadas son : " + identVictimasAsignadas );
         return identVictimasAsignadas;
     }
 public synchronized ArrayList getVictimsAsignadas() {
@@ -283,7 +286,7 @@ public synchronized ArrayList getVictimsAsignadas() {
 //                        x=indiceFila;
 //                        y=indiceCol;
                        
-                 System.out.println("Se cambia el valor del coste minimo ( " + indiceFila + " , " + indiceCol + " ) = " + nuevoCoste + " \n"
+                 System.out.println("Se cambia el valor del coste minimo  " + indiceFila + " , " + indiceCol + " ) = " + nuevoCoste + " \n"
                          + " El coste minimo es : " + costeMinimo + " \n" 
                              + " El valor de la matriz   ( " + indiceFila + " , " + indiceCol + " ) = " + costeMinimo + " \n" );        
                     }
@@ -311,13 +314,13 @@ public synchronized ArrayList getVictimsAsignadas() {
         return ultimoCaminoMinimoCalculado;
     }
     public synchronized void elimVictimAsignada(String idVict) {
-        int indiceVictima=getIndiceVictimARescatar(idVict);
+//        int indiceVictima=getIndiceVictimARescatar(idVict);
+        int indiceVictima=victimasARescatar.indexOf(idVict);
        if( indiceVictima<0)return;
-       System.out.println(" Mis victimas asignadas antes de eliminar la victima : " + idVict + " son :  " + misVictimasAsignadas );
        for (int i = 0; i < misVictimasAsignadas.size(); i++) {
            if(misVictimasAsignadas.get(i)==indiceVictima){
                misVictimasAsignadas.remove(i);
-               System.out.println(" Se elimina la victima con identificador :  " + idVict + " que ocupa la  posicion : " + i + " en el vector de victimas asignadas"+
+               System.out.println(" Mis victimas asignadas son  " + misVictimasAsignadas+" Se elimina la victima con identificador :  " + idVict + " que ocupa la  posicion : " + i + " en el vector de victimas asignadas"+
                        " Mis victimas asignadas quedan   " + misVictimasAsignadas);
            }
        }
@@ -325,15 +328,11 @@ public synchronized ArrayList getVictimsAsignadas() {
 
     public synchronized void addVictimAsignada(Victim victima) {
         int indiceVictima = victimasARescatar.indexOf(victima);
-         System.out.println( " Orden addVictimAsignada. Mis victimas asignadas son:   " + misVictimasAsignadas);
         if (indiceVictima >= 0 && !misVictimasAsignadas.contains(indiceVictima)) {
             misVictimasAsignadas.add(indiceVictima);
-            hayVictimasXrescatar = true;
-             System.out.println(" Se anyade el indice de  la victima " + indiceVictima + " con identificador " + victima.getName() + " a las victimas asignadas" +
-                " Mis victimas asignadas quedan   " + misVictimasAsignadas);
         }
-        
-       
+        hayVictimasXrescatar = true;
+        System.out.println(" Se anyade el indice de  la victima " + indiceVictima + " con identificador " + victima.getName() + " a las victimas asignadas");
 //        if(misVictimasAsignadas.size()>1 )this.ordenarVictimasAsignadas();
     }
  
@@ -355,12 +354,15 @@ public synchronized ArrayList getVictimsAsignadas() {
         victimaArescatar = victim;
     }
 
+    public synchronized Victim getVictimaARescatar() {
+        return victimaArescatar;
+    }
     public synchronized Victim getVictimaARescatar(Integer indiceVictima) {
         if(indiceVictima<0||indiceVictima>victimasARescatar.size())return null;
         return (Victim)victimasARescatar.get(indiceVictima);
     }
 
-    public synchronized void eliminarVictimaAsignada(String victimId) {
+    public synchronized void eliminarVictima(String victimId) {
         if (misVictimasAsignadas.isEmpty()) {
             return;
         }
@@ -440,4 +442,56 @@ public synchronized ArrayList getVictimsAsignadas() {
 //                    + " Las victimas asignadas son :  " + misVictimasAsignadas + "La victima mas proxima es  : " + victimaMasProx.getName());
         return victimaMasProx;
     }
+    
+    public static void main(String args[]) {
+        // Es necesario especificar un fichero de descripción como argumento
+        if (args.length == 0) {
+            System.err.println("Error: Hace falta especificar como argumento la ruta del fichero de descripción.\n Ejemplo: directorio/descripcionAcceso");
+            System.exit(-1);
         } 
+
+        	// arranca la infraestructura pasándole el fichero de descripción de la organización
+          VictimsToRescue victims;
+          victims= new VictimsToRescue();
+          victims.addIdentVictimARescatar("v1");
+          victims.addIdentVictimARescatar("v2");
+          victims.addIdentVictimARescatar("v1");
+          victims.addIdentVictimARescatar("v3");
+          System.out.println(" Las victimas a rescatar definidas son   " + victims.getVictimsArescatar() );
+          victims.addVictimAsignadaId("v1");
+          victims.addVictimAsignadaId("v2");
+          victims.addVictimAsignadaId("v1");
+          victims.addVictimAsignadaId("v3");
+          System.out.println(" Las victimas asignadas definidas son   " + victims.getVictimsAsignadas() );
+          victims.elimVictimAsignada("v2");
+          System.out.println(" Las victimas asignadas definidas son   " + victims.getVictimsAsignadas() );
+           victims.elimVictimAsignada("v1");
+           victims.elimVictimAsignada("v2");
+           victims.elimVictimAsignada("v3");
+           System.out.println(" Las victimas asignadas definidas son   " + victims.getVictimsAsignadas() );
+           
+    }
+    public synchronized int addIdentVictimARescatar(String victimId) {
+        int indiceVictima = victimasARescatar.indexOf(victimId);
+        System.out.println(" La victima con identificador " + victimId + " Se intenta anyadir  a las victimas a rescatar y su indice es : " + indiceVictima);
+        if (indiceVictima < 0) {
+            victimasARescatar.add(victimId);
+            indiceVictima = victimasARescatar.indexOf(victimId);
+            System.out.println(" La victima con identificador " + victimId + " Se anyade  a las victimas a rescatar y su indice es : " + indiceVictima);
+//            printMatrizCostesEntreVictimas();
+        }
+          return indiceVictima;
+    }
+   public synchronized void addVictimAsignadaId(String victimaId) {
+        int indiceVictima = victimasARescatar.indexOf(victimaId);
+        if (indiceVictima >= 0 && !misVictimasAsignadas.contains(indiceVictima)) {
+            misVictimasAsignadas.add(indiceVictima);
+        }
+        hayVictimasXrescatar = true;
+        System.out.println(" Se anyade el indice de  la victima " + indiceVictima + " con identificador " + victimaId + " a las victimas asignadas");
+//        if(misVictimasAsignadas.size()>1 )this.ordenarVictimasAsignadas();
+    }
+   public synchronized ArrayList getVictimsArescatar() {
+            return victimasARescatar;
+        }
+}

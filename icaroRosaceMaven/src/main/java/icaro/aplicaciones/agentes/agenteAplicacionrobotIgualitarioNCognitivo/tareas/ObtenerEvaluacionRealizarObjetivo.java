@@ -101,7 +101,9 @@ public class ObtenerEvaluacionRealizarObjetivo extends TareaSincrona {
             eval.setObjectEvaluationId(victim.getName());// Referenciamos la evaluacion con el ident de la victima
             infoDecision.setMi_eval(mi_eval);
             victim.setEstimatedCost(mi_eval);
-            victims2R.actualizarVictimARescatar(victim);
+      //      victims2R.actualizarVictimARescatar(victim);
+      this.trazas.aceptaNuevaTrazaEjecReglas(identAgente,
+                        " el coste de realizar el objetivo almacenado en Victimas2R es : " +victims2R.getVictimARescatar(victim.getName()).getEstimatedCost() + " El coste calculado ha sido  : " + victim.getEstimatedCost()+"\n");
             infoDecision.setTengoMiEvaluacion(Boolean.TRUE);
             this.getEnvioHechos().insertarHechoWithoutFireRules(eval);
             this.getEnvioHechos().insertarHechoWithoutFireRules(robot);
