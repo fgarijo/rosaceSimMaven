@@ -87,7 +87,7 @@ public class VisorMovimientoEscenario extends javax.swing.JFrame {
         IMAGEmujerAsignada= new ImageIcon(VocabularioRosace.RUTA_ICONOS_ESCENARIOS+imageniconoMujerAsignada);
 //        IMAGEmujerReAsignada= Utilities.loadImage ("utilsDiseniaEscenariosRosace/MujerReasignada.png");
         
-        tablaEntidadesEnEscenario= new HashMap<String, JLabel>();
+        tablaEntidadesEnEscenario= new HashMap<>();
     }
 
     /** This method is called from within the constructor to

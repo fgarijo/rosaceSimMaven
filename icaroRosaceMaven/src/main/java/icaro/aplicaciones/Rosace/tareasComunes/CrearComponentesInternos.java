@@ -18,8 +18,6 @@ import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
-
 /**
  *
  * @author FJG
@@ -29,14 +27,11 @@ public class CrearComponentesInternos extends TareaAsincrona {
     @Override
     public void ejecutar(Object... params) {
         try {
-            //        ItfUsoMovimientoCtrl ItfCom = FactoriaAbstrCompInterno.instance.crearComponenteInterno(null, this.getEnvioHechos());
-                  InfoCompInterno infoCompMov = FactoriaAbstrCompInterno.instance().crearComponenteInterno("CompMovimiento", itfProcObjetivos);
-                   ItfUsoMovimientoCtrl  itfcomp =  (ItfUsoMovimientoCtrl)  infoCompMov.getitfAccesoComponente();
-                  itfcomp.inicializarInfoMovimiento(0,null, Integer.SIZE);
-                           this.itfProcObjetivos.insertarHecho(infoCompMov);
-            //             itfcomp.moverAdestino(null, Integer.MIN_VALUE);
-                   this.trazas.aceptaNuevaTrazaEjecReglas(this.identAgente, "se ejecuta la tarea : "+ this.identTarea + " Se crea infoCompMov");
-                //   this.getEnvioHechos().insertarHecho(cre);
+            InfoCompInterno infoCompMov = FactoriaAbstrCompInterno.instance().crearComponenteInterno("CompMovimiento", itfProcObjetivos);
+            ItfUsoMovimientoCtrl itfcomp = (ItfUsoMovimientoCtrl) infoCompMov.getitfAccesoComponente();
+            itfcomp.inicializarInfoMovimiento(0, null, Integer.SIZE);
+            this.itfProcObjetivos.insertarHecho(infoCompMov);
+            this.trazas.aceptaNuevaTrazaEjecReglas(this.identAgente, "se ejecuta la tarea : " + this.identTarea + " Se crea infoCompMov");
         } catch (ExcepcionEnComponente ex) {
             Logger.getLogger(CrearComponentesInternos.class.getName()).log(Level.SEVERE, null, ex);
         }

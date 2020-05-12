@@ -8,7 +8,6 @@ import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Focus;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.MisObjetivos;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Objetivo;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaSincrona;
-import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
 
 /**
  *
@@ -24,9 +23,9 @@ public class GenerarObjetivoyFocalizarlo extends TareaSincrona{
              Focus miFocoActual = (Focus) params[2];
              objetivoaGenerar.setSolving();
              miFocoActual.setFoco(objetivoaGenerar);
-             misObjetivosActuales.addObjetivo(objetivoaGenerar);
+//             misObjetivosActuales.addObjetivo(objetivoaGenerar);
              this.getEnvioHechos().insertarHecho(objetivoaGenerar);
-             this.getEnvioHechos().insertarHechoWithoutFireRules(misObjetivosActuales);
+//             this.getEnvioHechos().insertarHechoWithoutFireRules(misObjetivosActuales);
              this.getEnvioHechos().actualizarHecho(miFocoActual);
              this.trazas.aceptaNuevaTrazaEjecReglas(this.identAgente," Ejecucion de la tarea : " + this.getIdentTarea()+ "  Se genera el objetivo : " +objetivoaGenerar );      	        	      
        } catch (Exception e) {

@@ -13,7 +13,6 @@ import icaro.infraestructura.entidadesBasicas.comunicacion.InfoContEvtMsgAgteRea
 import icaro.infraestructura.entidadesBasicas.interfaces.InterfazUsoAgente;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Objetivo;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaSincrona;
-import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
 import java.util.ArrayList;
 
 
@@ -60,7 +59,7 @@ import java.util.ArrayList;
               }else{ // El robot es el unico disponible por ello considera que el objetivo esta conseguido
                   objetivoEjecutantedeTarea.setSolved();
                   infoDecision.sethanLlegadoTodasLasEvaluaciones(true);
-                  infoDecision.settengoLaMejorEval();
+                  infoDecision.settengoLaMejorEvaluacion();
                 long tiempoActual = System.currentTimeMillis();
                 InfoAgteAsignacionVictima infoVictimaAsignada = new InfoAgteAsignacionVictima (this.identAgente,idVictima,tiempoActual,infoDecision.getMi_eval());
                 InfoContEvtMsgAgteReactivo msg = new InfoContEvtMsgAgteReactivo("victimaAsignadaARobot",infoVictimaAsignada);
@@ -70,11 +69,11 @@ import java.util.ArrayList;
                   trazas.aceptaNuevaTrazaEjecReglas(nombreAgenteEmisor, "Se Resuelve el objetivo porque no hay miembros activos en el equipo :"+ objetivoEjecutantedeTarea.getgoalId() +
                           " relativo a la victima : "+ objetivoEjecutantedeTarea.getobjectReferenceId()+" \n");
               }
-               this.getEnvioHechos().actualizarHechoWithoutFireRules(infoDecision);
                this.getEnvioHechos().eliminarHecho(miEvaluacion);
+               this.getEnvioHechos().actualizarHecho(infoDecision);
+
              } // en el caso de que ya la haya enviado la evaluacion no hago nada
 		} catch (Exception e) {
-			e.printStackTrace();
         }
     }
    

@@ -14,7 +14,6 @@ import icaro.aplicaciones.agentes.componentesInternos.movimientoCtrl.imp.Maquina
 import icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Focus;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.MisObjetivos;
-import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Tarea;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaSincrona;
 import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
 
@@ -41,38 +40,30 @@ public class InicializarInfoWorkMemCRN1 extends TareaSincrona{
              this.getItfConfigMotorDeReglas().setfactHandlesMonitoring_afterActivationFired_DEBUGGING(false);
              identEquipo = this.getItfUsoConfiguracion().getValorPropiedadGlobal(NombresPredefinidos.NOMBRE_PROPIEDAD_GLOBAL_IDENT_EQUIPO);
              this.getEnvioHechos().insertarHechoWithoutFireRules(new Focus());
-             // Crear dos categorias de objetivos : decision y accion
-            
+             // Crear dos categorias de objetivos : decision y accion           
              MisObjetivos objetivosDecision= new MisObjetivos();
              objetivosDecision.setcategoria(VocabularioRosace.IdentCategoriaObjetivosDecision);
               this.getItfMotorDeReglas().addGlobalVariable(VocabularioRosace.IdentCategoriaObjetivosDecision, objetivosDecision);
              MisObjetivos objetivosAccion= new MisObjetivos();
              objetivosAccion.setcategoria(VocabularioRosace.IdentCategoriaObjetivosAccion);
              this.getItfMotorDeReglas().addGlobalVariable(VocabularioRosace.IdentCategoriaObjetivosAccion, objetivosAccion);
-//             this.getEnvioHechos().insertarHechoWithoutFireRules(objetivosDecision);
-//             this.getEnvioHechos().insertarHechoWithoutFireRules(objetivosAccion);
-//             this.getEnvioHechos().insertarHecho(new VictimsToRescue());
-                VictimsToRescue victimsArescatar = new VictimsToRescue();
-                this.getItfMotorDeReglas().addGlobalVariable(VocabularioRosace.IdentVictimsArescatar, victimsArescatar);
-//             RobotStatus miStatus = getRobotStatusInicial ( identRolAgte);        
+                VictimsToRescue victimsArescatar = new VictimsToRescue(miIdentAgte);
+                this.getItfMotorDeReglas().addGlobalVariable(VocabularioRosace.IdentVictimsArescatar, victimsArescatar);     
                 if (  miStatus != null){
                     miStatus.setIdRobotRol(identRolAgte);
                     ItfUsoMovimientoCtrl itfCompMov = (ItfUsoMovimientoCtrl) infoCompmov.getitfAccesoComponente();
                     miStatus.setItfCompMovimiento(itfCompMov);
                     miStatus.setestadoMovimiento(EstadoMovimientoRobot.RobotParado.name());
-//                    itfCompMov.setRobotStatus((RobotStatus1) miStatus.clone());
                     itfCompMov.inicializarInfoMovimiento(miStatus.getAvailableEnergy(),miStatus.getRobotCoordinate(), velocidadCruceroPorDefecto);
                     InfoEquipo miEquipo = new InfoEquipo(miIdentAgte, identEquipo);
                     miEquipo.setTeamMemberStatus( miStatus); 
                     this.getEnvioHechos().insertarHecho(miStatus);
-//                    this.getEnvioHechos().insertarHecho(miEquipo);
                     this.getItfMotorDeReglas().addGlobalVariable(VocabularioRosace.IdentObjGlobalMiEquipo, miEquipo);
                     this.trazas.aceptaNuevaTrazaEjecReglas(miIdentAgte, this.getIdentTarea()+ "  Actualizo mi estatus. Mi Rol en equipo :  " + miStatus.getIdRobotRol());
                     }
                    else this.trazas.trazar(miIdentAgte, "No se ha encontrado el fichero de inicializacion de Estatus", InfoTraza.NivelTraza.error);
                       
        } catch (Exception e) {
-	e.printStackTrace();
        }                
    }
      

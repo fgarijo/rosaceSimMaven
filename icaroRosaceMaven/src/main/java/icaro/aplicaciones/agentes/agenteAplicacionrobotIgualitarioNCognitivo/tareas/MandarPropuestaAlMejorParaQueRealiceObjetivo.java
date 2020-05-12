@@ -22,12 +22,9 @@ public class MandarPropuestaAlMejorParaQueRealiceObjetivo extends TareaSincrona 
      *     */
     private InfoParaDecidirQuienVa infoDecision;
     private String nombreAgenteReceptor;
-
-    //private TimeOutRespuestas tiempoSinRecibirRespuesta; //no usado
     @Override
     public void ejecutar(Object... params) {
         try {
-            //            trazas = NombresPredefinidos.RECURSO_TRAZAS_OBJ;
             Objetivo objetivoEjecutantedeTarea = (Objetivo) params[0];
             infoDecision = (InfoParaDecidirQuienVa) params[1];
             //             nombreAgenteReceptor = (String)params[2];
@@ -51,10 +48,8 @@ public class MandarPropuestaAlMejorParaQueRealiceObjetivo extends TareaSincrona 
                 this.generarInformeTemporizado(VocabularioRosace.TimeOutMiliSecConseguirObjetivo, identTarea, objetivoEjecutantedeTarea, identAgente, VocabularioRosace.MsgTimeoutRecibirConfirmacionAsumirObjetivo);
                 
             } catch (Exception e) {
-                e.printStackTrace();
             }
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 

@@ -33,20 +33,10 @@ public class AsumirDecisionAsignVictimaOtroAgte extends TareaSincrona{
              InfoParaDecidirQuienVa infoDecision = (InfoParaDecidirQuienVa)params[3];
              Focus focoActual = (Focus)params[4]; // el foco actual es decidir quien va 
              Victim victima = (Victim)params[5];
-//             this.getEnvioHechos().eliminarHecho(decidirquienVa);
-//                this.getEnvioHechos().eliminarHecho(ayudarVictima);
-//                this.getEnvioHechos().eliminarHecho(infoDecision);
-//                misObjsDecision.eliminarObjetivo(decidirquienVa);
-//                decidirquienVa = misObjsDecision.getobjetivoMasPrioritario();
                 decidirquienVa.setSolved();
                 victima.setrobotResponsableId(infoDecision.dameIdentMejor());
                  this.getEnvioHechos().actualizarHecho(victima);
                  this.getEnvioHechos().actualizarHecho(decidirquienVa);
-//                if(decidirquienVa!=null)  this.getEnvioHechos().insertarHecho(decidirquienVa);
-//                this.getEnvioHechos().actualizarHechoWithoutFireRules(infoDecision);
-//                focoActual.setFocusToObjetivoMasPrioritario(misObjsDecision);
-//                focoActual.setFoco(decidirquienVa);
-//                this.getEnvioHechos().actualizarHecho(focoActual);
             trazas.aceptaNuevaTrazaEjecReglas(this.identAgente, " Se ejecuta la tarea " + this.identTarea+"\n"+
                     "Foco anterior : "+focoActual.getFocoAnterior()+
                                     " Se actualiza el  foco a :  "+ focoActual+"\n"+
@@ -57,7 +47,6 @@ public class AsumirDecisionAsignVictimaOtroAgte extends TareaSincrona{
                           
              
        } catch (Exception e) {
-			 e.printStackTrace();
        }
 }
   

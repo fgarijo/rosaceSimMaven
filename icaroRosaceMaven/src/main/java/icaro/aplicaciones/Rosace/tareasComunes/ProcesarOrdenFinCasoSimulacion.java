@@ -42,7 +42,6 @@ public class ProcesarOrdenFinCasoSimulacion extends TareaSincrona {
              this.getEnvioHechos().actualizarHecho(infoCompMov);
                }         
             catch(Exception e) {
-                  e.printStackTrace();
             }
     }
 }

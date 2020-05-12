@@ -3,18 +3,14 @@
  * and open the template in the editor.
  */
 package icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.tareas;
-import icaro.aplicaciones.Rosace.informacion.DecisionAgente;
 import icaro.aplicaciones.Rosace.informacion.Victim;
-import icaro.aplicaciones.Rosace.informacion.VictimasSalvadas;
 import icaro.aplicaciones.Rosace.informacion.VictimsToRescue;
 import icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.informacion.InfoParaDecidirQuienVa;
-import icaro.aplicaciones.agentes.componentesInternos.movimientoCtrl.InfoCompMovimiento;
 import icaro.aplicaciones.agentes.componentesInternos.movimientoCtrl.ItfUsoMovimientoCtrl;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Focus;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.MisObjetivos;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Objetivo;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaSincrona;
-import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
 
 /**
  *
@@ -55,10 +51,8 @@ public class AsimilarDecisionAsignVictimaOtroAgte extends TareaSincrona{
                      " Objetivos decision en la cola : " + misObjsDecision.getMisObjetivosPriorizados().toString()+"\n"+ 
                      " Objetivo mas prioritario : "+ misObjsDecision.getobjetivoMasPrioritario().toString()+ "\n");
             System.out.println("\n"+this.identAgente +"Se ejecuta la tarea " + this.getIdentTarea()+ " Se actualiza el  objetivo:  "+ ayudarVictima+"\n\n" );
-                          
-             
+                                    
        } catch (Exception e) {
-			 e.printStackTrace();
        }
 }
   

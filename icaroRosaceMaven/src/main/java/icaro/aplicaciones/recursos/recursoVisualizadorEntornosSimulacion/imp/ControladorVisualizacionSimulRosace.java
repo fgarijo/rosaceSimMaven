@@ -14,6 +14,7 @@ import java.awt.Image;
 import java.awt.Point;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JLabel;
@@ -34,7 +35,7 @@ public class ControladorVisualizacionSimulRosace {
     private int numMensajesEnviar = 3;
     private boolean primeraVictima = true;
     private VisorControlSimuladorRosace visorControlSim;
-    private ArrayList identsRobotsEquipo;
+    private ArrayList identsRobotsParados;
     private javax.swing.JLabel jLabelAux;
     private String directorioTrabajo;
     private String tituloVentanaVisor = "ROSACE Scenario Visor";
@@ -58,6 +59,7 @@ public class ControladorVisualizacionSimulRosace {
     private String mensajeEscenarioSinRobots = "No se han definido Robots en el escenario ";
     private String recomendacionDefinirRobots = " Definir Robots y Victimas con el botón derecho para poder guardar el escenario ";
     private Map<String, JLabel> tablaEntidadesEnEscenario;
+    private Map<String, Boolean> robotsParados;
     private ArrayList<JLabel> listaEntidadesEnEscenario;
     private JPanel panelVisor;
     JLabel entidadSeleccionada = null;
@@ -182,6 +184,7 @@ public class ControladorVisualizacionSimulRosace {
         notifEvts.sendPeticionSimulacionSecuenciaVictimasToRobotTeam(escenarioSimulComp, intervaloSecuencia);
         memComunControladores.setcasoSimulacionIniciado(true);
         simulacionEnCurso = true;
+        identsRobotsParados= new ArrayList();
     }
 
     private void consejoUsuario(String mensajeConsejo, String recomendacion) {
@@ -585,7 +588,8 @@ public class ControladorVisualizacionSimulRosace {
     }
 
     public void peticionCambiarPosicionRobot(String identRobot, Integer coordX, Integer coordY) {
-        this.visorMovimientoEscen.cambiarPosicionRobot(identRobot, coordX, coordY);
+        if ( !identsRobotsParados.contains(identRobot))
+            this.visorMovimientoEscen.cambiarPosicionRobot(identRobot, coordX, coordY);
     }
 
     public void peticionMostrarVictima(String identVictima, String estadoVictima) throws Exception {
@@ -685,6 +689,7 @@ public class ControladorVisualizacionSimulRosace {
         if (simulacionEnCurso) {
             notifEvts.sendPeticionPararAgente(identRobotSeleccionado);
             this.visorMovimientoEscen.cambiarIconoEntidad(identRobotSeleccionado,VisorMovimientoEscenario.IMAGErobotAveriado);
+             identsRobotsParados.add(identRobotSeleccionado);
         } else {
             visorControlSim.visualizarConsejo("Simulación no iniciada", "Debe iniciar la simulación y luego ", "seleccionar el robot que se debe parar");
         }

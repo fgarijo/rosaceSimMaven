@@ -96,13 +96,14 @@ public class MandarPropuestaParaIraEmpatados  extends TareaSincrona {
                        //          paquete.add(aux);
                        //          paquete.add(nombreAgenteEmisor);
                        //          EvaluacionAgente evalAgente = new EvaluacionAgente(nombreAgenteEmisor,evaluacion);
-              ComunicacionAgentes comunicacion = new ComunicacionAgentes(nombreAgenteEmisor);
+//              ComunicacionAgentes comunicacion = new ComunicacionAgentes(nombreAgenteEmisor);
+              this.comunicator.informaraGrupoAgentes(contenidoMsg, IdentsAgentesEmpatados);
             
-              for(int i = 0; i< IdentsAgentesEmpatados.size(); i++){
-                    String agenteReceptor = (String)IdentsAgentesEmpatados.get(i);
-                    comunicacion.enviarInfoAotroAgente(contenidoMsg, agenteReceptor);
-                                 //                    this.mandaMensajeAAgenteId(contenidoMsg, agenteReceptor );
-              }
+//              for(int i = 0; i< IdentsAgentesEmpatados.size(); i++){
+//                    String agenteReceptor = (String)IdentsAgentesEmpatados.get(i);
+//                    comunicacion.enviarInfoAotroAgente(contenidoMsg, agenteReceptor);
+//                                 //                    this.mandaMensajeAAgenteId(contenidoMsg, agenteReceptor );
+//              }
             } catch (Exception ex) {
                 Logger.getLogger(MandarEvalATodos.class.getName()).log(Level.SEVERE, null, ex);
             }

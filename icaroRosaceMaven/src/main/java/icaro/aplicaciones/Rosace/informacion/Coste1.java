@@ -198,7 +198,7 @@ public class Coste1 {
         }
         System.out.println(" Los costes desde la posicion del robot a las victimas asignadas son : " + costesRobtAvictsAsignadas);
         // obtencion de la matriz de costes
-        return victims2R.minCaminoRobotVictsAsignadas(costesRobtAvictsAsignadas, trazar);
+        return victims2R.minCaminoRobotVictsAsignadas(costesRobtAvictsAsignadas);
 //        int[][] matrizCostes = victims2R.getMatrizCostesVictimasAsign(costesRobtAvictsAsignadas, trazar);
 //        return minCamino(matrizCostes);
     } 

@@ -9,13 +9,11 @@ import icaro.aplicaciones.Rosace.informacion.*;
 import icaro.aplicaciones.Rosace.objetivosComunes.AyudarVictima;
 import icaro.aplicaciones.agentes.agenteAplicacionAsignadorTareasCognitivo.objetivos.DecidirQuienVa;
 import icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.informacion.InfoParaDecidirQuienVa;
-import icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
 import icaro.infraestructura.entidadesBasicas.interfaces.InterfazUsoAgente;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.MisObjetivos;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Objetivo;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaSincrona;
 import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
-import icaro.infraestructura.recursosOrganizacion.repositorioInterfaces.ItfUsoRepositorioInterfaces;
 import java.util.ArrayList;
 
 /**
@@ -80,7 +78,7 @@ public class MandarEvaluacionAQuienLaPide  extends TareaSincrona {
                             }
                                 }
                         else {// la victima no existe -> no se ha recibido el mensaje del CC. Calculo el coste y  meto los objetivos y la victima
-                            
+                             
                             miEvalDeRespuesta= calcularCosteEstimadoVictima();
                             victimEnPeticion.setEstimatedCost(miEvalDeRespuesta);
                             AyudarVictima newAyudarVictima = new AyudarVictima (identObjEvaluacion);
@@ -106,13 +104,11 @@ public class MandarEvaluacionAQuienLaPide  extends TareaSincrona {
                        //            tiempoSinRecibirRespuesta.start();
 
 		  } catch (Exception e) {
-			  e.printStackTrace();
           }
    }
-        private int calcularCosteEstimadoVictima(){
-          Coste1 coste = new Coste1();      
-          int[]resultado=coste.costeAyudarVictimas(nombreAgenteEmisor, robotLocation, robot, victimEnPeticion, victimasRecibidas, misObjtvs, "FuncionEvaluacion3");
-               return resultado[1] ;              
+        private int calcularCosteEstimadoVictima(){    
+          int[]resultado=victimasRecibidas.costeAyudarVictima(robot, victimEnPeticion);
+               return resultado[0] ;              
         }
  	
 }

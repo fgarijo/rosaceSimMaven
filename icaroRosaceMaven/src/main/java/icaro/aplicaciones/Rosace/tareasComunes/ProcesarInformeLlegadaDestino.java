@@ -19,8 +19,6 @@ import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Informe;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.MisObjetivos;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Objetivo;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaAsincrona;
-import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
-import java.util.ArrayList;
 
 /**
  *
@@ -28,11 +26,10 @@ import java.util.ArrayList;
  */
 public class ProcesarInformeLlegadaDestino extends TareaAsincrona {
 
-    private int velocidadCruceroPordefecto = 1;// metros por segundo 
-    private int tiempoMedioRescate = 15; // minutos
-    private int gastoEnergiaMinuto = 5; //unidades de energia
-    private int costeEstimadoRescate = 0;
-
+    private final int velocidadCruceroPordefecto = 1;// metros por segundo 
+    private final int tiempoMedioRescate = 15; // minutos
+    private final int gastoEnergiaMinuto = 5; //unidades de energia
+    private final int costeEstimadoRescate = 0;
     private ItfUsoMovimientoCtrl itfcompMov;
     private Victim victimaRescatar;
     private String estadoComponente;
@@ -51,13 +48,6 @@ public class ProcesarInformeLlegadaDestino extends TareaAsincrona {
             Informe informeRecibido = (Informe) params[5];
             Objetivo objetivoConseguido = (Objetivo) params[6];
             Objetivo objetivoFocalizado = focoActual.getFoco();
-
-//             trazas.aceptaNuevaTraza(new InfoTraza(this.identAgente, "Se Ejecuta la Tarea :"+ this.identTarea , InfoTraza.NivelTraza.info));
-//
-//            trazas.aceptaNuevaTraza(new InfoTraza("OrdenRescate",
-//                    " El robot " + this.identAgente + " ha salvado a la victima " + informeRecibido.referenciaContexto + "\n",
-//                    InfoTraza.NivelTraza.debug));
-            // se actualiza el coste de la  victima salvada
             boolean actualizarNuevoObjetivoAccion = false;
             boolean actualizarEstatusRobot = false;
             itfcompMov = (ItfUsoMovimientoCtrl) infoCompMov.getitfAccesoComponente();
@@ -68,13 +58,9 @@ public class ProcesarInformeLlegadaDestino extends TareaAsincrona {
             this.informarControladorRescateVictima(victimaRescatadaId); // informamos al agente controlador
             // Se actualizan los objetivos, se da por conseguido el objetivo salvar a la victima
             // se supone que este objetivo era el mas prioritario, si no lo era hay un problema
-//              Objetivo objetivoConseguido = misObjsAccion.getobjetivoMasPrioritario();
-//            this.getEnvioHechos().eliminarHecho(informeRecibido);
             trazas.aceptaNuevaTrazaEjecReglas(this.identAgente, " Se Procesa el informe   recibido por el agente :" + identAgente + "\n"
                     + " Cuyo contenido:" + informeRecibido.contenidoInforme + " Se informa al Agte controlador del rescate de la victima" + victimaRescatadaId + "\n"
-                    + " Elimino  la victima : " + victimaRescatadaId + " del conj de victimas asignadas. Las victimas asignadas restantes son: " + victims.getIdtsVictimsAsignadas() + "\n");
-//            Objetivo objetivoConseguido = misObjsAccion.getobjetivoEnCurso();
-        
+                    + " Elimino  la victima : " + victimaRescatadaId + " del conj de victimas asignadas. Las victimas asignadas restantes son: " + victims.getIdtsVictimsAsignadas() + "\n");    
             Thread accesoCompMovimiento = new Thread() {
                 @Override
                 public void run() {
@@ -82,12 +68,9 @@ public class ProcesarInformeLlegadaDestino extends TareaAsincrona {
                     itfcompMov.moverAdestino(victimaRescatar.getName(), victimaRescatar.getCoordinateVictim(), velocidadCruceroPordefecto);
                 }
             };
-//            if (victimaRescatadaId.equals(objetivoConseguido.getobjectReferenceId())) { // redundante porque siempre debe ser verdad
-//                victims.elimVictimAsignada(victimaRescatadaId);
             objetivoConseguido.setSolved();
             objetivoConseguido.setPriority(-1);
             misObjsAccion.eliminarObjetivo(objetivoConseguido);
-//                this.getEnvioHechos().actualizarHecho(objetivoConseguido);
             // Se actualiza el componente movimiento
             // se obtiene la victima mas proxima que estara en la posicion cero de las victimas asignadas
             victimaRescatar = victims.getVictimaMasProxima();
@@ -122,26 +105,14 @@ public class ProcesarInformeLlegadaDestino extends TareaAsincrona {
                             + " Se comprueba que se ha calculado el coste de la victima " + victimaRescatar.getisCostEstimated()
                             + " Se crea un objetivo AyudarVictima con ese identificador  :  " + idVictimaRescatar
                             + " y se ordena el salvamento . Mis victimas asignadas : " + victims.getIdtsVictimsAsignadas() + "\n");
-
                     nuevoObjetivoAccion.setSolving();
                     misObjsAccion.addObjetivo(nuevoObjetivoAccion);
-//                    nuevoObjetivoAccion= misObjsAccion.getobjetivoMasPrioritario();
-//                    if(!idVictimaRescatar.equals(nuevoObjetivoAccion.getobjectReferenceId())){
-//                        idVictimaRescatar=nuevoObjetivoAccion.getobjectReferenceId();
-//                        victimaRescatar= victims.getVictimARescatar(idVictimaRescatar);
-//                    }
-
                     estatusRobot.setidentDestino(idVictimaRescatar);
-//                    this.getEnvioHechos().actualizarHechoWithoutFireRules(nuevoObjetivoAccion);
                     itfcompMov.moverAdestino(idVictimaRescatar, victimaRescatar.getCoordinateVictim(), velocidadCruceroPordefecto);
-//                    accesoCompMovimiento.start();
                     estadoComponente = EstadoMovimientoRobot.RobotEnMovimiento.name();
                     estatusRobot.setestadoMovimiento(estadoComponente);
                     actualizarEstatusRobot = true;
                     actualizarNuevoObjetivoAccion = true;
-//                    this.getEnvioHechos().actualizarHecho(nuevoObjetivoAccion);
-//                    this.getEnvioHechos().actualizarHechoWithoutFireRules(estatusRobot);
-
                 }
                 else {// La victima a rescatar es la misma que esta implicada en la decision
                 // esperar a que termine el proceso de decision
@@ -151,7 +122,6 @@ public class ProcesarInformeLlegadaDestino extends TareaAsincrona {
                 if (!robotEnProcesoDeDecision) {
                 focoActual.setFoco(nuevoObjetivoAccion);
             } // Si esta en un proceso de decision no se cambia el foca para que continue con el proceso de decision
-
             misObjsAccion.setobjetivoEnCurso(nuevoObjetivoAccion);
             this.getEnvioHechos().actualizarHechoWithoutFireRules(estatusRobot);
             this.getEnvioHechos().eliminarHecho(informeRecibido);

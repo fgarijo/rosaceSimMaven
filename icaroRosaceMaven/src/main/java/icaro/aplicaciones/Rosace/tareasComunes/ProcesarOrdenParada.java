@@ -96,7 +96,6 @@ public class ProcesarOrdenParada extends TareaSincrona {
             }
                }         
             catch(Exception e) {
-                  e.printStackTrace();
             }
     }
 }

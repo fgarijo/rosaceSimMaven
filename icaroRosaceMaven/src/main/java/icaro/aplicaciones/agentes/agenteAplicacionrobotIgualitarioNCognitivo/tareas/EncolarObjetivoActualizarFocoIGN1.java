@@ -41,13 +41,9 @@ public class EncolarObjetivoActualizarFocoIGN1 extends TareaSincrona {
 
     @Override
     public void ejecutar(Object... params) {
-
-        //    ItfUsoRecursoEstadistica itfUsoRecursoEstadistica=null;
         velocidadCruceroPordefecto = 1;// metros por segundo
         //Para recoger estadisticas del instante de envio de victimas desde el centro de control
-
         try {
-//             trazas = NombresPredefinidos.RECURSO_TRAZAS_OBJ;
             MisObjetivos misObjs = (MisObjetivos) params[0];
             Objetivo objetivoAsignado = (Objetivo) params[1];// AyudarVictima .pending
             InfoParaDecidirQuienVa infoDecision = (InfoParaDecidirQuienVa) params[2];
@@ -55,10 +51,7 @@ public class EncolarObjetivoActualizarFocoIGN1 extends TareaSincrona {
             RobotStatus1 estatusRobot = (RobotStatus1) params[4];
             victima = (Victim) params[5];
             VictimsToRescue victimas = (VictimsToRescue) params[6];
-
             //Para anotar en el fichero cual es mi coste
-            int coste = 0;   //El coste se define como el MAYOR ENTERO - VALOR DE LA FUNCION DE EVALUACION
-            //El que menor coste tiene es el que se hace cargo de la victima 
             miEvaluacion = infoDecision.getMi_eval();
             String refVictima = objetivoAsignado.getobjectReferenceId();
             this.informarControladorAsignacionVictima(refVictima);
@@ -124,7 +117,6 @@ public class EncolarObjetivoActualizarFocoIGN1 extends TareaSincrona {
                     + "estado del Movimiento del Robot: " + estadoMovRobot + " Victima objetivo  :  " + estatusRobot.getidentDestino()
                     + " Victima asignada  :  " + victima + " El foco actual es : " + focoActual + "\n");
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 

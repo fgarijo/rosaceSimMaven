@@ -21,26 +21,16 @@ public OrdenInicioCasoSimulacion(String identCCEmisor) {
     identEmisor= identCCEmisor;
     mensajeOrden = VocabularioRosace.MsgOrdenCCinicioCasoSimulacion;
     justificacion = null;
-
  }
 public OrdenInicioCasoSimulacion(String identCCEmisor, RobotStatus1 estatus) {
     identEmisor= identCCEmisor;
     mensajeOrden = VocabularioRosace.MsgOrdenCCinicioCasoSimulacion;
     justificacion = null;
-}
-        
+}       
 public RobotStatus1 getRobotStatus(){
     return estusRobot;
 }
 public void setRobotStatus(RobotStatus1 estatusRobt){
      estusRobot=estatusRobt ;
 }
- 
-//  @Override
-//     public String toString(){
-//        if ( justificacion == null )
-//            return "Agente Emisor :"+identEmisor+ " MensajeOrden :+" + mensajeOrden+ "  Justificacion: null "+"\n ";
-//        else 
-//            return "Agente Emisor :"+identEmisor+ " MensajeOrden :+" + mensajeOrden+ "  Justificacion: "+justificacion.toString() +"\n ";
-//    }
 }

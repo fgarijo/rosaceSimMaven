@@ -6,9 +6,6 @@ package icaro.aplicaciones.Rosace.informacion;
 
 import java.io.Serializable;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
-import javax.xml.bind.annotation.XmlElement;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 

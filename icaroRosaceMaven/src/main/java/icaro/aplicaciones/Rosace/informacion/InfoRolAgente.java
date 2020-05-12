@@ -12,9 +12,8 @@ public class InfoRolAgente extends InfoInteraccionBasica{
     private String identRolAgte ;
     private String identEquipoAgte ;
     public InfoRolAgente (String agentId, String equipoId,String rolId, String iteracionId ){
-        super();
-        this.setAgteIniciadorId(agentId);
-        this.setrefIteracion(iteracionId);
+        super.setAgteIniciadorId(agentId);
+        super.setrefIteracion(iteracionId);
         identRolAgte = rolId;
         identEquipoAgte = equipoId;
     }    

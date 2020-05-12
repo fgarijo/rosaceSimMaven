@@ -6,7 +6,7 @@ import icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.inf
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Objetivo;
 import icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
 import icaro.infraestructura.entidadesBasicas.interfaces.InterfazUsoAgente;
-import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaComunicacion;
+//import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaComunicacion;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaSincrona;
 import icaro.infraestructura.recursosOrganizacion.recursoTrazas.ItfUsoRecursoTrazas;
 import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;

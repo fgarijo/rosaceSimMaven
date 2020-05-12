@@ -22,10 +22,6 @@ public class InicializarInfoParaDecidir extends TareaSincrona{
              String idVictim = (String)params[1];
              InfoParaDecidirQuienVa infoDecisionAgente;
               if (miEquipo!=null){
-//                    if(miEquipo.getIDsMiembrosActivos().isEmpty()){
-//                      this.trazas.aceptaNuevaTrazaEjecReglas(identAgente, "Se ejecuta la tarea : "+this.identTarea + " No hay miembros activos en el equipo");
-                      
-//                    }else{
                   infoDecisionAgente = new InfoParaDecidirQuienVa(this.identAgente,miEquipo.getIDsMiembrosActivos());
                   infoDecisionAgente.setidElementoDecision(idVictim);
                   this.getEnvioHechos().insertarHecho(infoDecisionAgente);
@@ -36,7 +32,6 @@ public class InicializarInfoParaDecidir extends TareaSincrona{
              }
              
        } catch (Exception e) {
-			 e.printStackTrace();
        }
    }
 

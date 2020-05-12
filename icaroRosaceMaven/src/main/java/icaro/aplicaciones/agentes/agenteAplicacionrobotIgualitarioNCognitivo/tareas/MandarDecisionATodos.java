@@ -10,7 +10,6 @@ import icaro.aplicaciones.Rosace.informacion.Victim;
 import icaro.aplicaciones.Rosace.informacion.VictimsToRescue;
 import icaro.aplicaciones.Rosace.informacion.VocabularioRosace;
 import icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.informacion.InfoParaDecidirQuienVa;
-import icaro.gestores.informacionComun.VocabularioGestores;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Objetivo;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaSincrona;
 import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
@@ -24,15 +23,13 @@ public class MandarDecisionATodos extends TareaSincrona {
 	@Override
 	public void ejecutar(Object... params) {
             try {
-  //               trazas = NombresPredefinidos.RECURSO_TRAZAS_OBJ;
                  Objetivo objetivoDecision = (Objetivo)params[0];
                  InfoParaDecidirQuienVa  infoDecision = (InfoParaDecidirQuienVa)params[1];
                  Victim victima = (Victim) params[2];
                  VictimsToRescue victimasArescatar = (VictimsToRescue) params[3];
                  DecisionAgente decision = new DecisionAgente (this.identAgente,VocabularioRosace.MsgPropuesta_Decision_Ir);
                              decision.setidentObjectRefDecision(victima.getName()); // En este caso el identificador se refiere a la victima
-                             decision.setJustificacion(infoDecision.getMi_eval());
-                 
+                             decision.setJustificacion(infoDecision.getMi_eval());                
                  trazas.aceptaNuevaTraza(new InfoTraza("OrdenAsignacion",
                                                      " El robot " + this.identAgente + " se hace cargo de la victima " + victima.getName()+"\n",
                                                      InfoTraza.NivelTraza.debug));
@@ -47,7 +44,6 @@ public class MandarDecisionATodos extends TareaSincrona {
                 this.getEnvioHechos().actualizarHechoWithoutFireRules(infoDecision);
                 this.getEnvioHechos().actualizarHecho(objetivoDecision);
 		    } catch (Exception e) {
-			     e.printStackTrace();
             }
     }
 	

@@ -32,7 +32,7 @@ public class PedirEvaluacionesQueFaltan extends TareaSincrona{
                    trazas.aceptaNuevaTrazaEjecReglas( identAgente,"Se Ejecuta la Tarea : "+ identTarea );
                   if (!infoDecisionAgente.hanLlegadoTodasLasEvaluaciones){ // si no han llegado todas las evaluaciones
                    
-                   ComunicacionAgentes comunicacion = new ComunicacionAgentes(identAgente );            
+//                   ComunicacionAgentes comunicacion = new ComunicacionAgentes(identAgente );            
                    for(int i = 0; i< infoDecisionAgente.getAgentesEquipo().size(); i++){
                        Integer evaluacionAgente = (Integer)infoDecisionAgente.getEvaluacionesRecibidas().get(i);
                        if(evaluacionAgente == 0){//si aun no tenemos la evaluacion , queremos que nos la vuelva a mandar
@@ -43,7 +43,7 @@ public class PedirEvaluacionesQueFaltan extends TareaSincrona{
                                   peticionEval.setidentObjectRefPeticion(victima.getName());
                                   peticionEval.setMensajePeticion(VocabularioRosace.MsgPeticionEnvioEvaluaciones);
                                   peticionEval.setJustificacion(victima); // para que se sepa que evaluacion le pedimos
-                                  comunicacion.enviarInfoAotroAgente(peticionEval, agenteReceptor);
+                                  comunicator.enviarInfoAotroAgente(peticionEval, agenteReceptor);
                             //      comunicacion.enviarInfoConMomentoCreacionAotroAgente(peticionEval, agenteReceptor);
                        }
                    }

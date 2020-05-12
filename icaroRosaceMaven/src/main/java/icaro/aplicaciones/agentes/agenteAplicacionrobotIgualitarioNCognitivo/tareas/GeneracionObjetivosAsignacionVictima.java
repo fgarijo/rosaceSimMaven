@@ -46,15 +46,9 @@ public class GeneracionObjetivosAsignacionVictima extends TareaSincrona{
             trazas.aceptaNuevaTraza(new InfoTraza(nombreAgenteEmisor, "Se ejecuta la tarea " + identTarea+
                                     " Se crea el  objetivo:  "+ newAyudarVictima, InfoTraza.NivelTraza.debug));
             System.out.println("\n"+nombreAgenteEmisor +"Se ejecuta la tarea " + identTarea + " Se crea el  objetivo:  "+ newAyudarVictima+"\n\n" );
-             
-             
-      //       if ((ccOrdenAyudarVictima.mensajeOrden.equals(VocabularioRosace.MsgOrdenCCAyudarVictima)) &&
-      //               (!idVictim.equals(objetivoEjecutantedeTarea.getobjectReferenceId()))&& (!misObjs.existeObjetivoConEsteIdentRef(idVictim))  ){
-                 
-            
+
              }
                catch (Exception e) {
-			 e.printStackTrace();
        }
    }
 

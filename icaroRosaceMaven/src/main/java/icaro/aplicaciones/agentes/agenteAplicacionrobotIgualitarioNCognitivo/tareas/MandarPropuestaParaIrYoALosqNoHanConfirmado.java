@@ -10,7 +10,8 @@ import icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.inf
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Objetivo;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.InformeDeTarea;
 import icaro.infraestructura.entidadesBasicas.interfaces.InterfazUsoAgente;
-import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaComunicacion;
+import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaAsincrona;
+//import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaComunicacion;
 import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
 import java.util.ArrayList;
 
@@ -18,7 +19,7 @@ import java.util.ArrayList;
  *
  * @author Francisco J Garijo
  */
-public class MandarPropuestaParaIrYoALosqNoHanConfirmado  extends TareaComunicacion {
+public class MandarPropuestaParaIrYoALosqNoHanConfirmado extends TareaAsincrona {
 
 	/**  */
     private InterfazUsoAgente agenteReceptor;
@@ -50,7 +51,7 @@ public class MandarPropuestaParaIrYoALosqNoHanConfirmado  extends TareaComunicac
                      String respuestaAgente = (String)infoDecision.getConfirmacionesRecibidas().get(i);
                      if(respuestaAgente == ""){//si aun no tenemos confirmacion, queremos que nos vuelva a mandar las cosas
                         String agenteReceptor = (String)infoDecision.getAgentesEquipo().get(i);
-                        this.informaraOtroAgente(miPropuesta, agenteReceptor);
+                        this.comunicator.enviarInfoAotroAgente(miPropuesta, agenteReceptor);
                      }
                  }
                  trazas.aceptaNuevaTraza(new InfoTraza(nombreAgenteEmisor, "Enviamos la propuesta: "+ VocabularioRosace.MsgPropuesta_Oferta_Para_Ir , InfoTraza.NivelTraza.debug));           

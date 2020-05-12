@@ -13,7 +13,6 @@ import icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.MisObjetivos;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Objetivo;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaSincrona;
-import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
 
 /**
  *
@@ -33,41 +32,24 @@ public class InterpretarOrdenDelCC extends TareaSincrona{
              String nombreAgenteEmisor = this.getIdentAgente();
              String idVictim = victim.getName();
              this.getEnvioHechos().eliminarHechoWithoutFireRules(ccOrdenAyudarVictima);
-           // verificamos que no se esta ayudando a esa victima. Comprobamos que el ident no esta en ninguno de los objetivos 
-       //      if ((ccOrdenAyudarVictima.mensajeOrden.equals(VocabularioRosace.MsgOrdenCCAyudarVictima)))
-        //          if((objetivoEjecutantedeTarea == null) |
-        //             ((objetivoEjecutantedeTarea != null)&&((!idVictim.equals(objetivoEjecutantedeTarea.getobjectReferenceId()))&& (!misObjs.existeObjetivoConEsteIdentRef(idVictim))))){
-           // se crea el objetivo y se inserta en el motor
                  if (!victims2R.hayVictimasArescatar() || !victims2R.victimaDefinida(victim))  {   
                  AyudarVictima newAyudarVictima = new AyudarVictima (idVictim);
-           //      newObjetivo.setvictimId(idVictim);
                  newAyudarVictima.setPriority(victim.getPriority());
                  victims2R.addVictimARescatar(victim);
-          //      if((objetivoEjecutantedeTarea == null)) newObjetivo.setSolving(); // se comienza el proceso para intentar conseguirlo                                        
-           //       Se genera un objetivo para decidir quien se hace cargo de la ayuda y lo ponemos a solving
                  DecidirQuienVa newDecision = new DecidirQuienVa(idVictim);
                  newDecision.setSolving();                 
                  this.getEnvioHechos().insertarHechoWithoutFireRules(victim);
                  this.getEnvioHechos().insertarHechoWithoutFireRules(newAyudarVictima);
-                 this.getEnvioHechos().actualizarHechoWithoutFireRules(victims2R);
                  this.getEnvioHechos().insertarHecho(newDecision);
-            trazas.aceptaNuevaTraza(new InfoTraza(nombreAgenteEmisor, "Se ejecuta la tarea " + this.getIdentTarea()+
-                                    " Se crea el  objetivo:  "+ newAyudarVictima, InfoTraza.NivelTraza.debug));
+            trazas.aceptaNuevaTrazaEjecReglas(nombreAgenteEmisor, "Se ejecuta la tarea " + this.getIdentTarea()+
+                                    " Se crea el  objetivo:  "+ newAyudarVictima );
             System.out.println("\n"+nombreAgenteEmisor +"Se ejecuta la tarea " + this.getIdentTarea()+ " Se crea el  objetivo:  "+ newAyudarVictima+"\n\n" );
              }else{
-              trazas.aceptaNuevaTraza(new InfoTraza("\n" +nombreAgenteEmisor, "Se ejecuta la tarea " + this.getIdentTarea()+
-                                    " Pero NO Se crea ningun   objetivo:  ", InfoTraza.NivelTraza.debug));
+              trazas.aceptaNuevaTrazaEjecReglas("\n" +nombreAgenteEmisor, "Se ejecuta la tarea " + this.getIdentTarea()+
+                                    " Pero NO Se crea ningun   objetivo:  ");
             System.out.println("\n"+nombreAgenteEmisor +"Se ejecuta la tarea " + this.getIdentTarea()+ " Pero NO Se crea ningun   objetivo:  "+"\n\n" ); 
-             
-      //       if ((ccOrdenAyudarVictima.mensajeOrden.equals(VocabularioRosace.MsgOrdenCCAyudarVictima)) &&
-      //               (!idVictim.equals(objetivoEjecutantedeTarea.getobjectReferenceId()))&& (!misObjs.existeObjetivoConEsteIdentRef(idVictim))  ){
-                 
-            
-             }
-                 
-             
+             }      
        } catch (Exception e) {
-			 e.printStackTrace();
        }
    }
 

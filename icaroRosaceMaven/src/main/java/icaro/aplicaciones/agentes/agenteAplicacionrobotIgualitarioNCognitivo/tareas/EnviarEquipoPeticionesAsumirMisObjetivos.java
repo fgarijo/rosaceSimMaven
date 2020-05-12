@@ -32,7 +32,7 @@ public class EnviarEquipoPeticionesAsumirMisObjetivos extends TareaSincrona{
              RobotStatus1 miEstatus = (RobotStatus1) params[2];
              VictimsToRescue victimas = (VictimsToRescue)params[3];
              InfoTransimisionObjetivos infoTransmisionObjs;
-//             String idVictima=trsnsfObj.getobjectReferenceId();
+             if (victimas.hayVictimasArescatar()){
              infoTransmisionObjs = new InfoTransimisionObjetivos(identAgente,miEquipo,miEstatus.getcausaCambioEstado());
              // Enviamos las propuestas a los miembros del equipo
              Iterator<Objetivo>  iterObj = misObjsAccion.getMisObjetivosPriorizados().iterator();
@@ -45,24 +45,15 @@ public class EnviarEquipoPeticionesAsumirMisObjetivos extends TareaSincrona{
   	  	  //Hay al menos un objetivo 
                   String idVictimaAsignada= (String)idsVictimasAsignadas.get(i);
                 Objetivo obj = new AyudarVictima(idVictimaAsignada);
-//                if(obj.getgoalId().equals(idObjetivoAtrasmitir) ){
-//                if( obj.getgoalId().equals("AyudarVictima")&&(obj.getState()!=Objetivo.SOLVED )){
-//                String obrefId = obj.getobjectReferenceId();
                 PeticionAsumirObjetivo petAsumirObj = new PeticionAsumirObjetivo(this.identAgente, obj, (RobotStatus1)miEstatus); 
-//                petAsumirObj.setinfoComplementaria((Victim)victimas.getVictimToRescue(obrefId).clone());
                 this.getComunicator().informaraGrupoAgentes(petAsumirObj, idsAgtesMiequipo);
                 infoTransmisionObjs.addInfoPropuestaEnviada(idVictimaAsignada);
                 trazas.aceptaNuevaTrazaEjecReglas(identAgente, " Se envia una peticion al equipo para salvar a la victima : "+idVictimaAsignada+ " Se aniade la victima a InfoTransimisionObjetivos . Contenido :  " + infoTransmisionObjs +"\n");
-                trazas.aceptaNuevaTraza(new InfoTraza("OrdenAsignacion",
-                                                     " El robot " + this.identAgente + " delega el salvamento de la victima " + idVictimaAsignada+"\n",
-                                                     InfoTraza.NivelTraza.debug));
                 }
-            
              this.getEnvioHechos().insertarHecho(infoTransmisionObjs);
-             // Activo un timeout para la decision. Cuando venza se decidira que hacer en funcion de la situacion del agente
-             // Porque se supone que estoy esperando informaciones que no llegan. 
+             }else trazas.aceptaNuevaTrazaEjecReglas(identAgente, "  Se ejecuta la tarea : " + identTarea 
+                      + " No hay victimas asignadas  para rescatar \n");
        } catch (Exception e) {
-			 e.printStackTrace();
        }
    }
 

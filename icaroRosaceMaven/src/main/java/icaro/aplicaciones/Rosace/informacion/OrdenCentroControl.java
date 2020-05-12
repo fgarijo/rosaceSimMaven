@@ -12,52 +12,59 @@ import java.io.Serializable;
  */
 public class OrdenCentroControl implements Serializable {
     // Mensajes validos en las propuestas : Ver vocabulario de la aplicacion
-    
-    
+
     public String identCC;
     public String mensajeOrden;
     public Object justificacion;
 
-  public OrdenCentroControl( ) {
-        
- }
+    public OrdenCentroControl() {
+
+    }
+
     public OrdenCentroControl(String identCCEmisor) {
-        identCC= identCCEmisor;
-        mensajeOrden =null;
+        identCC = identCCEmisor;
+        mensajeOrden = null;
         justificacion = null;
 
- }
+    }
+
     public OrdenCentroControl(String identCCEmisor, String msgOrden, Object justificat) {
-        identCC= identCCEmisor;
+        identCC = identCCEmisor;
         mensajeOrden = msgOrden;
         justificacion = justificat;
 
- }
-  public void   setMensajeOrden(String msgOrden){
-      mensajeOrden =msgOrden;
- }
- public String   getMensajeOrden(){
-      return mensajeOrden;
- }
- public void   setIdentCC(String ccId){
-      identCC =ccId;
- }
+    }
 
- public String   getIdentCC(){
-      return identCC;
- }
-public void   setJustificacion(Object contJustificacion){
-      justificacion =contJustificacion;
- }
+    public void setMensajeOrden(String msgOrden) {
+        mensajeOrden = msgOrden;
+    }
 
-  public Object   getJustificacion(){
-      return justificacion;
- }
-  @Override
-     public String toString(){
-        if ( justificacion == null )
-            return "Agente Emisor :"+identCC+ " MensajeOrden :+" + mensajeOrden+ "  Justificacion: null "+"\n ";
-        else 
-            return "Agente Emisor :"+identCC+ " MensajeOrden :+" + mensajeOrden+ "  Justificacion: "+justificacion.toString() +"\n ";
+    public String getMensajeOrden() {
+        return mensajeOrden;
+    }
+
+    public void setIdentCC(String ccId) {
+        identCC = ccId;
+    }
+
+    public String getIdentCC() {
+        return identCC;
+    }
+
+    public void setJustificacion(Object contJustificacion) {
+        justificacion = contJustificacion;
+    }
+
+    public Object getJustificacion() {
+        return justificacion;
+    }
+
+    @Override
+    public String toString() {
+        if (justificacion == null) {
+            return "Agente Emisor :" + identCC + " MensajeOrden :+" + mensajeOrden + "  Justificacion: null " + "\n ";
+        } else {
+            return "Agente Emisor :" + identCC + " MensajeOrden :+" + mensajeOrden + "  Justificacion: " + justificacion.toString() + "\n ";
+        }
     }
 }

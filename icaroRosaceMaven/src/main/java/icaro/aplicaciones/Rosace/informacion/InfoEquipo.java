@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.openide.util.Exceptions;
 
 /**
  *
@@ -43,28 +42,11 @@ public class InfoEquipo {
     }
     
     private   void  initializeAgentTeamStatus(){
-           teamInfoAgentStatus = new HashMap<String,RobotStatus1>();
+           teamInfoAgentStatus = new HashMap<>();
            for(int i = 0; i < teamRobotIds.size();  i++ ) {
                String aux = (String) teamRobotIds.get(i); 
                teamInfoAgentStatus.put(aux, null);
                 }
-//         try {
-////         ArrayList agentesRegistrados = itfConfig.getIdentificadoresInstanciasAgentesAplicacion();
-////         agentesEquipo = new ArrayList();
-//         String aux; Boolean encontrado = false; int i = 0;
-//            while  ( (i < agentesEquipo.size()) & (! encontrado))  {
-//                aux = (String) agentesEquipo.get(i); 
-//                //Excluimos el propio agente
-//                if (aux.contains(nombreAgente)) {
-//                    encontrado = true;
-//                    agentesEquipo.remove(i);
-//                }
-//                i++;
-//            }
-//         } catch (Exception ex) {
-//            Logger.getLogger(InfoParaDecidirQuienVa.class.getName()).log(Level.SEVERE, null, ex);
-//            } 
-//             return teamRobots;
      }
      private void getIdentsAgentesEquipoFromConfig(String identEquipo){
             ArrayList agentesRegistrados = this.getIdentsAgentesAplicacionRegistrados();

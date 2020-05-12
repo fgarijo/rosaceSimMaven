@@ -25,10 +25,9 @@ public class InicializarInfoWorkMem extends TareaSincrona{
              this.getItfConfigMotorDeReglas().setfactHandlesMonitoring_afterActivationFired_DEBUGGING(false);
              this.getEnvioHechos().insertarHechoWithoutFireRules(new Focus());
              this.getEnvioHechos().insertarHechoWithoutFireRules(new MisObjetivos());
-             this.getEnvioHechos().insertarHechoWithoutFireRules(new VictimsToRescue());
+             this.getEnvioHechos().insertarHechoWithoutFireRules(new VictimsToRescue(nombreAgenteEmisor));
              
        } catch (Exception e) {
-	e.printStackTrace();
        }
    }
 

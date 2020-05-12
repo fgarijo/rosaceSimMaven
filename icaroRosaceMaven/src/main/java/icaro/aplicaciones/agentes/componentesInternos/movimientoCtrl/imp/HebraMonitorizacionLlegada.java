@@ -51,19 +51,20 @@ public class HebraMonitorizacionLlegada implements Runnable {
 	private volatile boolean enDestino = false ;
 	private float distanciaArecorrer ;
 	private float b ; // punto corte recta con eje Y
-	private int dirX =0, dirY=0,incrementoDistancia=0;
+    private int dirX = 0;
+	private int dirY=0,incrementoDistancia=0;
 	private int intervaloEnvioInformesMs ;
 	private int distanciaRecorridaEnIntervaloInformes ;
-	private long tiempoParaAlcanzarDestino = 3000;
+	private final long tiempoParaAlcanzarDestino = 3000;
 //	private RobotStatus1 robotStatus;
         private int energiaRobot= 0;
         
 	public ItfUsoRecursoVisualizadorEntornosSimulacion itfusoRecVisSimulador;
 
-	private int contadorAuxiliar=0;
+	private final int contadorAuxiliar=0;
     private MaquinaEstadoMovimientoCtrl contrMovimiento;
-    private int costeEnergeticoPorPaso= 1;
-    private int energiaMinimaParaMoverse= 5000; // otra constante a revisar
+    private final int costeEnergeticoPorPaso= 1;
+    private final int energiaMinimaParaMoverse= 5000; // otra constante a revisar
 
 	//    private int numeroPuntos = 20;
 	/**
@@ -198,7 +199,7 @@ public class HebraMonitorizacionLlegada implements Runnable {
 			this.estadoRobot.setEstamosEnDestino();
 			log.debug("Coord Robot En thread  " + identRobot + " en destino -> ("+this.coordActuales.getX() + " , " + this.coordActuales.getY() + ")");
           System.out.println("Coord Robot En thread  " + identRobot + " en destino -> ("+this.coordActuales.x + " , " + this.coordActuales.y + ")");           
-            } catch (Exception ex) {
+            } catch (InterruptedException ex) {
                 log.error( ex);
                  finalizar = true;
 		}

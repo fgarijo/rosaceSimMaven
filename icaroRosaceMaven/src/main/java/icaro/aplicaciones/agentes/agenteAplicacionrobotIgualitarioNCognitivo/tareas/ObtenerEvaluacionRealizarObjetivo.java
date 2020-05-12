@@ -40,8 +40,8 @@ public class ObtenerEvaluacionRealizarObjetivo extends TareaSincrona {
             VictimsToRescue victims2R =(VictimsToRescue)params[4];
             MisObjetivos misObjsAccion = (MisObjetivos)params[5];
             trazarCalculoCoste=true;
-            Coste1 coste = new Coste1();
-            coste.setTrazar(true);
+//            Coste1 coste = new Coste1();
+//            coste.setTrazar(true);
             robotLocation = robot.getInfoCompMovt().getCoordenadasActuales();
             robot.setRobotCoordinate(robotLocation);
 
@@ -75,21 +75,10 @@ public class ObtenerEvaluacionRealizarObjetivo extends TareaSincrona {
             if( robot.getBloqueado()){ // se envia una evaluacion maxima 
                 mi_eval= Integer.MAX_VALUE;
             }else{
-               
-//                funcionEvaluacion= coste.CalculoCosteAyudarVictima(identAgente, robotLocation, robot, victim, victims2R, misObjsAccion, "FuncionEvaluacion3");
-//             mi_eval = (int)funcionEvaluacion;   //convierto de double a int porque la implementacion inicial de Paco usaba int 
-//            ArrayList victimasArescatar= victims2R.getVictimsAsignadas();
-//             if (victims2R.getVictimsAsignadas().isEmpty()){
-//                 int[] camino = new int[2];
-//                 mi_eval =coste.costeAyudarVictimaIndividual(identAgente, robotLocation, robot, victim, victims2R, misObjsAccion, identTarea);
-//                 camino[0]=mi_eval;
-//                 camino[1]=
-//             }
-//             else{
-                
-                 int camino[] = coste.costeAyudarVictimas(identAgente, robotLocation, robot, victim, victims2R, misObjsAccion, identTarea);
+//            int camino[] = coste.costeAyudarVictimas(identAgente, robotLocation, robot, victim, victims2R, misObjsAccion, identTarea);
+              int camino[]=victims2R.costeAyudarVictima(robot, victim);
              mi_eval = camino[0];
-             victims2R.setCaminoMinimo(camino);
+//             victims2R.setCaminoMinimo(camino);
 //            }
 	     
             if(trazarCalculoCoste) {
@@ -111,7 +100,6 @@ public class ObtenerEvaluacionRealizarObjetivo extends TareaSincrona {
        
             }
            } catch (Exception e) {
-		   e.printStackTrace();
        }
     }
 }

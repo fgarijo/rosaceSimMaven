@@ -12,6 +12,7 @@ import icaro.infraestructura.patronAgenteReactivo.control.acciones.AccionesSeman
 import icaro.infraestructura.recursosOrganizacion.configuracion.ItfUsoConfiguracion;
 import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
 import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza.NivelTraza;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -62,7 +63,7 @@ public class AccionesSemanticasAgenteAplicacionAgteControladorSimuladorRosace ex
     private boolean primeraSimulacion = true;
     private boolean primeraVictimaEnviada= false;
 
-    public void accionComenzar() {
+    public void accionComenzar() throws RemoteException {
         //Inicializar las interfaces a los recursos que se van a utilizar
         //----------------------------------------------------------------------------------------------------------------
         // INICIALIZACION DE VARIABLES RELACIONADAS CON LAS VICTIMAS
@@ -436,7 +437,7 @@ private void actualizarInfoVictimasAsignadas(Set conIdsVictimas){
             e.printStackTrace();
         }
     }
-public void guardarCasoYconfirmarVisualizacionResultados(){
+public void guardarCasoYconfirmarVisualizacionResultados() throws RemoteException{
     try {
             itfUsoRecursoPersistenciaEntornosSimulacion.guardarInfoCasoSimulacion(this.infoCasoSimul);
            if( itfUsoRecursoVisualizadorEntornosSimulacion.peticionConfirmacionInformacion("Desea visualizar los resultados obtenidos en esta simulacion ?")){
@@ -496,7 +497,7 @@ public void guardarCasoYconfirmarVisualizacionResultados(){
 //        }
 
     }
-     public void procesarInfoVictimaRescatada(InfoAgteRescateVictima infoRstVict) {
+     public void procesarInfoVictimaRescatada(InfoAgteRescateVictima infoRstVict) throws RemoteException {
         // el robot que se ha quedado con la victima informa sobre los detalles de la asingnacion
         // este agente incorpora el contexto de asigancion de la victima
         String idVictima= infoRstVict.getVictimId();

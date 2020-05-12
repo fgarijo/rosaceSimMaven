@@ -33,7 +33,6 @@ public class EliminarObjetivoyDecisionInfoActualizarFoco extends TareaSincrona{
                           
              
        } catch (Exception e) {
-			 e.printStackTrace();
        }
    }
 

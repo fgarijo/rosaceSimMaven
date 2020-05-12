@@ -47,7 +47,7 @@ public class InfoEstadoAgente {
 		this.bloqueado = b;
 	}
         @Override
-    public Object clone(){
+    public Object clone() throws CloneNotSupportedException{
         Object obj=null;
         try{
             obj=super.clone();

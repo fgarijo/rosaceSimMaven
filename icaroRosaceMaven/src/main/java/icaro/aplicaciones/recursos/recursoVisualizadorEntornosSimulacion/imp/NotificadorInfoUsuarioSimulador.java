@@ -89,8 +89,9 @@ public class NotificadorInfoUsuarioSimulador extends ComunicacionAgentes{
 //            Object[] infoDefinidaPorUsuario = new Object[]{idAgente};
 //            peticionPararAgente = new InfoContEvtMsgAgteReactivo (VocabularioRosace.PeticionAgteControlSimul.pararRobot.name());
 //            peticionPararAgente.setvaloresParametrosAccion(infoDefinidaPorUsuario);
-            this.informaraOtroAgenteReactivo(new InfoContEvtMsgAgteReactivo (
-                    VocabularioRosace.peticionPararRobot,idAgente),identificadorAgenteaReportar);
+//            this.informaraOtroAgenteReactivo(new InfoContEvtMsgAgteReactivo (
+//                    VocabularioRosace.peticionPararRobot,idAgente),identificadorAgenteaReportar);
+            this.enviarInfoAotroAgente(new OrdenParada(identRecurso, null), idAgente);
       //      comunicacion.enviarInfoAotroAgente(initialOrder, VocabularioRosace.IdentAgteDistribuidorTareas);
     }
     public void sendPeticionPararSimulacion (){

@@ -66,7 +66,6 @@ public class ProcesarPropuestaParaAsumirObjetivo extends TareaSincrona {
                          }
                   }
             catch(Exception e) {
-                  e.printStackTrace();
             }
     }
 	

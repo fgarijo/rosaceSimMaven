@@ -32,7 +32,7 @@ public class InicializarInfoWorkMemCR extends Tarea{
              identEquipo = this.getItfUsoConfiguracion().getValorPropiedadGlobal(NombresPredefinidos.NOMBRE_PROPIEDAD_GLOBAL_IDENT_EQUIPO);
              this.getEnvioHechos().insertarHechoWithoutFireRules(new Focus());
              this.getEnvioHechos().insertarHechoWithoutFireRules(new MisObjetivos());
-             this.getEnvioHechos().insertarHechoWithoutFireRules(new VictimsToRescue());
+             this.getEnvioHechos().insertarHechoWithoutFireRules(new VictimsToRescue(miIdentAgte));
              RobotStatus1 miStatus = getRobotStatusInicial ( identRolAgte);        
                 if (  miStatus != null){
                     InfoEquipo miEquipo = new InfoEquipo(miIdentAgte, identEquipo);

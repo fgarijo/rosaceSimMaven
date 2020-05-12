@@ -1,0 +1,31 @@
+<CasoSimulacion>
+   <identCaso>Org_IgualitarioRobts_4Victs_5_1Serie_0Caso_0</identCaso>
+   <identEscenario>Org_IgualitarioRobts_4Victs_5_1.xml</identEscenario>
+   <modeloOrganizativo>Igualitario</modeloOrganizativo>
+   <identEquipo>rescate1</identEquipo>
+   <tiempoInicialDeLaSimulacion>1589218141207</tiempoInicialDeLaSimulacion>
+   <numeroVictimasEntorno>1</numeroVictimasEntorno>
+   <numeroVictimasAsignadas>1</numeroVictimasAsignadas>
+   <numeroRobotsSimulacion>4</numeroRobotsSimulacion>
+   <numeroRobotsActivos>1</numeroRobotsActivos>
+   <tiempoMedioEnvioPeticiones>2096</tiempoMedioEnvioPeticiones>
+   <InfoVictimasRescatadas key="Victima1">
+      <infoRescateVictima>
+         <victimId>Victima1</victimId>
+         <robotRescatadorId>rescate1RobotIgualitario2</robotRescatadorId>
+         <tiempoAsignacion>1589218144238</tiempoAsignacion>
+         <tiempoPeticion>1589218141257</tiempoPeticion>
+         <tiempoRescate>1589218151854</tiempoRescate>
+         <costeEstimadoEnAsignacion>228.0</costeEstimadoEnAsignacion>
+         <costeRescate>224.0</costeRescate>
+      </infoRescateVictima>
+   </InfoVictimasRescatadas>
+   <rescatesRobot key="rescate1RobotIgualitario2">
+      <victimasSalvadas>
+         <victima>Victima1</victima>
+      </victimasSalvadas>
+   </rescatesRobot>
+   <identsVictimasRescatadas>
+      <victima>Victima1</victima>
+   </identsVictimasRescatadas>
+</CasoSimulacion>
