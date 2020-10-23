@@ -52,7 +52,7 @@ public class InicializarInfoWorkMemCRN1 extends TareaSincrona{
 //             this.getEnvioHechos().insertarHechoWithoutFireRules(objetivosDecision);
 //             this.getEnvioHechos().insertarHechoWithoutFireRules(objetivosAccion);
 //             this.getEnvioHechos().insertarHecho(new VictimsToRescue());
-                VictimsToRescue victimsArescatar = new VictimsToRescue();
+                VictimsToRescue victimsArescatar = new VictimsToRescue(miIdentAgte);
                 this.getItfMotorDeReglas().addGlobalVariable(VocabularioRosace.IdentVictimsArescatar, victimsArescatar);
 //             RobotStatus miStatus = getRobotStatusInicial ( identRolAgte);        
                 if (  miStatus != null){

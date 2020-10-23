@@ -9,15 +9,10 @@ import icaro.aplicaciones.Rosace.informacion.PeticionAgente;
 import icaro.aplicaciones.Rosace.informacion.Victim;
 import icaro.aplicaciones.Rosace.informacion.VocabularioRosace;
 import icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.informacion.InfoParaDecidirQuienVa;
-import icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
 import icaro.infraestructura.entidadesBasicas.comunicacion.ComunicacionAgentes;
-import icaro.infraestructura.entidadesBasicas.comunicacion.MensajeSimple;
-import icaro.infraestructura.entidadesBasicas.interfaces.InterfazUsoAgente;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Objetivo;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaSincrona;
 import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 /**
  *
  * @author Francisco J Garijo
@@ -30,9 +25,8 @@ public class PedirEvaluacionesQueFaltan extends TareaSincrona{
               Victim victima = (Victim) params[2];
               try {
                    trazas.aceptaNuevaTrazaEjecReglas( identAgente,"Se Ejecuta la Tarea : "+ identTarea );
-                  if (!infoDecisionAgente.hanLlegadoTodasLasEvaluaciones){ // si no han llegado todas las evaluaciones
-                   
-                   ComunicacionAgentes comunicacion = new ComunicacionAgentes(identAgente );            
+                  if (!infoDecisionAgente.hanLlegadoTodasLasEvaluaciones){ // si no han llegado todas las evaluaciones                  
+                   ComunicacionAgentes comunicacion = this.getComunicator();            
                    for(int i = 0; i< infoDecisionAgente.getAgentesEquipo().size(); i++){
                        Integer evaluacionAgente = (Integer)infoDecisionAgente.getEvaluacionesRecibidas().get(i);
                        if(evaluacionAgente == 0){//si aun no tenemos la evaluacion , queremos que nos la vuelva a mandar

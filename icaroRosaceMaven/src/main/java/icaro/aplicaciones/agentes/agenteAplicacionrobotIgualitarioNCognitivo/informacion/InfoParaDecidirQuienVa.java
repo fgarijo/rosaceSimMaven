@@ -115,8 +115,6 @@ public class InfoParaDecidirQuienVa implements Serializable{
          }
          return evalRecibidas;
      }
-
-     
      public synchronized int getnumeroEvaluacionesRecibidas(){
          int evalRecibidas = 0;
          for(int i = 0; i< respuestasAgentes.size(); i++){
@@ -133,7 +131,11 @@ public class InfoParaDecidirQuienVa implements Serializable{
              evaluacionesRecibidas.remove(indiceAgte);
              confirmacionesAgentes.remove(indiceAgte);
              agentesEquipo.remove(indiceAgte);
+             // Se obtiene el identificador del mejor para actualizar el valorMinimoCosteRecibido
+             if (dameIdentMejor().equals(idAgte)&&heInformadoAlmejorParaQueAsumaElObjetivo)setheInformadoAlmejorParaQueAsumaElObjetivo(false);
              actualizarAtributos();
+             System.out.println("Id Robot : "+nombreAgente + " Se  elimina del equipo el robot   " + idAgte + " ident mejor = " + dameIdentMejor() + "He informado al mejor "+
+                    heInformadoAlmejorParaQueAsumaElObjetivo );  
              
          }
      }
@@ -162,17 +164,15 @@ public class InfoParaDecidirQuienVa implements Serializable{
          return nombreAgente ;
      }
  
-     public synchronized boolean gettengoLaMejorEval(){
-         return tengoLaMejorEvaluacion;
+     public synchronized boolean gettengoLaMejorEvalAhora(){
+         return mi_eval<valorMinimoCosteRecibido;    
      }
-     public synchronized void settengoLaMejorEval(){
-          tengoLaMejorEvaluacion=true;
-     }
-     
+     public synchronized void settengoLaMejorEvaluacion(Boolean valor){
+          tengoLaMejorEvaluacion=valor;
+     }  
      public synchronized boolean tengoTodasLasEvaluaciones(){					   
          return hanLlegadoTodasLasEvaluaciones;      
      }
-
      //El que tiene mejor evaluacion nueva es el que menor Id tiene
      public synchronized boolean tengoLaMejorEvalNueva(ArrayList respuestas){
          boolean soyElMejor = true;
@@ -185,25 +185,25 @@ public class InfoParaDecidirQuienVa implements Serializable{
              }
          }
          return soyElMejor;
-     }
-     
-     
+     } 
      //devuelve el agente mejor dentro de mi equipo
      public synchronized String dameIdentMejor(){
          if(agentesEquipo !=null){
          String mejorAgente = (String)agentesEquipo.get(0);
-         int mejor_eval = (Integer)evaluacionesRecibidas.get(0);
+//         int mejor_eval = (Integer)evaluacionesRecibidas.get(0);
          int evaluacion_local;
          //empezamos en el uno porque lo hemos inicializado en el cero
-         for(int i = 1; i< evaluacionesRecibidas.size();i++){
+         for(int i = 0; i< evaluacionesRecibidas.size();i++){
              evaluacion_local = (Integer)evaluacionesRecibidas.get(i);
-             if(evaluacion_local<mejor_eval){
-                 mejorAgente = (String)agentesEquipo.get(i);
-                 mejor_eval = evaluacion_local;
-                 indiceAgenteConMejorEvaluacion=i;
+             if(evaluacion_local>0){
+                 if (evaluacion_local<valorMinimoCosteRecibido) {
+                     mejorAgente = (String)agentesEquipo.get(i);
+                     valorMinimoCosteRecibido = evaluacion_local;
+                     indiceAgenteConMejorEvaluacion=i;
+                 }
              }
          }
-         valorMinimoCosteRecibido=mejor_eval;
+//         valorMinimoCosteRecibido=mejor_eval;
          return mejorAgente;
          }else return null;
      }
@@ -303,6 +303,7 @@ public class InfoParaDecidirQuienVa implements Serializable{
               if ((Integer)evaluacionesRecibidas.get(indiceAgente)== 0 ){
                     // Si recibimos otra evaluacion del mismo agente no incrementamos     
                     numeroEvaluacionesRecibidas ++;
+                    evaluacionesRecibidas.set(indiceAgente, eval);//guardamos la evaluacion recibida
               }
               if (eval < valorMinimoCosteRecibido   ){
                     // Si la evaluacion recibida es menor que la mejor evaluacion actualizo el valor de la mejor evaluacion
@@ -311,28 +312,12 @@ public class InfoParaDecidirQuienVa implements Serializable{
               }else if (indiceAgenteConMejorEvaluacion == indiceAgente){
                   dameIdentMejor(); // se actualiza el valorMinimoCosteRecibido y el indice del agnte con el valor del mejor
               }   
-              evaluacionesRecibidas.set(indiceAgente, eval);//guardamos la evaluacion recibida
+//              evaluacionesRecibidas.set(indiceAgente, eval);//guardamos la evaluacion recibida
               actualizarAtributos();
-
-//              if (numeroEvaluacionesRecibidas == agentesEquipo.size()){
-//                    hanLlegadoTodasLasEvaluaciones = true;
-//                    // Caluculo si tengo la mejor evaluacio o si hay empate con otros
-//                    if (mi_eval > valorMinimoCosteRecibido ){
-//                        noSoyElMejor=true; 
-//                        hayEmpates = false;
-//                        tengoLaMejorEvaluacion = false;
-//                    }else
-//                        if (mi_eval == valorMinimoCosteRecibido ){
-//                             tengoLaMejorEvaluacion = false;
-//                             hayEmpates = true;
-//                             noSoyElMejor=false;
-//                        }else {// mi evaluacion es menor
-//                             tengoLaMejorEvaluacion = true;
-//                             hayEmpates = false;
-//                             noSoyElMejor=false;
-//                        }
-//              }
-                
+              
+              System.out.println("Id Robot : "+nombreAgente + " Se actualiza la evalucion recibida del robot    " + evaluacion.getIdentAgente() + 
+                      " cuyo valor es  = " + eval  + " Mi evaluacion es :" + mi_eval + " El valor del minimo coste recibido es  "+ valorMinimoCosteRecibido + " El agente con minimo coste es : "+
+                    dameIdentMejor()+  " Las evaluaciones recibidas son " + getEvaluacionesRecibidas()+ "\n" ); 
           }
           }
           // Si la evaluacion es -1 es decir esta fuera de rango  ignoro  la evaluacion
@@ -343,18 +328,18 @@ public class InfoParaDecidirQuienVa implements Serializable{
                     hanLlegadoTodasLasEvaluaciones = true;
                     // Caluculo si tengo la mejor evaluacio o si hay empate con otros
                     if (mi_eval > valorMinimoCosteRecibido ){
-                        noSoyElMejor=true; 
+                        setnoSoyElMejor(true);
                         hayEmpates = false;
                         tengoLaMejorEvaluacion = false;
                     }else
                         if (mi_eval == valorMinimoCosteRecibido ){
-                             tengoLaMejorEvaluacion = false;
+                             settengoLaMejorEvaluacion(false);
                              hayEmpates = true;
-                             noSoyElMejor=false;
+                             setnoSoyElMejor(false);
                         }else {// mi evaluacion es menor
-                             tengoLaMejorEvaluacion = true;
+                             settengoLaMejorEvaluacion(true);
                              hayEmpates = false;
-                             noSoyElMejor=false;
+                             setnoSoyElMejor(false);
                         }
               }
      }
@@ -463,6 +448,9 @@ public class InfoParaDecidirQuienVa implements Serializable{
   
      public synchronized Boolean getnoSoyElMejor(){
          return noSoyElMejor;
+     }
+     public  synchronized void setnoSoyElMejor(Boolean valor){
+          noSoyElMejor=valor;
      }
     
      public synchronized Boolean getMiEvaluacionEnviadaAtodos(){

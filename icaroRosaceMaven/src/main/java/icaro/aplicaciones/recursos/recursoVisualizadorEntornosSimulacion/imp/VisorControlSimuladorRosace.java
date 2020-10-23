@@ -93,6 +93,7 @@ public class VisorControlSimuladorRosace extends javax.swing.JFrame {
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
         jMenuItemCrearEscenario = new javax.swing.JMenuItem();
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
+        jMenuItemEliminarEscenario = new javax.swing.JMenuItem();
         jMenuItemSalir = new javax.swing.JMenuItem();
         jSeparator8 = new javax.swing.JPopupMenu.Separator();
         Trazas = new javax.swing.JMenu();
@@ -254,6 +255,14 @@ public class VisorControlSimuladorRosace extends javax.swing.JFrame {
         });
         jMenuEditarEscenario.add(jMenuItemCrearEscenario);
         jMenuEditarEscenario.add(jSeparator6);
+
+        jMenuItemEliminarEscenario.setText("Eliminar Escenario");
+        jMenuItemEliminarEscenario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemEliminarEscenarioActionPerformed(evt);
+            }
+        });
+        jMenuEditarEscenario.add(jMenuItemEliminarEscenario);
 
         jMenuItemSalir.setText("Salir");
         jMenuItemSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -496,6 +505,11 @@ public class VisorControlSimuladorRosace extends javax.swing.JFrame {
         // TODO add your handling code here:
         controladorEscSim.peticionSalirSimulador();
     }//GEN-LAST:event_jMenuItemSalirSimuladorActionPerformed
+
+    private void jMenuItemEliminarEscenarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEliminarEscenarioActionPerformed
+        // TODO add your handling code here:
+        controladorGestionEscenarios.peticionEliminarEscenarioSimulGuardado();
+    }//GEN-LAST:event_jMenuItemEliminarEscenarioActionPerformed
     public void setIntervaloEnvioMensajesDesdeCC(int intervalo){
 		intervaloSecuencia = intervalo ;
                 jtextTextFieldIntervaloEnvioMensajes.setText(String.valueOf(intervalo));
@@ -674,6 +688,7 @@ public class VisorControlSimuladorRosace extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemAbrirEscenario;
     private javax.swing.JMenuItem jMenuItemAbrirEscenarioParaSimular;
     private javax.swing.JMenuItem jMenuItemCrearEscenario;
+    private javax.swing.JMenuItem jMenuItemEliminarEscenario;
     private javax.swing.JMenuItem jMenuItemParar;
     private javax.swing.JMenuItem jMenuItemSalir;
     private javax.swing.JMenuItem jMenuItemSalirSimulador;

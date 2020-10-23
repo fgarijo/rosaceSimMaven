@@ -55,9 +55,8 @@ public class EncolarObjetivoActualizarFocoIGN1 extends TareaSincrona {
             RobotStatus1 estatusRobot = (RobotStatus1) params[4];
             victima = (Victim) params[5];
             VictimsToRescue victimas = (VictimsToRescue) params[6];
-
             //Para anotar en el fichero cual es mi coste
-            int coste = 0;   //El coste se define como el MAYOR ENTERO - VALOR DE LA FUNCION DE EVALUACION
+            //El coste se define como el MAYOR ENTERO - VALOR DE LA FUNCION DE EVALUACION
             //El que menor coste tiene es el que se hace cargo de la victima 
             miEvaluacion = infoDecision.getMi_eval();
             String refVictima = objetivoAsignado.getobjectReferenceId();
@@ -124,7 +123,6 @@ public class EncolarObjetivoActualizarFocoIGN1 extends TareaSincrona {
                     + "estado del Movimiento del Robot: " + estadoMovRobot + " Victima objetivo  :  " + estatusRobot.getidentDestino()
                     + " Victima asignada  :  " + victima + " El foco actual es : " + focoActual + "\n");
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 

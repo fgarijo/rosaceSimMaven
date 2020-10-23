@@ -41,7 +41,7 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
             </goals>
             <properties>
-                <exec.args>-Xmx512m -classpath %classpath icaro.aplicaciones.ArranqueICARO aplicaciones/descripcionOrganizaciones/rosaceCicloCompleto/descripcion_4Robots_nVictimasIgualitario_1</exec.args>
+                <exec.args>-Xmx512m -classpath %classpath gb -classpath %classpath icaro.aplicaciones.ArranqueICARO aplicaciones/descripcionOrganizaciones/rosaceCicloCompleto/descripcion_4Robots_nVictimasIgualitario_1</exec.args>
                 <exec.executable>java</exec.executable>
                 <exec.workingdir></exec.workingdir>
             </properties>

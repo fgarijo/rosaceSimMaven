@@ -19,9 +19,6 @@ import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.
 public class ProcesarPropuestaParaAsumirObjetivo extends TareaSincrona {
 
     private RobotStatus1 miStatus;
-
-//    private String mensajePropuesta ;   ////????????????????????esto no se inicializa?????????????
-
 	@Override
 	public void ejecutar(Object... params) {
             try {

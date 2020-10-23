@@ -9,7 +9,6 @@ import icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.inf
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.MisObjetivos;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Objetivo;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaSincrona;
-import java.util.ArrayList;
 
 /**
  *
@@ -40,8 +39,8 @@ public class ObtenerEvaluacionRealizarObjetivo extends TareaSincrona {
             VictimsToRescue victims2R =(VictimsToRescue)params[4];
             MisObjetivos misObjsAccion = (MisObjetivos)params[5];
             trazarCalculoCoste=true;
-            Coste1 coste = new Coste1();
-            coste.setTrazar(true);
+//            Coste1 coste = new Coste1();
+//            coste.setTrazar(true);
             robotLocation = robot.getInfoCompMovt().getCoordenadasActuales();
             robot.setRobotCoordinate(robotLocation);
 
@@ -75,21 +74,10 @@ public class ObtenerEvaluacionRealizarObjetivo extends TareaSincrona {
             if( robot.getBloqueado()){ // se envia una evaluacion maxima 
                 mi_eval= Integer.MAX_VALUE;
             }else{
-               
-//                funcionEvaluacion= coste.CalculoCosteAyudarVictima(identAgente, robotLocation, robot, victim, victims2R, misObjsAccion, "FuncionEvaluacion3");
-//             mi_eval = (int)funcionEvaluacion;   //convierto de double a int porque la implementacion inicial de Paco usaba int 
-//            ArrayList victimasArescatar= victims2R.getVictimsAsignadas();
-//             if (victims2R.getVictimsAsignadas().isEmpty()){
-//                 int[] camino = new int[2];
-//                 mi_eval =coste.costeAyudarVictimaIndividual(identAgente, robotLocation, robot, victim, victims2R, misObjsAccion, identTarea);
-//                 camino[0]=mi_eval;
-//                 camino[1]=
-//             }
-//             else{
-                
-                 int camino[] = coste.costeAyudarVictimas(identAgente, robotLocation, robot, victim, victims2R, misObjsAccion, identTarea);
+//            int camino[] = coste.costeAyudarVictimas(identAgente, robotLocation, robot, victim, victims2R, misObjsAccion, identTarea);
+              int camino[]=victims2R.costeAyudarVictima(robot, victim);
              mi_eval = camino[0];
-             victims2R.setCaminoMinimo(camino);
+//             victims2R.setCaminoMinimo(camino);
 //            }
 	     
             if(trazarCalculoCoste) {
@@ -101,7 +89,9 @@ public class ObtenerEvaluacionRealizarObjetivo extends TareaSincrona {
             eval.setObjectEvaluationId(victim.getName());// Referenciamos la evaluacion con el ident de la victima
             infoDecision.setMi_eval(mi_eval);
             victim.setEstimatedCost(mi_eval);
-            victims2R.actualizarVictimARescatar(victim);
+      //      victims2R.actualizarVictimARescatar(victim);
+      this.trazas.aceptaNuevaTrazaEjecReglas(identAgente,
+                        " el coste de realizar el objetivo almacenado en Victimas2R es : " +victims2R.getVictimARescatar(victim.getName()).getEstimatedCost() + " El coste calculado ha sido  : " + victim.getEstimatedCost()+"\n");
             infoDecision.setTengoMiEvaluacion(Boolean.TRUE);
             this.getEnvioHechos().insertarHechoWithoutFireRules(eval);
             this.getEnvioHechos().insertarHechoWithoutFireRules(robot);
@@ -109,7 +99,6 @@ public class ObtenerEvaluacionRealizarObjetivo extends TareaSincrona {
        
             }
            } catch (Exception e) {
-		   e.printStackTrace();
        }
     }
 }

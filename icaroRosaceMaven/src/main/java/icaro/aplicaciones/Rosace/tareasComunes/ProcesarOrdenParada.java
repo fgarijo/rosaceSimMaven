@@ -61,13 +61,6 @@ public class ProcesarOrdenParada extends TareaSincrona {
                         "esta bloqueado : "+ miEstatus.getBloqueado()+"\n" +
                          " Informo al equipo : "+ miEquipo.getIDsMiembrosActivos().toString()+ "  de mi estado " +"\n");
             
-            // Todos los objetivos decision pendientes los pongo a solved
-//            Iterator<Objetivo> it = misObjsDecision.getMisObjetivosPriorizados().iterator();    	    	
-//    	while (it.hasNext()){
-//  	  	  //Hay al menos un objetivo    		
-//  	      Objetivo obj = it.next();
-//              obj.setSolved();
-//              }
             // Se informa al agente controlador de la ejecucion de la orden de parada y los companyeros del bloqueo
             InfoEstadoAgente infoMiEstado = new InfoEstadoAgente(this.identAgente,EstadoMovimientoRobot.RobotBloqueado.name(),VocabularioRosace.CausaCambioMovtoOrdenCC);
             infoMiEstado.setBloqueado(true);

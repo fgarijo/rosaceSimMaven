@@ -24,12 +24,11 @@ public class ProcesarInfoRolAgente extends TareaSincrona {
                 // se obtiene su identificador y se le pone como  jefe en el equipo
                   if (infoRolRecibido.getidentRolAgte().equals(VocabularioRosace.IdentRolAgteDistribuidorTareas))
                                                 miEquipo.setidentAgenteJefeEquipo(infoRolRecibido.getAgteIniciadorId());
-                  this.getEnvioHechos().eliminarHechoWithoutFireRules(infoRolRecibido);
+                  this.getEnvioHechos().eliminarHecho(infoRolRecibido);
 //                  this.getEnvioHechos().actualizarHecho(miEquipo);
                   trazas.trazar(this.getIdentAgente(), "Se procesa el InfoRol recibido :  "+ infoRolRecibido.toString(), InfoTraza.NivelTraza.debug);
                }         
             catch(Exception e) {
-                  e.printStackTrace();
             }
     }
 }

@@ -6,16 +6,10 @@ package icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.ta
 
 import icaro.aplicaciones.Rosace.informacion.Coordinate;
 import icaro.aplicaciones.Rosace.informacion.*;
-import icaro.aplicaciones.Rosace.objetivosComunes.AyudarVictima;
-import icaro.aplicaciones.agentes.agenteAplicacionAsignadorTareasCognitivo.objetivos.DecidirQuienVa;
 import icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.informacion.InfoParaDecidirQuienVa;
-import icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
 import icaro.infraestructura.entidadesBasicas.interfaces.InterfazUsoAgente;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.MisObjetivos;
-import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Objetivo;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaSincrona;
-import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
-import icaro.infraestructura.recursosOrganizacion.repositorioInterfaces.ItfUsoRepositorioInterfaces;
 import java.util.ArrayList;
 
 /**
@@ -25,7 +19,8 @@ import java.util.ArrayList;
 public class MandarEvaluacionAQuienLaPide1 extends TareaSincrona {
 
     /**
-     *     */
+     *
+     */
     private InterfazUsoAgente agenteReceptor;
     private ArrayList agentesEquipo, respuestasAgentes, confirmacionesAgentes, nuevasEvaluacionesAgentes, empates;//resto de agentes que forman mi equipo
     private int mi_eval, mi_eval_nueva;
@@ -63,7 +58,7 @@ public class MandarEvaluacionAQuienLaPide1 extends TareaSincrona {
         robotLocation = robot.getRobotCoordinate();
         try {
             // si el identificador esta entre mis objetivos es que esta resuelto , le mando un valor para que se desanime
-            // en  otro caso puede ser que sea otro el que tenga el objetivo, en este caso él le mandará un valor grande
+            // en  otro caso puede ser que sea otro el que tenga el objetivo, en este caso el le mandara� un valor grande
             // si no tengo noticias del objetivo le mando un valor pequeno para que vaya el
             // si coincide con el que estoy trabajando le mando el valor 
             if (misObjtvsAccion.existeObjetivoConEsteIdentRef(identObjEvaluacion)) {
@@ -74,8 +69,10 @@ public class MandarEvaluacionAQuienLaPide1 extends TareaSincrona {
                     if (victimaAdecidir.getisCostEstimated()) {
                         miEvalDeRespuesta = victimEnPeticion.getEstimatedCost();
                     } else { // calculo el coste y lo guardo en la victima
-                        Coste coste = new Coste();
-                        miEvalDeRespuesta = coste.CalculoCosteAyudarVictima(nombreAgenteEmisor, robotLocation, robot, victimEnPeticion, victimasRecibidas, misObjtvsAccion, "FuncionEvaluacion3");
+//                        Coste coste = new Coste();
+//                        miEvalDeRespuesta = coste.CalculoCosteAyudarVictima(nombreAgenteEmisor, robotLocation, robot, victimEnPeticion, victimasRecibidas, misObjtvsAccion, "FuncionEvaluacion3");
+                        int camino[] = victimasRecibidas.costeAyudarVictima(robot, victimEnPeticion);
+                        miEvalDeRespuesta = camino[0];
                         victimaAdecidir.setEstimatedCost(miEvalDeRespuesta);
                         infoDecision.setMi_eval(miEvalDeRespuesta);
                         this.getEnvioHechos().actualizarHechoWithoutFireRules(victimaAdecidir);
@@ -91,7 +88,6 @@ public class MandarEvaluacionAQuienLaPide1 extends TareaSincrona {
             this.getComunicator().enviarInfoAotroAgente(miEvaluacion, nombreAgenteQuePideLaEvaluacion);
 
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 

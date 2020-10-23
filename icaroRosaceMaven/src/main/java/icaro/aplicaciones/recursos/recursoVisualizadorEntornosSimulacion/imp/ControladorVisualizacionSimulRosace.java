@@ -57,6 +57,8 @@ public class ControladorVisualizacionSimulRosace {
     private String tituloAvisoEscenSinRobotsDefinidos = "Escenario sin Robots definidos";
     private String mensajeEscenarioSinRobots = "No se han definido Robots en el escenario ";
     private String recomendacionDefinirRobots = " Definir Robots y Victimas con el botón derecho para poder guardar el escenario ";
+    private String msgParaconfirmarEliminacionFichero1= " El  fichero seleccionado esta utilizandose para simular. Desea elininarlo ? ";
+    private String msgParaconfirmarEliminacionFichero2= " El  fichero seleccionado esta abierto para edicion. Desea elininarlo ? ";
     private Map<String, JLabel> tablaEntidadesEnEscenario;
     private ArrayList<JLabel> listaEntidadesEnEscenario;
     private JPanel panelVisor;
@@ -703,5 +705,7 @@ public class ControladorVisualizacionSimulRosace {
     public void peticionDesactivarTrazas() {
         this.trazas.visualizacionDeTrazas(false);
     }
+
+    
 
 }
