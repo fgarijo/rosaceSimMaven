@@ -7,7 +7,6 @@ import icaro.aplicaciones.recursos.recursoPersistenciaEntornosSimulacion.ItfUsoR
 import icaro.aplicaciones.recursos.recursoVisualizadorEntornosSimulacion.ItfUsoRecursoVisualizadorEntornosSimulacion;
 import icaro.aplicaciones.recursos.recursoVisualizadorEntornosSimulacion.imp.EscenarioSimulacionRobtsVictms;
 import icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
-import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Informe;
 import icaro.infraestructura.patronAgenteReactivo.control.acciones.AccionesSemanticasAgenteReactivo;
 import icaro.infraestructura.recursosOrganizacion.configuracion.ItfUsoConfiguracion;
 import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
@@ -433,7 +432,6 @@ private void actualizarInfoVictimasAsignadas(Set conIdsVictimas){
 //            this.itfUsoRecursoVisualizadorEntornosSimulacion.obtenerEscenarioSimulacion(modeloOrganizativo, numeroRobotsSimulacion);
 //        itfUsoRecursoVisualizadorEntornosSimulacion.mostrarEscenarioMovimiento(escenarioActual);
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 public void guardarCasoYconfirmarVisualizacionResultados(){
@@ -446,7 +444,6 @@ public void guardarCasoYconfirmarVisualizacionResultados(){
 //                itfUsoRecursoPersistenciaEntornosSimulacion.guardarInfoCasoSimulacion(this.infoCasoSimul);
            }
         } catch (Exception e1) {
-            e1.printStackTrace();
         }
     this.informaraMiAutomata(VocabularioRosace.informacionResultadosGuardados);
 }
@@ -470,7 +467,6 @@ public void guardarCasoYconfirmarVisualizacionResultados(){
 //            itfUsoRecursoPersistenciaEntornosSimulacion.guardarSerieResultadosSimulacion(infoCasoSimul.getSerieElapsed());
             itfUsoRecursoPersistenciaEntornosSimulacion.guardarInfoCasoSimulacion(this.infoCasoSimul);
         } catch (Exception e1) {
-            e1.printStackTrace();
         }
     }
 
@@ -537,7 +533,6 @@ public void guardarCasoYconfirmarVisualizacionResultados(){
             if (contadorRobotsQueContestanFinsimulacion == identsAgtesEquipo.size())
                 this.itfUsoRecursoVisualizadorEntornosSimulacion.mostrarResultadosFinSimulacion();
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
     public void crearTempSolicitarDefinicionEscenario(){

@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package icaro.aplicaciones.Rosace.tareasComunes;
+package icaro.aplicaciones.agentes.agenteAplicacionAsignadorTareasCognitivo.tareas;
 import icaro.aplicaciones.Rosace.informacion.InfoEquipo;
 import icaro.aplicaciones.Rosace.informacion.RobotStatus1;
 import icaro.aplicaciones.Rosace.informacion.VictimsToRescue;
@@ -21,7 +21,7 @@ import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.
  *
  * @author Francisco J Garijo
  */
-public class InicializarInfoWorkMemCRN1 extends TareaSincrona{
+public class InicializarInfoWorkMemCRN1Jefe extends TareaSincrona{
             String miIdentAgte ;
             String identEquipo;
             int velocidadCruceroPorDefecto = 4; // metros por segundo
@@ -32,12 +32,12 @@ public class InicializarInfoWorkMemCRN1 extends TareaSincrona{
              InfoCompMovimiento  infoCompmov = (InfoCompMovimiento) params[1];
              RobotStatus1  miStatus = (RobotStatus1) params[2];
              miIdentAgte= this.getIdentAgente();
-             this.getItfConfigMotorDeReglas().setDepuracionActivationRulesDebugging(false);
-             this.getItfConfigMotorDeReglas().setDepuracionHechosInsertados(false);
+             this.getItfConfigMotorDeReglas().setDepuracionActivationRulesDebugging(true);
+             this.getItfConfigMotorDeReglas().setDepuracionHechosInsertados(true);
              this.getItfConfigMotorDeReglas().setDepuracionHechosModificados(false);
              this.getItfConfigMotorDeReglas().setFactHandlesMonitoring_beforeActivationFired_DEBUGGING(false);
              this.getItfConfigMotorDeReglas().setFactHandlesMonitoringRETRACT_DEBUGGING(false);
-             this.getItfConfigMotorDeReglas().setfactHandlesMonitoring_afterActivationFired_DEBUGGING(false);
+             this.getItfConfigMotorDeReglas().setfactHandlesMonitoring_afterActivationFired_DEBUGGING(true);
              identEquipo = this.getItfUsoConfiguracion().getValorPropiedadGlobal(NombresPredefinidos.NOMBRE_PROPIEDAD_GLOBAL_IDENT_EQUIPO);
              this.getEnvioHechos().insertarHechoWithoutFireRules(new Focus());
              // Crear dos categorias de objetivos : decision y accion           

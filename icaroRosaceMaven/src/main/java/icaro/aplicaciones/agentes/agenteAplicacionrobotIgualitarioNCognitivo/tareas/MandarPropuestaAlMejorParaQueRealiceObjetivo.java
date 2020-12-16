@@ -4,6 +4,7 @@
  */
 package icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.tareas;
 
+import icaro.aplicaciones.Rosace.informacion.InfoEquipo;
 import icaro.aplicaciones.Rosace.informacion.PropuestaAgente;
 import icaro.aplicaciones.Rosace.informacion.VocabularioRosace;
 import icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.informacion.InfoParaDecidirQuienVa;
@@ -21,26 +22,33 @@ public class MandarPropuestaAlMejorParaQueRealiceObjetivo extends TareaSincrona 
      */
     private InfoParaDecidirQuienVa infoDecision;
     private String nombreAgenteReceptor;
+    private final long valorTemporizador = 3000;
 
     @Override
     public void ejecutar(Object... params) {
         try {
-            Objetivo objetivoEjecutantedeTarea = (Objetivo) params[0];
+            InfoEquipo miEquipo = (InfoEquipo) params[0];
             infoDecision = (InfoParaDecidirQuienVa) params[1];
             try {
                 nombreAgenteReceptor = infoDecision.dameIdentMejor();
                 PropuestaAgente miPropuesta = new PropuestaAgente(this.identAgente);
-                miPropuesta.setMensajePropuesta(VocabularioRosace.MsgPropuesta_Para_Q_vayaOtro);
+                miPropuesta.setMensajePropuesta(VocabularioRosace.MsgPropuesta_Para_Aceptar_Objetivo);
                 miPropuesta.setIdentObjectRefPropuesta(infoDecision.getidElementoDecision());
-                miPropuesta.setJustificacion(infoDecision.getMi_eval());
+                int miEvalRespuesta;
+                if(miEquipo.getidentAgenteJefeEquipo().equals(this.getIdentAgente())){
+                    miEvalRespuesta = infoDecision.getEvalucionRecibidaDelAgente(nombreAgenteReceptor);
+//                    this.generarInformeTemporizado(valorTemporizador, VocabularioRosace.IdentTareaTimeOutRecibirConfirmacionesRealizacionObjetivo1, this.identAgente, infoDecision.getidElementoDecision());
+                }
+                else miEvalRespuesta = infoDecision.getMi_eval();
+                miPropuesta.setJustificacion(miEvalRespuesta);
                 trazas.aceptaNuevaTrazaEjecReglas(this.identAgente, "Se Ejecuta la Tarea :" + this.identTarea + " Se envia propuesta : "
-                        + VocabularioRosace.MsgPropuesta_Para_Q_vayaOtro + " Al Agente : " + nombreAgenteReceptor + " MiEvaluacion : " + infoDecision.getMi_eval());
+                        + VocabularioRosace.MsgPropuesta_Para_Q_vayaOtro + " Al Agente : " + nombreAgenteReceptor + " MiEvaluacion : " + miEvalRespuesta);
                 this.getComunicator().enviarInfoAotroAgente(miPropuesta, nombreAgenteReceptor);
                 infoDecision.setheInformadoAlmejorParaQueAsumaElObjetivo(true);
                 this.getEnvioHechos().actualizarHecho(infoDecision);
                 trazas.aceptaNuevaTrazaEjecReglas(this.identAgente, "Se Genera un timeout de :" + VocabularioRosace.TimeOutMiliSecConseguirObjetivo
                         + " Con mensaje  : " + VocabularioRosace.MsgTimeoutRecibirConfirmacionAsumirObjetivo);
-                this.generarInformeTemporizado(VocabularioRosace.TimeOutMiliSecConseguirObjetivo, identTarea, objetivoEjecutantedeTarea, identAgente, VocabularioRosace.MsgTimeoutRecibirConfirmacionAsumirObjetivo);
+                this.generarInformeTemporizado(VocabularioRosace.TimeOutMiliSecConseguirObjetivo, VocabularioRosace.IdentTareaTimeOutRecibirConfirmacionRealizacionObjetivo1, null, identAgente, infoDecision.getidElementoDecision());
             } catch (Exception e) {
             }
         } catch (Exception e) {

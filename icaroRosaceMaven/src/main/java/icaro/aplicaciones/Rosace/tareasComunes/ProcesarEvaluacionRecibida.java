@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.tareas;
+package icaro.aplicaciones.Rosace.tareasComunes;
 import icaro.aplicaciones.Rosace.informacion.EvaluacionAgente;
 import icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.informacion.InfoParaDecidirQuienVa;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Objetivo;
@@ -25,24 +25,6 @@ public class ProcesarEvaluacionRecibida extends TareaSincrona{
              //tengoLaMejorEvaluacion de InfoParaDecidirQuienVa  
 //              this.getEnvioHechos().eliminarHechoWithoutFireRules(evaluacionRecibida);
              infoDecisionAgente.addNuevaEvaluacion(evaluacionRecibida); 
-              
-//             if (infoDecisionAgente.tengoTodasLasEvaluaciones()){
-//                 if ( infoDecisionAgente.tengoLaMejorEvaluacion){
-//                       // this.generarInformeOK(identDeEstaTarea, objetivoEjecutantedeTarea, nombreAgenteEmisor, VocabularioRosace.ResEjTaskProcesadoEvaluaciones_SoyElMejor);
-//                      this.getEnvioHechos().actualizarHecho(infoDecisionAgente);
-//                 } else {
-//                          if (infoDecisionAgente.gethayEmpates()){
-//                           //  this.generarInformeOK(identDeEstaTarea, objetivoEjecutantedeTarea, nombreAgenteEmisor, VocabularioRosace.ResEjTaskProcesadoEvaluaciones_HayEmpates);
-//                          this.getEnvioHechos().actualizarHecho(infoDecisionAgente);
-//                          } else {
-//                              //   this.generarInformeOK(identDeEstaTarea, objetivoEjecutantedeTarea, nombreAgenteEmisor, VocabularioRosace.ResEjTaskProcesadoEvaluaciones_NoSoyElMejor);
-//                              this.getEnvioHechos().actualizarHechoWithoutFireRules(infoDecisionAgente);
-//                          }
-//                   }
-//             } else {
-//           // Todavia no tengo todas las respuestas
-////                 this.generarInformeOK(identDeEstaTarea, objetivoEjecutantedeTarea, nombreAgenteEmisor, VocabularioRosace.ResEjTaskProcesadoEvaluaciones_MefaltanEvaluaciones);
-//             }
               this.getEnvioHechos().actualizarHecho(infoDecisionAgente);
               this.getEnvioHechos().eliminarHecho(evaluacionRecibida);
               trazas.aceptaNuevaTrazaEjecReglas(identAgente,"Se ejecuta la tarea : " + identTarea + "  Se Procesa la Evaluacion  enviada por el agente :"+ evaluacionRecibida.identAgente +

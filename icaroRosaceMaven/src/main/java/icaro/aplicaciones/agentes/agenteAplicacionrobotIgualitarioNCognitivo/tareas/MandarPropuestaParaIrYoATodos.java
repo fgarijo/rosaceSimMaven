@@ -45,7 +45,7 @@ public class MandarPropuestaParaIrYoATodos extends TareaSincrona {
                 infoDecision.setMiPropuestaParaAsumirElObjetivoEnviadaAtodos(Boolean.TRUE);
                 this.getEnvioHechos().actualizarHecho(infoDecision);
                 trazas.aceptaNuevaTraza(new InfoTraza(nombreAgenteEmisor, "Numero de agentes de los que espero respuesta:" + agentesEquipo.size(), InfoTraza.NivelTraza.info));
-                this.generarInformeTemporizadoFromConfigProperty(VocabularioRosace.IdentTareaTimeOutRecibirConfirmacionesRealizacionObjetivo1, objetivoEjecutantedeTarea,
+                this.generarInformeTemporizadoFromConfigProperty(VocabularioRosace.IdentTareaTimeOutRecibirConfirmacionRealizacionObjetivo1, objetivoEjecutantedeTarea,
                         nombreAgenteEmisor, infoDecision.getidElementoDecision());
             }
         } catch (Exception e) {

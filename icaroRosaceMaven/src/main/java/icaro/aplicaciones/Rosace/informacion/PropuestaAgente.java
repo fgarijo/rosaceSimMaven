@@ -15,6 +15,7 @@ public class PropuestaAgente implements Serializable {
     // Mensajes validos en las propuestas
    
     public String identAgente;
+    public String identAgenteReceptor;
     public String mensajePropuesta;
     public String identObjectRefPropuesta; // identificador de un objeto o contexto al que se refiere la propuesta
     public Object justificacion;
@@ -25,6 +26,14 @@ public class PropuestaAgente implements Serializable {
     
     public PropuestaAgente(String identAgenteEmisor) {
         identAgente= identAgenteEmisor;
+        identAgenteReceptor=null;
+        mensajePropuesta =null;
+        justificacion = null;
+        identObjectRefPropuesta= null;
+    }
+    public PropuestaAgente(String identAgenteEmisor,String idAgteReceptor) {
+        identAgente= identAgenteEmisor;
+        identAgenteReceptor=idAgteReceptor;
         mensajePropuesta =null;
         justificacion = null;
         identObjectRefPropuesta= null;
@@ -40,6 +49,12 @@ public class PropuestaAgente implements Serializable {
 
     public String   getIdentAgente(){
         return identAgente;
+    }
+    public String   getIdentAgenteReceptor(){
+        return identAgenteReceptor;
+    }
+    public void    setIdentAgenteReceptor(String idAgteReceptor){
+         identAgenteReceptor =idAgteReceptor ;
     }
  public void   setIdentObjectRefPropuesta(String msgPropuesta){
         identObjectRefPropuesta =msgPropuesta;

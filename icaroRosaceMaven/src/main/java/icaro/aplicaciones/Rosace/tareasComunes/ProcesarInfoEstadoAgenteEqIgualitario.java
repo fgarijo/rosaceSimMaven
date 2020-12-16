@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.tareas;
+package icaro.aplicaciones.Rosace.tareasComunes;
 
 import icaro.aplicaciones.Rosace.informacion.EvaluacionAgente;
 import icaro.aplicaciones.Rosace.informacion.InfoAgteAsignacionVictima;
@@ -24,7 +24,7 @@ import java.util.ArrayList;
  *
  * @author FGarijo
  */
-public class ProcesarInfoEstadoAgente extends TareaSincrona {
+public class ProcesarInfoEstadoAgenteEqIgualitario extends TareaSincrona {
 
     private InfoParaDecidirQuienVa infoDecision;
     private String idVictimaEnDecision;
@@ -44,8 +44,9 @@ public class ProcesarInfoEstadoAgente extends TareaSincrona {
             String identMejor = null;
             // Actualizo el equipo
             miEquipo.setEstadoTeamMember(infoEstadoRobot);
-            idVictimaEnDecision = objetivoDecision.getobjectReferenceId();
-            if (miEquipo.getIDsMiembrosActivos().isEmpty()) {// el robot es el unico miembro del equipo, asume la victima y considera conseguido el objetio              
+            if (objetivoDecision!=null ){
+                idVictimaEnDecision = objetivoDecision.getobjectReferenceId();       
+                if (miEquipo.getIDsMiembrosActivos().isEmpty()) // el robot es el unico miembro del equipo, asume la victima y considera conseguido el objetio              
                 conseguirObjetivoDecision(objetivoDecision);
             } else if (infoDecision != null && infoEstadoRobot.getBloqueado()) {
                 Victim victimaImplicada = victims2R.getVictimARescatar(idVictimaEnDecision);
@@ -96,7 +97,7 @@ public class ProcesarInfoEstadoAgente extends TareaSincrona {
                 + "  al equipo formado por : " + agentesEquipo);
         this.getComunicator().informaraGrupoAgentes(miPropuesta, agentesEquipo);
 //                 this.getEnvioHechos().actualizarHecho(infoDecision);
-        this.generarInformeTemporizadoFromConfigProperty(VocabularioRosace.IdentTareaTimeOutRecibirConfirmacionesRealizacionObjetivo1, null,
+        this.generarInformeTemporizadoFromConfigProperty(VocabularioRosace.IdentTareaTimeOutRecibirConfirmacionRealizacionObjetivo1, null,
                 identAgente, infoDecision.getidElementoDecision());
     }
 

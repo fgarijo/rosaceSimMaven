@@ -49,6 +49,7 @@ public class ProcesarOrdenParada extends TareaSincrona {
 			};
             accesoCompMovimiento.start();
 //             this.getEnvioHechos().insertarHechoWithoutFireRules(miEquipo);
+            String miRolId=miEstatus.getIdRobotRol();
             miEstatus.setBloqueado(true);
             miEstatus.setRobotCoordinate(itfcompMov.getCoordenadasActuales());
             miEstatus.setestadoMovimiento(EstadoMovimientoRobot.RobotBloqueado.name());
@@ -59,14 +60,12 @@ public class ProcesarOrdenParada extends TareaSincrona {
                         "Se ejecuta la tarea : " + identTarea + " El robot esta en la posicion " + itfcompMov.getCoordenadasActuales() +
                         "estado del robot : "+EstadoMovimientoRobot.RobotBloqueado.name()+"\n" +
                         "esta bloqueado : "+ miEstatus.getBloqueado()+"\n" +
-                         " Informo al equipo : "+ miEquipo.getIDsMiembrosActivos().toString()+ "  de mi estado " +"\n");
-            
+                         " Informo al equipo : "+ miEquipo.getIDsMiembrosActivos().toString()+ "  de mi estado " +"\n");            
             // Se informa al agente controlador de la ejecucion de la orden de parada y los companyeros del bloqueo
             InfoEstadoAgente infoMiEstado = new InfoEstadoAgente(this.identAgente,EstadoMovimientoRobot.RobotBloqueado.name(),VocabularioRosace.CausaCambioMovtoOrdenCC);
             infoMiEstado.setBloqueado(true);
             InfoContEvtMsgAgteReactivo msg = new InfoContEvtMsgAgteReactivo(VocabularioRosace.MsgeInfoEstadoAgente,infoMiEstado);
-            this.getComunicator().enviarInfoAotroAgente(msg, VocabularioRosace.IdentAgteControladorSimulador);
-           
+            this.getComunicator().enviarInfoAotroAgente(msg, VocabularioRosace.IdentAgteControladorSimulador);           
             if (idsMiembroActivos.size()>0)
             System.out.println( "\n"+ " Ident Agente : " + identAgente + " Ident Tarea " + identTarea+" Miembros activos del equipo  "+idsMiembroActivos.toString() +" \n\n" ); 
             System.out.println( "\n"+identTarea+" Miestado  "+ infoMiEstado.toString() +" \n\n" ); 
@@ -74,7 +73,7 @@ public class ProcesarOrdenParada extends TareaSincrona {
                 this.getEnvioHechos().eliminarHecho(ordenCC);
 //             this.getEnvioHechos().eliminarHechoWithoutFireRules(miEstatus);
              this.getEnvioHechos().actualizarHecho(miEstatus);
-             if(infoDecision!=null){
+             if(infoDecision!=null&& miRolId.equalsIgnoreCase(VocabularioRosace.IdentRolAgtesIgualitarios)){
 //                EvaluacionAgente miEval = new EvaluacionAgente(identAgente, Integer.MAX_VALUE);
                 infoDecision.setMi_eval(Integer.MAX_VALUE);
                 infoDecision.hanLlegadoTodasLasEvaluaciones=true;
@@ -89,7 +88,6 @@ public class ProcesarOrdenParada extends TareaSincrona {
             }
                }         
             catch(Exception e) {
-                  e.printStackTrace();
             }
     }
 }

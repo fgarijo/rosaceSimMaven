@@ -19,8 +19,6 @@ import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaSincrona;
  */
 public class ProcesarPeticionConfirmRolenEquipo extends TareaSincrona {
 
-    private ItfUsoMovimientoCtrl itfcompMov;
-
     @Override
     public void ejecutar(Object... params) {
         try {
@@ -36,14 +34,14 @@ public class ProcesarPeticionConfirmRolenEquipo extends TareaSincrona {
                     + " Los miembros en mi equipo : " + idsMiembroActivos + "\n");
             System.out.println("\n" + " Ident Agente : " + identAgente + " Ident Tarea " + identTarea + " Miembros activos del equipo  " + idsMiembroActivos.toString() + " \n\n");
             InfoRolAgente mirol = new InfoRolAgente(identAgente, miEquipo.getTeamId(), miEstatus.getIdRobotRol(), VocabularioRosace.IdentMisionEquipo);
-            this.getComunicator().enviarInfoAotroAgente(mirol, identAgente);
+            this.getComunicator().enviarInfoAotroAgente(mirol, idAgtePeticionario);      
+//            if (!idsMiembroActivos.contains(idAgtePeticionario)) {
+//                InfoRolAgente rolInferidoAgtePeticionario = new InfoRolAgente(idAgtePeticionario, miEquipo.getTeamId(), miEstatus.getIdRobotRol(), VocabularioRosace.IdentMisionEquipo);
+//                miEquipo.procesarInfoRolAgente(rolInferidoAgtePeticionario);
+//                trazas.aceptaNuevaTrazaEjecReglas(this.identAgente, "El agente peticionario no esta entre los miembros activos. Lo añado  " + "\n"
+//                        + " Los miembros en mi equipo : " + idsMiembroActivos + "\n");
+//            }
             this.getEnvioHechos().eliminarHecho(peticion);
-            if (!idsMiembroActivos.contains(idAgtePeticionario)) {
-                InfoRolAgente rolInferidoAgtePeticionario = new InfoRolAgente(idAgtePeticionario, miEquipo.getTeamId(), miEstatus.getIdRobotRol(), VocabularioRosace.IdentMisionEquipo);
-                miEquipo.procesarInfoRolAgente(rolInferidoAgtePeticionario);
-                trazas.aceptaNuevaTrazaEjecReglas(this.identAgente, "El agente peticionario no esta entre los miembros activos. Lo añado  " + "\n"
-                        + " Los miembros en mi equipo : " + idsMiembroActivos + "\n");
-            }
         } catch (Exception e) {
         }
     }

@@ -6,21 +6,15 @@
 package icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.tareas;
 
 import icaro.aplicaciones.Rosace.informacion.InfoEquipo;
-import icaro.aplicaciones.Rosace.informacion.PropuestaAgente;
 import icaro.aplicaciones.Rosace.informacion.PeticionAsumirObjetivo;
 import icaro.aplicaciones.Rosace.informacion.RobotStatus1;
 import icaro.aplicaciones.Rosace.informacion.Victim;
-import icaro.aplicaciones.Rosace.informacion.VictimsToRescue;
-import icaro.aplicaciones.Rosace.informacion.VocabularioRosace;
 import icaro.aplicaciones.Rosace.objetivosComunes.AyudarVictima;
 import icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.informacion.InfoParaDecidirQuienVa;
 import icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.objetivos.DecidirQuienVa;
-import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.CausaTerminacionTarea;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Focus;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.MisObjetivos;
-import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Objetivo;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaSincrona;
-import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
 
 /**
  *
@@ -90,7 +84,6 @@ public class ProcesarPeticionAsumirObjetivo extends TareaSincrona {
                   
             }
             catch(Exception e) {
-                  e.printStackTrace();
             }
 	 
 }

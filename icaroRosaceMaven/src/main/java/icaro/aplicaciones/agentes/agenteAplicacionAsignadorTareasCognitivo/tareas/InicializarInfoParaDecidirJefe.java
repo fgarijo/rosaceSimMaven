@@ -13,7 +13,7 @@ import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaSincrona;
  *
  * @author Francisco J Garijo
  */
-public class InicializarInfoParaDecidir extends TareaSincrona{
+public class InicializarInfoParaDecidirJefe extends TareaSincrona{
 
    @Override
    public void ejecutar(Object... params) {

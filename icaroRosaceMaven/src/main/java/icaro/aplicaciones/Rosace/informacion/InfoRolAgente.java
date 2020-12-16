@@ -8,7 +8,7 @@ package icaro.aplicaciones.Rosace.informacion;
  *
  * @author FGarijo
  */
-public class InfoRolAgente extends InfoInteraccionBasica{
+public class InfoRolAgente extends InfoInteraccionBasica implements Cloneable{
     private String identRolAgte ;
     private String identEquipoAgte ;
     public InfoRolAgente (String agentId, String equipoId,String rolId, String iteracionId ){
@@ -29,5 +29,15 @@ public class InfoRolAgente extends InfoInteraccionBasica{
     }
     public void setidentEquipoAgte(String identEquipo){
         identEquipoAgte = identEquipo;
+    }
+    @Override
+    public Object clone(){
+        Object obj=null;
+        try{
+            obj=super.clone();
+        }catch(CloneNotSupportedException ex){
+            System.out.println(" no se puede duplicar");
+        }
+        return obj;
     }
 }

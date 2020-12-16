@@ -5,6 +5,7 @@
 package icaro.aplicaciones.Rosace.tareasComunes;
 
 import icaro.aplicaciones.Rosace.informacion.InfoAgteRescateVictima;
+import icaro.aplicaciones.Rosace.informacion.InfoEquipo;
 import icaro.aplicaciones.Rosace.informacion.RobotStatus1;
 import icaro.aplicaciones.Rosace.informacion.Victim;
 import icaro.aplicaciones.Rosace.informacion.VictimsToRescue;
@@ -47,15 +48,18 @@ public class ProcesarInformeLlegadaDestino extends TareaAsincrona {
             InfoCompMovimiento infoCompMov = (InfoCompMovimiento) params[4];
             Informe informeRecibido = (Informe) params[5];
             Objetivo objetivoConseguido = (Objetivo) params[6];
+            InfoEquipo miEquipo = (InfoEquipo) params[7];
             Objetivo objetivoFocalizado = focoActual.getFoco();
             boolean actualizarNuevoObjetivoAccion = false;
-            boolean actualizarEstatusRobot = false;
+            boolean actualizarEstatusRobot=false;
+//            boolean informarRescateVictimaJefe = false;
+//            if(estatusRobot.getIdRobotRol().equals(VocabularioRosace.IdentRolAgtesSubordinados))informarRescateVictimaJefe=true;
             itfcompMov = (ItfUsoMovimientoCtrl) infoCompMov.getitfAccesoComponente();
             String victimaRescatadaId = informeRecibido.getReferenciaContexto();
             estadoComponente = EstadoMovimientoRobot.RobotParado.name();
             estatusRobot.setestadoMovimiento(estadoComponente);
             victims.elimVictimAsignada(victimaRescatadaId);
-            this.informarControladorRescateVictima(victimaRescatadaId); // informamos al agente controlador
+            this.informarControladorRescateVictima(victimaRescatadaId, miEquipo); // informamos al agente controlador
             // Se actualizan los objetivos, se da por conseguido el objetivo salvar a la victima
             // se supone que este objetivo era el mas prioritario, si no lo era hay un problema
             trazas.aceptaNuevaTrazaEjecReglas(this.identAgente, " Se Procesa el informe   recibido por el agente :" + identAgente + "\n"
@@ -141,15 +145,15 @@ public class ProcesarInformeLlegadaDestino extends TareaAsincrona {
 
     }
 
-    private void informarControladorRescateVictima(String idVictimaAsignada) {
-        //ACTUALIZAR ESTADISTICAS
-        //Inicializar y recuperar la referencia al recurso de estadisticas 
-        // Supongo como prueba que la evaluacion es una constante, pero deberia obtenerse del RobotStatus
+    private void informarControladorRescateVictima(String idVictimaAsignada, InfoEquipo miEquipo) {
+        // Si el equipo es jerarquico se informa tambien al jefe
         long tiempoActual = System.currentTimeMillis();
         int gastoEnergia = itfcompMov.getContadorGastoEnergia(); // En terminos de energia consumida  para el rescate
         InfoAgteRescateVictima infoVictimaRescatada = new InfoAgteRescateVictima(this.identAgente, idVictimaAsignada, tiempoActual, gastoEnergia);
         InfoContEvtMsgAgteReactivo msg = new InfoContEvtMsgAgteReactivo("victimaRescatada", infoVictimaRescatada);
         this.getComunicator().enviarInfoAotroAgente(msg, VocabularioRosace.IdentAgteControladorSimulador);
+        if(miEquipo.getidentMiRolEnEsteEquipo().equalsIgnoreCase(VocabularioRosace.IdentRolAgtesSubordinados))
+                this.getComunicator().enviarInfoAotroAgente(infoVictimaRescatada, miEquipo.getidentAgenteJefeEquipo());
     }
 
 }

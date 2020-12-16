@@ -69,7 +69,7 @@ public class VictimsToRescue {
         // La posicion de la victima estara en el extremo del array
         Victim victimaNueva = (Victim) this.victimasARescatar.get(posicionVictima);
         int valorCoste;
-        System.out.println("Actualizo la matriz de costes para el agente " + robotPropietario + "y la victima : " + victimaNueva.getName() + "  en la posicion : " + posicionVictima);
+        System.out.println("Actualizo la matriz de costes para el agente " + robotPropietario + " y la victima : " + victimaNueva.getName() + "  en la posicion : " + posicionVictima);
         if (posicionVictima > 0) {
             Victim victimai;
             for (int i = 0; i < posicionVictima; i++) {
@@ -91,8 +91,7 @@ public class VictimsToRescue {
     }
 
     public int[] costeAyudarVictima(RobotStatus1 robotStatus, Victim victimaRescatar) {
-        int valorCoste;
-        int indiceVictimaRescatar = getIndiceVictimARescatar(victimaRescatar.getName());
+        int indiceVictimaRescatar = this.addVictimARescatar(victimaRescatar);
         System.out.println(" Victima a rescatar : " + victimaRescatar.getName() + " Se  calcula los costes del robot a las victimas asignadas  " + misVictimasAsignadas);
         //Calculo del coste del robot  a las victimas asignadas
         if (misVictimasAsignadas.isEmpty()) { // no hay victimas asignadas. Es el coste desde la posicion del robot a la victima a rescatar
@@ -249,7 +248,7 @@ public class VictimsToRescue {
         return -1;
     }
 
-    public synchronized ArrayList getIdtsVictimsAsignadas() {
+    public synchronized ArrayList<String> getIdtsVictimsAsignadas() {
         if (misVictimasAsignadas.isEmpty()) {
             return null;
         }
@@ -420,18 +419,13 @@ public class VictimsToRescue {
         }
 
     }
-
-//    public synchronized boolean costeRescateDesdeVict(int i) {
-//        // devuleve true si el coste de rescate desde la victima que esta en la posicion i al resto de las Victimas a Rescatar 
-//        // al resto
-//        System.out.println(" Se verifica si el coste de la victima con indice " + i + " con identificador " + victimasARescatar.get(i).getName()
-//                + " tiene el valor : " + matrizCostes[i][i+1]);
-//        return matrizCostes[i][i+1] >= 0;
-//    }
-    
-//public boolean costeRescateDesdeVict(int i, int j) {
-//        return matrizCostes[i][j] >= 0;
-//    }
+public synchronized ArrayList idsVictimasAsignadasArobot( String robotId){
+    ArrayList<String> victimasAsigndasRobot = new ArrayList();
+    for ( Victim victim : victimasARescatar){
+        if( victim.getrobotResponsableId().equalsIgnoreCase(robotId))victimasAsigndasRobot.add(victim.getName());
+    }
+    return victimasAsigndasRobot;
+}
     public synchronized boolean hayVictimasArescatar() {
         return !victimasARescatar.isEmpty();
     }

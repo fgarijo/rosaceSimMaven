@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.tareas;
+package icaro.aplicaciones.Rosace.tareasComunes;
 
 import icaro.aplicaciones.Rosace.informacion.PeticionAgente;
 import icaro.aplicaciones.Rosace.informacion.Victim;

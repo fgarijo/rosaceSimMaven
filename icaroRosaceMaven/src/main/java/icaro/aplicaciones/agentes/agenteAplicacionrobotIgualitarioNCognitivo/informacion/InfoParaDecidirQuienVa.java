@@ -135,9 +135,8 @@ public class InfoParaDecidirQuienVa implements Serializable{
              if (dameIdentMejor().equals(idAgte)&&heInformadoAlmejorParaQueAsumaElObjetivo)setheInformadoAlmejorParaQueAsumaElObjetivo(false);
              actualizarAtributos();
              System.out.println("Id Robot : "+nombreAgente + " Se  elimina del equipo el robot   " + idAgte + " ident mejor = " + dameIdentMejor() + "He informado al mejor "+
-                    heInformadoAlmejorParaQueAsumaElObjetivo );  
-             
-         }
+                    heInformadoAlmejorParaQueAsumaElObjetivo );               
+         }else System.out.println("Id Robot : "+nombreAgente + " El robot  que se pretende eliminar  " + idAgte + " No esta en el equipo  " );
      }
     public synchronized ArrayList getAgentesEquipo(){
           return agentesEquipo;
@@ -188,11 +187,11 @@ public class InfoParaDecidirQuienVa implements Serializable{
      } 
      //devuelve el agente mejor dentro de mi equipo
      public synchronized String dameIdentMejor(){
-         if(agentesEquipo !=null){
+         if(agentesEquipo.size() >=0){
          String mejorAgente = (String)agentesEquipo.get(0);
 //         int mejor_eval = (Integer)evaluacionesRecibidas.get(0);
          int evaluacion_local;
-         //empezamos en el uno porque lo hemos inicializado en el cero
+         valorMinimoCosteRecibido= Integer.MAX_VALUE;
          for(int i = 0; i< evaluacionesRecibidas.size();i++){
              evaluacion_local = (Integer)evaluacionesRecibidas.get(i);
              if(evaluacion_local>0){
@@ -203,7 +202,6 @@ public class InfoParaDecidirQuienVa implements Serializable{
                  }
              }
          }
-//         valorMinimoCosteRecibido=mejor_eval;
          return mejorAgente;
          }else return null;
      }
@@ -322,6 +320,12 @@ public class InfoParaDecidirQuienVa implements Serializable{
           }
           // Si la evaluacion es -1 es decir esta fuera de rango  ignoro  la evaluacion
           // el motor la elimina
+    }
+      public synchronized int getEvalucionRecibidaDelAgente(String agentId){
+          Integer indiceAgente = agentesEquipo.indexOf ( agentId);
+          // Si el agente no pertenece al equipo ignoro la evalucion que puede ser la mia
+          if (indiceAgente == -1 ) return indiceAgente;
+          else return (Integer)evaluacionesRecibidas.get(indiceAgente);                
     }
      public synchronized void actualizarAtributos() {
          if (numeroEvaluacionesRecibidas == agentesEquipo.size()){
