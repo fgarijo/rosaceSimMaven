@@ -29,7 +29,7 @@ public class VocabularioRosace extends NombresPredefinidos{
     public static final String DescrExpectComunicacionConJefe="miComunicacionConJefe";
     public static final String MsgPropuesta_Oferta_Para_Ir= "SoyElMejorSituadoParaRealizarElObjetivo";
     public static final String MsgPropuesta_Decision_Ir = "YoVoy";
-    public static final String MsgPropuesta_Para_Q_vayaOtro = "CreoQueDebesIrTu";
+    public static final String MsgPropuesta_Para_Q_vayaOtrotimeTimeoutMilisegundosRecibirPropuestaDesempate = "CreoQueDebesIrTu";
     public static final String MsgPropuesta_Para_Q_vayaYo = "CreoQueDebesIrTu";
     public static final String MsgPropuesta_Para_Aceptar_Objetivo = "HazteCargoDeEstaTarea";
     public static final String MsgJustificacion_Propuesta_Para_Aceptar_Objetivo = "Eres el mejor situado";

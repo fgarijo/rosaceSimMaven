@@ -9,13 +9,13 @@ package icaro.aplicaciones.Rosace.informacion;
  *
  * @author FGarijo
  */
-public class InfoAgteRescateVictima {
+public class InfoAgteVictimaRescatada {
     private  String idAgteInformante;
     private  String victimId;
     private  long tiempoRescate;
     private  int costeRescate; // en terminos de energia consumida
     private String notas;
-    public InfoAgteRescateVictima(String identAgteInformante, String idVictima,long tmpoRescate, int energiaConsumida) {
+    public InfoAgteVictimaRescatada(String identAgteInformante, String idVictima,long tmpoRescate, int energiaConsumida) {
         idAgteInformante = identAgteInformante;
         victimId=idVictima;
         tiempoRescate = tmpoRescate;

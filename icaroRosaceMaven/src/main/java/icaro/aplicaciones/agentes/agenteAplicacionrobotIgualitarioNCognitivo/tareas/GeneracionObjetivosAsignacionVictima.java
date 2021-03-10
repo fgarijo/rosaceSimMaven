@@ -21,7 +21,6 @@ public class GeneracionObjetivosAsignacionVictima extends TareaSincrona{
     @Override
    public void ejecutar(Object... params) {
 	   try {
-    //         MisObjetivos misObjs = (MisObjetivos) params[0];
              Victim victim = (Victim) params[0];
              VictimsToRescue victims2R = (VictimsToRescue)params[1];
              MisObjetivos misObjs = (MisObjetivos) params[2];
@@ -33,7 +32,6 @@ public class GeneracionObjetivosAsignacionVictima extends TareaSincrona{
              misObjs.deleteObjetivosSolved();
            // se crea el objetivo y se inserta en el motor  
                  AyudarVictima newAyudarVictima = new AyudarVictima (idVictim);
-           //      newObjetivo.setvictimId(idVictim);
                  newAyudarVictima.setPriority(victim.getPriority());
                  victims2R.addVictimARescatar(victim);
                  DecidirQuienVa newDecision = new DecidirQuienVa(idVictim);
@@ -46,15 +44,8 @@ public class GeneracionObjetivosAsignacionVictima extends TareaSincrona{
             trazas.aceptaNuevaTraza(new InfoTraza(nombreAgenteEmisor, "Se ejecuta la tarea " + identTarea+
                                     " Se crea el  objetivo:  "+ newAyudarVictima, InfoTraza.NivelTraza.debug));
             System.out.println("\n"+nombreAgenteEmisor +"Se ejecuta la tarea " + identTarea + " Se crea el  objetivo:  "+ newAyudarVictima+"\n\n" );
-             
-             
-      //       if ((ccOrdenAyudarVictima.mensajeOrden.equals(VocabularioRosace.MsgOrdenCCAyudarVictima)) &&
-      //               (!idVictim.equals(objetivoEjecutantedeTarea.getobjectReferenceId()))&& (!misObjs.existeObjetivoConEsteIdentRef(idVictim))  ){
-                 
-            
              }
                catch (Exception e) {
-			 e.printStackTrace();
        }
    }
 

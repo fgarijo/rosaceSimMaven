@@ -264,7 +264,9 @@ public class VictimsToRescue {
     public synchronized ArrayList getVictimsAsignadas() {
         return misVictimasAsignadas;
     }
-
+public synchronized ArrayList getVictimsARescatar() {
+    return victimasARescatar;
+}
     public synchronized void addRobotResponsableVictim2Rescue(String victimId, String robotId) {
         Victim victima = getVictimARescatar(victimId);
         if (victima != null) {

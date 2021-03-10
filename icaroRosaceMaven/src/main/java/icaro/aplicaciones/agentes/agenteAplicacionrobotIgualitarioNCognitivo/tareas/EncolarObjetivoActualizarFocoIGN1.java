@@ -41,13 +41,9 @@ public class EncolarObjetivoActualizarFocoIGN1 extends TareaSincrona {
 
     @Override
     public void ejecutar(Object... params) {
-
-        //    ItfUsoRecursoEstadistica itfUsoRecursoEstadistica=null;
         velocidadCruceroPordefecto = 1;// metros por segundo
         //Para recoger estadisticas del instante de envio de victimas desde el centro de control
-
         try {
-//             trazas = NombresPredefinidos.RECURSO_TRAZAS_OBJ;
             MisObjetivos misObjs = (MisObjetivos) params[0];
             Objetivo objetivoAsignado = (Objetivo) params[1];// AyudarVictima .pending
             InfoParaDecidirQuienVa infoDecision = (InfoParaDecidirQuienVa) params[2];
@@ -87,16 +83,12 @@ public class EncolarObjetivoActualizarFocoIGN1 extends TareaSincrona {
                 this.getEnvioHechos().actualizarHecho(misObjs);
                 // hay un objetivo en curso ayudar victima comparamos prioridades
                 if (objetivoAsignado.getPriority() <= nuevoObj.getPriority()) { // tiene menor prioridad  encolamos el objetivo
-//                                    misObjs.addObjetivo(objetivoAsignado);
-//                                    this.getEnvioHechos().actualizarHecho(misObjs);
                     trazas.aceptaNuevaTrazaEjecReglas(identAgente, "Se ejecuta la tarea : " + identTarea + "El objetivo asignado : " + objetivoAsignado.toString()
                             + "Tiene menor o igual prioridad que el objetivo en curso  :  " + nuevoObj
                             + "estado del robot : " + estatusRobot.getestadoMovimiento() + "\n");
                 } else {// El objetivo actual tiene mayor prioridad
                     // se  mira si el robot se esta moviendo a rescatar la victima                      
-//                    victima = victimas.getVictimToRescue(nuevoObj.getobjectReferenceId());
                     if (estatusRobot.getestadoMovimiento().equalsIgnoreCase(EstadoMovimientoRobot.RobotEnMovimiento.name())) {
-//                       itfcompMov.cambiaDestino(nuevoObj.getobjectReferenceId(), victima.getCoordinateVictim());
                         t.start();
                         estatusRobot.setidentDestino(nuevoObj.getobjectReferenceId());
                         objetivoAsignado.setSolving(); // interrumpimos la ejecucion y la sustituimos por el nuevo objetivo
@@ -111,7 +103,6 @@ public class EncolarObjetivoActualizarFocoIGN1 extends TareaSincrona {
                 }
             }
             System.out.println("\n" + identAgente + "Se ejecuta la tarea " + identTarea + " Se actualiza el  objetivo:  " + objetivoAsignado + "\n\n");
-//            }
             if (infoDecision != null) {
                 this.getEnvioHechos().eliminarHechoWithoutFireRules(infoDecision);
             }

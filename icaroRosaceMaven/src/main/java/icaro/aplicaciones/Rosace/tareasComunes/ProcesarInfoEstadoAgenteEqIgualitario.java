@@ -103,11 +103,11 @@ public class ProcesarInfoEstadoAgenteEqIgualitario extends TareaSincrona {
 
     private void mandarPropuestaAlmejorParaAsumirObjetivo(String identAgteReceptor) {
         PropuestaAgente miPropuesta = new PropuestaAgente(this.identAgente);
-        miPropuesta.setMensajePropuesta(VocabularioRosace.MsgPropuesta_Para_Q_vayaOtro);
+        miPropuesta.setMensajePropuesta(VocabularioRosace.MsgPropuesta_Para_Aceptar_Objetivo);
         miPropuesta.setIdentObjectRefPropuesta(idVictimaEnDecision);
         miPropuesta.setJustificacion(infoDecision.getMi_eval());
         trazas.aceptaNuevaTrazaEjecReglas(this.identAgente, "Se Ejecuta la Tarea :" + this.identTarea + " Se envia propuesta : "
-                + VocabularioRosace.MsgPropuesta_Para_Q_vayaOtro + " Al Agente : " + identAgteReceptor + " MiEvaluacion : " + infoDecision.getMi_eval());
+                + VocabularioRosace.MsgPropuesta_Para_Aceptar_Objetivo + " Al Agente : " + identAgteReceptor + " MiEvaluacion : " + infoDecision.getMi_eval());
         this.getComunicator().enviarInfoAotroAgente(miPropuesta, identAgteReceptor);
         infoDecision.setheInformadoAlmejorParaQueAsumaElObjetivo(true);
         trazas.aceptaNuevaTrazaEjecReglas(this.identAgente, "Se Genera un timeout de :" + VocabularioRosace.TimeOutMiliSecConseguirObjetivo

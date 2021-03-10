@@ -98,8 +98,6 @@ public class ActualizarObjsAccionyDecision1 extends TareaSincrona {
                         if (victimaRescatable != null) { //Caso en que exista una victima rescatable
                             // se pone el objetivo accion actual a solving y se da orden para que se empiece a mover 
                             idvictimaRescatable = victimaRescatable.getName();
-//                            if (!idVictimaAsignada.equals(idvictimaRescatable)) {La victima asignada siempre es diferente de la rescatable
-//                             porque la asignada lo ha sido a otro robot y la rescatable siempre pertenece a las asignadas
                                 objetivoAccion = new AyudarVictima(idvictimaRescatable);
                                 objetivoAccion.setPriority(victimaRescatable.getPriority() + incrementoPrioridad);
                                 trazas.aceptaNuevaTrazaEjecReglas(identAgente, " El identificador de la victima mas proxima : " + idvictimaRescatable + "\n"
@@ -139,16 +137,13 @@ public class ActualizarObjsAccionyDecision1 extends TareaSincrona {
                             + " Se ha tomado una decision sobre la victima :  " + victimaAsignada.getName()
                             + " Mis victimas asignadas : " + victimas.getVictimsAsignadas() + " Victima mas proxima: " + idvictimaRescatable + "\n");
                     itfcompMov = estatusRobot.getInfoCompMovt();
-//                     objAccionMasPrioritario = misObjsAcc.getobjetivoMasPrioritario(); // Da problemas y lo quito
                     // El objetivo mas prioritario no puede ser null pq se ha anyadido un objetivo, pero puede que sea diferente del anyadido
-//                    this.getEnvioHechos().actualizarHechoWithoutFireRules(objAccionMasPrioritario);
                     System.out.println("\n" + identAgente + "Se ejecuta la tarea " + identTarea + " La victima mas proxima es :  " + idvictimaRescatable
                             + " El ident de la  victima asignada es : " + idVictimaAsignada + " El ident del objetivo mas prioritario es :  "
                             + objetivoAccion.getobjectReferenceId() + " Mis victimas asignadas :  " + victsAsignadasIds + " \n\n");
                     if (objAccionEnCurso == null || objAccionEnCurso.getState() == Objetivo.SOLVED) {
                         // No hay objetivos accion iniciados Se inicia el proceso de salvar a la victima asignada
                         // se pone el objetivo accion actual a solving y se da orden para que se empiece a mover     
-//                        System.out.println(" El objetivo accion en curso es : Null . se ejecuta el objetivo accion con el ident : " + victimaAsignada.getName() + "  \n\n");
                         trazas.aceptaNuevaTrazaEjecReglas(identAgente, " El objetivo accion en curso es : Null . se ejecuta el objetivo accion con el ident : " + objetivoAccion.getobjectReferenceId() + "\n");
                         ordenarSalvamentoVictima(objetivoAccion);
                     } else // if (objAccionEnCurso.getState() == Objetivo.SOLVING) Tiene forzosamente estado Solving
@@ -165,7 +160,6 @@ public class ActualizarObjsAccionyDecision1 extends TareaSincrona {
                             objAccionEnCurso.setPending();
                             ordenarSalvamentoVictima(objetivoAccion);
                             this.getEnvioHechos().actualizarHechoWithoutFireRules(objAccionEnCurso);
-//                            this.getEnvioHechos().actualizarHechoWithoutFireRules(objMasPrioritario);
                             trazas.aceptaNuevaTrazaEjecReglas(identAgente, "  El objetivo asignado : " + objetivoAccion.getobjectReferenceId() + "\n"
                                     + "  Tiene mayor  prioridad que el objetivo en curso. Se ejecuta este objetivo : " + objAccionEnCurso.getobjectReferenceId() + "\n");
                         }
@@ -215,9 +209,11 @@ public class ActualizarObjsAccionyDecision1 extends TareaSincrona {
         misObjsAcc.addObjetivo(objetivoAccion);
         estatusRobot.setidentDestino(victimaRescatable.getName());
         estatusRobot.setestadoMovimiento(EstadoMovimientoRobot.RobotEnMovimiento.name());
-        this.getEnvioHechos().actualizarHechoWithoutFireRules(estatusRobot);
-        this.getEnvioHechos().actualizarHechoWithoutFireRules(objetivoAccion);
+        this.getEnvioHechos().actualizarHecho(estatusRobot);
+        this.getEnvioHechos().actualizarHecho(objetivoAccion);
         focoActual.setFoco(objetivoAccion);
+        trazas.aceptaNuevaTrazaEjecReglas(identAgente, "  Se da una orden para salvar a la victima : " + objetivoAccion.getobjectReferenceId() + 
+                                     "  El objetivo Accion se pone en el estado  : " + objetivoAccion.getStateAsString() + "\n");
         t.start();
     }
 

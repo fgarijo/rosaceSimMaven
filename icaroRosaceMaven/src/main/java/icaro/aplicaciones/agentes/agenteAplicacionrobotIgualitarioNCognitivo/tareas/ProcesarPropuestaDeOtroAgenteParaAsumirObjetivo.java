@@ -18,9 +18,7 @@ import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.
  * @author Francisco J Garijo
  */
 
-//NOTA JM: esta tarea se llama en la regla "Procesar propuestas de otro agente para ir yo" 
-
-public class ProcesarPropuestaDeOtroAgenteParaQueVayaYo extends TareaSincrona {
+public class ProcesarPropuestaDeOtroAgenteParaAsumirObjetivo extends TareaSincrona {
     private InfoParaDecidirQuienVa infoDecision;
 	@Override
 	public void ejecutar(Object... params) {
@@ -29,7 +27,7 @@ public class ProcesarPropuestaDeOtroAgenteParaQueVayaYo extends TareaSincrona {
                   infoDecision = (InfoParaDecidirQuienVa)params[1];
                   PropuestaAgente propuestaRecibida =  (PropuestaAgente)params[2];
                   trazas.aceptaNuevaTrazaEjecReglas(this.identAgente, "Se Ejecuta la Tarea :"+ this.identTarea );    
-                  if (!(propuestaRecibida.getMensajePropuesta().equals(VocabularioRosace.MsgPropuesta_Para_Q_vayaYo)) ){
+                  if (!(propuestaRecibida.getMensajePropuesta().equals(VocabularioRosace.MsgPropuesta_Para_Aceptar_Objetivo)) ){
                         this.generarInformeConCausaTerminacion(this.identTarea, objetivoEjecutantedeTarea, identAgente, VocabularioRosace.MsgContenidoPropuestaNoValida, CausaTerminacionTarea.ERROR);
                         trazas.aceptaNuevaTraza(new InfoTraza(identAgente, "El mensaje de la propuesta Recibida No es valido :  "+ propuestaRecibida  , InfoTraza.NivelTraza.error));
                   }

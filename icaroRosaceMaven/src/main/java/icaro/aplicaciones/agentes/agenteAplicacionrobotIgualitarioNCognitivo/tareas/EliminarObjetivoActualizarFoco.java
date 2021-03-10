@@ -21,15 +21,11 @@ public class EliminarObjetivoActualizarFoco extends TareaSincrona{
              Focus focoActual = (Focus)params[2];
                 this.getEnvioHechos().eliminarHechoWithoutFireRules(objetivoAeliminar);
                 focoActual.setFocusToObjetivoMasPrioritario(misObjs);
-       //       this.getEnvioHechos().actualizarHechoWithoutFireRules(misObjs);
                 this.getEnvioHechos().actualizarHecho(focoActual);
              trazas.aceptaNuevaTrazaEjecReglas(this.identAgente, "Se ejecuta la tarea " + this.identTarea+
                                     " Se actualiza el  foco:  "+ focoActual +"\n" );
-            System.out.println("\n"+this.identAgente +"Se ejecuta la tarea " + this.getIdentTarea()+ " Se elimina el  objetivo:  "+ objetivoAeliminar+"\n\n" );
-                          
-             
+            System.out.println("\n"+this.identAgente +"Se ejecuta la tarea " + this.getIdentTarea()+ " Se elimina el  objetivo:  "+ objetivoAeliminar+"\n\n" );  
        } catch (Exception e) {
-			 e.printStackTrace();
        }
    }
 

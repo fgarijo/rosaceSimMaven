@@ -21,29 +21,19 @@ public class MandarEvaluacionAQuienLaPide1 extends TareaSincrona {
     /**
      *
      */
-    private InterfazUsoAgente agenteReceptor;
-    private ArrayList agentesEquipo, respuestasAgentes, confirmacionesAgentes, nuevasEvaluacionesAgentes, empates;//resto de agentes que forman mi equipo
-    private int mi_eval, mi_eval_nueva;
     private String nombreAgenteEmisor;
     private PeticionAgente peticionRecibida;
-//    private ItfUsoRecursoTrazas trazas;
     private InfoParaDecidirQuienVa infoDecision;
     private MisObjetivos misObjtvsAccion;
     private String identObjEvaluacion;
     private String nombreAgenteQuePideLaEvaluacion;
     private Integer miEvalDeRespuesta;
-    private Integer valorDisuasorioParaElquePideAcepteQueSoyYoElResponsable = Integer.MIN_VALUE;
-//    private  Integer valorParaExcluirmeDelObjetivo = -5000 ;
     private VictimsToRescue victimasRecibidas;
     private Victim victimEnPeticion;
     private RobotStatus1 robot;
-    private Coordinate robotLocation;
-    //private TimeOutRespuestas tiempoSinRecibirRespuesta; //no usado
 
     @Override
     public void ejecutar(Object... params) {
-
-        //        trazas = NombresPredefinidos.RECURSO_TRAZAS_OBJ;
         Victim victimaAdecidir = (Victim) params[0];
         infoDecision = (InfoParaDecidirQuienVa) params[1];
         peticionRecibida = (PeticionAgente) params[2];
@@ -52,10 +42,11 @@ public class MandarEvaluacionAQuienLaPide1 extends TareaSincrona {
         victimasRecibidas = (VictimsToRescue) params[5];
         //      EvaluacionAgente miEvaluacion = (EvaluacionAgente) params[2];
         nombreAgenteEmisor = this.getIdentAgente();
-        agentesEquipo = infoDecision.getAgentesEquipo();
+        ArrayList agentesEquipo = infoDecision.getAgentesEquipo();
         identObjEvaluacion = peticionRecibida.getidentObjectRefPeticion();
         nombreAgenteQuePideLaEvaluacion = peticionRecibida.getIdentAgente();
-        robotLocation = robot.getRobotCoordinate();
+        Coordinate robotLocation = robot.getRobotCoordinate();
+        int valorDisuasorioParaElquePideAcepteQueSoyYoElResponsable= Integer.MAX_VALUE;
         try {
             // si el identificador esta entre mis objetivos es que esta resuelto , le mando un valor para que se desanime
             // en  otro caso puede ser que sea otro el que tenga el objetivo, en este caso el le mandara¡ un valor grande
@@ -69,8 +60,6 @@ public class MandarEvaluacionAQuienLaPide1 extends TareaSincrona {
                     if (victimaAdecidir.getisCostEstimated()) {
                         miEvalDeRespuesta = victimEnPeticion.getEstimatedCost();
                     } else { // calculo el coste y lo guardo en la victima
-//                        Coste coste = new Coste();
-//                        miEvalDeRespuesta = coste.CalculoCosteAyudarVictima(nombreAgenteEmisor, robotLocation, robot, victimEnPeticion, victimasRecibidas, misObjtvsAccion, "FuncionEvaluacion3");
                         int camino[] = victimasRecibidas.costeAyudarVictima(robot, victimEnPeticion);
                         miEvalDeRespuesta = camino[0];
                         victimaAdecidir.setEstimatedCost(miEvalDeRespuesta);
@@ -84,9 +73,7 @@ public class MandarEvaluacionAQuienLaPide1 extends TareaSincrona {
             EvaluacionAgente miEvaluacion = new EvaluacionAgente(nombreAgenteEmisor, miEvalDeRespuesta);
             miEvaluacion.setObjectEvaluationId(identObjEvaluacion);
             trazas.aceptaNuevaTrazaEjecReglas(nombreAgenteEmisor, "Se Ejecuta la Tarea :" + identTarea + " Enviamos la evaluacion " + miEvaluacion + " de la victima : " + victimEnPeticion.getName() + " Al agente : " + nombreAgenteQuePideLaEvaluacion);
-
             this.getComunicator().enviarInfoAotroAgente(miEvaluacion, nombreAgenteQuePideLaEvaluacion);
-
         } catch (Exception e) {
         }
     }

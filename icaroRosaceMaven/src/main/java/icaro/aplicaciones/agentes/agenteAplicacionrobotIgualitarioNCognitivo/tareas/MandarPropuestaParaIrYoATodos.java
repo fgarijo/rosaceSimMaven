@@ -5,6 +5,7 @@
 
 package icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.tareas;
 import icaro.aplicaciones.Rosace.informacion.PropuestaAgente;
+import icaro.aplicaciones.Rosace.informacion.VictimsToRescue;
 import icaro.aplicaciones.Rosace.informacion.VocabularioRosace;
 import icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.informacion.InfoParaDecidirQuienVa;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Objetivo;
@@ -20,33 +21,30 @@ public class MandarPropuestaParaIrYoATodos extends TareaSincrona {
 
     /**
      *     */
-    private ArrayList agentesEquipo, respuestasAgentes, confirmacionesAgentes, nuevasEvaluacionesAgentes, empates;//resto de agentes que forman mi equipo
-    private String nombreAgenteEmisor;
+    private ArrayList agentesEquipo;//resto de agentes que forman mi equipo
     private InfoParaDecidirQuienVa infoDecision;
-    private String identDeEstaTarea;
     @Override
     public void ejecutar(Object... params) {
-        Objetivo objetivoEjecutantedeTarea = (Objetivo) params[0];
+        VictimsToRescue victimas = (VictimsToRescue) params[0];
         infoDecision = (InfoParaDecidirQuienVa) params[1];
-        nombreAgenteEmisor = this.getAgente().getIdentAgente();
-        identDeEstaTarea = this.getIdentTarea();
-
         try {
-            PropuestaAgente miPropuesta = new PropuestaAgente(nombreAgenteEmisor);
+            PropuestaAgente miPropuesta = new PropuestaAgente(this.identAgente);
             miPropuesta.setMensajePropuesta(VocabularioRosace.MsgPropuesta_Oferta_Para_Ir);
             miPropuesta.setJustificacion(infoDecision.getMi_eval());
             miPropuesta.setIdentObjectRefPropuesta(infoDecision.getidElementoDecision());
             if (!infoDecision.miPropuestaParaAsumirElObjetivoEnviadaAtodos) { // si ya lo he enviado no hago nada asi evito problemas de invocacion en  la regla
-                trazas.aceptaNuevaTraza(new InfoTraza(nombreAgenteEmisor, "Se Ejecuta la Tarea :" + identDeEstaTarea, InfoTraza.NivelTraza.debug));
-                agentesEquipo = infoDecision.getAgentesEquipo();
-                trazas.aceptaNuevaTraza(new InfoTraza(nombreAgenteEmisor, "Enviamos la propuesta: " + VocabularioRosace.MsgPropuesta_Oferta_Para_Ir, InfoTraza.NivelTraza.debug));
+//                trazas.aceptaNuevaTrazaEjecReglas(this.identAgente, "Se Ejecuta la Tarea :" + this.identTarea + " Agentes en el equipo : " +agentesEquipo );
+                victimas.addVictimAsignada(victimas.getVictimARescatar(infoDecision.idElementoDecision));
+            agentesEquipo = infoDecision.getAgentesEquipo();
+                trazas.aceptaNuevaTrazaEjecReglas(this.identAgente, "Se Ejecuta la Tarea :" + this.identTarea +" se envia  la propuesta: " + VocabularioRosace.MsgPropuesta_Oferta_Para_Ir + " Agentes en el equipo : " +agentesEquipo);
                 this.getComunicator().informaraGrupoAgentes(miPropuesta, agentesEquipo);
                 infoDecision.setRespuestasEsperadas(infoDecision.getAgentesEquipo().size() - 1);
                 infoDecision.setMiPropuestaParaAsumirElObjetivoEnviadaAtodos(Boolean.TRUE);
                 this.getEnvioHechos().actualizarHecho(infoDecision);
-                trazas.aceptaNuevaTraza(new InfoTraza(nombreAgenteEmisor, "Numero de agentes de los que espero respuesta:" + agentesEquipo.size(), InfoTraza.NivelTraza.info));
-                this.generarInformeTemporizadoFromConfigProperty(VocabularioRosace.IdentTareaTimeOutRecibirConfirmacionRealizacionObjetivo1, objetivoEjecutantedeTarea,
-                        nombreAgenteEmisor, infoDecision.getidElementoDecision());
+                trazas.aceptaNuevaTrazaEjecReglas(this.identAgente,  " El numero de agentes de los que espero respuesta es : " + agentesEquipo.size() + " Me asigno  la victima  : " + infoDecision.idElementoDecision +"/n" );
+//                this.generarInformeTemporizadoFromConfigProperty(VocabularioRosace.IdentTareaTimeOutRecibirConfirmacionRealizacionObjetivo1, objetivoEjecutantedeTarea,
+//                        nombreAgenteEmisor, infoDecision.getidElementoDecision());
+                 this.generarInformeTemporizado(VocabularioRosace.TimeOutMiliSecConseguirObjetivo, VocabularioRosace.IdentTareaTimeOutRecibirConfirmacionRealizacionObjetivo1, null, identAgente, infoDecision.getidElementoDecision());
             }
         } catch (Exception e) {
         }

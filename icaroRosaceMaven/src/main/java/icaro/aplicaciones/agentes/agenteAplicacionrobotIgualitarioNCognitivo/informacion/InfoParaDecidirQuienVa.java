@@ -16,7 +16,6 @@ public class InfoParaDecidirQuienVa implements Serializable{
       private ArrayList confirmacionesAgentes,evaluacionesRecibidas;//resto de agentes que forman mi equipo
       private String  identEquipo = null;
       private String  nombreAgente;
-//      private InfoEquipo miEquipo ;
       private ArrayList<String>  agentesEquipo,agentesEmpatados,respuestasAgentes;
       private  int mi_eval_nueva,respuestasEsperadas,confirmacionesEsperadas ;
       private int numeroEvaluacionesRecibidas, valorMinimoCosteRecibido,indiceAgenteConMejorEvaluacion;
@@ -74,11 +73,11 @@ public class InfoParaDecidirQuienVa implements Serializable{
      public synchronized void inicializarInfoParaDecidir(String idInfoDecision){
       // Inicializamos para cada agente las respuestas, empates, confirmaciones
          if(agentesEquipo!= null){
-         for (int i = 0; i < agentesEquipo.size(); i++) {
-             respuestasAgentes.add("");
-             confirmacionesAgentes.add("");
-             evaluacionesRecibidas.add(0);
-         }
+             for (String agentesEquipo1 : agentesEquipo) {
+                 respuestasAgentes.add("");
+                 confirmacionesAgentes.add("");
+                 evaluacionesRecibidas.add(0);
+             }
          }
          idElementoDecision = idInfoDecision;
          numeroEvaluacionesRecibidas = 0;
@@ -99,7 +98,7 @@ public class InfoParaDecidirQuienVa implements Serializable{
      public synchronized int numRespuestasRecibidas(){
          int respRecibidas = 0;
          for(int i = 0; i< respuestasAgentes.size(); i++){
-             if(((String)respuestasAgentes.get(i)) != ""){
+             if(!"".equals((String)respuestasAgentes.get(i))){
                  respRecibidas++;
              }
          }
@@ -233,7 +232,7 @@ public class InfoParaDecidirQuienVa implements Serializable{
                 tengoLaMejorEvaluacion = false;
                 hayEmpates = false;
                 noSoyElMejor=true; 
-        }else if (msgPropuesta.equals(VocabularioRosace.MsgPropuesta_Para_Q_vayaYo)){// otro agente dice que me haga cargo yo
+        }else if (msgPropuesta.equals(VocabularioRosace.MsgPropuesta_Para_Aceptar_Objetivo)){// otro agente dice que me haga cargo yo
                 //    agentesEmpatados.remove(identAgteProponente);
                     this.procesarPropuestaRecibida(propuesta);
                     if (this.propuestasDesempateRecibidas == this.propuestasDesempateEsperadas){
@@ -266,10 +265,10 @@ public class InfoParaDecidirQuienVa implements Serializable{
          String respuesta = propuesta.getMensajePropuesta();
          String idAgenteEmisorRespuesta = propuesta.getIdentAgente();
          Integer indiceAgenteEmisorRespuesta = agentesEquipo.indexOf(idAgenteEmisorRespuesta);
-         if ( (String) respuestasAgentes.get(indiceAgenteEmisorRespuesta)== "" ){
+         if ( "".equals((String) respuestasAgentes.get(indiceAgenteEmisorRespuesta)) ){
               respuestasRecibidas ++;
               respuestasAgentes.set(indiceAgenteEmisorRespuesta, respuesta);//guardamos la respuesta
-              if ((respuesta == "CreoQueDebesIrTu")& (tengoLaMejorEvaluacion)){
+              if (("CreoQueDebesIrTu".equals(respuesta))& (tengoLaMejorEvaluacion)){
                  numeroRespuestasConfirmacionParaIrYo ++;
                  this.addConfirmacionAcuerdoParaIr(idAgenteEmisorRespuesta, respuesta);
                  if (numeroRespuestasConfirmacionParaIrYo == respuestasEsperadas){
@@ -310,9 +309,7 @@ public class InfoParaDecidirQuienVa implements Serializable{
               }else if (indiceAgenteConMejorEvaluacion == indiceAgente){
                   dameIdentMejor(); // se actualiza el valorMinimoCosteRecibido y el indice del agnte con el valor del mejor
               }   
-//              evaluacionesRecibidas.set(indiceAgente, eval);//guardamos la evaluacion recibida
-              actualizarAtributos();
-              
+              actualizarAtributos();              
               System.out.println("Id Robot : "+nombreAgente + " Se actualiza la evalucion recibida del robot    " + evaluacion.getIdentAgente() + 
                       " cuyo valor es  = " + eval  + " Mi evaluacion es :" + mi_eval + " El valor del minimo coste recibido es  "+ valorMinimoCosteRecibido + " El agente con minimo coste es : "+
                     dameIdentMejor()+  " Las evaluaciones recibidas son " + getEvaluacionesRecibidas()+ "\n" ); 
@@ -514,6 +511,7 @@ public class InfoParaDecidirQuienVa implements Serializable{
          return (Integer)evaluacionesRecibidas.get(refAgente)>0 ;
      }
       
+      @Override
      public String toString(){
     	 return " idElementoDecision->" + idElementoDecision +
                 "; InfoParaDecidirQuienVa: " + "Agente->" + nombreAgente + 

@@ -21,26 +21,20 @@ import java.util.ArrayList;
 public class MandarPropuestaParaIrYoALosqNoHanConfirmado  extends TareaComunicacion {
 
 	/**  */
-    private InterfazUsoAgente agenteReceptor;
-    private ArrayList agentesEquipo, respuestasAgentes,confirmacionesAgentes,nuevasEvaluacionesAgentes,empates;//resto de agentes que forman mi equipo
+    private ArrayList agentesEquipo ;//resto de agentes que forman mi equipo
         
     private String nombreAgenteEmisor;
 //    private ItfUsoRecursoTrazas trazas;
     private InfoParaDecidirQuienVa infoDecision;
     private String identDeEstaTarea ;
 
-    //private TimeOutRespuestas tiempoSinRecibirRespuesta;   //no usado
-
 	@Override
 	public void ejecutar(Object... params) {
-		
- //          trazas = NombresPredefinidos.RECURSO_TRAZAS_OBJ;
            Objetivo objetivoEjecutantedeTarea = (Objetivo)params[0];
            infoDecision = (InfoParaDecidirQuienVa)params[1];
            nombreAgenteEmisor = this.getIdentAgente();     
            identDeEstaTarea = this.getIdentTarea();
            try {
-                    //      PropuestaAgente miPropuesta = new PropuestaAgente (nombreAgenteEmisor,"SoyElMejorSituadoParaRealizarElObjetivo", infoDecision.getValorMiEvaluacion());
                  PropuestaAgente miPropuesta = new PropuestaAgente (nombreAgenteEmisor);
                  miPropuesta.setMensajePropuesta(VocabularioRosace.MsgPropuesta_Oferta_Para_Ir);
                  miPropuesta.setJustificacion(infoDecision.getMi_eval());
@@ -54,34 +48,11 @@ public class MandarPropuestaParaIrYoALosqNoHanConfirmado  extends TareaComunicac
                      }
                  }
                  trazas.aceptaNuevaTraza(new InfoTraza(nombreAgenteEmisor, "Enviamos la propuesta: "+ VocabularioRosace.MsgPropuesta_Oferta_Para_Ir , InfoTraza.NivelTraza.debug));           
-                    //            this.mandaMensajeATodos(miPropuesta);
-                 this.generarTimeoutRespuestas(5000, VocabularioRosace.MsgTimeoutRecibirRespPropuestasIrYo);
-                    //           this.getGestorTareas().crearTarea(TimeOutRespuestas2.class).ejecutar(10000,"ExpiroElTimeoutRespuestaPropuestasParaIrYo");
+                 this.generarInformeTemporizado(VocabularioRosace.TimeOutMiliSecConseguirObjetivo, VocabularioRosace.IdentTareaTimeOutRecibirConfirmacionRealizacionObjetivo1, objetivoEjecutantedeTarea, this.getIdentAgente(), infoDecision.getidElementoDecision());
                  infoDecision.setRespuestasEsperadas(infoDecision.getAgentesEquipo().size());
-                 this.generarInformeOK(identDeEstaTarea, objetivoEjecutantedeTarea, nombreAgenteEmisor, VocabularioRosace.ResEjTaskMiPropuestaParaIrYoEnviadaAlEquipo);
-                 trazas.aceptaNuevaTraza(new InfoTraza(nombreAgenteEmisor, "Numero de agentes de los que espero respuesta:" + agentesEquipo.size(), InfoTraza.NivelTraza.info));
-                    //            tiempoSinRecibirRespuesta.start();		
+                 trazas.aceptaNuevaTraza(new InfoTraza(nombreAgenteEmisor, "Numero de agentes de los que espero respuesta:" + agentesEquipo.size(), InfoTraza.NivelTraza.info));	
            } catch(Exception e) {
-			    e.printStackTrace();
            }
     }
-
-	
-    public void generarTimeoutRespuestas(Integer milis, String textoMsgTimout)   {
-
-         try {
-        	    Thread.sleep(milis);
-	     } catch (InterruptedException ex) {}
-
-    	  // Genera un informe de Tarea
-          //	  if (!this.finalizar)
-		 try {
-  			   this.generarInforme(new InformeDeTarea (identDeEstaTarea, VocabularioRosace.MsgTimeoutRecibirRespPropuestasIrYo, nombreAgenteEmisor, textoMsgTimout));
-		 } catch (Exception e) {
-		   // TODO Auto-generated catch block
-		   e.printStackTrace();
-		 }
-    }
-    
     
  }

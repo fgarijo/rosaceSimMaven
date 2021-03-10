@@ -44,7 +44,6 @@ int minimaPrioridadObjetivo=-1;
                         "LaPropuestaConfirmadaNoEsValida", CausaTerminacionTarea.ERROR);
                 trazas.aceptaNuevaTrazaEjecReglas(this.identAgente, "La propuesta Confirmada por el agente : " + idAgteAceptaPropuesta + "  No es valida :" + propuestaConfirmada + "\n");
             } else {
-//                      infoDecisionAgente.addConfirmacionRealizacionObjetivo(aceptacionRecibida);
             Victim victimaImplicada = victimas.getVictimARescatar(idVictima);
                 victimaImplicada.setrobotResponsableId(idAgteAceptaPropuesta);
                 victimas.addVictimAsignada(victimaImplicada);

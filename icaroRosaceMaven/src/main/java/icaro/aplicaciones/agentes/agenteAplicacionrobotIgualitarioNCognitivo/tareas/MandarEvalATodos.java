@@ -24,9 +24,7 @@ public class MandarEvalATodos extends TareaSincrona {
     //public class MandarEvalATodos  extends TareaComunicacion {
     /**
      *     */
-    private InterfazUsoAgente agenteReceptor;
     private ArrayList<String> agentesEquipo;//resto de agentes que forman mi equipo                                
-    private int mi_eval, mi_eval_nueva;
     private String nombreAgenteEmisor;
     private String idVictima;
     private InfoParaDecidirQuienVa infoDecision;
@@ -49,11 +47,9 @@ public class MandarEvalATodos extends TareaSincrona {
                     infoDecision.setAgentesEquipo(agentesEquipo);
                     trazas.aceptaNuevaTrazaEjecReglas(nombreAgenteEmisor, " Agentes en el equipo : " + agentesEquipo.toString() + " Enviamos la evaluacion " + infoDecision.getMi_eval() + "\n");
                     this.getComunicator().informaraGrupoAgentes(miEvaluacion, agentesEquipo);
-                    //   this.getComunicator().informarConMomentoCreacionaGrupoAgentes(miEvaluacion, agentesEquipo);
                     infoDecision.setRespuestasEsperadas(agentesEquipo.size());
                     infoDecision.setMiEvaluacionEnviadaAtodos(true);
                     infoDecision.sethanLlegadoTodasLasEvaluaciones(false);
-                    //       this.generarInformeOK(identTarea, objetivoEjecutantedeTarea, nombreAgenteEmisor, VocabularioRosace.ResEjTaskMiEvalucionEnviadaAlEquipo);
                     trazas.aceptaNuevaTrazaEjecReglas(nombreAgenteEmisor, "Numero de agentes de los que espero respuesta:" + agentesEquipo.size() + "\n");
                     this.generarInformeTemporizadoFromConfigProperty(VocabularioRosace.IdentTareaTimeOutRecibirEvaluaciones1, objetivoEjecutantedeTarea,
                             nombreAgenteEmisor, idVictima);

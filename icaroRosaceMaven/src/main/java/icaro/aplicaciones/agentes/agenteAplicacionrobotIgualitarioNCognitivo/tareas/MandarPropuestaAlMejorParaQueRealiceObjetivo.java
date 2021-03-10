@@ -8,7 +8,6 @@ import icaro.aplicaciones.Rosace.informacion.InfoEquipo;
 import icaro.aplicaciones.Rosace.informacion.PropuestaAgente;
 import icaro.aplicaciones.Rosace.informacion.VocabularioRosace;
 import icaro.aplicaciones.agentes.agenteAplicacionrobotIgualitarioNCognitivo.informacion.InfoParaDecidirQuienVa;
-import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Objetivo;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaSincrona;
 
 /**
@@ -22,7 +21,6 @@ public class MandarPropuestaAlMejorParaQueRealiceObjetivo extends TareaSincrona 
      */
     private InfoParaDecidirQuienVa infoDecision;
     private String nombreAgenteReceptor;
-    private final long valorTemporizador = 3000;
 
     @Override
     public void ejecutar(Object... params) {
@@ -37,12 +35,11 @@ public class MandarPropuestaAlMejorParaQueRealiceObjetivo extends TareaSincrona 
                 int miEvalRespuesta;
                 if(miEquipo.getidentAgenteJefeEquipo().equals(this.getIdentAgente())){
                     miEvalRespuesta = infoDecision.getEvalucionRecibidaDelAgente(nombreAgenteReceptor);
-//                    this.generarInformeTemporizado(valorTemporizador, VocabularioRosace.IdentTareaTimeOutRecibirConfirmacionesRealizacionObjetivo1, this.identAgente, infoDecision.getidElementoDecision());
                 }
                 else miEvalRespuesta = infoDecision.getMi_eval();
                 miPropuesta.setJustificacion(miEvalRespuesta);
                 trazas.aceptaNuevaTrazaEjecReglas(this.identAgente, "Se Ejecuta la Tarea :" + this.identTarea + " Se envia propuesta : "
-                        + VocabularioRosace.MsgPropuesta_Para_Q_vayaOtro + " Al Agente : " + nombreAgenteReceptor + " MiEvaluacion : " + miEvalRespuesta);
+                        + VocabularioRosace.MsgPropuesta_Para_Aceptar_Objetivo + " Al Agente : " + nombreAgenteReceptor + " MiEvaluacion : " + miEvalRespuesta);
                 this.getComunicator().enviarInfoAotroAgente(miPropuesta, nombreAgenteReceptor);
                 infoDecision.setheInformadoAlmejorParaQueAsumaElObjetivo(true);
                 this.getEnvioHechos().actualizarHecho(infoDecision);
