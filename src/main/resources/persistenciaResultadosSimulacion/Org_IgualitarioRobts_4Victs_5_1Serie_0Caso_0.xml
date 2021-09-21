@@ -1,0 +1,83 @@
+<CasoSimulacion>
+   <identCaso>Org_IgualitarioRobts_4Victs_5_1Serie_0Caso_0</identCaso>
+   <identEscenario>Org_IgualitarioRobts_4Victs_5_1.xml</identEscenario>
+   <modeloOrganizativo>Igualitario</modeloOrganizativo>
+   <identEquipo>rescate1</identEquipo>
+   <tiempoInicialDeLaSimulacion>1632143288113</tiempoInicialDeLaSimulacion>
+   <numeroVictimasEntorno>5</numeroVictimasEntorno>
+   <numeroVictimasAsignadas>5</numeroVictimasAsignadas>
+   <numeroRobotsSimulacion>4</numeroRobotsSimulacion>
+   <numeroRobotsActivos>1</numeroRobotsActivos>
+   <tiempoMedioEnvioPeticiones>2103</tiempoMedioEnvioPeticiones>
+   <InfoVictimasRescatadas key="Victima5">
+      <infoRescateVictima>
+         <victimId>Victima5</victimId>
+         <robotRescatadorId>rescate1RobotIgualitario2</robotRescatadorId>
+         <tiempoAsignacion>1632143301126</tiempoAsignacion>
+         <tiempoPeticion>1632143288132</tiempoPeticion>
+         <tiempoRescate>1632143317670</tiempoRescate>
+         <costeEstimadoEnAsignacion>350.0</costeEstimadoEnAsignacion>
+         <costeRescate>170.0</costeRescate>
+      </infoRescateVictima>
+   </InfoVictimasRescatadas>
+   <InfoVictimasRescatadas key="Victima4">
+      <infoRescateVictima>
+         <victimId>Victima4</victimId>
+         <robotRescatadorId>rescate1RobotIgualitario2</robotRescatadorId>
+         <tiempoAsignacion>1632143335505</tiempoAsignacion>
+         <tiempoPeticion>1632143290209</tiempoPeticion>
+         <tiempoRescate>1632143340145</tiempoRescate>
+         <costeEstimadoEnAsignacion>0.0</costeEstimadoEnAsignacion>
+         <costeRescate>50.0</costeRescate>
+      </infoRescateVictima>
+   </InfoVictimasRescatadas>
+   <InfoVictimasRescatadas key="Victima3">
+      <infoRescateVictima>
+         <victimId>Victima3</victimId>
+         <robotRescatadorId>rescate1RobotIgualitario2</robotRescatadorId>
+         <tiempoAsignacion>1632143301818</tiempoAsignacion>
+         <tiempoPeticion>1632143292275</tiempoPeticion>
+         <tiempoRescate>1632143335409</tiempoRescate>
+         <costeEstimadoEnAsignacion>730.0</costeEstimadoEnAsignacion>
+         <costeRescate>237.0</costeRescate>
+      </infoRescateVictima>
+   </InfoVictimasRescatadas>
+   <InfoVictimasRescatadas key="Victima2">
+      <infoRescateVictima>
+         <victimId>Victima2</victimId>
+         <robotRescatadorId>rescate1RobotIgualitario2</robotRescatadorId>
+         <tiempoAsignacion>1632143301346</tiempoAsignacion>
+         <tiempoPeticion>1632143294374</tiempoPeticion>
+         <tiempoRescate>1632143324885</tiempoRescate>
+         <costeEstimadoEnAsignacion>489.0</costeEstimadoEnAsignacion>
+         <costeRescate>132.0</costeRescate>
+      </infoRescateVictima>
+   </InfoVictimasRescatadas>
+   <InfoVictimasRescatadas key="Victima1">
+      <infoRescateVictima>
+         <victimId>Victima1</victimId>
+         <robotRescatadorId>rescate1RobotIgualitario2</robotRescatadorId>
+         <tiempoAsignacion>1632143301676</tiempoAsignacion>
+         <tiempoPeticion>1632143296500</tiempoPeticion>
+         <tiempoRescate>1632143309345</tiempoRescate>
+         <costeEstimadoEnAsignacion>496.0</costeEstimadoEnAsignacion>
+         <costeRescate>143.0</costeRescate>
+      </infoRescateVictima>
+   </InfoVictimasRescatadas>
+   <rescatesRobot key="rescate1RobotIgualitario2">
+      <victimasSalvadas>
+         <victima>Victima1</victima>
+         <victima>Victima5</victima>
+         <victima>Victima2</victima>
+         <victima>Victima3</victima>
+         <victima>Victima4</victima>
+      </victimasSalvadas>
+   </rescatesRobot>
+   <identsVictimasRescatadas>
+      <victima>Victima5</victima>
+      <victima>Victima1</victima>
+      <victima>Victima2</victima>
+      <victima>Victima3</victima>
+      <victima>Victima4</victima>
+   </identsVictimasRescatadas>
+</CasoSimulacion>
