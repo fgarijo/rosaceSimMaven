@@ -39,9 +39,11 @@ public class ComprobadorRutasEntidades {
 // Se cmprueba la existencia del fichero en la ruta predefinida de la organizacion
         File schema = new File(NombresPredefinidos.DESCRIPCION_SCHEMA);
         if (!schema.exists()) {
-            logger.fatal("No se ha encontrado el fichero de descripcion:"
-                    + "\n\t\t\t" + schema.getAbsolutePath()
-                    + ".\n Compruebe la ruta y el nombre del fichero.");
+          return  ( buscarFichero("DescripcionOrganizacionSchema.xsd", "schemas/")!=null);
+//            logger.fatal("No se ha encontrado el fichero de descripcion:"
+//                    + "\n\t\t\t" + schema.getAbsolutePath()
+//                    + ".\n Compruebe la ruta y el nombre del fichero.");
+        
         }
         return (schema.exists());
     }
@@ -56,6 +58,54 @@ public class ComprobadorRutasEntidades {
                     + ".\n Compruebe la ruta y el nombre del fichero.");
         }
         return (ficheroDescripcion.exists());
+    }
+    public String buscarFichero(String identFicherodescripcion, String rutaBusqueda ) {
+        // devuelve la ruta del fichero encontrado o null si no lo encuentra
+        //   identFicherodescripcion = identFicherodescripcion+".xml";
+        //   String rutaBusqueda = NombresPredefinidos.RUTA_DESCRIPCIONES.replace(".", File.separator);
+//        String rutaBusqueda = NombresPredefinidos.RUTA_DESCRIPCIONES;
+        int posSeparadorDirect = identFicherodescripcion.lastIndexOf("/");
+        if (posSeparadorDirect > 0) {
+            posSeparadorDirect = posSeparadorDirect + 1;
+            rutaBusqueda = rutaBusqueda + identFicherodescripcion.substring(0, posSeparadorDirect);
+            identFicherodescripcion = identFicherodescripcion.substring(posSeparadorDirect);
+        }
+        rutaBusqueda = rutaBusqueda.replace(".", File.separator);
+//        identFicherodescripcion = identFicherodescripcion + ".xml";
+        String rutaFicheroVisitado = null;
+//       String rutaBusqueda = utils.Constantes.rutassrc + rutaComportamiento;
+        Boolean ficheroEncontrado = false;
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        assert classLoader != null;
+        Enumeration<URL> resources;
+        try {
+            resources = classLoader.getResources(rutaBusqueda);
+
+            Queue<File> ficherosRuta = new LinkedList<File>();
+            while (resources.hasMoreElements()) {
+                URL resource = resources.nextElement();
+                ficherosRuta.add(new File(resource.getFile()));
+            }
+            if (ficherosRuta == null) {
+                return null;
+            }
+            while (!ficherosRuta.isEmpty() && !ficheroEncontrado) {
+                for (File ficheroVisitado : ficherosRuta.poll().listFiles()) {
+                    if (ficheroVisitado.isDirectory()) {
+                        ficherosRuta.add(ficheroVisitado);
+                    } else if (ficheroVisitado.isFile()) {
+                        String nombFicherovisitado = ficheroVisitado.getName();
+                        if (ficheroVisitado.getName().equals(identFicherodescripcion)) {
+                            ficheroEncontrado = true;
+                            return ficheroVisitado.getAbsolutePath();
+                        }
+                    }
+                }
+            }
+        } catch (IOException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+        return null;
     }
     public boolean existeDescOrganizacion(String identFicherodescripcion) {
         // La ruta del comportamiento no incluye el fichero 

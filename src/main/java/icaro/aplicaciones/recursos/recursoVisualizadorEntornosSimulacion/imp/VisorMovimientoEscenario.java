@@ -108,10 +108,13 @@ public class VisorMovimientoEscenario extends javax.swing.JFrame {
         intervalNumRobots = new javax.swing.JTextField();
         victimaIcon1 = new javax.swing.JLabel();
         intervalNumVictimas = new javax.swing.JTextField();
-        jTextFieldIdentEquipo = new javax.swing.JTextField();
+        jTextFieldIdentEscenario = new javax.swing.JTextField();
         jSeparator7 = new javax.swing.JSeparator();
         jLabelOrganizacion = new javax.swing.JLabel();
         jLabelIdentEquipo = new javax.swing.JLabel();
+        jLabelOrganizacion1 = new javax.swing.JLabel();
+        jTextFieldIdentEquipo = new javax.swing.JTextField();
+        jSeparator1 = new javax.swing.JSeparator();
         GestionEscenarios = new javax.swing.JMenuBar();
 
         jDialogAvisoErrorDefNumEntidades.setTitle("Error: Definición de entidades en el escenario");
@@ -180,15 +183,19 @@ public class VisorMovimientoEscenario extends javax.swing.JFrame {
             }
         });
 
-        jTextFieldIdentEquipo.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldIdentEscenario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldIdentEquipoActionPerformed(evt);
+                jTextFieldIdentEscenarioActionPerformed(evt);
             }
         });
 
         jLabelOrganizacion.setText("Organización");
 
         jLabelIdentEquipo.setText("Escenario");
+
+        jLabelOrganizacion1.setText("Ident Equipo");
+
+        jTextFieldIdentEquipo.setName("Modelo Organizacion"); // NOI18N
         setJMenuBar(GestionEscenarios);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -201,44 +208,51 @@ public class VisorMovimientoEscenario extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabelIdentEquipo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldIdentEquipo, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextFieldIdentEscenario, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabelOrganizacion1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldIdentEquipo, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(16, 16, 16)
                         .addComponent(jLabelOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextFieldModeloOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(robotIcon)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(intervalNumRobots, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(victimaIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(intervalNumVictimas, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 433, Short.MAX_VALUE))
-                    .addComponent(jSeparator7, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addComponent(intervalNumVictimas, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jSeparator7, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(intervalNumVictimas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(victimaIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldIdentEscenario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelIdentEquipo))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelOrganizacion1)
+                            .addComponent(jTextFieldIdentEquipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelOrganizacion)
+                            .addComponent(jTextFieldModeloOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(intervalNumRobots, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(robotIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldModeloOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelOrganizacion)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextFieldIdentEquipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelIdentEquipo))))
+                            .addComponent(victimaIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(intervalNumVictimas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(564, Short.MAX_VALUE))
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(523, Short.MAX_VALUE))
         );
 
         pack();
@@ -279,9 +293,9 @@ public class VisorMovimientoEscenario extends javax.swing.JFrame {
                 }else System.out.println("Definido el numero de victimas : "+ num1);
     }//GEN-LAST:event_intervalNumVictimasActionPerformed
 
-    private void jTextFieldIdentEquipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldIdentEquipoActionPerformed
+    private void jTextFieldIdentEscenarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldIdentEscenarioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldIdentEquipoActionPerformed
+    }//GEN-LAST:event_jTextFieldIdentEscenarioActionPerformed
     
     public void visualizarIdentsEquipoRobot ( ArrayList<String> equipoIds){
 //        eqipoIds = eqipoIds.toArray();
@@ -314,9 +328,9 @@ public class VisorMovimientoEscenario extends javax.swing.JFrame {
         labelEntidad.setVisible(true);
     }
     public void actualizarInfoEquipoEnEscenario (){
-//        jTextFieldIdentEquipo= escenrioSimComp.get
         jTextFieldModeloOrganizacion.setText(""+escenarioActual.getmodeloOrganizativo());
-        jTextFieldIdentEquipo.setText(""+escenarioActual.getIdentEscenario());
+        jTextFieldIdentEquipo.setText(""+escenarioActual.getIdentEquipo());
+        jTextFieldIdentEscenario.setText(""+escenarioActual.getIdentEscenario());
         intervalNumRobots.setText(""+escenarioActual.getNumRobots());
         intervalNumVictimas.setText(""+escenarioActual.getNumVictimas());
 //        intervalNumVictimas.setVisible(true);
@@ -333,7 +347,8 @@ public class VisorMovimientoEscenario extends javax.swing.JFrame {
         if (!escenarioActualAbierto){
          int numRobots = escenarioActual.getNumRobots();
          int numVictims = escenarioActual.getNumVictimas();
-         jTextFieldIdentEquipo.setText(""+escenarioActual.getIdentEscenario());
+         jTextFieldIdentEquipo.setText(""+escenarioActual.getIdentEquipo());
+         jTextFieldIdentEscenario.setText(""+escenarioActual.getIdentEscenario());
          jTextFieldModeloOrganizacion.setText(""+escenarioActual.getmodeloOrganizativo());
          intervalNumRobots.setText(""+numRobots);
          intervalNumVictimas.setText(""+numVictims);
@@ -479,9 +494,12 @@ public class VisorMovimientoEscenario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelIdentEquipo;
     private javax.swing.JLabel jLabelOrganizacion;
+    private javax.swing.JLabel jLabelOrganizacion1;
     private javax.swing.JOptionPane jOptionPane1;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JTextField jTextFieldIdentEquipo;
+    private javax.swing.JTextField jTextFieldIdentEscenario;
     private javax.swing.JTextField jTextFieldModeloOrganizacion;
     private javax.swing.JLabel robotIcon;
     private javax.swing.JLabel victimaIcon1;
@@ -496,7 +514,7 @@ public void visualizarConsejo (String titulo, String msgConsejo, String recomend
             //Si el escenario a visulizar
          int numRobots = escenarioComp.getNumRobots();
          int numVictims = escenarioComp.getNumVictimas();
-         jTextFieldIdentEquipo.setText(""+escenarioComp.getIdentEscenario());
+         jTextFieldIdentEscenario.setText(""+escenarioComp.getIdentEscenario());
          jTextFieldModeloOrganizacion.setText(""+escenarioComp.getmodeloOrganizativo());
          intervalNumRobots.setText(""+numRobots);
          intervalNumVictimas.setText(""+numVictims);

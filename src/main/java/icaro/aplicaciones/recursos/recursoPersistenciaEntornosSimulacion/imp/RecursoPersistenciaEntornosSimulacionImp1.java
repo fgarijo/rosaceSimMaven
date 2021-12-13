@@ -7,10 +7,8 @@ package icaro.aplicaciones.recursos.recursoPersistenciaEntornosSimulacion.imp;
 import com.thoughtworks.xstream.XStream;
 import icaro.aplicaciones.InfoSimulador.informacion.*;
 import icaro.aplicaciones.recursos.recursoVisualizadorEntornosSimulacion.imp.EscenarioSimulacionRobtsVictms;
-import icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
 import icaro.infraestructura.entidadesBasicas.comunicacion.ComunicacionAgentes;
 import icaro.infraestructura.patronRecursoSimple.imp.ImplRecursoSimple;
-import icaro.infraestructura.recursosOrganizacion.configuracion.ItfUsoConfiguracion;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.FileSystems;
@@ -22,17 +20,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 /**
@@ -123,8 +116,8 @@ public class RecursoPersistenciaEntornosSimulacionImp1 extends ImplRecursoSimple
 //              List<RobotCapability> capacidades=infoRobot.getRobotCapabilities();
 //                 System.out.println(" Desde persistencia Lista de capacidades a guardar del robot  : " + ideRobot+"Capacidades : "+ capacidades.toString() );
 //             }
-              System.out.println("Desde peticion Guardar Numero de Robots  : " + escenario.getNumRobots()+" Numero de victimas : "+ escenario.getNumVictimas()+
-                                "   Renombrar fichero : " + nuevaVersion );
+              System.out.println("Desde peticion Guardar Nombre del Equipo : " + escenario.getIdentEquipo()+ "  Numero de Robots  : " + escenario.getNumRobots()+
+                      " Numero de victimas : "+ escenario.getNumVictimas()+ "   Renombrar fichero : " + nuevaVersion );
 
 //          serializer.write(escenario, new File(rutaFicheroInfoPersistencia+identFichero+".xml"));
           
@@ -152,9 +145,10 @@ public class RecursoPersistenciaEntornosSimulacionImp1 extends ImplRecursoSimple
 //                        serializer.read(EscenarioSimulacionRobtsVictms.class,ficheroEscenario, false);
                     
                 }   
-                }catch (Exception e) { // catches ANY exception
-        e.printStackTrace();
-        }
+                }catch (Exception e) {
+             // catches ANY exception
+              System.out.println("El fichero   : "+ identFichero+ " Tiene errores " + e.getMessage() );
+                     }
          return null;
      }
      public boolean existEscenarioSimulacion(String modOrg, int numRobots){

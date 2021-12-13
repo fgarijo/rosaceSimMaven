@@ -111,12 +111,15 @@ public class AccionesAgteControladorSimulador extends AccionesSemanticasAgenteRe
                 escenarioActual = itfUsoRecursoPersistenciaEntornosSimulacion.obtenerInfoEscenarioSimulacion(identFicheroEscenario);
             }
             if (escenarioActual != null) {
-                escenarioActual.renombrarIdentRobts(identsAgtesEquipo);
+//                escenarioActual.renombrarIdentRobts(identsAgtesEquipo);
                 this.actualizarInfoVisorSimulador(escenarioActual);
                 this.informaraMiAutomata("escenarioDefinidoValido");
             } else {
+               
                 modeloOrganizativo = itfconfig.getValorPropiedadGlobal(VocabularioRosace.NOMBRE_PROPIEDAD_GLOBAL_MODELO_ORGANIZATIVO);
                 this.numeroRobotsSimulacion = identsAgtesEquipo.size();
+                 itfUsoRecursoVisualizadorEntornosSimulacion.notificarRecomendacion("Fichero de Escenario Nulo", " Error en la interpretación del fichero de simulación", " Selecione otro fichero "
+                         + "con Modelo Organizativo : " + modeloOrganizativo + " y   Numero de robots : " + numeroRobotsSimulacion + " o cree unfichero nuevo con el mismo modelo organizativo y mismo numero de robots");
                 itfUsoRecursoVisualizadorEntornosSimulacion.obtenerEscenarioSimulacion(modeloOrganizativo, numeroRobotsSimulacion);
             }
         } catch (Exception e) {
@@ -138,6 +141,7 @@ public class AccionesAgteControladorSimulador extends AccionesSemanticasAgenteRe
                     this.informaraMiAutomata("escenarioDefinidoNoValido", causaError);
                 } else {
                     escenarioActual = escenario;
+                    escenarioActual.setIdentEquipo(identificadorEquipo);
                     escenarioActual.renombrarIdentRobts(identsAgtesEquipo);
                     this.inicializarSerieCasos = true;
                     this.informaraMiAutomata("escenarioyTipoSimulacionValidos");
@@ -157,6 +161,7 @@ public class AccionesAgteControladorSimulador extends AccionesSemanticasAgenteRe
                 if (this.numeroRobotsSimulacion == escenario.getNumRobots()
                         && this.modeloOrganizativo.equalsIgnoreCase(escenario.getmodeloOrganizativo())) {
                     escenarioActual = escenario;
+                    escenarioActual.setIdentEquipo(identificadorEquipo);
                     escenarioActual.renombrarIdentRobts(identsAgtesEquipo);
                     this.informaraMiAutomata("escenarioDefinidoValido", escenarioActual);
                 } else {
@@ -179,7 +184,9 @@ public class AccionesAgteControladorSimulador extends AccionesSemanticasAgenteRe
         // suponemos que ya existe un escenario valido
         try {
             escenarioActual = escenarioDefinidoUsuario;
+            escenarioActual.setIdentEquipo(identificadorEquipo); 
             escenarioActual.renombrarIdentRobts(identsAgtesEquipo);
+            itfUsoRecursoVisualizadorEntornosSimulacion.notificarRecomendacion("Renombrado de Robots", "Se han renombrado los robots del escenario de acuerdo con la descripcion de la  organizacion", "");
             itfUsoRecursoVisualizadorEntornosSimulacion.mostrarEscenarioMovimiento(escenarioActual);
             victims2Rescue = escenarioActual.getVictims();
             this.numeroRobotsSimulacion = escenarioActual.getNumRobots();

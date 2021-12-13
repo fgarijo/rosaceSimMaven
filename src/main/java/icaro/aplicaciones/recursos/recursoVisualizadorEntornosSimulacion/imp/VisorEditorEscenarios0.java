@@ -29,7 +29,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import org.netbeans.api.visual.action.ActionFactory;
 import org.netbeans.api.visual.action.WidgetAction;
@@ -43,15 +42,17 @@ import org.openide.util.Utilities;
  *
  * @author FGarijo
  */
-public class VisorEditorEscenarios1 extends javax.swing.JFrame {
+public class VisorEditorEscenarios0 extends javax.swing.JFrame {
 
     /** Creates new form ControlCenterGui2 */
+    private NotificadorInfoUsuarioSimulador notifEvts;
     private int intervaloSecuencia = 10000; // valor por defecto. Eso deberia ponerse en otro sitio
     private int numMensajesEnviar = 3;
     private boolean primeraVictima = true;
     private ArrayList identsRobotsEquipo ;
     private javax.swing.JLabel jLabelAux;
     private String directorioTrabajo;
+     private String tituloVentanaVisor = "ROSACE Scenario Visor";
     private String rutassrc = "src/";   //poner "src/main/java" si el proyecto de icaro se monta en un proyecto maven
 //    private String rutaIconosEscenarios = "src/main/resources/iconosEscenarios/";
     private static  Image IMAGErobot,IMAGEmujer,IMAGEmujerRes ;
@@ -62,7 +63,7 @@ public class VisorEditorEscenarios1 extends javax.swing.JFrame {
     private String imageniconoMujerRescatada = "MujerRescatada.png";
     private String imageniconoHombreRescatado = "HombreRescatado.png";
     private String imageniconoRobot = "Robot.png";
-    private final String modeloOrganizativoInicial = "SinDefinir";
+    private String modeloOrganizativoInicial = "Igualitario";
     private Map<String, JLabel> tablaEntidadesEnEscenario;
     private ArrayList <JLabel> listaEntidadesEnEscenario;
     private volatile ArrayList <String> listaIdentsRobots;
@@ -86,7 +87,7 @@ public class VisorEditorEscenarios1 extends javax.swing.JFrame {
     private ControladorGestionEscenarios controladorGestionEsc;
     private volatile PersistenciaVisualizadorEscenarios persistencia;
     private String modeloOrganizativo;
-    private String identEscenario;
+    private String identEquipoActual;
     private File ultimoFicheroEscenarioSeleccionado;
     private final int ENTIDAD_ROBOT=1;
     private final int ENTIDAD_VICTIMA=2;
@@ -97,13 +98,10 @@ public class VisorEditorEscenarios1 extends javax.swing.JFrame {
     private String orgModelo = "Org_";
     private String  orgModeloInicial = "SinDefinir";
     private String subIndiceEscRepetido = "_0";
-    private String identEquipo ="Equipo1";
 
-     public  VisorEditorEscenarios1(ControladorGestionEscenarios controlador) throws Exception {
+     public  VisorEditorEscenarios0(ControladorGestionEscenarios controlador) throws Exception {
 //        super("visor Escenario ");
         initComponents();
-        jTextFieldIdentEquipo.setVisible(false);
-        jLabelIdentEquipo.setVisible(false);
         moverComp =new ComponentMover();
         moverComp.addMenuAcciones(jPopupMenuAcionEntidad);
         controladorGestionEsc = controlador;
@@ -114,6 +112,7 @@ public class VisorEditorEscenarios1 extends javax.swing.JFrame {
         listaIdentsRobots= new ArrayList < >();
         listaIdentsVictimas= new ArrayList < >();
     }
+   
 
         public synchronized void cambiarIconoVictimaARescatada(String valor_idVictima) {
         System.out.println("se cambia el icono de la victima a rescatada: "+valor_idVictima );
@@ -143,30 +142,15 @@ public class VisorEditorEscenarios1 extends javax.swing.JFrame {
         jMenuItemAddVictima = new javax.swing.JMenuItem();
         jFileChooser1 = new javax.swing.JFileChooser();
         jOptionPane1 = new javax.swing.JOptionPane();
-        jPopupMenu1 = new javax.swing.JPopupMenu();
-        menuBar1 = new java.awt.MenuBar();
-        menu1 = new java.awt.Menu();
-        menu2 = new java.awt.Menu();
-        menuBar2 = new java.awt.MenuBar();
-        menu3 = new java.awt.Menu();
-        menu4 = new java.awt.Menu();
-        menuBar3 = new java.awt.MenuBar();
-        menu5 = new java.awt.Menu();
-        menu6 = new java.awt.Menu();
-        menuBar4 = new java.awt.MenuBar();
-        menu7 = new java.awt.Menu();
-        menu8 = new java.awt.Menu();
         jTextFieldModeloOrganizacion = new javax.swing.JTextField();
         robotIcon = new javax.swing.JLabel();
         intervalNumRobots = new javax.swing.JTextField();
         victimaIcon1 = new javax.swing.JLabel();
         intervalNumVictimas = new javax.swing.JTextField();
-        jTextFieldIdentEscenario = new javax.swing.JTextField();
+        jTextFieldIdentEquipo = new javax.swing.JTextField();
         jButtonGuardarEscenario = new javax.swing.JButton();
         jSeparator7 = new javax.swing.JSeparator();
         jLabelOrganizacion = new javax.swing.JLabel();
-        jLabelIdentEscenario = new javax.swing.JLabel();
-        jTextFieldIdentEquipo = new javax.swing.JTextField();
         jLabelIdentEquipo = new javax.swing.JLabel();
         GestionEscenarios = new javax.swing.JMenuBar();
         jMenuEditarEscenario = new javax.swing.JMenu();
@@ -179,14 +163,11 @@ public class VisorEditorEscenarios1 extends javax.swing.JFrame {
         jMenuItemGuardarEscenario = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenuItemSalir = new javax.swing.JMenuItem();
-        jMenuEquipo = new javax.swing.JMenu();
-        jMenuNombreEquipo = new javax.swing.JMenuItem();
-        jSeparator9 = new javax.swing.JPopupMenu.Separator();
-        jMenuOrgEquipo = new javax.swing.JMenu();
-        jCheckBoxMenuIgualitario = new javax.swing.JCheckBoxMenuItem();
-        jCheckBoxMenuJerarquico = new javax.swing.JCheckBoxMenuItem();
-        jCheckBoxMenuOtros = new javax.swing.JCheckBoxMenuItem();
-        jMenuAddEtidad = new javax.swing.JMenu();
+        jMenuOrganizacion = new javax.swing.JMenu();
+        jMenuItemModeloJerarquico = new javax.swing.JMenuItem();
+        jMenuItemModeloIgualitario = new javax.swing.JMenuItem();
+        jMenuItemModeloOtros = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
         jMenuItemCrearRobot = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         jMenuItemCrearVictima = new javax.swing.JMenuItem();
@@ -284,30 +265,6 @@ public class VisorEditorEscenarios1 extends javax.swing.JFrame {
             }
         });
 
-        menu1.setLabel("File");
-        menuBar1.add(menu1);
-
-        menu2.setLabel("Edit");
-        menuBar1.add(menu2);
-
-        menu3.setLabel("File");
-        menuBar2.add(menu3);
-
-        menu4.setLabel("Edit");
-        menuBar2.add(menu4);
-
-        menu5.setLabel("File");
-        menuBar3.add(menu5);
-
-        menu6.setLabel("Edit");
-        menuBar3.add(menu6);
-
-        menu7.setLabel("File");
-        menuBar4.add(menu7);
-
-        menu8.setLabel("Edit");
-        menuBar4.add(menu8);
-
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Editor de Escenarios");
         setMinimumSize(new java.awt.Dimension(30, 30));
@@ -347,9 +304,9 @@ public class VisorEditorEscenarios1 extends javax.swing.JFrame {
             }
         });
 
-        jTextFieldIdentEscenario.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldIdentEquipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldIdentEscenarioActionPerformed(evt);
+                jTextFieldIdentEquipoActionPerformed(evt);
             }
         });
 
@@ -367,17 +324,7 @@ public class VisorEditorEscenarios1 extends javax.swing.JFrame {
 
         jLabelOrganizacion.setText("Organización");
 
-        jLabelIdentEscenario.setText("Ident Escenario");
-
-        jTextFieldIdentEquipo.setToolTipText("");
-        jTextFieldIdentEquipo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldIdentEquipoActionPerformed(evt);
-            }
-        });
-
-        jLabelIdentEquipo.setLabelFor(jTextFieldIdentEquipo);
-        jLabelIdentEquipo.setText("Ident Equipo");
+        jLabelIdentEquipo.setText("Ident Escenario");
 
         jMenuEditarEscenario.setText("Edición");
 
@@ -427,49 +374,30 @@ public class VisorEditorEscenarios1 extends javax.swing.JFrame {
 
         GestionEscenarios.add(jMenuEditarEscenario);
 
-        jMenuEquipo.setText("Equipo");
-        jMenuEquipo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jMenuOrganizacion.setText("Organizacion del equipo");
 
-        jMenuNombreEquipo.setText("Nombre del Equipo");
-        jMenuNombreEquipo.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemModeloJerarquico.setText("Jerarquico");
+        jMenuItemModeloJerarquico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuNombreEquipoActionPerformed(evt);
+                jMenuItemModeloJerarquicoActionPerformed(evt);
             }
         });
-        jMenuEquipo.add(jMenuNombreEquipo);
-        jMenuEquipo.add(jSeparator9);
+        jMenuOrganizacion.add(jMenuItemModeloJerarquico);
 
-        jMenuOrgEquipo.setText("Organización del Equipo");
-
-        jCheckBoxMenuIgualitario.setText("Igualitario");
-        jCheckBoxMenuIgualitario.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemModeloIgualitario.setText("Igualitario");
+        jMenuItemModeloIgualitario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBoxMenuIgualitarioActionPerformed(evt);
+                jMenuItemModeloIgualitarioActionPerformed(evt);
             }
         });
-        jMenuOrgEquipo.add(jCheckBoxMenuIgualitario);
+        jMenuOrganizacion.add(jMenuItemModeloIgualitario);
 
-        jCheckBoxMenuJerarquico.setText("Jerarquico");
-        jCheckBoxMenuJerarquico.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBoxMenuJerarquicoActionPerformed(evt);
-            }
-        });
-        jMenuOrgEquipo.add(jCheckBoxMenuJerarquico);
+        jMenuItemModeloOtros.setText("Otros");
+        jMenuOrganizacion.add(jMenuItemModeloOtros);
 
-        jCheckBoxMenuOtros.setText("Otros");
-        jCheckBoxMenuOtros.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBoxMenuOtrosActionPerformed(evt);
-            }
-        });
-        jMenuOrgEquipo.add(jCheckBoxMenuOtros);
+        GestionEscenarios.add(jMenuOrganizacion);
 
-        jMenuEquipo.add(jMenuOrgEquipo);
-
-        GestionEscenarios.add(jMenuEquipo);
-
-        jMenuAddEtidad.setText("Añadir entidad");
+        jMenu3.setText("Añadir entidad");
 
         jMenuItemCrearRobot.setText("Robot");
         jMenuItemCrearRobot.addActionListener(new java.awt.event.ActionListener() {
@@ -477,8 +405,8 @@ public class VisorEditorEscenarios1 extends javax.swing.JFrame {
                 jMenuItemCrearRobotActionPerformed(evt);
             }
         });
-        jMenuAddEtidad.add(jMenuItemCrearRobot);
-        jMenuAddEtidad.add(jSeparator2);
+        jMenu3.add(jMenuItemCrearRobot);
+        jMenu3.add(jSeparator2);
 
         jMenuItemCrearVictima.setText("Victima");
         jMenuItemCrearVictima.addActionListener(new java.awt.event.ActionListener() {
@@ -486,9 +414,9 @@ public class VisorEditorEscenarios1 extends javax.swing.JFrame {
                 jMenuItemCrearVictimaActionPerformed(evt);
             }
         });
-        jMenuAddEtidad.add(jMenuItemCrearVictima);
+        jMenu3.add(jMenuItemCrearVictima);
 
-        GestionEscenarios.add(jMenuAddEtidad);
+        GestionEscenarios.add(jMenu3);
 
         setJMenuBar(GestionEscenarios);
 
@@ -496,60 +424,48 @@ public class VisorEditorEscenarios1 extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jSeparator7)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabelOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldModeloOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabelIdentEquipo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabelOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(robotIcon)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(intervalNumRobots, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(victimaIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(intervalNumVictimas, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(64, 64, 64))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextFieldIdentEquipo, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabelIdentEscenario, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldIdentEscenario, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButtonGuardarEscenario)
-                                .addContainerGap())))))
+                        .addComponent(jTextFieldModeloOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(robotIcon)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(intervalNumRobots, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(victimaIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(intervalNumVictimas, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelIdentEquipo, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldIdentEquipo, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonGuardarEscenario)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jSeparator7, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldIdentEquipo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelIdentEquipo)
-                    .addComponent(jLabelIdentEscenario)
-                    .addComponent(jTextFieldIdentEscenario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonGuardarEscenario))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(4, 4, 4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(intervalNumVictimas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(victimaIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(intervalNumRobots, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(robotIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldIdentEquipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonGuardarEscenario)
                     .addComponent(jTextFieldModeloOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelOrganizacion))
+                    .addComponent(jLabelOrganizacion)
+                    .addComponent(jLabelIdentEquipo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(722, Short.MAX_VALUE))
+                .addContainerGap(544, Short.MAX_VALUE))
         );
 
         pack();
@@ -620,10 +536,9 @@ public class VisorEditorEscenarios1 extends javax.swing.JFrame {
          intencionUsuarioCrearRobot = false;
     }//GEN-LAST:event_jMenuItemCrearVictimaActionPerformed
 
-    private void jTextFieldIdentEscenarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldIdentEscenarioActionPerformed
+    private void jTextFieldIdentEquipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldIdentEquipoActionPerformed
         // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jTextFieldIdentEscenarioActionPerformed
+    }//GEN-LAST:event_jTextFieldIdentEquipoActionPerformed
 
     private void jMenuItemEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEliminarActionPerformed
         // TODO add your handling code here:
@@ -700,13 +615,31 @@ public class VisorEditorEscenarios1 extends javax.swing.JFrame {
         }
         escenarioActualComp = gestionEscComp.crearEscenarioSimulacion();
 //        jTextFieldIdentEquipo.setText()
-        identEscenario= escenarioActualComp.getIdentEscenario();
+         identEquipoActual= escenarioActualComp.getIdentEscenario();
         eliminarEntidadesEscenario();
-        jTextFieldIdentEscenario.setText(identEscenario);
+        jTextFieldIdentEquipo.setText(identEquipoActual);
         intervalNumRobots.setText(""+0);
         intervalNumVictimas.setText(""+0);
         
     }//GEN-LAST:event_jMenuItemNuevoEscenarioActionPerformed
+
+    private void jMenuItemModeloJerarquicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemModeloJerarquicoActionPerformed
+        // TODO add your handling code here:
+        modeloOrganizativo = "Jerarquico";
+        jTextFieldModeloOrganizacion.setText(modeloOrganizativo);
+        escenarioActualComp.setmodeloOrganizativo(modeloOrganizativo);
+        identEquipoActual=gestionEscComp.getIdentEscenario(modeloOrganizativo, numeroRobots, numeroVictimas);
+        this.actualizarInfoEquipoEnEscenario();
+    }//GEN-LAST:event_jMenuItemModeloJerarquicoActionPerformed
+
+    private void jMenuItemModeloIgualitarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemModeloIgualitarioActionPerformed
+        // TODO add your handling code here:
+         modeloOrganizativo = "Igualitario";
+        jTextFieldModeloOrganizacion.setText(modeloOrganizativo);
+        escenarioActualComp.setmodeloOrganizativo(modeloOrganizativo);
+        identEquipoActual=gestionEscComp.getIdentEscenario(modeloOrganizativo, numeroRobots, numeroVictimas);
+        this.actualizarInfoEquipoEnEscenario();
+    }//GEN-LAST:event_jMenuItemModeloIgualitarioActionPerformed
 
     private void jMenuItemEliminarEscenarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEliminarEscenarioActionPerformed
         // TODO add your handling code here:
@@ -734,51 +667,6 @@ public class VisorEditorEscenarios1 extends javax.swing.JFrame {
 //         this.crearIconoRobVict(tipoEntidad,puntoCursor.x,puntoCursor.y );
 //        }
     }//GEN-LAST:event_formMouseReleased
-
-    private void jTextFieldIdentEquipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldIdentEquipoActionPerformed
-        // TODO add your handling code here:
-       identEquipo= jTextFieldIdentEquipo.getText();
-       actualizarIdentEquipo(identEquipo);
-    }//GEN-LAST:event_jTextFieldIdentEquipoActionPerformed
-
-    private void jCheckBoxMenuJerarquicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuJerarquicoActionPerformed
-        // TODO add your handling code here:
-        jCheckBoxMenuIgualitario.setSelected(false);
-        jCheckBoxMenuOtros.setSelected(false);
-        modeloOrganizativo = "Jerarquico";
-        jTextFieldModeloOrganizacion.setText(modeloOrganizativo);
-        escenarioActualComp.setmodeloOrganizativo(modeloOrganizativo);
-        identEscenario=gestionEscComp.getIdentEscenario(modeloOrganizativo, numeroRobots, numeroVictimas);
-        this.actualizarInfoEquipoEnEscenario();
-        
-    }//GEN-LAST:event_jCheckBoxMenuJerarquicoActionPerformed
-
-    private void jMenuNombreEquipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuNombreEquipoActionPerformed
-        // TODO add your handling code here:
-       
-        identEquipo= solicitarIdentEquipo("Definir Identificador del equipo", identEquipo);
-        actualizarIdentEquipo(identEquipo);
-        
-    }//GEN-LAST:event_jMenuNombreEquipoActionPerformed
-
-    private void jCheckBoxMenuIgualitarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuIgualitarioActionPerformed
-        // TODO add your handling code here:
-        jCheckBoxMenuJerarquico.setSelected(false);
-        jCheckBoxMenuOtros.setSelected(false);
-         modeloOrganizativo = "Igualitario";
-        jTextFieldModeloOrganizacion.setText(modeloOrganizativo);
-        escenarioActualComp.setmodeloOrganizativo(modeloOrganizativo);
-        identEscenario=gestionEscComp.getIdentEscenario(modeloOrganizativo, numeroRobots, numeroVictimas);
-        this.actualizarInfoEquipoEnEscenario();
-    }//GEN-LAST:event_jCheckBoxMenuIgualitarioActionPerformed
-
-    private void jCheckBoxMenuOtrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuOtrosActionPerformed
-        // TODO add your handling code here:
-        jCheckBoxMenuJerarquico.setSelected(false);
-        jCheckBoxMenuIgualitario.setSelected(false);
-        modeloOrganizativo = "Otros";
-        actualizarItemsMenuModeloOrganizacion(modeloOrganizativo);
-    }//GEN-LAST:event_jCheckBoxMenuOtrosActionPerformed
     private void setIntervaloEnvioMensajesDesdeCC(int intervalo){
 		intervaloSecuencia = intervalo ;
 		int intervaloEnvioMensajesDesdeCC = 1000;
@@ -791,36 +679,9 @@ public class VisorEditorEscenarios1 extends javax.swing.JFrame {
          entidadSeleccionadaParaMover=false;
           evt.consume();
          
-    } 
-     private void actualizarIdentEquipo(String idEquipo){
-          String identEquipoActual= escenarioActualComp.getIdentEquipo();
-         if(idEquipo==null||idEquipo.isEmpty()||idEquipo.isBlank()){
-            JOptionPane.showMessageDialog(jMenuEquipo, "El identificador del equipo debe tener más de un caracter");
-           identEquipo= solicitarIdentEquipo("Definir Identificador del equipo", "identificación del Equipo");
-        }
-        if(!identEquipo.equals(identEquipoActual)){
-        jLabelIdentEquipo.setVisible(true);
-        jTextFieldIdentEquipo.setText(identEquipo);
-         jTextFieldIdentEquipo.setVisible(true);
-        escenarioActualComp.actualizarIdentRobts(identEquipo);
-        escenarioActualComp.setIdentEquipo(identEquipo);
-        this.visualizarEscenario(escenarioActualComp);
-        }
-     }
-     private void actualizarItemsMenuModeloOrganizacion(String modeloOrganizacion){
-        modeloOrganizativo = modeloOrganizacion;
-        jTextFieldModeloOrganizacion.setText(modeloOrganizativo);
-        escenarioActualComp.setmodeloOrganizativo(modeloOrganizativo);
-        identEscenario=gestionEscComp.getIdentEscenario(modeloOrganizativo, numeroRobots, numeroVictimas);
-        this.actualizarInfoEquipoEnEscenario();
-     }
-             
+    }  
      public int solicitarConfirmacion(String texto, String tituloVentana){
         return( JOptionPane.showConfirmDialog(rootPane, texto,tituloVentana,JOptionPane.YES_NO_CANCEL_OPTION ));  
-     }
-     
-     public String solicitarIdentEquipo(String texto,  String valorInicial){
-         return JOptionPane.showInputDialog(rootPane, texto, valorInicial);
      }
 
     public void visualizarIdentsEquipoRobot ( ArrayList<String> equipoIds){
@@ -842,7 +703,13 @@ public class VisorEditorEscenarios1 extends javax.swing.JFrame {
         String rutaImagen;
         String identEntidad="";
        if ( tipoEntidad.startsWith("Robot")){
+//           rutaImagen=directorioTrabajo+rutaIconos+imageniconoRobot;
             rutaImagen=VocabularioRosace.RUTA_ICONOS_ESCENARIOS+imageniconoRobot;
+//           numeroRobots= escenarioActualComp.getNumRobots();
+//             numeroRobots++; 
+//             identEntidad=tipoEntidad+numeroRobots;
+//             if(listaIdentsRobots.contains(identEntidad))identEntidad=geIdentEntidad(ENTIDAD_ROBOT);
+//             else listaIdentsRobots.add(identEntidad);
             identEntidad=geIdentEntidad(ENTIDAD_ROBOT);
            escenarioActualComp.addRoboLoc(identEntidad, new Point(coordX,coordY));
            numeroRobots++;
@@ -865,14 +732,13 @@ public class VisorEditorEscenarios1 extends javax.swing.JFrame {
 //         label.setText(tipoEntidad+mumeroVictimas);
        }      
         label.setText(identEntidad);
-        label.setBounds(10, 10, 150, 150);
-        label.setHorizontalTextPosition(SwingConstants.RIGHT);
+        label.setBounds(10, 10, 100, 100);
         this.add(label);
         label.setVisible(true);
         label.setIcon(new ImageIcon(rutaImagen));
         label.setLocation(coordX, coordY);
         this.listaEntidadesEnEscenario.add(label);
-        identEscenario=gestionEscComp.getIdentEscenario(modeloOrganizativo, numeroRobots, numeroVictimas);
+        identEquipoActual=gestionEscComp.getIdentEscenario(modeloOrganizativo, numeroRobots, numeroVictimas);
         actualizarInfoEquipoEnEscenario ();
         System.out.println( "Se crea la entidad : "+label.getText()+ " Coordenadas : X =" + coordX +" , Y = " +coordY );
 //       tablaEntidadesEnEscenario.put(identEntidad, label);
@@ -885,22 +751,38 @@ public class VisorEditorEscenarios1 extends javax.swing.JFrame {
     private synchronized String geIdentEntidad(int tipoEntidad){
         // si ya hay una entidad con ese el numero asignado se busca el entero minimo que no tiene asignada entidad
         String etiqueta = "";
+//        ArrayList listaBusqueda=null;
+//        if(tipoEntidad==ENTIDAD_ROBOT){listaBusqueda=listaIdentsRobots;
+//        etiqueta=ROBOT;
+//        }
+//        else if(tipoEntidad==ENTIDAD_VICTIMA){
+//            listaBusqueda=listaIdentsVictimas;
+//            etiqueta=VICTIMA;
+//        }
+//        else return etiqueta;
         int indiceHueco=0; boolean huecoEncontrado=false;
+//            indiceHueco = listaBusqueda.indexOf("");
+//                    if(indiceHueco<0)indiceHueco=listaBusqueda.size+1;
+//            while (indiceHueco< listaBusqueda.size()&&!huecoEncontrado){
+//                  if(listaBusqueda.get(i).equals(""))huecoEncontrado=true; 
+//                  else i++;
+//                }
+//            etiqueta=etiqueta+(i+1); 
             if(listaIdentsRobots==null)listaIdentsRobots= new ArrayList < >();
             if(listaIdentsVictimas==null)listaIdentsVictimas= new ArrayList < >();
             if( tipoEntidad==ENTIDAD_ROBOT){
                 indiceHueco =listaIdentsRobots.indexOf("");
                 if(indiceHueco<0){
-                    int i=listaIdentsRobots.size()+1; etiqueta= identEquipo+ROBOT+i;
+                    int i=listaIdentsRobots.size()+1; etiqueta=ROBOT+i;
                     while(listaIdentsRobots.contains(etiqueta)){
                         i++;
-                        etiqueta=identEquipo+ROBOT+i;
+                        etiqueta=ROBOT+i;   
                     }
                     listaIdentsRobots.add(etiqueta);
     System.out.println( "Se crea la etiqueta : " +etiqueta+ " En la posicion de la lista:  " + (i-1) +" ,El tamagno de la lista es : " +listaIdentsRobots.size() );
                 }
                 else{
-                    etiqueta=identEquipo+ROBOT+(indiceHueco+1); 
+                    etiqueta=ROBOT+(indiceHueco+1); 
                     listaIdentsRobots.set(indiceHueco, etiqueta);
     System.out.println( "Se reutiliza la etiqueta : " +etiqueta+ " En la posicion de la lista:  " + indiceHueco +" ,El tamagno de la lista es : " +listaIdentsRobots.size() );
                 }
@@ -925,7 +807,7 @@ public class VisorEditorEscenarios1 extends javax.swing.JFrame {
         escenarioModificado=true;
          JLabel label = new JLabel();
            label.setText(idEntidad);
-        label.setBounds(10, 10, 150, 150);
+        label.setBounds(10, 10, 100, 100);
         this.add(label);
         label.setVisible(true);
         label.setIcon(new ImageIcon(rutaIcono));
@@ -959,7 +841,7 @@ int indiceEntidad =0;
        escenarioActualComp.eliminarEntidad(identEntidad);
        listaEntidadesEnEscenario.remove(entidadAeliminar);
         System.out.println( "Se elimina la entidad : "+entidadAeliminar.getText()+ "Indice en tabla ident :"+ indiceEntidad + " Coordenadas : X =" + entidadAeliminar.getX() +" , Y = " +entidadAeliminar.getY() );
-        identEscenario=gestionEscComp.getIdentEscenario(modeloOrganizativoInicial, numeroRobots, numeroVictimas);
+        identEquipoActual=gestionEscComp.getIdentEscenario(modeloOrganizativoInicial, numeroRobots, numeroVictimas);
         actualizarInfoEquipoEnEscenario ();
     }
     public void actualizarInfoEquipoEnEscenario (){
@@ -968,16 +850,15 @@ int indiceEntidad =0;
         intervalNumRobots.setText(""+numeroRobots);
         intervalNumVictimas.setText(""+numeroVictimas);
 //        identEquipoActual=orgModelo+modeloOrganizativo+numRobots+numeroRobots+numVictims+numeroVictimas+subIndiceEscRepetido
-        jTextFieldIdentEscenario.setText(""+identEscenario);
-        escenarioActualComp.setIdentEscenario(identEscenario);
-        jTextFieldIdentEquipo.setText(""+identEquipo);
-        escenarioActualComp.setIdentEquipo(identEquipo);
+        jTextFieldIdentEquipo.setText(""+identEquipoActual);
+        escenarioActualComp.setIdentEscenario(identEquipoActual);
+        jTextFieldIdentEquipo.setText(""+identEquipoActual);
     }
-//    private void actualizarIdentEscenario(String idenEscenario){
-//        if(idenEscenario!=null)identEscenario=gestionEscComp.getNewVersionEscenario(idenEscenario);
-//        else identEscenario = gestionEscComp.getIdentEscenario(modeloOrganizativo, numeroRobots, numeroVictimas);
-//        escenarioActualComp.setIdentEscenario(idenEscenario);
-//    }
+    private void actualizarIdentEscenario(String idenEscenario){
+        if(idenEscenario!=null)identEquipoActual=gestionEscComp.getNewVersionEscenario(idenEscenario);
+        else identEquipoActual = gestionEscComp.getIdentEscenario(modeloOrganizativo, numeroRobots, numeroVictimas);
+        escenarioActualComp.setIdentEscenario(idenEscenario);
+    }
    
     public void actualizarCoordenadasEntidades(){
         System.out.println( "Se actualizan las coordenadas. Numero de entidades : "+listaEntidadesEnEscenario.size());
@@ -1003,20 +884,19 @@ int indiceEntidad =0;
         escenarioActualComp = escenActualComp;
     }
      public void visualizarEscenario(EscenarioSimulacionRobtsVictms infoEscenario ){
-         eliminarEntidadesEscenario();        
-         jTextFieldIdentEquipo.setVisible(true);
-        jLabelIdentEquipo.setVisible(true);
-         escenarioActualComp= infoEscenario;
-         identEscenario=escenarioActualComp.getIdentEscenario();
+         eliminarEntidadesEscenario();
+         String identEscenario=infoEscenario.getIdentEscenario();
          System.out.println( "Se Va a visualizar el escenario con identificador "+ identEscenario ); 
+         escenarioActualComp= infoEscenario;
          listaIdentsRobots=infoEscenario.getListIdentsRobots();
          listaIdentsVictimas=infoEscenario.getListIdentsVictims();
          modeloOrganizativo=infoEscenario.getmodeloOrganizativo();
          numeroRobots = infoEscenario.getNumRobots();
          numeroVictimas = infoEscenario.getNumVictimas();
-         identEquipo=infoEscenario.getIdentEquipo();       
-         jTextFieldIdentEquipo.setText(""+identEquipo);
-         jTextFieldModeloOrganizacion.setText(""+modeloOrganizativo);
+         identEquipoActual=identEscenario;
+         
+//         jTextFieldIdentEquipo.setText(""+infoEscenario.getIdentEscenario());
+//         jTextFieldModeloOrganizacion.setText(""+modeloOrganizativo);
 //         intervalNumRobots.setText(""+numeroRobots);
 //         intervalNumVictimas.setText(""+numeroVictimas);
          String rutaImagen;
@@ -1050,27 +930,13 @@ int indiceEntidad =0;
          this.setLocation(100,100);
          this.setVisible(true);
 //          escenarioModificado= (!identEscenario.equals(this.identEquipoActual));
-          System.out.println( "El identificador del escenario tras su visualizacion es : "+ identEscenario + " El escenario hasido modificado :" + escenarioModificado );
+          System.out.println( "El identificador del escenario tras su visualizacion es : "+ identEquipoActual + " El escenario hasido modificado :" + escenarioModificado );
      }
-     public void visualizarCrearEscenario(EscenarioSimulacionRobtsVictms infoEscenario ){
-         escenarioActualComp=infoEscenario;
-         identEscenario=escenarioActualComp.getIdentEscenario();
-         System.out.println( "Se Va a visualizar el panel para crear un escenario con identificador "+ identEscenario ); 
-//         jTextFieldIdentEquipo.setVisible(true);
-//        jLabelIdentEquipo.setVisible(true);
-         listaIdentsRobots=escenarioActualComp.getListIdentsRobots();
-         listaIdentsVictimas=escenarioActualComp.getListIdentsVictims();
-         modeloOrganizativo=escenarioActualComp.getmodeloOrganizativo();
-         numeroRobots = escenarioActualComp.getNumRobots();
-         numeroVictimas = escenarioActualComp.getNumVictimas();
-         identEquipo=escenarioActualComp.getIdentEquipo();
-         actualizarInfoEquipoEnEscenario ();
-     } 
      
      public int confirmarPeticionGuardarEscenario (String msgConfirmacion){
          escenarioActualComp.setIdentificadorNormalizado();
-         jTextFieldIdentEscenario.setText(escenarioActualComp.getIdentEscenario());
-        String smsg = msgConfirmacion + jTextFieldIdentEscenario.getText();
+         jTextFieldIdentEquipo.setText(escenarioActualComp.getIdentEscenario());
+        String smsg = msgConfirmacion + jTextFieldIdentEquipo.getText();
        return JOptionPane.showConfirmDialog(rootPane, smsg,"Confirmar GuardarEscenario",JOptionPane.OK_CANCEL_OPTION );
      }
      private void eliminarEntidadesEscenario(){
@@ -1078,7 +944,7 @@ int indiceEntidad =0;
          for( Component comp : this.getContentPane().getComponents() ){
                  if (comp instanceof JLabel){
                       labelActual = (JLabel)comp;
-                     if (!labelActual.equals(jLabelIdentEscenario)&&!labelActual.equals(jLabelOrganizacion)
+                     if (!labelActual.equals(jLabelIdentEquipo)&&!labelActual.equals(jLabelOrganizacion)
                              &&!labelActual.equals(robotIcon)&&!labelActual.equals(victimaIcon1)){                    
                          comp.setVisible(false);
                          remove(comp);
@@ -1124,13 +990,13 @@ int indiceEntidad =0;
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VisorEditorEscenarios1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VisorEditorEscenarios0.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VisorEditorEscenarios1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VisorEditorEscenarios0.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VisorEditorEscenarios1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VisorEditorEscenarios0.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VisorEditorEscenarios1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VisorEditorEscenarios0.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
        
         /* Create and display the form */
@@ -1139,7 +1005,7 @@ int indiceEntidad =0;
             @Override
             public void run() {
             String  directorioPersistencia = VocabularioRosace.NombreDirectorioPersistenciaEscenarios+File.separator;
-            VisorEditorEscenarios1 visor;
+            VisorEditorEscenarios0 visor;
             PersistenciaVisualizadorEscenarios persistencia= new PersistenciaVisualizadorEscenarios();
             GestionEscenariosSimulacion gestionEscComp= new GestionEscenariosSimulacion();
             gestionEscComp.setIdentsEscenariosSimulacion(persistencia.obtenerIdentsEscenarioSimulacion(directorioPersistencia));
@@ -1168,18 +1034,13 @@ int indiceEntidad =0;
     private javax.swing.JTextField intervalNumVictimas;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonGuardarEscenario;
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuIgualitario;
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuJerarquico;
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuOtros;
     private javax.swing.JDialog jDialogAvisoErrorDefNumEntidades;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelIdentEquipo;
-    private javax.swing.JLabel jLabelIdentEscenario;
     private javax.swing.JLabel jLabelOrganizacion;
-    private javax.swing.JMenu jMenuAddEtidad;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenuEditarEscenario;
-    private javax.swing.JMenu jMenuEquipo;
     private javax.swing.JMenuItem jMenuItemAbrir;
     private javax.swing.JMenuItem jMenuItemAddRobot;
     private javax.swing.JMenuItem jMenuItemAddVictima;
@@ -1189,12 +1050,13 @@ int indiceEntidad =0;
     private javax.swing.JMenuItem jMenuItemEliminarEscenario;
     private javax.swing.JMenuItem jMenuItemGuardar;
     private javax.swing.JMenuItem jMenuItemGuardarEscenario;
+    private javax.swing.JMenuItem jMenuItemModeloIgualitario;
+    private javax.swing.JMenuItem jMenuItemModeloJerarquico;
+    private javax.swing.JMenuItem jMenuItemModeloOtros;
     private javax.swing.JMenuItem jMenuItemNuevoEscenario;
     private javax.swing.JMenuItem jMenuItemSalir;
-    private javax.swing.JMenuItem jMenuNombreEquipo;
-    private javax.swing.JMenu jMenuOrgEquipo;
+    private javax.swing.JMenu jMenuOrganizacion;
     private javax.swing.JOptionPane jOptionPane1;
-    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JPopupMenu jPopupMenuAcionEntidad;
     private javax.swing.JPopupMenu jPopupMenuAddEntidades;
     private javax.swing.JPopupMenu.Separator jSeparator1;
@@ -1205,22 +1067,8 @@ int indiceEntidad =0;
     private javax.swing.JPopupMenu.Separator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JPopupMenu.Separator jSeparator8;
-    private javax.swing.JPopupMenu.Separator jSeparator9;
     private javax.swing.JTextField jTextFieldIdentEquipo;
-    private javax.swing.JTextField jTextFieldIdentEscenario;
     private javax.swing.JTextField jTextFieldModeloOrganizacion;
-    private java.awt.Menu menu1;
-    private java.awt.Menu menu2;
-    private java.awt.Menu menu3;
-    private java.awt.Menu menu4;
-    private java.awt.Menu menu5;
-    private java.awt.Menu menu6;
-    private java.awt.Menu menu7;
-    private java.awt.Menu menu8;
-    private java.awt.MenuBar menuBar1;
-    private java.awt.MenuBar menuBar2;
-    private java.awt.MenuBar menuBar3;
-    private java.awt.MenuBar menuBar4;
     private javax.swing.JLabel robotIcon;
     private javax.swing.JLabel victimaIcon1;
     // End of variables declaration//GEN-END:variables

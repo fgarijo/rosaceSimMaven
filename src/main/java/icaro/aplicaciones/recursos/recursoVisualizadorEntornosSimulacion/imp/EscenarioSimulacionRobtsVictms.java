@@ -12,13 +12,9 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import javax.swing.JLabel;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementMap;
 import org.simpleframework.xml.Root;
@@ -32,11 +28,14 @@ public class EscenarioSimulacionRobtsVictms {
     @Element
     private String identEscenario;
     @Element
+    private String identEquipo;
+    @Element
     private String modeloOrganizativo;
     @Element
     private int numRobots;
     @Element
     private int numVictimas;
+    
     @ElementMap(entry="robots", key="key", attribute=true, inline=true)
     private Map<String, RobotStatus1> infoRobots;     
     @ElementMap(entry="victimas", key="key", attribute=true, inline=true)
@@ -54,18 +53,10 @@ public class EscenarioSimulacionRobtsVictms {
      
 
 public  EscenarioSimulacionRobtsVictms (){
+        this.identEquipo = "indefinido";
     migestor=null;
-    
         infoRobots = new HashMap<String,RobotStatus1 >();
-//        infoRobots.put(robotInfo.getIdRobot(),robotInfo);
-//        infoRobots.put(robotInicialId, robotInfo);
-        
-        
-//        victimasLoc = new HashMap<String, Point>();
         infoVictimas = new HashMap<String, Victim>();
-       
-        
-        
 }
 public void  initEscenario(){
     modeloOrganizativo = "SinDefinir";
@@ -78,11 +69,7 @@ public void  initEscenario(){
         ultimoRobotDefinido.setRobotCapability(capabilityInicial);
         ultimoRobotDefinido.setIdRobot(robotInicialId);
         ultimaVictimaModificada = new Victim (victimInicialId);
-//        ultimaVictimaModificada.setName(victimInicialId);
-//        this.addRoboInfo(robotInicialId, ultimoRobotDefinido);
         this.infoRobots.put(robotInicialId, ultimoRobotDefinido);
-     
-//        victimasLoc.put(victimInicialId, new Point(0,0));
         this.infoVictimas.put(victimInicialId, ultimaVictimaModificada);
         
 }
@@ -205,9 +192,13 @@ public void setIdentEscenario(String escenarioId) {
     identEscenario = escenarioId;
 }
     public synchronized String getIdentEscenario() {
-//        throw new UnsupportedOperationException("Not supported yet."); 
-//    if ( migestor!=null)return migestor.getIdentEscenario(modeloOrganizativo, numRobots, numVictimas);
         return this.identEscenario;
+    }
+    public void setIdentEquipo(String equipoId) {
+    identEquipo = equipoId;
+}
+    public synchronized String getIdentEquipo() {
+        return this.identEquipo;
     }
     public synchronized String getNewIdentEscenario() {
     if ( migestor!=null){
@@ -255,6 +246,23 @@ public void setIdentEscenario(String escenarioId) {
             infoRobots.remove ( identTabla);  
             robotInfo.setIdRobot(identNuevo);  
             infoRobots.put(identNuevo,robotInfo ); 
+           }
+        }
+    }
+
+    void actualizarIdentRobts(String identEquipoN) {
+       String identEquipoActual= this.getIdentEquipo(); 
+       if(!identEquipoActual.equals(identEquipoN)){
+        String identRobotActual; 
+        RobotStatus1 robotInfo = null;
+        Object[] identRobots= infoRobots.keySet().toArray();
+           for (Object identRobot : identRobots) {
+               identRobotActual = (String) identRobot;
+               robotInfo = infoRobots.get(identRobotActual);
+               infoRobots.remove ( identRobotActual);
+               identRobotActual=identRobotActual.replace(identEquipoActual, identEquipoN);
+               robotInfo.setIdRobot(identRobotActual);
+               infoRobots.put(identRobotActual,robotInfo );      
            }
         }
     }

@@ -20,26 +20,25 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  *
  * @author FGarijo
  */
-public class VisorControlSimuladorRosace extends javax.swing.JFrame {
+public class VisorControlSimulador extends javax.swing.JFrame {
 
     /** Creates new form ControlCenterGui2 */
-    private NotificadorInfoUsuarioSimulador notifEvts;
     private int intervaloSecuencia = 5000; // valor por defecto. Eso deberia ponerse en otro sitio
     private int numMensajesEnviar = 3;
     private boolean primeraVictima = true;
     private ArrayList identsRobotsEquipo ;
     private ArrayList identsVictimas ;
-    private ControladorVisualizacionSimulRosace controladorEscSim;
+    private ControladorVisualizacionSimulador controladorEscSim;
     private String identEscenarioActual;
     private String identRobotSeleccionado;
     private String identVictimaSeleccionada;
-    private ControladorGestionEscenariosRosace controladorGestionEscenarios;
+    private ControladorGestionEscenarios controladorGestionEscenarios;
     private File ultimoFicheroEscenarioSeleccionado;
     private String sepLinea;
     
      
     
-    public VisorControlSimuladorRosace(ControladorVisualizacionSimulRosace controlador) {
+    public VisorControlSimulador(ControladorVisualizacionSimulador controlador) {
         controladorEscSim= controlador;
         sepLinea= System.getProperty("line.separator");
         initComponents();
@@ -47,9 +46,9 @@ public class VisorControlSimuladorRosace extends javax.swing.JFrame {
 //         listaComponentes.setVisible(false);
        
     }
-    public void setControladorGestionEscenarios( ControladorGestionEscenariosRosace controladorGestionEsc) {
-        this.controladorGestionEscenarios = controladorGestionEsc;
-    }
+//    public void setControladorGestionEscenarios( ControladorGestionEscenarios controladorGestionEsc) {
+//        this.controladorGestionEscenarios = controladorGestionEsc;
+//    }
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -89,7 +88,7 @@ public class VisorControlSimuladorRosace extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItemSalirSimulador = new javax.swing.JMenuItem();
         jMenuEditarEscenario = new javax.swing.JMenu();
-        jMenuItemAbrirEscenario = new javax.swing.JMenuItem();
+        jMenuItemAbrirEscenarioEdicion = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
         jMenuItemCrearEscenario = new javax.swing.JMenuItem();
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
@@ -237,13 +236,13 @@ public class VisorControlSimuladorRosace extends javax.swing.JFrame {
 
         jMenuEditarEscenario.setText("Editor Escenarios");
 
-        jMenuItemAbrirEscenario.setText("Abrir Escenario");
-        jMenuItemAbrirEscenario.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemAbrirEscenarioEdicion.setText("Abrir Escenario");
+        jMenuItemAbrirEscenarioEdicion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemAbrirEscenarioActionPerformed(evt);
+                jMenuItemAbrirEscenarioEdicionActionPerformed(evt);
             }
         });
-        jMenuEditarEscenario.add(jMenuItemAbrirEscenario);
+        jMenuEditarEscenario.add(jMenuItemAbrirEscenarioEdicion);
         jMenuEditarEscenario.add(jSeparator5);
 
         jMenuItemCrearEscenario.setText("Crear Escenario");
@@ -428,14 +427,14 @@ public class VisorControlSimuladorRosace extends javax.swing.JFrame {
         // Usuario quiere crear un escenario
         // se abre una  ventana vacia , si tiene otra abierta se le debería avisar de que se guardar
         // lo que tiene
-        controladorGestionEscenarios.peticionCrearEscenario();
+        controladorEscSim.peticionCrearEscenario();
     }//GEN-LAST:event_jMenuItemCrearEscenarioActionPerformed
 
-    private void jMenuItemAbrirEscenarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAbrirEscenarioActionPerformed
+    private void jMenuItemAbrirEscenarioEdicionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAbrirEscenarioEdicionActionPerformed
         // TODO add your handling code here:
-       controladorGestionEscenarios.peticionAbrirEscenarioEdicion();
+       controladorEscSim.peticionAbrirEscenarioEdicion();
 
-    }//GEN-LAST:event_jMenuItemAbrirEscenarioActionPerformed
+    }//GEN-LAST:event_jMenuItemAbrirEscenarioEdicionActionPerformed
 
     private void jMenuItemPararActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPararActionPerformed
         // TODO add your handling code here:
@@ -628,14 +627,18 @@ public class VisorControlSimuladorRosace extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VisorControlSimuladorRosace.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VisorControlSimulador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VisorControlSimuladorRosace.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VisorControlSimulador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VisorControlSimuladorRosace.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VisorControlSimulador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VisorControlSimuladorRosace.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VisorControlSimulador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -671,7 +674,7 @@ public class VisorControlSimuladorRosace extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuEditarEscenario;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItemAbrirEscenario;
+    private javax.swing.JMenuItem jMenuItemAbrirEscenarioEdicion;
     private javax.swing.JMenuItem jMenuItemAbrirEscenarioParaSimular;
     private javax.swing.JMenuItem jMenuItemCrearEscenario;
     private javax.swing.JMenuItem jMenuItemParar;

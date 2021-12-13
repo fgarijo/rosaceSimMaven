@@ -121,68 +121,6 @@
     </Component>
     <Component class="javax.swing.JOptionPane" name="jOptionPane1">
     </Component>
-    <Container class="javax.swing.JPopupMenu" name="jPopupMenu1">
-
-      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
-        <Property name="useNullLayout" type="boolean" value="true"/>
-      </Layout>
-    </Container>
-    <Menu class="java.awt.MenuBar" name="menuBar1">
-      <SubComponents>
-        <Menu class="java.awt.Menu" name="menu1">
-          <Properties>
-            <Property name="label" type="java.lang.String" value="File"/>
-          </Properties>
-        </Menu>
-        <Menu class="java.awt.Menu" name="menu2">
-          <Properties>
-            <Property name="label" type="java.lang.String" value="Edit"/>
-          </Properties>
-        </Menu>
-      </SubComponents>
-    </Menu>
-    <Menu class="java.awt.MenuBar" name="menuBar2">
-      <SubComponents>
-        <Menu class="java.awt.Menu" name="menu3">
-          <Properties>
-            <Property name="label" type="java.lang.String" value="File"/>
-          </Properties>
-        </Menu>
-        <Menu class="java.awt.Menu" name="menu4">
-          <Properties>
-            <Property name="label" type="java.lang.String" value="Edit"/>
-          </Properties>
-        </Menu>
-      </SubComponents>
-    </Menu>
-    <Menu class="java.awt.MenuBar" name="menuBar3">
-      <SubComponents>
-        <Menu class="java.awt.Menu" name="menu5">
-          <Properties>
-            <Property name="label" type="java.lang.String" value="File"/>
-          </Properties>
-        </Menu>
-        <Menu class="java.awt.Menu" name="menu6">
-          <Properties>
-            <Property name="label" type="java.lang.String" value="Edit"/>
-          </Properties>
-        </Menu>
-      </SubComponents>
-    </Menu>
-    <Menu class="java.awt.MenuBar" name="menuBar4">
-      <SubComponents>
-        <Menu class="java.awt.Menu" name="menu7">
-          <Properties>
-            <Property name="label" type="java.lang.String" value="File"/>
-          </Properties>
-        </Menu>
-        <Menu class="java.awt.Menu" name="menu8">
-          <Properties>
-            <Property name="label" type="java.lang.String" value="Edit"/>
-          </Properties>
-        </Menu>
-      </SubComponents>
-    </Menu>
     <Menu class="javax.swing.JMenuBar" name="GestionEscenarios">
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="jMenuEditarEscenario">
@@ -240,56 +178,35 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenuEquipo">
+        <Menu class="javax.swing.JMenu" name="jMenuOrganizacion">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Equipo"/>
-            <Property name="horizontalAlignment" type="int" value="2"/>
+            <Property name="text" type="java.lang.String" value="Organizacion del equipo"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuNombreEquipo">
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemModeloJerarquico">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Nombre del Equipo"/>
+                <Property name="text" type="java.lang.String" value="Jerarquico"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuNombreEquipoActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemModeloJerarquicoActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator9">
-            </MenuItem>
-            <Menu class="javax.swing.JMenu" name="jMenuOrgEquipo">
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemModeloIgualitario">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Organizaci&#xf3;n del Equipo"/>
+                <Property name="text" type="java.lang.String" value="Igualitario"/>
               </Properties>
-              <SubComponents>
-                <MenuItem class="javax.swing.JCheckBoxMenuItem" name="jCheckBoxMenuIgualitario">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Igualitario"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBoxMenuIgualitarioActionPerformed"/>
-                  </Events>
-                </MenuItem>
-                <MenuItem class="javax.swing.JCheckBoxMenuItem" name="jCheckBoxMenuJerarquico">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Jerarquico"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBoxMenuJerarquicoActionPerformed"/>
-                  </Events>
-                </MenuItem>
-                <MenuItem class="javax.swing.JCheckBoxMenuItem" name="jCheckBoxMenuOtros">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Otros"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBoxMenuOtrosActionPerformed"/>
-                  </Events>
-                </MenuItem>
-              </SubComponents>
-            </Menu>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemModeloIgualitarioActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemModeloOtros">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Otros"/>
+              </Properties>
+            </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenuAddEtidad">
+        <Menu class="javax.swing.JMenu" name="jMenu3">
           <Properties>
             <Property name="text" type="java.lang.String" value="A&#xf1;adir entidad"/>
           </Properties>
@@ -348,72 +265,53 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="1" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="jSeparator7" max="32767" attributes="0"/>
+                      <Component id="jLabelOrganizacion" min="-2" pref="82" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="jLabelOrganizacion" min="-2" pref="82" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jTextFieldModeloOrganizacion" min="-2" pref="105" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="jLabelIdentEquipo" alignment="1" min="-2" pref="76" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="jTextFieldModeloOrganizacion" min="-2" pref="105" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="robotIcon" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="intervalNumRobots" min="-2" pref="27" max="-2" attributes="1"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="victimaIcon1" min="-2" pref="69" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="intervalNumVictimas" min="-2" pref="33" max="-2" attributes="1"/>
-                              <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jTextFieldIdentEquipo" min="-2" pref="240" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabelIdentEscenario" min="-2" pref="95" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jTextFieldIdentEscenario" min="-2" pref="292" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="jButtonGuardarEscenario" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
+                      <Component id="robotIcon" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="intervalNumRobots" min="-2" pref="27" max="-2" attributes="1"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="victimaIcon1" min="-2" pref="69" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="intervalNumVictimas" min="-2" pref="33" max="-2" attributes="1"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLabelIdentEquipo" min="-2" pref="95" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jTextFieldIdentEquipo" min="-2" pref="292" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jButtonGuardarEscenario" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
+                  <Component id="jSeparator7" alignment="1" max="32767" attributes="0"/>
               </Group>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jTextFieldIdentEquipo" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                  <Component id="jLabelIdentEquipo" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabelIdentEscenario" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jTextFieldIdentEscenario" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButtonGuardarEscenario" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="intervalNumVictimas" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="victimaIcon1" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
                   <Component id="intervalNumRobots" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="robotIcon" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
+                  <Component id="jTextFieldIdentEquipo" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButtonGuardarEscenario" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jTextFieldModeloOrganizacion" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabelOrganizacion" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabelIdentEquipo" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="jSeparator7" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="722" max="32767" attributes="0"/>
+              <EmptySpace pref="544" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -461,9 +359,9 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="intervalNumVictimasActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextFieldIdentEscenario">
+    <Component class="javax.swing.JTextField" name="jTextFieldIdentEquipo">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldIdentEscenarioActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldIdentEquipoActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButtonGuardarEscenario">
@@ -482,25 +380,9 @@
         <Property name="text" type="java.lang.String" value="Organizaci&#xf3;n"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabelIdentEscenario">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Ident Escenario"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="jTextFieldIdentEquipo">
-      <Properties>
-        <Property name="toolTipText" type="java.lang.String" value=""/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldIdentEquipoActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JLabel" name="jLabelIdentEquipo">
       <Properties>
-        <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-          <ComponentRef name="jTextFieldIdentEquipo"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Ident Equipo"/>
+        <Property name="text" type="java.lang.String" value="Ident Escenario"/>
       </Properties>
     </Component>
   </SubComponents>

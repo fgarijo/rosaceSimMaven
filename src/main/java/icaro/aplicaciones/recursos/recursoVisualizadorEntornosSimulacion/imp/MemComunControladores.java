@@ -31,6 +31,7 @@ public class MemComunControladores {
     private boolean robtsVisualizados;
     private boolean victimsVisualizados;
     private boolean intervaloSecVisualizado;
+    private boolean esperandoCreacionEscenarioSimulacionValido;
     public MemComunControladores(){
         
     }
@@ -57,6 +58,12 @@ public class MemComunControladores {
     public synchronized void setcasoSimulacionFinalizado(boolean estado){
          casoSimulacionFinalizado=estado ;
          if(casoSimulacionFinalizado)casoSimulacionIniciado=false;
+    }
+    public synchronized boolean getEsperandoCreacionEscenarioSimulacionValido(){
+        return esperandoCreacionEscenarioSimulacionValido;
+    }
+    public synchronized void setEsperandoCreacionEscenarioSimulacionValido(boolean estado){
+         esperandoCreacionEscenarioSimulacionValido=estado ;
     }
     public synchronized boolean getcasoSimulacionFinalizado(){
         return casoSimulacionFinalizado;
@@ -140,7 +147,9 @@ public class MemComunControladores {
        return escenarioEdicionAbierto;
     }
   public  boolean reqComenzarSimulacion() {
-       return (escenarioSimulacion!=null)&&!casoSimulacionIniciado;
+       return (escenarioSimulacion!=null&&!casoSimulacionIniciado&&
+               escenarioSimulacion.getNumRobots()==numRobotsdefsEnOrganizacion&&
+              escenarioSimulacion.getmodeloOrganizativo().equalsIgnoreCase(modorganizDefinidoEnOrg));
     }
   public boolean reqEscnrioEnEdicionParaSimular(){
     return  escenarioEdicionAbierto&&

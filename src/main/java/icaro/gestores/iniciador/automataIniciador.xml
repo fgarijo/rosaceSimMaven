@@ -2,6 +2,7 @@
 <!-- Descriptor de la tabla de estados del automata -->
 <!DOCTYPE tablaEstados SYSTEM "src/main/schemas/TablaEstados.dtd">
 <!-- para validacion manual:
+<!DOCTYPE tablaEstados SYSTEM "src/main/schemas/TablaEstados.dtd">
 <!DOCTYPE tablaEstados SYSTEM "../../../../../schemas/TablaEstados.dtd">
  -->
 <tablaEstados descripcionTabla="Tabla de transiciones del gestor de agentes general">

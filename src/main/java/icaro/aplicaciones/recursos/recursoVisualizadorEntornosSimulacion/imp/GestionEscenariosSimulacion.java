@@ -24,6 +24,7 @@ public class GestionEscenariosSimulacion {
     private final String orgModelo = "Org_";
     private  String  orgModeloInicial = "SinDefinir";
     private final String tipoFichero=".xml";
+    private final String identEquipoPorDefecto = "Equipo1";
 
      public GestionEscenariosSimulacion (){
         tablaEscenariosDefinidos = new HashMap();      
@@ -66,6 +67,8 @@ public class GestionEscenariosSimulacion {
          String identEscenario = getIdentEscenario (orgModeloInicial,0, 0);
 //         escenarioSim.setIdentEscenario(getIdentEscenario (orgModeloInicial,0, 0));
          escenarioSim.setIdentEscenario (identEscenario);
+           
+         escenarioSim.setIdentEquipo(identEquipoPorDefecto);
          return escenarioSim;
     }
     public void addEscenario(EscenarioSimulacionRobtsVictms escenario){

@@ -33,7 +33,7 @@ public class ClaseGeneradoraRecursoVisualizadorEntornosSimulacion extends ImplRe
     private int coordX = 40;
     private int coordY = 40;  // valores iniciales 
 //   private int coordX, coordY ; // coordenadas de visualizacion  se le dan valores iniciales y se incrementan para que las ventanas no coincidan
-    private ControladorVisualizacionSimulRosace controladorIUSimulador;
+    private ControladorVisualizacionSimulador controladorIUSimulador;
     private ControladorVisualizResultados controladorResultados;
  // para prueba de integracion 
     private String directorioPersistencia = VocabularioRosace.NombreDirectorioPersistenciaEscenarios+File.separator;
@@ -44,7 +44,7 @@ public class ClaseGeneradoraRecursoVisualizadorEntornosSimulacion extends ImplRe
     private boolean escenarioMovAbierto;
     private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(this.getClass().getSimpleName());
 //    private VisorMovimientoEscenario visorMovimiento;
-    private ControladorGestionEscenariosRosace controladorGestEscenarios;
+    private ControladorGestionEscenarios controladorGestEscenarios;
     private MemComunControladores memoriaComunControladores;
 
     public ClaseGeneradoraRecursoVisualizadorEntornosSimulacion(String idRecurso) throws Exception {
@@ -59,10 +59,10 @@ public class ClaseGeneradoraRecursoVisualizadorEntornosSimulacion extends ImplRe
 //            visorEscenarios = new VisorEscenariosRosace();
 //            ventanaControlCenterGUI = new ControlCenterGUI4(notifEvt);
             
-            controladorIUSimulador = new ControladorVisualizacionSimulRosace(notifEvt);
-            controladorGestEscenarios= new ControladorGestionEscenariosRosace(notifEvt);
-            VisorControlSimuladorRosace visorControl = new VisorControlSimuladorRosace(controladorIUSimulador);
-            visorControl.setControladorGestionEscenarios(controladorGestEscenarios);
+            controladorIUSimulador = new ControladorVisualizacionSimulador(notifEvt);
+            controladorGestEscenarios= new ControladorGestionEscenarios(notifEvt);
+            VisorControlSimulador visorControl = new VisorControlSimulador(controladorIUSimulador);
+            controladorIUSimulador.setControladorGestionEscenarios(controladorGestEscenarios);
             visorControl.setVisible(true);
             memoriaComunControladores = new MemComunControladores();
             controladorIUSimulador.setVisorControlSimulador(visorControl);

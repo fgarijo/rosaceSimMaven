@@ -85,12 +85,12 @@
             <Property name="text" type="java.lang.String" value="Editor Escenarios"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemAbrirEscenario">
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemAbrirEscenarioEdicion">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Abrir Escenario"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemAbrirEscenarioActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemAbrirEscenarioEdicionActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator5">

@@ -133,7 +133,7 @@ public class NotificadorInfoUsuarioSimulador extends ComunicacionAgentes{
             Logger.getLogger(NotificadorInfoUsuarioSimulador.class.getName()).log(Level.SEVERE, null, ex);
         }
      }
-     public void sendInfoEscenarioObtenidodoValido (EscenarioSimulacionRobtsVictms escenario){
+     public void sendInfoEscenarioObtenidoValido (EscenarioSimulacionRobtsVictms escenario){
          try {  
             this.informaraOtroAgenteReactivo(new InfoContEvtMsgAgteReactivo ("escenarioDefinidoValido",escenario) , identificadorAgenteaReportar);
         } catch (Exception ex) {

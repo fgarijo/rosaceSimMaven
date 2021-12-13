@@ -18,10 +18,11 @@
 
      <transicion input="escenarioSeleccionadoUsuario" accion="ValidarEscenarioRecibido" estadoSiguiente="obtencionDelEscenario" modoDeTransicion="bloqueante"/>
       <transicion input="escenarioDefinidoValido" accion="actualizarInfoVisorSimulador" estadoSiguiente="esperandoPeticionesUsuario" modoDeTransicion="bloqueante"/>
-     <transicion input="timeoutEsperaDefinicionEscenario" accion="solicitarDefinicionEscenario" estadoSiguiente="esperandoDefinicionEscenario" modoDeTransicion="bloqueante"/>
-      <transicion input="EscenarioEnfaseDeCreacion" accion="crearTempSolicitarDefinicionEscenario" estadoSiguiente="esperandoDefinicionEscenario" modoDeTransicion="bloqueante"/>
+     <transicion input="timeoutEsperaDefinicionEscenario" accion="solicitarDefinicionEscenario" estadoSiguiente="obtencionDelEscenario" modoDeTransicion="bloqueante"/>
+      <transicion input="UsuarioCreandoEscenarioSimulacion" accion="crearTempSolicitarDefinicionEscenario" estadoSiguiente="obtencionDelEscenario" modoDeTransicion="bloqueante"/>
       <transicion input="escenarioNoDefinidoTrasAgotarLosIntentos" accion="solicitarDefinicionEscenario" estadoSiguiente="obtencionDelEscenario" modoDeTransicion="bloqueante"/>
   </estado>
+ 
 <estado idIntermedio="esperandoPeticionesUsuario">
 
      <transicion input="sendSequenceOfSimulatedVictimsToRobotTeam" accion="validarPeticionSimulacion" estadoSiguiente="clasificacionPeticionSimulacion" modoDeTransicion="bloqueante"/>
