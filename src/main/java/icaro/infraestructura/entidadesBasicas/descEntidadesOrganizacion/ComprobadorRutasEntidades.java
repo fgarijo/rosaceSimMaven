@@ -39,7 +39,7 @@ public class ComprobadorRutasEntidades {
 // Se cmprueba la existencia del fichero en la ruta predefinida de la organizacion
         File schema = new File(NombresPredefinidos.DESCRIPCION_SCHEMA);
         if (!schema.exists()) {
-          return  ( buscarFichero("DescripcionOrganizacionSchema.xsd", "schemas/")!=null);
+          return  ( buscarFichero(NombresPredefinidos.DESCRIPCION_SCHEMA, "schemas/")!=null);
 //            logger.fatal("No se ha encontrado el fichero de descripcion:"
 //                    + "\n\t\t\t" + schema.getAbsolutePath()
 //                    + ".\n Compruebe la ruta y el nombre del fichero.");

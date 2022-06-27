@@ -153,12 +153,6 @@
             <version>[1.2.8,]</version>
         </dependency>
         <dependency>
-            <groupId>apache-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-            <version>1.1.0.jboss</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
             <groupId>in.jlibs</groupId>
             <artifactId>org-openide-util</artifactId>
             <version>RELEASE65</version>
